@@ -48,9 +48,7 @@ class ColorScreen extends StatelessWidget {
               'Mint': CoconutColors.mint,
             };
 
-            final colorPalette = isDarkMode
-                ? CoconutColors.colorPaletteDark
-                : CoconutColors.colorPaletteLight;
+            const colorPalette = CoconutColors.colorPalette;
             for (int i = 0; i < colorPalette.length; i++) {
               colorMap['ColorPalette $i'] = colorPalette[i];
             }

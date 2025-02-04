@@ -26,23 +26,23 @@ class CoconutColors {
   static const Color yellow = Color(0xFFFECC2F);
   static const Color green = Color(0xFF88C125);
   static const Color sky = Color(0xFF41A4D8);
-  static const Color pink = Color(0xFF88C125);
+  static const Color pink = Color(0xFFEE6579);
   static const Color red = Color(0xFFDB3937);
   static const Color orange = Color(0xFFF56321);
   static const Color mint = Color(0xFF33BFB8);
 
   /// **Light mode color palette**
-  static const List<Color> colorPaletteLight = [
-    Color(0xFFA364D9), // Purple
-    Color(0xFFFA9C5A), // Apricot
-    Color(0xFFFECC2F), // Yellow
-    Color(0xFF88C125), // Green
-    Color(0xFF41A4D8), // Blue
-    Color(0xFFEE6579), // Pink
-    Color(0xFFDB3937), // Red
-    Color(0xFFF56321), // Orange
-    Color(0xFF787878), // Light Grey
-    Color(0xFF33BFB8), // Mint
+  static const List<Color> colorPalette = [
+    purple,
+    tangerine,
+    yellow,
+    green,
+    sky,
+    pink,
+    red,
+    orange,
+    gray600,
+    mint,
   ];
 
   /// **Light mode background color palette (with opacity)**
@@ -57,20 +57,6 @@ class CoconutColors {
     Color(0x21F56321), // Orange (opacity 0.13)
     Color(0x1A656565), // Light Grey (opacity 0.1)
     Color(0x1A33BFB8), // Mint (opacity 0.1)
-  ];
-
-  /// **Dark mode color palette**
-  static const List<Color> colorPaletteDark = [
-    Color(0xFFA364D9), // Purple
-    Color(0xFFFA9C5A), // Apricot
-    Color(0xFFFECC2F), // Yellow
-    Color(0xFF88C125), // Green
-    Color(0xFF41A4D8), // Blue
-    Color(0xFFEE6579), // Pink
-    Color(0xFFDB3937), // Red
-    Color(0xFFF56321), // Orange
-    Color(0xFF9A9A9A), // Light Grey
-    Color(0xFF33BFB8), // Mint
   ];
 
   /// **Dark mode background color palette (with opacity)**
@@ -94,4 +80,25 @@ class CoconutColors {
   static Color surface(Brightness brightness) => brightness == Brightness.dark
       ? const Color(0xFF141318)
       : const Color(0xFFFFFFFF);
+
+  static Color normalButtonColor(Brightness brightness) =>
+      brightness == Brightness.dark
+          ? const Color(0xFFFFFFFF)
+          : const Color(0xFF141318);
+
+  static Color pressedButtonColor(Brightness brightness) =>
+      brightness == Brightness.dark
+          ? const Color(0x80FFFFFF)
+          : const Color(0x80141318);
+
+  static Color normalPrimaryButtonColor() => const Color(0xFFDEFF58);
+  static Color pressedPrimaryButtonColor() => const Color(0x80DEFF58);
+  static Color disabledButtonColor(Brightness brightness) =>
+      brightness == Brightness.dark ? gray800 : gray150;
+
+  static Color buttonLabelColor(Brightness brightness) =>
+      brightness == Brightness.dark ? black : white;
+  static Color primaryButtonLabelColor() => black;
+  static Color disabledButtonLabelColor(Brightness brightness) =>
+      brightness == Brightness.dark ? gray700 : gray350;
 }

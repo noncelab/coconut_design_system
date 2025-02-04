@@ -33,7 +33,7 @@ class CoconutColorScheme {
     red: CoconutColors.red,
     orange: CoconutColors.orange,
     mint: CoconutColors.mint,
-    colorPalette: CoconutColors.colorPaletteLight,
+    colorPalette: CoconutColors.colorPalette,
     backgroundColorPalette: CoconutColors.backgroundColorPaletteLight,
   );
 
@@ -67,7 +67,7 @@ class CoconutColorScheme {
     red: CoconutColors.red,
     orange: CoconutColors.orange,
     mint: CoconutColors.mint,
-    colorPalette: CoconutColors.colorPaletteDark,
+    colorPalette: CoconutColors.colorPalette,
     backgroundColorPalette: CoconutColors.backgroundColorPaletteDark,
   );
   final Color primary;
