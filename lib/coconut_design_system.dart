@@ -1,7 +1,10 @@
-library coconut_design_system;
+// ignore_for_file: directives_ordering
 
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
-}
+// 🌟 Coconut Design System Barrel file
+
+// 📌 Components
+export 'src/components/button.dart';
+
+// 📌 Theme & Styling
+export 'src/theme/typography.dart';
+export 'src/theme/data.dart';
