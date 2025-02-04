@@ -11,7 +11,7 @@ class CoconutThemeData {
   /// - Uses `Pretendard` as the default font.
   /// - Applies `CoconutColorScheme.dark` for a consistent dark mode UI.
   static ThemeData get darkTheme {
-    const colorScheme = CoconutColorScheme.dark;
+    CoconutColorScheme colorScheme = CoconutColorScheme.dark;
 
     return ThemeData(
       brightness: Brightness.dark,
@@ -53,7 +53,7 @@ class CoconutThemeData {
   /// - Uses `Pretendard` as the default font.
   /// - Applies `CoconutColorScheme.light` for a consistent light mode UI.
   static ThemeData get lightTheme {
-    const colorScheme = CoconutColorScheme.light;
+    CoconutColorScheme colorScheme = CoconutColorScheme.light;
 
     return ThemeData(
       brightness: Brightness.light,
