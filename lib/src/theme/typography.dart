@@ -2,15 +2,17 @@
 
 import 'package:flutter/material.dart';
 
-/// **Coconut Design System `TextTheme` Generator**
+/// **Coconut Design System - Typography Theme Generator**
 ///
-/// This class provides a consistent typography theme for the Coconut Design System.
-/// It includes both **light** and **dark** mode text themes.
+/// This class defines typography styles for the **Coconut Design System**.
+/// - Supports both **light** and **dark** mode text themes.
+/// - Provides predefined typography styles for **headings, body, and captions**.
+/// - Includes variations for **number styling** and **bold text**.
 class CoconutTextTheme {
   /// Returns the text theme for **dark mode**.
   ///
-  /// - Applies **white** as the default text color.
-  /// - Uses **white70** for display text.
+  /// - Default text color: **white**
+  /// - Display text color: **white70**
   static TextTheme get darkTextTheme => textTheme.apply(
         bodyColor: Colors.white,
         displayColor: Colors.white70,
@@ -18,14 +20,16 @@ class CoconutTextTheme {
 
   /// Returns the text theme for **light mode**.
   ///
-  /// - Applies **black** as the default text color.
-  /// - Uses **black87** for display text.
+  /// - Default text color: **black**
+  /// - Display text color: **black87**
   static TextTheme get lightTextTheme => textTheme.apply(
         bodyColor: Colors.black,
         displayColor: Colors.black87,
       );
 
-  /// Defines the **base text theme** with custom styles.
+  /// **Base text theme** with Coconut Typography styles.
+  ///
+  /// This is used as the foundation for both **light** and **dark** themes.
   static TextTheme get textTheme => TextTheme(
         displayLarge: CoconutTypography.heading1_32_Bold,
         displayMedium: CoconutTypography.heading2_28_Bold,
@@ -45,7 +49,11 @@ class CoconutTextTheme {
       );
 }
 
-/// Method for Typography Variation
+/// **Applies variations** to the base typography styles.
+///
+/// Allows **bold** and **number-specific fonts** to be applied dynamically.
+/// - **isNumber** → Uses `SpaceGrotesk` instead of `Pretendard`.
+/// - **isBold** → Uses `FontWeight.w700` instead of regular weight.
 TextStyle applyVariation(
   TextStyle baseStyle, {
   bool isNumber = false,
@@ -63,20 +71,22 @@ TextStyle applyVariation(
           fontSize != null ? (fontSize >= 18 ? -0.04 : -0.02) : -0.02);
 }
 
-/// **Coconut Design System Typography**
+/// **Coconut Design System - Typography Styles**
 ///
-/// Defines the default typography styles used in the Coconut Design System.
-/// It includes multiple font weights, sizes, and spacing for a unified design.
+/// Defines **font families, sizes, and weights** used throughout the system.
+/// - Supports **dynamic variations** using `applyVariation()`.
+/// - Includes predefined styles for **headings, body, captions**.
+/// - Uses `Pretendard` for general text and `SpaceGrotesk` for numbers.
 class CoconutTypography {
-  /// Default text font family used throughout the system.
+  /// **Primary font** used in the system (`Pretendard`).
   static const String kTextFontFamily = 'Pretendard';
 
-  /// Number-specific font family for enhanced numerical clarity.
+  /// **Font for numbers** to enhance numerical clarity (`SpaceGrotesk`).
   static const String kNumberFontFamily = 'SpaceGrotesk';
 
   // ====== Heading Styles ======
 
-  /// **H1 Bold** - 32px, `Pretendard`
+  /// **H1 - 32px, Regular**
   static const TextStyle heading1_32 = TextStyle(
     fontSize: 32,
     fontWeight: FontWeight.w400,
@@ -90,7 +100,7 @@ class CoconutTypography {
   static final TextStyle heading1_32_NumberBold =
       applyVariation(heading1_32, isNumber: true, isBold: true);
 
-  /// **H2 Bold** - 28px, `Pretendard`
+  /// **H2 - 28px, Regular**
   static const TextStyle heading2_28 = TextStyle(
     fontSize: 28,
     fontWeight: FontWeight.w400,
@@ -104,7 +114,7 @@ class CoconutTypography {
   static final TextStyle heading2_28_NumberBold =
       applyVariation(heading2_28, isNumber: true, isBold: true);
 
-  /// **H3** - 21px, `Pretendard`
+  /// **H3 - 21px, Regular**
   static const TextStyle heading3_21 = TextStyle(
     fontSize: 21,
     fontWeight: FontWeight.w400,
@@ -118,7 +128,7 @@ class CoconutTypography {
   static final TextStyle heading3_21_NumberBold =
       applyVariation(heading3_21, isNumber: true, isBold: true);
 
-  /// **H4** - 18px, `Pretendard`
+  /// **H4 - 18px, Regular**
   static const TextStyle heading4_18 = TextStyle(
     fontSize: 18,
     fontWeight: FontWeight.w400,
@@ -132,7 +142,7 @@ class CoconutTypography {
   static final TextStyle heading4_18_NumberBold =
       applyVariation(heading4_18, isNumber: true, isBold: true);
 
-  /// **Body 1** - 16px, `Pretendard`
+  /// **Body 1 - 16px, Regular**
   static const TextStyle body1_16 = TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.w400,
@@ -145,7 +155,7 @@ class CoconutTypography {
   static final TextStyle body1_16_NumberBold =
       applyVariation(body1_16, isNumber: true, isBold: true);
 
-  /// **Body 2** - 14px, `Pretendard`
+  /// **Body 2 - 14px, Regular**
   static const TextStyle body2_14 = TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.w400,
@@ -158,7 +168,7 @@ class CoconutTypography {
   static final TextStyle body2_14_NumberBold =
       applyVariation(body2_14, isNumber: true, isBold: true);
 
-  /// **Body 3** - 12px, `Pretendard`, Regular
+  /// **Body 3 - 12px, Regular**
   static const TextStyle body3_12 = TextStyle(
     fontSize: 12,
     fontWeight: FontWeight.w400,
@@ -171,7 +181,7 @@ class CoconutTypography {
   static final TextStyle body3_12_NumberBold =
       applyVariation(body3_12, isNumber: true, isBold: true);
 
-  /// **Caption Number** - 10px, `SpaceGrotesk`, Regular
+  /// **Caption Number - 10px, Regular**
   static const TextStyle caption_10 = TextStyle(
     fontSize: 10,
     fontWeight: FontWeight.w400,
