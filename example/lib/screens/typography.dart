@@ -28,7 +28,7 @@ class TypographyScreen extends StatelessWidget {
                 children: [
                   Text(
                     typographyKey,
-                    style: CoconutTypography.body2.copyWith(
+                    style: CoconutTypography.body2_14.copyWith(
                       fontWeight: FontWeight.bold,
                       color: Colors.grey,
                     ),

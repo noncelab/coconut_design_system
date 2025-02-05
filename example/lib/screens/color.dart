@@ -86,7 +86,7 @@ class ColorScreen extends StatelessWidget {
       child: Center(
         child: Text(
           name,
-          style: CoconutTypography.body2Bold.merge(
+          style: CoconutTypography.body2_14_Bold.merge(
             TextStyle(
               color: displayColor,
             ),

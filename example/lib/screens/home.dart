@@ -39,7 +39,7 @@ class HomeScreen extends StatelessWidget {
                 return ListTile(
                   title: Text(
                     route.path.replaceAll('/', ''),
-                    style: CoconutTypography.body1Bold,
+                    style: CoconutTypography.body1_16_Bold,
                   ),
                   trailing: const Icon(
                     Icons.arrow_forward_ios,

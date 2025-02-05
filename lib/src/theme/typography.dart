@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 
 /// **Coconut Design System `TextTheme` Generator**
@@ -24,23 +26,41 @@ class CoconutTextTheme {
       );
 
   /// Defines the **base text theme** with custom styles.
-  static TextTheme get textTheme => const TextTheme(
-        displayLarge: CoconutTypography.heading1Bold,
-        displayMedium: CoconutTypography.heading2Bold,
-        displaySmall: CoconutTypography.heading3Bold,
-        headlineLarge: CoconutTypography.heading1Bold,
-        headlineMedium: CoconutTypography.heading2Bold,
-        headlineSmall: CoconutTypography.heading3Bold,
-        titleLarge: CoconutTypography.heading1Bold,
-        titleMedium: CoconutTypography.heading2Bold,
-        titleSmall: CoconutTypography.heading3Bold,
-        bodyLarge: CoconutTypography.body1,
-        bodyMedium: CoconutTypography.body2,
-        bodySmall: CoconutTypography.body3,
-        labelLarge: CoconutTypography.body1,
-        labelMedium: CoconutTypography.body2,
-        labelSmall: CoconutTypography.body3,
+  static TextTheme get textTheme => TextTheme(
+        displayLarge: CoconutTypography.heading1_32_Bold,
+        displayMedium: CoconutTypography.heading2_28_Bold,
+        displaySmall: CoconutTypography.heading3_21_Bold,
+        headlineLarge: CoconutTypography.heading1_32_Bold,
+        headlineMedium: CoconutTypography.heading2_28_Bold,
+        headlineSmall: CoconutTypography.heading3_21_Bold,
+        titleLarge: CoconutTypography.heading1_32_Bold,
+        titleMedium: CoconutTypography.heading2_28_Bold,
+        titleSmall: CoconutTypography.heading3_21_Bold,
+        bodyLarge: CoconutTypography.body1_16,
+        bodyMedium: CoconutTypography.body2_14,
+        bodySmall: CoconutTypography.body3_12,
+        labelLarge: CoconutTypography.body1_16,
+        labelMedium: CoconutTypography.body2_14,
+        labelSmall: CoconutTypography.body3_12,
       );
+}
+
+/// Method for Typography Variation
+TextStyle applyVariation(
+  TextStyle baseStyle, {
+  bool isNumber = false,
+  bool isBold = false,
+}) {
+  double? fontSize = baseStyle.fontSize;
+
+  return baseStyle.copyWith(
+      fontFamily: isNumber
+          ? CoconutTypography.kNumberFontFamily
+          : CoconutTypography.kTextFontFamily,
+      fontWeight: isBold ? FontWeight.w700 : FontWeight.w400,
+      height: fontSize != null ? (fontSize >= 24 ? 1.4 : 1.2) : null,
+      letterSpacing:
+          fontSize != null ? (fontSize >= 18 ? -0.04 : -0.02) : -0.02);
 }
 
 /// **Coconut Design System Typography**
@@ -56,294 +76,151 @@ class CoconutTypography {
 
   // ====== Heading Styles ======
 
-  /// **H1 Bold** - 32px, `Pretendard`, Bold
-  static const TextStyle heading1Bold = TextStyle(
+  /// **H1 Bold** - 32px, `Pretendard`
+  static const TextStyle heading1_32 = TextStyle(
     fontSize: 32,
-    fontWeight: FontWeight.w700,
+    fontWeight: FontWeight.w400,
     fontFamily: kTextFontFamily,
-    letterSpacing: -0.04,
-    height: 38.4 / 32,
   );
 
-  /// **H1 Number Bold** - 32px, `SpaceGrotesk`, Bold
-  static const TextStyle heading1NumberBold = TextStyle(
-    fontSize: 32,
-    fontWeight: FontWeight.w700,
-    fontFamily: kNumberFontFamily,
-    letterSpacing: -0.04,
-    height: 38.4 / 32,
-  );
+  static final TextStyle heading1_32_Bold =
+      applyVariation(heading1_32, isBold: true);
+  static final TextStyle heading1_32_Number =
+      applyVariation(heading1_32, isNumber: true);
+  static final TextStyle heading1_32_NumberBold =
+      applyVariation(heading1_32, isNumber: true, isBold: true);
 
-  /// **H2 Bold** - 28px, `Pretendard`, Bold
-  static const TextStyle heading2Bold = TextStyle(
+  /// **H2 Bold** - 28px, `Pretendard`
+  static const TextStyle heading2_28 = TextStyle(
     fontSize: 28,
-    fontWeight: FontWeight.w700,
+    fontWeight: FontWeight.w400,
     fontFamily: kTextFontFamily,
-    letterSpacing: -0.04,
-    height: 33.6 / 28,
   );
 
-  /// **H2 Number Bold** - 28px, `SpaceGrotesk`, Bold
-  static const TextStyle heading2NumberBold = TextStyle(
-    fontSize: 28,
-    fontWeight: FontWeight.w700,
-    fontFamily: kNumberFontFamily,
-    letterSpacing: -0.04,
-    height: 33.6 / 28,
-  );
+  static final TextStyle heading2_28_Bold =
+      applyVariation(heading2_28, isBold: true);
+  static final TextStyle heading2_28_Number =
+      applyVariation(heading2_28, isNumber: true);
+  static final TextStyle heading2_28_NumberBold =
+      applyVariation(heading2_28, isNumber: true, isBold: true);
 
-  /// **H3** - 21px, `Pretendard`, Regular
-  static const TextStyle heading3 = TextStyle(
+  /// **H3** - 21px, `Pretendard`
+  static const TextStyle heading3_21 = TextStyle(
     fontSize: 21,
     fontWeight: FontWeight.w400,
     fontFamily: kTextFontFamily,
-    letterSpacing: -0.04,
-    height: 29.4 / 21,
   );
 
-  /// **H3 Number** - 21px, `Pretendard`, Regular
-  static const TextStyle heading3Number = TextStyle(
-    fontSize: 21,
-    fontWeight: FontWeight.w400,
-    fontFamily: kNumberFontFamily,
-    letterSpacing: -0.04,
-    height: 29.4 / 21,
-  );
+  static final TextStyle heading3_21_Bold =
+      applyVariation(heading3_21, isBold: true);
+  static final TextStyle heading3_21_Number =
+      applyVariation(heading3_21, isNumber: true);
+  static final TextStyle heading3_21_NumberBold =
+      applyVariation(heading3_21, isNumber: true, isBold: true);
 
-  /// **H3 Bold** - 21px, `Pretendard`, Bold
-  static const TextStyle heading3Bold = TextStyle(
-    fontSize: 21,
-    fontWeight: FontWeight.w700,
-    fontFamily: kTextFontFamily,
-    letterSpacing: -0.04,
-    height: 29.4 / 21,
-  );
-
-  /// **H3 Number Bold** - 21px, `SpaceGrotesk`, Bold
-  static const TextStyle heading3NumberBold = TextStyle(
-    fontSize: 21,
-    fontWeight: FontWeight.w700,
-    fontFamily: kNumberFontFamily,
-    letterSpacing: -0.04,
-    height: 29.4 / 21,
-  );
-
-  /// **H4** - 18px, `Pretendard`, Regular
-  static const TextStyle heading4 = TextStyle(
+  /// **H4** - 18px, `Pretendard`
+  static const TextStyle heading4_18 = TextStyle(
     fontSize: 18,
     fontWeight: FontWeight.w400,
     fontFamily: kTextFontFamily,
-    letterSpacing: -0.04,
-    height: 27 / 18,
   );
 
-  /// **H4 Number** - 18px, `SpaceGrotesk`, Regular
-  static const TextStyle heading4Number = TextStyle(
-    fontSize: 18,
-    fontWeight: FontWeight.w400,
-    fontFamily: kNumberFontFamily,
-    letterSpacing: -0.04,
-    height: 27 / 18,
-  );
+  static final TextStyle heading4_18_Bold =
+      applyVariation(heading4_18, isBold: true);
+  static final TextStyle heading4_18_Number =
+      applyVariation(heading4_18, isNumber: true);
+  static final TextStyle heading4_18_NumberBold =
+      applyVariation(heading4_18, isNumber: true, isBold: true);
 
-  /// **H4 Bold** - 18px, `Pretendard`, Bold
-  static const TextStyle heading4Bold = TextStyle(
-    fontSize: 18,
-    fontWeight: FontWeight.w700,
-    fontFamily: kTextFontFamily,
-    letterSpacing: -0.04,
-    height: 27 / 18,
-  );
-
-  /// **H4 Number Bold** - 18px, `SpaceGrotesk`, Bold
-  static const TextStyle heading4NumberBold = TextStyle(
-    fontSize: 21,
-    fontWeight: FontWeight.w700,
-    fontFamily: kNumberFontFamily,
-    letterSpacing: -0.04,
-    height: 27 / 18,
-  );
-
-  /// **Body 1** - 16px, `Pretendard`, Regular
-  static const TextStyle body1 = TextStyle(
+  /// **Body 1** - 16px, `Pretendard`
+  static const TextStyle body1_16 = TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.w400,
     fontFamily: kTextFontFamily,
-    letterSpacing: -0.02,
-    height: 22.4 / 16,
   );
 
-  /// **Body 1 Number** - 16px, `SpaceGrotesk`, Regular
-  static const TextStyle body1Number = TextStyle(
-    fontSize: 16,
-    fontWeight: FontWeight.w400,
-    fontFamily: kNumberFontFamily,
-    letterSpacing: -0.02,
-    height: 22.4 / 16,
-  );
+  static final TextStyle body1_16_Bold = applyVariation(body1_16, isBold: true);
+  static final TextStyle body1_16_Number =
+      applyVariation(body1_16, isNumber: true);
+  static final TextStyle body1_16_NumberBold =
+      applyVariation(body1_16, isNumber: true, isBold: true);
 
-  /// **Body 1 Bold** - 16px, `Pretendard`, Bold
-  static const TextStyle body1Bold = TextStyle(
-    fontSize: 16,
-    fontWeight: FontWeight.w700,
-    fontFamily: kTextFontFamily,
-    letterSpacing: -0.02,
-    height: 22.4 / 16,
-  );
-
-  /// **Body 1 Number Bold** - 16px, `SpaceGrotesk`, Bold
-  static const TextStyle body1NumberBold = TextStyle(
-    fontSize: 16,
-    fontWeight: FontWeight.w700,
-    fontFamily: kNumberFontFamily,
-    letterSpacing: -0.02,
-    height: 22.4 / 16,
-  );
-
-  /// **Body 2** - 14px, `Pretendard`, Regular
-  static const TextStyle body2 = TextStyle(
+  /// **Body 2** - 14px, `Pretendard`
+  static const TextStyle body2_14 = TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.w400,
     fontFamily: kTextFontFamily,
-    letterSpacing: -0.02,
-    height: 19.6 / 14,
   );
 
-  /// **Body 2 Number** - 14px, `SpaceGrotesk`, Regular
-  static const TextStyle body2Number = TextStyle(
-    fontSize: 14,
-    fontWeight: FontWeight.w400,
-    fontFamily: kNumberFontFamily,
-    letterSpacing: -0.02,
-    height: 19.6 / 14,
-  );
-
-  /// **Body 2 Bold** - 14px, `Pretendard`, Bold
-  static const TextStyle body2Bold = TextStyle(
-    fontSize: 14,
-    fontWeight: FontWeight.w700,
-    fontFamily: kTextFontFamily,
-    letterSpacing: -0.02,
-    height: 19.6 / 14,
-  );
-
-  /// **Body 2 Number Bold** - 14px, `SpaceGrotesk`, Bold
-  static const TextStyle body2NumberBold = TextStyle(
-    fontSize: 14,
-    fontWeight: FontWeight.w700,
-    fontFamily: kNumberFontFamily,
-    letterSpacing: -0.02,
-    height: 19.6 / 14,
-  );
+  static final TextStyle body2_14_Bold = applyVariation(body2_14, isBold: true);
+  static final TextStyle body2_14_Number =
+      applyVariation(body2_14, isNumber: true);
+  static final TextStyle body2_14_NumberBold =
+      applyVariation(body2_14, isNumber: true, isBold: true);
 
   /// **Body 3** - 12px, `Pretendard`, Regular
-  static const TextStyle body3 = TextStyle(
+  static const TextStyle body3_12 = TextStyle(
     fontSize: 12,
     fontWeight: FontWeight.w400,
     fontFamily: kTextFontFamily,
-    letterSpacing: -0.02,
-    height: 16.8 / 14,
   );
 
-  /// **Body 3 Number** - 12px, `SpaceGrotesk`, Regular
-  static const TextStyle body3Number = TextStyle(
-    fontSize: 12,
-    fontWeight: FontWeight.w400,
-    fontFamily: kNumberFontFamily,
-    letterSpacing: -0.02,
-    height: 16.8 / 14,
-  );
-
-  /// **Body 3 Bold** - 12px, `Pretendard`, Bold
-  static const TextStyle body3Bold = TextStyle(
-    fontSize: 12,
-    fontWeight: FontWeight.w700,
-    fontFamily: kTextFontFamily,
-    letterSpacing: -0.02,
-    height: 16.8 / 14,
-  );
-
-  /// **Body 3 Number Bold** - 12px, `SpaceGrotesk`, Bold
-  static const TextStyle body3NumberBold = TextStyle(
-    fontSize: 12,
-    fontWeight: FontWeight.w700,
-    fontFamily: kNumberFontFamily,
-    letterSpacing: -0.02,
-    height: 16.8 / 14,
-  );
-
-  /// **Caption** - 10px, `Pretendard`, Regular
-  static const TextStyle caption = TextStyle(
-    fontSize: 10,
-    fontWeight: FontWeight.w400,
-    fontFamily: kTextFontFamily,
-    letterSpacing: -0.02,
-    height: 14 / 10,
-  );
+  static final TextStyle body3_12_Bold = applyVariation(body3_12, isBold: true);
+  static final TextStyle body3_12_Number =
+      applyVariation(body3_12, isNumber: true);
+  static final TextStyle body3_12_NumberBold =
+      applyVariation(body3_12, isNumber: true, isBold: true);
 
   /// **Caption Number** - 10px, `SpaceGrotesk`, Regular
-  static const TextStyle captionNumber = TextStyle(
+  static const TextStyle caption_10 = TextStyle(
     fontSize: 10,
     fontWeight: FontWeight.w400,
-    fontFamily: kNumberFontFamily,
-    letterSpacing: -0.02,
-    height: 14 / 10,
-  );
-
-  /// **Caption Bold** - 10px, `Pretendard`, Bold
-  static const TextStyle captionBold = TextStyle(
-    fontSize: 10,
-    fontWeight: FontWeight.w700,
     fontFamily: kTextFontFamily,
-    letterSpacing: -0.02,
-    height: 14 / 10,
   );
 
-  /// **Caption Number Bold** - 10px, `SpaceGrotesk`, Bold
-  static const TextStyle caotionNumberBold = TextStyle(
-    fontSize: 10,
-    fontWeight: FontWeight.w700,
-    fontFamily: kNumberFontFamily,
-    letterSpacing: -0.02,
-    height: 14 / 10,
-  );
+  static final TextStyle caption_10_Bold =
+      applyVariation(caption_10, isBold: true);
+  static final TextStyle caption_10_Number =
+      applyVariation(caption_10, isNumber: true);
+  static final TextStyle caption_10_NumberBold =
+      applyVariation(caption_10, isNumber: true, isBold: true);
 
   /// **Predefined Typography Styles Map**
   ///
   /// Provides easy access to typography styles with meaningful labels.
   static final Map<String, TextStyle> typographyStyles = {
-    // Heading Styles (Pretendard)
-    'Heading 1 (Bold)': heading1Bold,
-    'Heading 1 (Number Bold)': heading1NumberBold,
-    'Heading 2 (Bold)': heading2Bold,
-    'Heading 2 (Number Bold)': heading2NumberBold,
-    'Heading 3': heading3,
-    'Heading 3 (Bold)': heading3Bold,
-    'Heading 3 (Number)': heading3Number,
-    'Heading 3 (Number Bold)': heading3NumberBold,
-    'Heading 4': heading4,
-    'Heading 4 (Bold)': heading4Bold,
-    'Heading 4 (Number)': heading4Number,
-    'Heading 4 (Number Bold)': heading4NumberBold,
+    // Heading Styles
+    'Heading 1 (32px)': heading1_32,
+    'Heading 1 (32px, Bold)': heading1_32_Bold,
+    'Heading 1 (32px, Number)': heading1_32_Number,
+    'Heading 1 (32px, Number Bold)': heading1_32_NumberBold,
+    'Heading 2 (28px)': heading2_28,
+    'Heading 2 (28px, Bold)': heading2_28_Bold,
+    'Heading 2 (28px, Number)': heading2_28_Number,
+    'Heading 2 (28px, Number Bold)': heading2_28_NumberBold,
+    'Heading 3 (21px)': heading3_21,
+    'Heading 3 (21px, Bold)': heading3_21_Bold,
+    'Heading 3 (21px, Number)': heading3_21_Number,
+    'Heading 3 (21px, Number Bold)': heading3_21_NumberBold,
 
-    // Body Styles (Pretendard)
-    'Body 1': body1,
-    'Body 1 (Bold)': body1Bold,
-    'Body 1 (Number)': body1Number,
-    'Body 1 (Number Bold)': body1NumberBold,
-    'Body 2': body2,
-    'Body 2 (Bold)': body2Bold,
-    'Body 2 (Number)': body2Number,
-    'Body 2 (Number Bold)': body2NumberBold,
-    'Body 3': body3,
-    'Body 3 (Bold)': body3Bold,
-    'Body 3 (Number)': body3Number,
-    'Body 3 (Number Bold)': body3NumberBold,
+    // Body Styles
+    'Body 1 (16px)': body1_16,
+    'Body 1 (16px, Bold)': body1_16_Bold,
+    'Body 1 (16px, Number)': body1_16_Number,
+    'Body 1 (16px, Number Bold)': body1_16_NumberBold,
+    'Body 2 (14px)': body2_14,
+    'Body 2 (14px, Bold)': body2_14_Bold,
+    'Body 2 (14px, Number)': body2_14_Number,
+    'Body 2 (14px, Number Bold)': body2_14_NumberBold,
+    'Body 3 (12px)': body3_12,
+    'Body 3 (12px, Bold)': body3_12_Bold,
+    'Body 3 (12px, Number)': body3_12_Number,
+    'Body 3 (12px, Number Bold)': body3_12_NumberBold,
 
     // Caption Styles (Pretendard)
-    'Caption': caption,
-    'Caption (Bold)': captionBold,
-    'Caption (Number)': captionNumber,
-    'Caption (Number Bold)': caotionNumberBold,
+    'Caption (10px)': caption_10,
+    'Caption (10px, Bold)': caption_10_Bold,
+    'Caption (10px, Number)': caption_10_Number,
+    'Caption (10p,x Number Bold)': caption_10_NumberBold,
   };
 }
