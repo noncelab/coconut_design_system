@@ -1,6 +1,7 @@
 import 'package:coconut_design_system/coconut_design_system.dart';
 import 'package:example/screens/color.dart';
 import 'package:example/screens/home.dart';
+import 'package:example/screens/layout.dart';
 import 'package:example/screens/typography.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -51,6 +52,11 @@ final GoRouter _router = GoRouter(
       name: 'color',
       path: '/color',
       builder: (context, state) => const ColorScreen(),
+    ),
+    GoRoute(
+      name: 'layout',
+      path: '/layout',
+      builder: (context, state) => const LayoutScreen(),
     ),
   ],
 );
