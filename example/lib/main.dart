@@ -1,4 +1,5 @@
 import 'package:coconut_design_system/coconut_design_system.dart';
+import 'package:example/screens/button.dart';
 import 'package:example/screens/color.dart';
 import 'package:example/screens/home.dart';
 import 'package:example/screens/icon.dart';
@@ -63,6 +64,11 @@ final GoRouter _router = GoRouter(
       name: 'icon',
       path: '/icon',
       builder: (context, state) => const IconScreen(),
+    ),
+    GoRoute(
+      name: 'button',
+      path: '/button',
+      builder: (context, state) => const ButtonScreen(),
     ),
   ],
 );
