@@ -1,5 +1,4 @@
 import 'package:coconut_design_system/coconut_design_system.dart';
-import 'package:coconut_design_system/src/util/vibration.dart';
 import 'package:flutter/material.dart';
 
 /// ## **Coconut Design System - Custom Button**
@@ -8,7 +7,6 @@ import 'package:flutter/material.dart';
 /// ### **Features:**
 /// - Supports **filled, outlined, and none** button types.
 /// - Automatically adjusts colors for **light and dark mode**.
-/// - Includes **vibration feedback** on click (optional).
 /// - Allows buttons to be **fully expanded** to the screen width.
 /// - Customizable **border, radius, padding, and typography**.
 ///
@@ -76,10 +74,6 @@ class CoconutButton extends StatefulWidget {
   /// **Text color when button is disabled**
   final Color disabledForegroundColor;
 
-  /// **Enable vibration feedback when clicked**
-  /// - Default: `false`
-  final bool isVibrateActive;
-
   /// **Button active state**
   /// - If `false`, the button appears disabled.
   final bool isActive;
@@ -103,7 +97,6 @@ class CoconutButton extends StatefulWidget {
     required this.onPressed,
     required this.text,
     TextStyle? textStyle,
-    this.isVibrateActive = false,
     this.isActive = true,
     this.isExpand = false,
     Color? backgroundColor,
@@ -292,7 +285,6 @@ class _CoconutButtonState extends State<CoconutButton> {
   /// **Handles button click action**
   void onTap() {
     if (!widget.isActive) return;
-    if (widget.isVibrateActive) vibrateLight();
     widget.onPressed.call();
   }
 }
@@ -323,7 +315,6 @@ extension CoconutButtonCopy on CoconutButton {
       padding: padding,
       textStyle: textStyle,
       buttonType: buttonType,
-      isVibrateActive: isVibrateActive,
     );
   }
 }
