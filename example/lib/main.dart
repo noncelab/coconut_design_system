@@ -6,6 +6,7 @@ import 'package:example/screens/icon.dart';
 import 'package:example/screens/layout.dart';
 import 'package:example/screens/radius.dart';
 import 'package:example/screens/typography.dart';
+import 'package:example/screens/underlined_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
@@ -75,6 +76,11 @@ final GoRouter _router = GoRouter(
       name: 'button',
       path: '/button',
       builder: (context, state) => const ButtonScreen(),
+    ),
+    GoRoute(
+      name: 'underlined button',
+      path: '/underlined_button',
+      builder: (context, state) => const CoconutUnderlinedButtonScreen(),
     ),
   ],
 );

@@ -5,6 +5,7 @@
 // 📌 Components
 export 'src/components/button.dart';
 export 'src/components/icon.dart';
+export 'src/components/underlined_button.dart';
 
 // 📌 Theme & Styling
 export 'src/theme/typography.dart';

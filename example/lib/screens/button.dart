@@ -63,7 +63,6 @@ class ButtonScreen extends StatelessWidget {
                         foregroundColor: CoconutColors.black,
                         pressedTextColor: CoconutColors.black,
                         buttonType: CoconutButtonType.filled,
-                        isVibrateActive: true,
                         onPressed: () => debugPrint('button Pressed!'),
                       ),
                     ),
