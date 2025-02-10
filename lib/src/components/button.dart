@@ -115,7 +115,7 @@ class CoconutButton extends StatefulWidget {
     Color? pressedTextColor,
     this.buttonType = CoconutButtonType.filled,
   })  : padding =
-            padding ?? const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+            padding ?? const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
         backgroundColor = backgroundColor ??
             (brightness == Brightness.light
                 ? CoconutColors.black

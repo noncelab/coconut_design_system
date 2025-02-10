@@ -66,7 +66,7 @@ TextStyle applyVariation(
           ? CoconutTypography.kNumberFontFamily
           : CoconutTypography.kTextFontFamily,
       fontWeight: isBold ? FontWeight.w700 : FontWeight.w400,
-      height: fontSize != null ? (fontSize >= 24 ? 1.4 : 1.2) : null,
+      height: fontSize != null ? (fontSize >= 24 ? 1.2 : 1.4) : null,
       letterSpacing:
           fontSize != null ? (fontSize >= 18 ? -0.04 : -0.02) : -0.02);
 }
