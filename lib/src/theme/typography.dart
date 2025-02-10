@@ -234,3 +234,9 @@ class CoconutTypography {
     'Caption (10p,x Number Bold)': caption_10_NumberBold,
   };
 }
+
+extension TextColorExtension on TextStyle {
+  TextStyle setColor(Color color) {
+    return copyWith(color: color);
+  }
+}
