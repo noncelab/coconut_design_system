@@ -4,6 +4,7 @@ import 'package:example/screens/color.dart';
 import 'package:example/screens/home.dart';
 import 'package:example/screens/icon.dart';
 import 'package:example/screens/layout.dart';
+import 'package:example/screens/radius.dart';
 import 'package:example/screens/typography.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -64,6 +65,11 @@ final GoRouter _router = GoRouter(
       name: 'icon',
       path: '/icon',
       builder: (context, state) => const IconScreen(),
+    ),
+    GoRoute(
+      name: 'radius',
+      path: '/radius',
+      builder: (context, state) => const RadiusScreen(),
     ),
     GoRoute(
       name: 'button',
