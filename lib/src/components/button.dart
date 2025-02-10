@@ -193,9 +193,12 @@ class _CoconutButtonState extends State<CoconutButton> {
         height: widget.height,
         padding: widget.padding,
         decoration: BoxDecoration(
-          color: getBackgroundColor(),
-          border:
-              Border.all(width: widget.borderWidth, color: getOutlineColor()),
+          color: getBackgroundColor(
+              isDarkMode: widget.brightness == Brightness.dark),
+          border: Border.all(
+              width: widget.borderWidth,
+              color: getOutlineColor(
+                  isDarkMode: widget.brightness == Brightness.dark)),
           borderRadius: BorderRadius.circular(
             widget.borderRadius,
           ),
@@ -205,7 +208,8 @@ class _CoconutButtonState extends State<CoconutButton> {
           textAlign: TextAlign.center,
           style: widget.textStyle.merge(
             TextStyle(
-              color: getForegroundColor(),
+              color: getForegroundColor(
+                  isDarkMode: widget.brightness == Brightness.dark),
             ),
           ),
         ),
@@ -214,16 +218,24 @@ class _CoconutButtonState extends State<CoconutButton> {
   }
 
   /// **Returns the appropriate background color based on state**
-  Color getBackgroundColor() {
+  Color getBackgroundColor({bool isDarkMode = false}) {
     if (!widget.isActive) {
       return switch (widget.buttonType) {
         CoconutButtonType.filled => widget.disabledBackgroundColor,
-        CoconutButtonType.outlined => widget.disabledBackgroundColor,
+        CoconutButtonType.outlined => Colors.transparent,
         CoconutButtonType.none => Colors.transparent,
       };
     }
     if (widget.buttonType == CoconutButtonType.none) return Colors.transparent;
-    if (isPressing) return widget.pressedBackgroundColor;
+    if (isPressing) {
+      final outlinePressingColor =
+          isDarkMode ? CoconutColors.gray800 : CoconutColors.gray150;
+      return switch (widget.buttonType) {
+        CoconutButtonType.filled => widget.pressedBackgroundColor,
+        CoconutButtonType.outlined => outlinePressingColor,
+        CoconutButtonType.none => Colors.transparent,
+      };
+    }
     return widget.buttonType == CoconutButtonType.filled
         ? widget.backgroundColor
         : widget.brightness == Brightness.light
@@ -236,22 +248,24 @@ class _CoconutButtonState extends State<CoconutButton> {
       widget.isExpand ? MediaQuery.sizeOf(context).width : widget.width;
 
   /// **Returns the appropriate text color based on state**
-  Color getForegroundColor() {
+  Color getForegroundColor({bool isDarkMode = false}) {
     if (!widget.isActive) return widget.disabledForegroundColor;
     final Color textColor =
         widget.textStyle.color ?? CoconutColors.onPrimary(widget.brightness);
+    final outlinePressingColor =
+        isDarkMode ? CoconutColors.gray200 : CoconutColors.gray500;
     return switch (widget.buttonType) {
       CoconutButtonType.filled =>
         isPressing ? widget.pressedTextColor : widget.foregroundColor,
       CoconutButtonType.outlined =>
-        isPressing ? textColor.withOpacity(0.5) : textColor,
+        isPressing ? outlinePressingColor : textColor,
       CoconutButtonType.none =>
         isPressing ? textColor.withOpacity(0.5) : textColor,
     };
   }
 
   /// **Returns the appropriate border color based on state**
-  Color getOutlineColor() {
+  Color getOutlineColor({bool isDarkMode = false}) {
     if (!widget.isActive) {
       return switch (widget.buttonType) {
         CoconutButtonType.filled => widget.disabledBackgroundColor,
@@ -260,9 +274,11 @@ class _CoconutButtonState extends State<CoconutButton> {
       };
     }
     if (isPressing) {
+      final outlinePressingColor =
+          isDarkMode ? CoconutColors.gray200 : CoconutColors.gray500;
       return switch (widget.buttonType) {
         CoconutButtonType.filled => Colors.transparent,
-        CoconutButtonType.outlined => widget.textStyle.color!.withOpacity(0.5),
+        CoconutButtonType.outlined => outlinePressingColor,
         CoconutButtonType.none => Colors.transparent,
       };
     }
