@@ -14,7 +14,7 @@ class RadiusScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Consumer<ThemeProvider>(
           builder: (context, themeProvider, child) {
-            Map<String, int> radiusMap = {
+            Map<String, double> radiusMap = {
               'CoconutStyles.radius_500': CoconutStyles.radius_500,
               'CoconutStyles.radius_400': CoconutStyles.radius_400,
               'CoconutStyles.radius_300': CoconutStyles.radius_300,
@@ -40,7 +40,7 @@ class RadiusScreen extends StatelessWidget {
                           color: CoconutColors.gray500,
                         ),
                         borderRadius: BorderRadius.circular(
-                          entry.value.toDouble(),
+                          entry.value,
                         ),
                       ),
                       child: Stack(
@@ -57,7 +57,7 @@ class RadiusScreen extends StatelessWidget {
                                   color: CoconutColors.pink,
                                 ),
                                 borderRadius: BorderRadius.circular(
-                                  entry.value.toDouble(),
+                                  entry.value,
                                 ),
                               ),
                             ),
