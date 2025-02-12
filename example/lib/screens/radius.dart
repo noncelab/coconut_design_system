@@ -40,7 +40,7 @@ class RadiusScreen extends StatelessWidget {
                           color: CoconutColors.gray500,
                         ),
                         borderRadius: BorderRadius.circular(
-                          entry.value.toDouble(),
+                          entry.value,
                         ),
                       ),
                       child: Stack(
@@ -57,7 +57,7 @@ class RadiusScreen extends StatelessWidget {
                                   color: CoconutColors.pink,
                                 ),
                                 borderRadius: BorderRadius.circular(
-                                  entry.value.toDouble(),
+                                  entry.value,
                                 ),
                               ),
                             ),

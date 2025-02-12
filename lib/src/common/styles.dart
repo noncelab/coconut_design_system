@@ -20,9 +20,16 @@ class CoconutStyles {
 
   /// **radius-150 (10px)**
   /// - Used for **small buttons, badges, tags, and compact UI elements**.
+  /// - **Examples:** Small action buttons, Category tags, Notification badges
   static const radius_150 = 10.0;
 
   /// **radius-100 (8px)**
   /// - Used for **the smallest UI elements with rounded corners**.
+  /// - **Examples:** Tiny buttons, Chip components, Small indicators
   static const radius_100 = 8.0;
+
+  /// **radius-50 (4px)**
+  /// - Used for **chip UI elements and very small rounded components**.
+  /// - **Examples:** Filter chips, Tag labels, Small progress indicators
+  static const radius_50 = 4.0;
 }

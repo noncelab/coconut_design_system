@@ -27,6 +27,13 @@ flutter:
   assets:
     - assets/svg/arrow-back.svg
     - assets/svg/close.svg
+    - assets/svg/checkbox.svg
+    - assets/svg/checkbox_selected.svg
+    - assets/svg/pulldown_close.svg
+    - assets/svg/pulldown_open.svg
+    - assets/svg/stepper_minus.svg
+    - assets/svg/stepper_plus.svg
+
   fonts:
     - family: SpaceGrotesk
       fonts:

@@ -5,6 +5,7 @@ import 'package:example/screens/button.dart';
 import 'package:example/screens/color.dart';
 import 'package:example/screens/home.dart';
 import 'package:example/screens/icon.dart';
+import 'package:example/screens/inputs.dart';
 import 'package:example/screens/layout.dart';
 import 'package:example/screens/radius.dart';
 import 'package:example/screens/segmented_control.dart';
@@ -87,6 +88,11 @@ final GoRouter _router = GoRouter(
       name: 'underlined button',
       path: '/underlined_button',
       builder: (context, state) => const CoconutUnderlinedButtonScreen(),
+    ),
+    GoRoute(
+      name: 'inputs',
+      path: '/inputs',
+      builder: (context, state) => const InputsScreen(),
     ),
     GoRoute(
       name: 'appbar',
