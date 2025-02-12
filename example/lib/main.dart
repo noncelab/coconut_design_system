@@ -7,6 +7,7 @@ import 'package:example/screens/home.dart';
 import 'package:example/screens/icon.dart';
 import 'package:example/screens/layout.dart';
 import 'package:example/screens/radius.dart';
+import 'package:example/screens/segmented_control.dart';
 import 'package:example/screens/typography.dart';
 import 'package:example/screens/underlined_button.dart';
 import 'package:flutter/material.dart';
@@ -91,6 +92,11 @@ final GoRouter _router = GoRouter(
       name: 'appbar',
       path: '/appbar',
       builder: (context, state) => const AppbarScreen(),
+    ),
+    GoRoute(
+      name: 'segmented control',
+      path: '/segmented_control',
+      builder: (context, state) => const SegmentedConrolScreen(),
     ),
   ],
 );

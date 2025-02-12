@@ -123,7 +123,7 @@ class AppbarScreen extends StatelessWidget {
       padding: const EdgeInsets.all(Sizes.size16),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(
-          CoconutStyles.radius_200.toDouble(),
+          CoconutStyles.radius_200,
         ),
         color: CoconutColors.onPrimary(brightness).withOpacity(0.2),
       ),
