@@ -16,6 +16,7 @@ export 'src/components/inputs/stepper.dart';
 export 'src/components/inputs/switch.dart';
 export 'src/components/inputs/tag_chip.dart';
 export 'src/components/inputs/textfield.dart';
+export 'src/components/segmented_control.dart';
 
 // 📌 Theme & Styling
 export 'src/theme/typography.dart';

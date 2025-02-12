@@ -11,7 +11,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     final themeProvider = Provider.of<ThemeProvider>(context);
     final isDarkMode = themeProvider.themeMode == ThemeMode.dark;
     final routeName = GoRouterState.of(context).uri.path.substring(1);
-    final title = routeName.isEmpty ? 'Home' : routeName;
+    final title = routeName.isEmpty ? 'Home' : routeName.replaceAll('_', ' ');
 
     return AppBar(
       title: Text(title),
