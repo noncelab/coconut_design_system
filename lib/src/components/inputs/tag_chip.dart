@@ -10,6 +10,7 @@ class CoconutTagChip extends StatelessWidget {
   final bool isRectangle;
   final EdgeInsets padding;
   final double borderWidth;
+  final Function(String)? onTap;
 
   const CoconutTagChip({
     super.key,
@@ -20,29 +21,37 @@ class CoconutTagChip extends StatelessWidget {
     this.isRectangle = false,
     this.padding = const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
     this.borderWidth = 1.0,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: padding,
-      decoration: BoxDecoration(
-        color: color
-            .withOpacity(status == CoconutChipStatus.selected ? 0.3 : 0.18),
-        borderRadius: BorderRadius.circular(
-          isRectangle ? CoconutStyles.radius_50 : CoconutStyles.radius_500,
-        ),
-        border: Border.all(
-            color: color
-                .withOpacity(status == CoconutChipStatus.unselected ? 0.15 : 1),
-            width: borderWidth),
-      ),
-      child: Text(
-        '#$tag',
-        style: textStyle.copyWith(
+    return GestureDetector(
+      onTap: onTap != null
+          ? () {
+              onTap?.call(tag);
+            }
+          : null,
+      child: Container(
+        padding: padding,
+        decoration: BoxDecoration(
           color: color
-              .withOpacity(status == CoconutChipStatus.unselected ? 0.18 : 1),
-          //fontWeight: status == CoconutChipStatus.selected ? FontWeight.w700 : null,
+              .withOpacity(status == CoconutChipStatus.selected ? 0.3 : 0.18),
+          borderRadius: BorderRadius.circular(
+            isRectangle ? CoconutStyles.radius_50 : CoconutStyles.radius_500,
+          ),
+          border: Border.all(
+              color: color.withOpacity(
+                  status == CoconutChipStatus.unselected ? 0.15 : 1),
+              width: borderWidth),
+        ),
+        child: Text(
+          '#$tag',
+          style: textStyle.copyWith(
+            color: color
+                .withOpacity(status == CoconutChipStatus.unselected ? 0.18 : 1),
+            //fontWeight: status == CoconutChipStatus.selected ? FontWeight.w700 : null,
+          ),
         ),
       ),
     );
