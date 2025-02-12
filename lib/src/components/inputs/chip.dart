@@ -9,6 +9,7 @@ class CoconutChip extends StatelessWidget {
   final EdgeInsets padding;
   final double borderWidth;
   final Color? borderColor;
+  final Function? onTap;
 
   const CoconutChip({
     super.key,
@@ -18,19 +19,27 @@ class CoconutChip extends StatelessWidget {
     this.padding = const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
     this.borderWidth = 1.0,
     this.borderColor,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        padding: padding,
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(
-            isRectangle ? CoconutStyles.radius_50 : CoconutStyles.radius_500,
+    return GestureDetector(
+      onTap: onTap != null
+          ? () {
+              onTap?.call();
+            }
+          : null,
+      child: Container(
+          padding: padding,
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius: BorderRadius.circular(
+              isRectangle ? CoconutStyles.radius_50 : CoconutStyles.radius_500,
+            ),
+            border: Border.all(color: borderColor ?? color, width: borderWidth),
           ),
-          border: Border.all(color: borderColor ?? color, width: borderWidth),
-        ),
-        child: child);
+          child: child),
+    );
   }
 }

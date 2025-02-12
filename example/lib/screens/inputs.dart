@@ -2,6 +2,7 @@ import 'package:coconut_design_system/coconut_design_system.dart';
 import 'package:example/appbar.dart';
 import 'package:example/provider/theme_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 class InputsScreen extends StatefulWidget {
@@ -12,6 +13,26 @@ class InputsScreen extends StatefulWidget {
 }
 
 class _InputsScreenState extends State<InputsScreen> {
+  CoconutChipStatus chipStatus = CoconutChipStatus.unselected;
+
+  bool isCheckbox1Selected = false;
+  bool isCheckbox2Selected = false;
+  bool isSwitch1On = false;
+  bool isSwitch2On = false;
+  bool isPulldownOpen = false;
+
+  final focusNode1 = FocusNode();
+  final controller1 = TextEditingController();
+  String controller1Text = '';
+  bool isVisibleErrorText = false;
+  int maxLength = 10;
+  final focusNode2 = FocusNode();
+  final controller2 = TextEditingController();
+  final focusNode3 = FocusNode();
+  final controller3 = TextEditingController();
+  String controller3Text = '';
+  bool obscureText = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,8 +44,7 @@ class _InputsScreenState extends State<InputsScreen> {
             final brightness = isDarkMode ? Brightness.dark : Brightness.light;
 
             return Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: CoconutLayout.defaultPadding),
+              padding: const EdgeInsets.all(CoconutLayout.defaultPadding),
               child: Center(
                 child: Column(
                   children: [
@@ -49,25 +69,7 @@ class _InputsScreenState extends State<InputsScreen> {
                           child: Text(
                             'TEXT',
                             style: CoconutTypography.caption_10_Bold.copyWith(
-                              color: CoconutColors.onAccent(brightness),
-                            ),
-                          ),
-                        ),
-                        CoconutChip(
-                          color: CoconutColors.onGray150(brightness),
-                          child: Text(
-                            'TEXT',
-                            style: CoconutTypography.caption_10_Bold.copyWith(
                               color: CoconutColors.onBlack(brightness),
-                            ),
-                          ),
-                        ),
-                        CoconutChip(
-                          color: CoconutColors.onBlack(brightness),
-                          child: Text(
-                            'TEXT',
-                            style: CoconutTypography.caption_10_Bold.copyWith(
-                              color: CoconutColors.onWhite(brightness),
                             ),
                           ),
                         ),
@@ -75,7 +77,7 @@ class _InputsScreenState extends State<InputsScreen> {
                           color: Colors.transparent,
                           borderColor: CoconutColors.onBlack(brightness),
                           child: Text(
-                            'TEXT',
+                            'TEXT3',
                             style: CoconutTypography.caption_10_Bold.copyWith(
                               color: CoconutColors.onBlack(brightness),
                             ),
@@ -123,17 +125,20 @@ class _InputsScreenState extends State<InputsScreen> {
                               ),
                             ],
                           ),
+                          onTap: () {
+                            showSnackBar(context, '2024.11.08 | 18:50');
+                          },
                         ),
                       ],
                     ),
                     _titleBox('Tag Chip', brightness),
-                    const Wrap(
+                    Wrap(
                       spacing: 10,
                       runAlignment: WrapAlignment.center,
                       runSpacing: 10,
                       crossAxisAlignment: WrapCrossAlignment.center,
                       children: [
-                        CoconutTagChip(
+                        const CoconutTagChip(
                           tag: 'TEXT',
                           color: CoconutColors.red,
                           isRectangle: true,
@@ -141,31 +146,184 @@ class _InputsScreenState extends State<InputsScreen> {
                         CoconutTagChip(
                           tag: 'TEXT',
                           color: CoconutColors.red,
-                          isRectangle: true,
-                          status: CoconutChipStatus.unselected,
-                        ),
-                        CoconutTagChip(
-                          tag: 'TEXT',
-                          color: CoconutColors.red,
-                          isRectangle: true,
-                          status: CoconutChipStatus.selected,
-                        ),
-                        CoconutTagChip(
-                          tag: 'Coconut',
-                          color: CoconutColors.sky,
-                        ),
-                        CoconutTagChip(
-                          tag: 'Coconut',
-                          color: CoconutColors.sky,
-                          status: CoconutChipStatus.unselected,
-                        ),
-                        CoconutTagChip(
-                          color: CoconutColors.sky,
-                          tag: 'Coconut',
-                          status: CoconutChipStatus.selected,
+                          status: chipStatus,
+                          onTap: (value) {
+                            if (chipStatus == CoconutChipStatus.unselected) {
+                              chipStatus = CoconutChipStatus.selected;
+                            } else {
+                              chipStatus = CoconutChipStatus.unselected;
+                            }
+                            setState(() {});
+                          },
                         ),
                       ],
                     ),
+                    _titleBox('Checkbox', brightness),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CoconutCheckbox(
+                          isSelected: isCheckbox1Selected,
+                          brightness: brightness,
+                          onChanged: (value) {
+                            isCheckbox1Selected = value;
+                            setState(() {});
+                          },
+                        ),
+                        const SizedBox(width: 10),
+                        CoconutCheckbox(
+                          isSelected: isCheckbox2Selected,
+                          brightness: brightness,
+                          color: CoconutColors.primary,
+                          onChanged: (value) {
+                            isCheckbox2Selected = value;
+                            setState(() {});
+                          },
+                        ),
+                      ],
+                    ),
+                    _titleBox('Switch', brightness),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CoconutSwitch(
+                          isOn: isSwitch1On,
+                          brightness: brightness,
+                          onChanged: (value) {
+                            isSwitch1On = value;
+                            setState(() {});
+                          },
+                        ),
+                        const SizedBox(width: 10),
+                        CoconutSwitch(
+                          isOn: isSwitch2On,
+                          brightness: brightness,
+                          activeColor: CoconutColors.primary,
+                          thumbColor: CoconutColors.white,
+                          onChanged: (value) {
+                            isSwitch2On = value;
+                            setState(() {});
+                          },
+                        ),
+                      ],
+                    ),
+                    _titleBox('Stepper', brightness),
+                    CoconutStepper(
+                      maxCount: 3,
+                      brightness: brightness,
+                      onCount: (count) {},
+                    ),
+                    _titleBox('Pulldown', brightness),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CoconutPulldown(
+                          title: 'TEXT',
+                          brightness: brightness,
+                          isOpen: isPulldownOpen,
+                          onChanged: (value) {
+                            isPulldownOpen = value;
+                            setState(() {});
+                          },
+                        ),
+                      ],
+                    ),
+                    _titleBox('Textfield', brightness),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        CoconutTextField(
+                          controller: controller1,
+                          focusNode: focusNode1,
+                          brightness: brightness,
+                          descriptionText: 'Description text',
+                          placeholderText: 'Placeholder text',
+                          errorText: 'Error text',
+                          isVisibleErrorText: isVisibleErrorText,
+                          maxLength: maxLength,
+                          prefix: Container(
+                            margin: const EdgeInsets.only(left: 16),
+                            child: Text(
+                              '#',
+                              style: CoconutTypography.body2_14.copyWith(
+                                color: controller1Text.isEmpty
+                                    ? CoconutColors.onGray300(brightness)
+                                    : CoconutColors.onBlack(brightness),
+                              ),
+                            ),
+                          ),
+                          suffix: GestureDetector(
+                            onTap: () {
+                              controller1.text = '';
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.only(right: 13),
+                              child: SvgPicture.asset(
+                                'assets/svg/textfield_clear.svg',
+                                width: 16,
+                                height: 16,
+                                colorFilter: ColorFilter.mode(
+                                  controller1Text.isEmpty
+                                      ? CoconutColors.onGray300(brightness)
+                                      : controller1Text.runes.length == 10
+                                          ? CoconutColors.red
+                                          : CoconutColors.onBlack(brightness),
+                                  BlendMode.srcIn,
+                                ),
+                              ),
+                            ),
+                          ),
+                          onChanged: (text) {
+                            controller1Text = text;
+                            isVisibleErrorText = text.runes.length == maxLength;
+                            setState(() {});
+                          },
+                        ),
+                        const SizedBox(height: 10),
+                        CoconutTextField(
+                          controller: controller2,
+                          focusNode: focusNode2,
+                          brightness: brightness,
+                          maxLines: 5,
+                          descriptionText: 'Description text',
+                          placeholderText: 'Placeholder text',
+                          onChanged: (text) {},
+                        ),
+                        const SizedBox(height: 10),
+                        CoconutTextField(
+                          controller: controller3,
+                          focusNode: focusNode3,
+                          brightness: brightness,
+                          placeholderText: 'Placeholder text',
+                          maxLength: 16,
+                          obscureText: obscureText,
+                          suffix: GestureDetector(
+                            onTap: () {
+                              obscureText = !obscureText;
+                              setState(() {});
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.only(right: 13),
+                              child: SvgPicture.asset(
+                                'assets/svg/textfield_view.svg',
+                                width: 16,
+                                height: 16,
+                                colorFilter: ColorFilter.mode(
+                                  controller3Text.isEmpty
+                                      ? CoconutColors.onGray300(brightness)
+                                      : CoconutColors.onBlack(brightness),
+                                  BlendMode.srcIn,
+                                ),
+                              ),
+                            ),
+                          ),
+                          onChanged: (text) {
+                            controller3Text = text;
+                            setState(() {});
+                          },
+                        ),
+                      ],
+                    )
                   ],
                 ),
               ),
@@ -189,6 +347,17 @@ class _InputsScreenState extends State<InputsScreen> {
         ),
         CoconutLayout.spacing_300h,
       ],
+    );
+  }
+
+  void showSnackBar(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: const Duration(seconds: 2),
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: Colors.black54,
+      ),
     );
   }
 }
