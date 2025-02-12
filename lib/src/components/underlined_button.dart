@@ -140,6 +140,5 @@ class _CoconutUnderlinedButtonState extends State<CoconutUnderlinedButton> {
   void initState() {
     super.initState();
     _isPressing = false;
-    debugPrint('widget:: ${widget.textStyle}');
   }
 }

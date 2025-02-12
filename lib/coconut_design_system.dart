@@ -6,6 +6,8 @@
 export 'src/components/button.dart';
 export 'src/components/icon.dart';
 export 'src/components/underlined_button.dart';
+export 'src/components/appbar.dart';
+export 'src/components/appbar_button.dart';
 
 // 📌 Theme & Styling
 export 'src/theme/typography.dart';
