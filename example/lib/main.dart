@@ -1,4 +1,6 @@
 import 'package:coconut_design_system/coconut_design_system.dart';
+import 'package:example/provider/appbar_provider.dart';
+import 'package:example/screens/appbar.dart';
 import 'package:example/screens/button.dart';
 import 'package:example/screens/color.dart';
 import 'package:example/screens/home.dart';
@@ -14,8 +16,11 @@ import 'package:example/provider/theme_provider.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => ThemeProvider(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AppbarProvider()),
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
+      ],
       child: const MyApp(),
     ),
   );
@@ -82,5 +87,21 @@ final GoRouter _router = GoRouter(
       path: '/underlined_button',
       builder: (context, state) => const CoconutUnderlinedButtonScreen(),
     ),
+    GoRoute(
+      name: 'appbar',
+      path: '/appbar',
+      builder: (context, state) => const AppbarScreen(),
+    ),
   ],
 );
+
+void showSnackBar(BuildContext context, String message, Brightness brightness) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Text(message),
+      duration: const Duration(seconds: 2),
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: CoconutColors.onPrimary(brightness),
+    ),
+  );
+}

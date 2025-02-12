@@ -1,4 +1,5 @@
 import 'package:example/appbar.dart';
+import 'package:example/main.dart';
 import 'package:example/provider/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:coconut_design_system/coconut_design_system.dart';
@@ -31,8 +32,8 @@ class CoconutUnderlinedButtonScreen extends StatelessWidget {
                     brightness: brightness,
                     isActive: false,
                     text: 'UnderlinedButton',
-                    onTap: () =>
-                        showSnackBar(context, 'Underlined Button Clicked!'),
+                    onTap: () => showSnackBar(
+                        context, 'Underlined Button Clicked!', brightness),
                   ),
                   CoconutLayout.spacing_300h,
                   const Text(
@@ -42,8 +43,8 @@ class CoconutUnderlinedButtonScreen extends StatelessWidget {
                   CoconutUnderlinedButton(
                     brightness: brightness,
                     text: 'UnderlinedButton',
-                    onTap: () =>
-                        showSnackBar(context, 'Underlined Button Clicked!'),
+                    onTap: () => showSnackBar(
+                        context, 'Underlined Button Clicked!', brightness),
                   ),
                   CoconutLayout.spacing_300h,
                   const Text(
@@ -55,8 +56,8 @@ class CoconutUnderlinedButtonScreen extends StatelessWidget {
                     defaultColor: CoconutColors.red,
                     text: 'UnderlinedButton',
                     lineWidth: 2,
-                    onTap: () =>
-                        showSnackBar(context, 'Underlined Button Clicked!'),
+                    onTap: () => showSnackBar(
+                        context, 'Underlined Button Clicked!', brightness),
                   ),
                   CoconutLayout.spacing_300h,
                   const Text(
@@ -67,25 +68,14 @@ class CoconutUnderlinedButtonScreen extends StatelessWidget {
                     brightness: brightness,
                     textStyle: CoconutTypography.heading1_32_Bold,
                     text: 'UnderlinedButton',
-                    onTap: () =>
-                        showSnackBar(context, 'Underlined Button Clicked!'),
+                    onTap: () => showSnackBar(
+                        context, 'Underlined Button Clicked!', brightness),
                   ),
                 ],
               ),
             );
           },
         ),
-      ),
-    );
-  }
-
-  void showSnackBar(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        duration: const Duration(seconds: 2),
-        behavior: SnackBarBehavior.floating,
-        backgroundColor: Colors.black54,
       ),
     );
   }
