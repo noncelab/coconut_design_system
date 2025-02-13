@@ -11,7 +11,7 @@ class CoconutPulldownMenu extends StatelessWidget {
   final double iconSize;
   final bool isVisibleCheck;
   final int? dividerIndex;
-  final Color? fontColor;
+  final Color? textColor;
   final Color? backgroundColor;
   final Color? dividerColor;
   final Color? dividerPointColor;
@@ -27,7 +27,7 @@ class CoconutPulldownMenu extends StatelessWidget {
     this.iconSize = 24,
     this.isVisibleCheck = true,
     this.dividerIndex,
-    this.fontColor,
+    this.textColor,
     this.backgroundColor,
     this.dividerColor,
     this.dividerPointColor,
@@ -101,7 +101,7 @@ class CoconutPulldownMenu extends StatelessWidget {
                   Text(
                     title,
                     style: CoconutTypography.body2_14.copyWith(
-                      color: fontColor ?? CoconutColors.onBlack(brightness),
+                      color: textColor ?? CoconutColors.onBlack(brightness),
                     ),
                   ),
                   const Spacer(),
