@@ -18,6 +18,7 @@ export 'src/components/inputs/textfield.dart';
 export 'src/components/segmented_control.dart';
 export 'src/components/overlays/bottom_sheet.dart';
 export 'src/components/overlays/popup.dart';
+export 'src/components/overlays/pulldown_menu.dart';
 
 // 📌 Theme & Styling
 export 'src/theme/typography.dart';

@@ -29,6 +29,7 @@ flutter:
     - assets/svg/close.svg
     - assets/svg/checkbox.svg
     - assets/svg/checkbox_selected.svg
+    - assets/svg/pulldown_check.svg
     - assets/svg/pulldown_close.svg
     - assets/svg/pulldown_open.svg
     - assets/svg/stepper_minus.svg

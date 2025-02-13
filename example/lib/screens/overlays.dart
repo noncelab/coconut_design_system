@@ -12,6 +12,26 @@ class OverlaysScreen extends StatefulWidget {
 }
 
 class _OverlaysScreenState extends State<OverlaysScreen> {
+  List<String> pulldownButtons = [
+    'Pulldown1',
+    'Pulldown2',
+    'Pulldown3',
+    'Pulldown4',
+    'Pulldown5'
+  ];
+  int selectedPulldownIndex = 0;
+  bool isPulldownOpen = false;
+
+  List<String> pulldownButtons2 = [
+    'Pulldown1',
+    'Pulldown2',
+    'Pulldown3',
+    'Pulldown4',
+    'Pulldown5'
+  ];
+  int selectedPulldownIndex2 = 0;
+  bool isPulldownOpen2 = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -144,7 +164,7 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
                         );
                       },
                     ),
-                    CoconutLayout.spacing_300h,
+                    CoconutLayout.spacing_600h,
                     _titleBox('Popup', brightness),
                     CoconutUnderlinedButton(
                       brightness: brightness,
@@ -191,6 +211,65 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
                         );
                       },
                     ),
+                    CoconutLayout.spacing_600h,
+                    _titleBox('Pulldown Menu', brightness),
+                    CoconutPulldown(
+                      title: pulldownButtons[selectedPulldownIndex],
+                      brightness: brightness,
+                      isOpen: isPulldownOpen,
+                      onChanged: (value) {
+                        isPulldownOpen = value;
+                        isPulldownOpen2 = false;
+                        setState(() {});
+                      },
+                    ),
+                    Visibility(
+                      visible: isPulldownOpen,
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(vertical: 12),
+                        child: CoconutPulldownMenu(
+                          brightness: brightness,
+                          buttons: pulldownButtons,
+                          selectedIndex: selectedPulldownIndex,
+                          onTap: (index) {
+                            selectedPulldownIndex = index;
+                            isPulldownOpen = false;
+                            isPulldownOpen2 = false;
+                            setState(() {});
+                          },
+                        ),
+                      ),
+                    ),
+                    CoconutPulldown(
+                      title: pulldownButtons2[selectedPulldownIndex2],
+                      brightness: brightness,
+                      isOpen: isPulldownOpen2,
+                      onChanged: (value) {
+                        isPulldownOpen = false;
+                        isPulldownOpen2 = value;
+                        setState(() {});
+                      },
+                    ),
+                    Visibility(
+                      visible: isPulldownOpen2,
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(vertical: 12),
+                        child: CoconutPulldownMenu(
+                          brightness: brightness,
+                          buttons: pulldownButtons2,
+                          selectedIndex: selectedPulldownIndex2,
+                          isVisibleCheck: false,
+                          dividerIndex: 3,
+                          onTap: (index) {
+                            selectedPulldownIndex2 = index;
+                            isPulldownOpen = false;
+                            isPulldownOpen2 = false;
+                            setState(() {});
+                          },
+                        ),
+                      ),
+                    ),
+                    CoconutLayout.spacing_600h,
                   ],
                 ),
               ),
@@ -205,7 +284,6 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        CoconutLayout.spacing_300h,
         Text(
           title,
           style: CoconutTypography.body1_16_Bold.setColor(

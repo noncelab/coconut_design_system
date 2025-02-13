@@ -133,6 +133,7 @@ class _InputsScreenState extends State<InputsScreen> {
                         ),
                       ],
                     ),
+                    CoconutLayout.spacing_600h,
                     _titleBox('Tag Chip', brightness),
                     Wrap(
                       spacing: 10,
@@ -160,6 +161,7 @@ class _InputsScreenState extends State<InputsScreen> {
                         ),
                       ],
                     ),
+                    CoconutLayout.spacing_600h,
                     _titleBox('Checkbox', brightness),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -184,6 +186,7 @@ class _InputsScreenState extends State<InputsScreen> {
                         ),
                       ],
                     ),
+                    CoconutLayout.spacing_600h,
                     _titleBox('Switch', brightness),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -209,27 +212,25 @@ class _InputsScreenState extends State<InputsScreen> {
                         ),
                       ],
                     ),
+                    CoconutLayout.spacing_600h,
                     _titleBox('Stepper', brightness),
                     CoconutStepper(
                       maxCount: 3,
                       brightness: brightness,
                       onCount: (count) {},
                     ),
+                    CoconutLayout.spacing_600h,
                     _titleBox('Pulldown', brightness),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        CoconutPulldown(
-                          title: 'TEXT',
-                          brightness: brightness,
-                          isOpen: isPulldownOpen,
-                          onChanged: (value) {
-                            isPulldownOpen = value;
-                            setState(() {});
-                          },
-                        ),
-                      ],
+                    CoconutPulldown(
+                      title: 'TEXT',
+                      brightness: brightness,
+                      isOpen: isPulldownOpen,
+                      onChanged: (value) {
+                        isPulldownOpen = value;
+                        setState(() {});
+                      },
                     ),
+                    CoconutLayout.spacing_600h,
                     _titleBox('Textfield', brightness),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -325,7 +326,7 @@ class _InputsScreenState extends State<InputsScreen> {
                           },
                         ),
                       ],
-                    )
+                    ),
                   ],
                 ),
               ),
