@@ -17,6 +17,7 @@ export 'src/components/inputs/switch.dart';
 export 'src/components/inputs/textfield.dart';
 export 'src/components/segmented_control.dart';
 export 'src/components/overlays/bottom_sheet.dart';
+export 'src/components/overlays/popup.dart';
 
 // 📌 Theme & Styling
 export 'src/theme/typography.dart';

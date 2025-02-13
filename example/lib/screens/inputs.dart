@@ -1,5 +1,6 @@
 import 'package:coconut_design_system/coconut_design_system.dart';
 import 'package:example/appbar.dart';
+import 'package:example/main.dart';
 import 'package:example/provider/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -126,7 +127,8 @@ class _InputsScreenState extends State<InputsScreen> {
                             ],
                           ),
                           onTap: () {
-                            showSnackBar(context, '2024.11.08 | 18:50');
+                            showSnackBar(
+                                context, '2024.11.08 | 18:50', brightness);
                           },
                         ),
                       ],
@@ -338,7 +340,6 @@ class _InputsScreenState extends State<InputsScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        CoconutLayout.spacing_1000h,
         Text(
           title,
           style: CoconutTypography.body1_16_Bold.setColor(
@@ -347,17 +348,6 @@ class _InputsScreenState extends State<InputsScreen> {
         ),
         CoconutLayout.spacing_300h,
       ],
-    );
-  }
-
-  void showSnackBar(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        duration: const Duration(seconds: 2),
-        behavior: SnackBarBehavior.floating,
-        backgroundColor: Colors.black54,
-      ),
     );
   }
 }

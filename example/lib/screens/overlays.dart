@@ -27,44 +27,46 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
               child: Center(
                 child: Column(
                   children: [
-                    CoconutUnderlinedButton(
-                        brightness: brightness,
-                        text: 'CoconutBottomSheet minimum',
-                        onTap: () {
-                          showModalBottomSheet(
-                            context: context,
-                            isScrollControlled: true,
-                            builder: (context) => CoconutBottomSheet(
-                              brightness: brightness,
-                              appBar: CoconutAppBar.build(
-                                title: 'Minimum',
-                                context: context,
-                                brightness: brightness,
-                                hasRightIcon: false,
-                                isBottom: true,
-                              ),
-                              body: Column(
-                                children: [
-                                  Container(
-                                    height: 20,
-                                    color: CoconutColors.red,
-                                  ),
-                                  Container(
-                                    height: 20,
-                                    color: CoconutColors.yellow,
-                                  ),
-                                  Container(
-                                    height: 20,
-                                    color: CoconutColors.green,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        }),
+                    _titleBox('BottomSheet', brightness),
                     CoconutUnderlinedButton(
                       brightness: brightness,
-                      text: 'CoconutBottomSheet maximum',
+                      text: 'Minimum',
+                      onTap: () {
+                        showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          builder: (context) => CoconutBottomSheet(
+                            brightness: brightness,
+                            appBar: CoconutAppBar.build(
+                              title: 'Minimum',
+                              context: context,
+                              brightness: brightness,
+                              hasRightIcon: false,
+                              isBottom: true,
+                            ),
+                            body: Column(
+                              children: [
+                                Container(
+                                  height: 20,
+                                  color: CoconutColors.red,
+                                ),
+                                Container(
+                                  height: 20,
+                                  color: CoconutColors.yellow,
+                                ),
+                                Container(
+                                  height: 20,
+                                  color: CoconutColors.green,
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                    CoconutUnderlinedButton(
+                      brightness: brightness,
+                      text: 'Maximum',
                       onTap: () {
                         showModalBottomSheet(
                           context: context,
@@ -104,7 +106,7 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
                     ),
                     CoconutUnderlinedButton(
                       brightness: brightness,
-                      text: 'CoconutBottomSheet fixed',
+                      text: 'Fixed',
                       onTap: () {
                         showModalBottomSheet(
                           context: context,
@@ -142,6 +144,53 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
                         );
                       },
                     ),
+                    CoconutLayout.spacing_300h,
+                    _titleBox('Popup', brightness),
+                    CoconutUnderlinedButton(
+                      brightness: brightness,
+                      text: 'Default',
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return CoconutPopup(
+                              brightness: brightness,
+                              title: 'Title',
+                              description: 'description',
+                              onTapRight: () {
+                                Navigator.pop(context);
+                              },
+                            );
+                          },
+                        );
+                      },
+                    ),
+                    CoconutUnderlinedButton(
+                      brightness: brightness,
+                      text: 'Primary',
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return CoconutPopup(
+                              brightness: brightness,
+                              title: 'Title',
+                              description: 'description',
+                              rightButtonColor:
+                                  CoconutColors.onAccent(brightness),
+                              rightButtonText: '완료',
+                              leftButtonText: '닫기',
+                              onTapLeft: () {
+                                Navigator.pop(context);
+                              },
+                              onTapRight: () {
+                                Navigator.pop(context);
+                              },
+                            );
+                          },
+                        );
+                      },
+                    ),
                   ],
                 ),
               ),
@@ -149,6 +198,22 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
           },
         ),
       ),
+    );
+  }
+
+  Widget _titleBox(String title, Brightness brightness) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        CoconutLayout.spacing_300h,
+        Text(
+          title,
+          style: CoconutTypography.body1_16_Bold.setColor(
+            CoconutColors.onPrimary(brightness),
+          ),
+        ),
+        CoconutLayout.spacing_300h,
+      ],
     );
   }
 }
