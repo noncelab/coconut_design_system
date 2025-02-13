@@ -257,6 +257,7 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
                           title: pulldownButtons[selectedPulldownIndex],
                           brightness: brightness,
                           isOpen: isPulldownOpen,
+                          fontSize: 12,
                           onChanged: (value) {
                             isPulldownOpen = value;
                             isPulldownOpen2 = false;

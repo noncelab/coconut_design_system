@@ -10,6 +10,7 @@ class CoconutPulldown extends StatelessWidget {
   final double iconSize;
   final Color? iconColor;
   final Color? textColor;
+  final double? fontSize;
   const CoconutPulldown({
     super.key,
     required this.title,
@@ -19,6 +20,7 @@ class CoconutPulldown extends StatelessWidget {
     this.iconSize = 24,
     this.iconColor,
     this.textColor,
+    this.fontSize,
   });
 
   @override
@@ -36,6 +38,7 @@ class CoconutPulldown extends StatelessWidget {
             child: Text(
               title,
               style: CoconutTypography.caption_10.copyWith(
+                fontSize: fontSize,
                 color: textColor ?? CoconutColors.onBlack(brightness),
               ),
             ),
