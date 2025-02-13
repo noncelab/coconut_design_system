@@ -17,6 +17,7 @@ class CoconutPulldownMenu extends StatelessWidget {
   final Color? dividerPointColor;
   final Color? iconColor;
   final Color? splashColor;
+  final Color? shadowColor;
   const CoconutPulldownMenu({
     super.key,
     required this.brightness,
@@ -33,6 +34,7 @@ class CoconutPulldownMenu extends StatelessWidget {
     this.dividerPointColor,
     this.iconColor,
     this.splashColor,
+    this.shadowColor,
   });
 
   @override
@@ -43,9 +45,9 @@ class CoconutPulldownMenu extends StatelessWidget {
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-            color: CoconutColors.onGray300(brightness),
-            spreadRadius: 2,
-            blurRadius: 14,
+            color: shadowColor ?? CoconutColors.onGray300(brightness),
+            spreadRadius: 0.5,
+            blurRadius: 10,
             offset: Offset.zero,
           ),
         ],

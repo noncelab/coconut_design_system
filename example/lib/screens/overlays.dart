@@ -223,6 +223,30 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
                             );
                           },
                         ),
+                        CoconutUnderlinedButton(
+                          brightness: brightness,
+                          text: 'Long description',
+                          textStyle: CoconutTypography.caption_10,
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return CoconutPopup(
+                                  brightness: brightness,
+                                  title: 'Title',
+                                  description:
+                                      'Long description description description description description description description description description description description description description description description description description description',
+                                  onTapLeft: () {
+                                    Navigator.pop(context);
+                                  },
+                                  onTapRight: () {
+                                    Navigator.pop(context);
+                                  },
+                                );
+                              },
+                            );
+                          },
+                        ),
                       ],
                     ),
                     _box(
