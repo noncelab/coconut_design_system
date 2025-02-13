@@ -5,6 +5,7 @@ import 'package:example/screens/button.dart';
 import 'package:example/screens/color.dart';
 import 'package:example/screens/home.dart';
 import 'package:example/screens/icon.dart';
+import 'package:example/screens/indicator.dart';
 import 'package:example/screens/inputs.dart';
 import 'package:example/screens/layout.dart';
 import 'package:example/screens/radius.dart';
@@ -103,6 +104,11 @@ final GoRouter _router = GoRouter(
       name: 'segmented control',
       path: '/segmented_control',
       builder: (context, state) => const SegmentedConrolScreen(),
+    ),
+    GoRoute(
+      name: 'indicator',
+      path: '/indicator',
+      builder: (context, state) => const IndicatorScreen(),
     ),
   ],
 );
