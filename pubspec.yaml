@@ -12,6 +12,7 @@ dependencies:
     sdk: flutter
   provider: ^6.1.2
   flutter_svg: ^2.0.10+1
+  lottie: ^3.1.2
 
 dev_dependencies:
   flutter_test:
@@ -33,6 +34,8 @@ flutter:
     - assets/svg/pulldown_open.svg
     - assets/svg/stepper_minus.svg
     - assets/svg/stepper_plus.svg
+    - assets/lottie/loading_dark.json
+    - assets/lottie/loading_light.json
 
   fonts:
     - family: SpaceGrotesk
