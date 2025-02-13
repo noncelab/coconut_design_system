@@ -1,5 +1,6 @@
 import 'package:coconut_design_system/coconut_design_system.dart';
 import 'package:example/appbar.dart';
+import 'package:example/main.dart';
 import 'package:example/provider/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -126,11 +127,13 @@ class _InputsScreenState extends State<InputsScreen> {
                             ],
                           ),
                           onTap: () {
-                            showSnackBar(context, '2024.11.08 | 18:50');
+                            showSnackBar(
+                                context, '2024.11.08 | 18:50', brightness);
                           },
                         ),
                       ],
                     ),
+                    CoconutLayout.spacing_600h,
                     _titleBox('Tag Chip', brightness),
                     Wrap(
                       spacing: 10,
@@ -158,6 +161,7 @@ class _InputsScreenState extends State<InputsScreen> {
                         ),
                       ],
                     ),
+                    CoconutLayout.spacing_600h,
                     _titleBox('Checkbox', brightness),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -182,6 +186,7 @@ class _InputsScreenState extends State<InputsScreen> {
                         ),
                       ],
                     ),
+                    CoconutLayout.spacing_600h,
                     _titleBox('Switch', brightness),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -207,27 +212,25 @@ class _InputsScreenState extends State<InputsScreen> {
                         ),
                       ],
                     ),
+                    CoconutLayout.spacing_600h,
                     _titleBox('Stepper', brightness),
                     CoconutStepper(
                       maxCount: 3,
                       brightness: brightness,
                       onCount: (count) {},
                     ),
+                    CoconutLayout.spacing_600h,
                     _titleBox('Pulldown', brightness),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        CoconutPulldown(
-                          title: 'TEXT',
-                          brightness: brightness,
-                          isOpen: isPulldownOpen,
-                          onChanged: (value) {
-                            isPulldownOpen = value;
-                            setState(() {});
-                          },
-                        ),
-                      ],
+                    CoconutPulldown(
+                      title: 'TEXT',
+                      brightness: brightness,
+                      isOpen: isPulldownOpen,
+                      onChanged: (value) {
+                        isPulldownOpen = value;
+                        setState(() {});
+                      },
                     ),
+                    CoconutLayout.spacing_600h,
                     _titleBox('Textfield', brightness),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -323,7 +326,7 @@ class _InputsScreenState extends State<InputsScreen> {
                           },
                         ),
                       ],
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -338,7 +341,6 @@ class _InputsScreenState extends State<InputsScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        CoconutLayout.spacing_1000h,
         Text(
           title,
           style: CoconutTypography.body1_16_Bold.setColor(
@@ -347,17 +349,6 @@ class _InputsScreenState extends State<InputsScreen> {
         ),
         CoconutLayout.spacing_300h,
       ],
-    );
-  }
-
-  void showSnackBar(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        duration: const Duration(seconds: 2),
-        behavior: SnackBarBehavior.floating,
-        backgroundColor: Colors.black54,
-      ),
     );
   }
 }

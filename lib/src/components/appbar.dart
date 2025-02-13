@@ -133,7 +133,7 @@ class CoconutAppBar {
           for (Widget action in actionButtonList) ...[action],
         CoconutLayout.spacing_300w
       ],
-      flexibleSpace: backgroundColor == null
+      flexibleSpace: !isBottom && backgroundColor == null
           ? ClipRect(
               child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
@@ -300,14 +300,16 @@ class CoconutAppBar {
           ),
         ),
       ],
-      flexibleSpace: ClipRect(
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
-          child: Container(
-            color: Colors.transparent,
-          ),
-        ),
-      ),
+      flexibleSpace: !isBottom
+          ? ClipRect(
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
+                child: Container(
+                  color: Colors.transparent,
+                ),
+              ),
+            )
+          : null,
     );
   }
 }

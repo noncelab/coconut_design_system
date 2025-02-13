@@ -78,6 +78,7 @@ class CoconutPulldown extends StatelessWidget {
         onChanged(!isOpen);
       },
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Container(
             margin: const EdgeInsets.only(left: 8),
