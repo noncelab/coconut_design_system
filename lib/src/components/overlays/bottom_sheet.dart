@@ -33,6 +33,9 @@ class CoconutBottomSheet extends StatelessWidget {
   /// The main body content of the bottom sheet.
   final Widget body;
 
+  /// The margin at the bottom of the bottom sheet,
+  final double bottomMargin;
+
   /// An optional fixed height for the body content.
   ///
   /// If `bodyHeight` is provided, the body is wrapped inside a `SizedBox`
@@ -48,6 +51,7 @@ class CoconutBottomSheet extends StatelessWidget {
     required this.brightness,
     required this.appBar,
     required this.body,
+    this.bottomMargin = 54,
     this.bodyHeight,
     this.backgroundColor,
   });
@@ -57,7 +61,7 @@ class CoconutBottomSheet extends StatelessWidget {
     return LayoutBuilder(builder: (context, constraints) {
       // Define the maximum and minimum height of the bottom sheet based on screen size.
       double maxHeight = constraints.maxHeight * 0.9;
-      double minHeight = constraints.maxHeight * 0.3;
+      double minHeight = constraints.maxHeight * 0.1;
 
       return Container(
         decoration: BoxDecoration(
@@ -86,6 +90,7 @@ class CoconutBottomSheet extends StatelessWidget {
 
               /// Bottom spacing to prevent UI from touching the screen edge
               const SizedBox(height: 54),
+              SizedBox(height: bottomMargin),
             ],
           ),
         ),
