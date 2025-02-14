@@ -1,39 +1,129 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# 🥥 Coconut Design System
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages).
+The **Coconut Design System** is a modern, reusable UI component library for Flutter, developed by **Nonce Lab**. It provides a **consistent**, **customizable**, and **theme-aware** UI for building high-quality mobile applications.
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages).
--->
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+## 🚀 Features
+- **Reusable UI Components** – Buttons, Tooltips, Toasts, Bottom Sheets, etc.
+- **Theme-Aware** – Supports **light & dark mode**.
+- **Highly Customizable** – Easily change colors, fonts, sizes, etc.
+- **Performance Optimized** – Built with **Flutter best practices**.
+- **MIT Licensed** – Open-source, with Commons Clause.
 
-## Features
+---
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+## 📦 Installation
 
-## Getting started
+To use Coconut Design System in your Flutter project, add it as a dependency:
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
-
-```dart
-const like = 'sample';
+### 1️⃣ **Add the Package**
+```sh
+flutter pub add coconut_design_system
+```
+Or manually add it in your pubspec.yaml:
+```
+dependencies:
+  coconut_design_system: latest_version
 ```
 
-## Additional information
+### 2️⃣ Import the Library
+```
+import 'package:coconut_design_system/coconut_design_system.dart';
+```
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+---
+
+## 📚 Usage Guide
+
+### 🟢 Buttons
+```
+CoconutButton(
+  text: "Click Me",
+  brightness: Brightness.light,
+  onPressed: () {
+    print("Button Clicked!");
+  },
+);
+```
+### 🟡 Toast Messages
+```
+CoconutToast.showToast(
+  context: context,
+  brightness: Brightness.dark,
+  text: "This is a toast message!",
+);
+```
+### 🔵 Bottom Sheet
+```
+showModalBottomSheet(
+  context: context,
+  builder: (context) => CoconutBottomSheet(
+    brightness: Brightness.light,
+    appBar: AppBar(title: Text("Title")),
+    body: Text("This is a bottom sheet."),
+  ),
+);
+```
+---
+## 🎨 Theming & Customization
+
+The Coconut Design System supports light and dark mode, and allows you to customize:
+	•	Colors
+	•	Typography
+	•	Shapes & Borders
+	•	Icons & Sizes
+
+Example:
+```
+CoconutButton(
+  text: "Custom Button",
+  backgroundColor: Colors.purple,
+  textColor: Colors.white,
+);
+```
+---
+## 🛠 Available Components
+| Component                | Description                                      |
+|-------------------------|--------------------------------------------------|
+| ✅ **Buttons**          | Standard, Segmented, Underlined Buttons         |
+| 🔔 **Toasts**           | Top & Bottom Toast Notifications                 |
+| 📥 **Bottom Sheets**    | Modal & Fixed Bottom Sheets                      |
+| 📌 **Tooltips**         | Fixed & Floating Tooltips                        |
+| 📂 **Pulldowns**        | Custom Dropdown Menus                            |
+| 🔄 **Indicators**       | Circular & Progress Indicators                   |
+| 🔳 **Inputs**           | Checkbox, Chip, Pulldown, Stepper, Switch, TagChip, TextField |
+| 📏 **Overlays**         | Popup, Pulldown Menu, Toast, Bubble Clipper      |
+| 🎨 **Theme**            | Color Scheme, Typography, Data                   |
+| 📑 **App Bar**          | Customizable App Bar & Buttons                   |
+| 🖼 **Icons**            | Custom Icon Components                           |
+---
+## 📖 Documentation
+For full documentation, visit: **[Coconut Design System Docs](https://your-docs-url.com)**
+---
+## License
+This project is licensed under the **MIT License with Commons Clause**.
+
+**© 2025 Nonce Lab** – All rights reserved.
+---
+## 🤝 Contributing  
+
+We welcome contributions! If you’d like to improve the **Coconut Design System**, follow these steps:  
+
+1. **Fork the repository**  
+2. **Create a feature branch** (`git checkout -b new-feature`)  
+3. **Commit your changes** (`git commit -m "Add new feature"`)  
+4. **Push to the branch** (`git push origin new-feature`)  
+5. **Submit a Pull Request!** 🚀  
+
+---
+## 🛠 Support & Feedback  
+
+For **issues, feature requests, or feedback**, feel free to:  
+- Open an issue on **[GitHub](https://github.com/noncelab/coconut_design_system/issues)**  
+- Contact us at **hello@noncelab.com**  
+
+---
+
+## ⭐ Star & Follow  
+
+If you like this project, please **star** the repo and **follow** us for updates! 🚀✨  
