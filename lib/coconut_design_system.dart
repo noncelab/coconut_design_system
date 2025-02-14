@@ -20,6 +20,7 @@ export 'src/components/overlays/bottom_sheet.dart';
 export 'src/components/overlays/popup.dart';
 export 'src/components/overlays/pulldown_menu.dart';
 export 'src/components/overlays/tooltip.dart';
+export 'src/components/overlays/toast.dart';
 
 // 📌 Theme & Styling
 export 'src/theme/typography.dart';

@@ -5,34 +5,34 @@ import 'package:flutter_svg/flutter_svg.dart';
 class CoconutPulldownMenu extends StatelessWidget {
   final Brightness brightness;
   final List<String> buttons;
-  final int selectedIndex;
+  final int? selectedIndex;
   final Function(int) onTap;
   final EdgeInsets margin;
   final double iconSize;
-  final bool isVisibleCheck;
   final int? dividerIndex;
-  final Color? fontColor;
+  final Color? textColor;
   final Color? backgroundColor;
   final Color? dividerColor;
   final Color? dividerPointColor;
   final Color? iconColor;
   final Color? splashColor;
+  final Color? shadowColor;
   const CoconutPulldownMenu({
     super.key,
     required this.brightness,
     required this.buttons,
-    required this.selectedIndex,
     required this.onTap,
+    this.selectedIndex,
     this.margin = EdgeInsets.zero,
     this.iconSize = 24,
-    this.isVisibleCheck = true,
     this.dividerIndex,
-    this.fontColor,
+    this.textColor,
     this.backgroundColor,
     this.dividerColor,
     this.dividerPointColor,
     this.iconColor,
     this.splashColor,
+    this.shadowColor,
   });
 
   @override
@@ -43,9 +43,9 @@ class CoconutPulldownMenu extends StatelessWidget {
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-            color: CoconutColors.onGray300(brightness),
-            spreadRadius: 2,
-            blurRadius: 14,
+            color: shadowColor ?? CoconutColors.onGray300(brightness),
+            spreadRadius: 0.5,
+            blurRadius: 10,
             offset: Offset.zero,
           ),
         ],
@@ -101,11 +101,11 @@ class CoconutPulldownMenu extends StatelessWidget {
                   Text(
                     title,
                     style: CoconutTypography.body2_14.copyWith(
-                      color: fontColor ?? CoconutColors.onBlack(brightness),
+                      color: textColor ?? CoconutColors.onBlack(brightness),
                     ),
                   ),
                   const Spacer(),
-                  if (isVisibleCheck && selectedIndex == index) ...{
+                  if (selectedIndex == index) ...{
                     SvgPicture.asset(
                       'packages/coconut_design_system/assets/svg/pulldown_check.svg',
                       width: iconSize,

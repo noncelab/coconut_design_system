@@ -39,6 +39,7 @@ flutter:
     - assets/svg/tooltip/normal.svg
     - assets/svg/tooltip/success.svg
     - assets/svg/tooltip/warning.svg
+    - assets/svg/toast_info.svg
 
   fonts:
     - family: SpaceGrotesk
