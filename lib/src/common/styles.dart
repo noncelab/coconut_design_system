@@ -13,6 +13,11 @@ class CoconutStyles {
   /// - **Examples:** Menu cards, custom toasts, tooltips.
   static const radius_300 = 20.0;
 
+  /// **radius-250 (16px)**
+  /// - Used for **Tooltip**.
+  /// - **Examples:** Tooltip Containers.
+  static const radius_250 = 16.0;
+
   /// **radius-200 (12px)**
   /// - Used for **CTA (Call-To-Action) buttons**.
   /// - **Examples:** Receive, Send, Full-width bottom navigation buttons.

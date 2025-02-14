@@ -37,7 +37,12 @@ class CoconutPulldown extends StatelessWidget {
   /// The color of the title text.
   ///
   /// If `null`, it defaults to the appropriate color based on the brightness mode.
-  final Color? fontColor;
+  final Color? textColor;
+
+  /// The font size of the title text.
+  ///
+  /// If `null`, it uses the default text style.
+  final double? fontSize;
 
   /// Creates a `CoconutPulldown` widget.
   ///
@@ -68,7 +73,8 @@ class CoconutPulldown extends StatelessWidget {
     required this.onChanged,
     this.iconSize = 24,
     this.iconColor,
-    this.fontColor,
+    this.textColor,
+    this.fontSize,
   });
 
   @override
@@ -78,17 +84,22 @@ class CoconutPulldown extends StatelessWidget {
         onChanged(!isOpen);
       },
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
+          /// Title text
           Container(
             margin: const EdgeInsets.only(left: 8),
             alignment: Alignment.center,
             child: Text(
               title,
               style: CoconutTypography.caption_10.copyWith(
-                color: fontColor ?? CoconutColors.onBlack(brightness),
+                fontSize: fontSize,
+                color: textColor ?? CoconutColors.onBlack(brightness),
               ),
             ),
           ),
+
+          /// Open/Close icon
           SvgPicture.asset(
             'packages/coconut_design_system/assets/svg/pulldown_${isOpen ? 'open' : 'close'}.svg',
             width: iconSize,

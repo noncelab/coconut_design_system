@@ -8,6 +8,7 @@ import 'package:example/screens/icon.dart';
 import 'package:example/screens/indicator.dart';
 import 'package:example/screens/inputs.dart';
 import 'package:example/screens/layout.dart';
+import 'package:example/screens/overlays.dart';
 import 'package:example/screens/radius.dart';
 import 'package:example/screens/segmented_control.dart';
 import 'package:example/screens/typography.dart';
@@ -109,6 +110,11 @@ final GoRouter _router = GoRouter(
       name: 'indicator',
       path: '/indicator',
       builder: (context, state) => const IndicatorScreen(),
+    ),
+    GoRoute(
+      name: 'overlays',
+      path: '/overlays',
+      builder: (context, state) => const OverlaysScreen(),
     ),
   ],
 );
