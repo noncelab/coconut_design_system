@@ -97,9 +97,6 @@ CoconutButton(
 | 📑 **App Bar**          | Customizable App Bar & Buttons                   |
 | 🖼 **Icons**            | Custom Icon Components                           |
 ---
-## 📖 Documentation
-For full documentation, visit: **[Coconut Design System Docs](https://your-docs-url.com)**
----
 ## License
 This project is licensed under the **MIT License with Commons Clause**.
 
