@@ -89,7 +89,6 @@ class CoconutBottomSheet extends StatelessWidget {
               },
 
               /// Bottom spacing to prevent UI from touching the screen edge
-              const SizedBox(height: 54),
               SizedBox(height: bottomMargin),
             ],
           ),
