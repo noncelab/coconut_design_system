@@ -21,6 +21,8 @@ export 'src/components/overlays/popup.dart';
 export 'src/components/overlays/pulldown_menu.dart';
 export 'src/components/overlays/tooltip.dart';
 export 'src/components/overlays/toast.dart';
+export 'src/components/indicator/progress_indicator.dart';
+export 'src/components/indicator/circular_indicator.dart';
 
 // 📌 Theme & Styling
 export 'src/theme/typography.dart';
