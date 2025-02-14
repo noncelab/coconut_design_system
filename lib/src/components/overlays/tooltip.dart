@@ -156,7 +156,7 @@ class _CoconutToolTipState extends State<CoconutToolTip> {
                       : RightTriangleBubbleClipper(),
                   child: Container(
                     padding: _padding,
-                    color: CoconutColors.onPrimary(widget.brightness),
+                    color: _backgroundColor,
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -264,7 +264,8 @@ class _CoconutToolTipState extends State<CoconutToolTip> {
             ? _getBorderColorForBrighness()
             : CoconutColors.onPrimary(widget.brightness));
     _backgroundColor = widget.backgroundColor ??
-        (widget.tooltipType == CoconutTooltipType.fixedClosable
+        (widget.tooltipType == CoconutTooltipType.fixedClosable ||
+                widget.tooltipType == CoconutTooltipType.placement
             ? _getBackgroundColorForBrighness()
             : CoconutColors.surface(widget.brightness));
 
