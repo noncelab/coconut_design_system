@@ -2,9 +2,32 @@ import 'package:coconut_design_system/coconut_design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-bool _isToastVisible = false;
-
+/// A customizable toast notification utility for displaying temporary messages.
+///
+/// The `CoconutToast` class provides two types of toast messages:
+/// - **showBottomToast()**: Displays a toast message at the bottom of the screen.
+/// - **showToast()**: Displays a toast message at the top of the screen.
+///
+/// Example Usage:
+/// ```dart
+/// CoconutToast.showBottomToast(
+///   brightness: Brightness.light,
+///   context: context,
+///   text: "This is a bottom toast message.",
+/// );
+/// ```
 class CoconutToast {
+  static bool _isToastVisible = false;
+
+  /// Displays a toast message at the bottom of the screen.
+  ///
+  /// - [brightness]: Determines whether the theme is light or dark.
+  /// - [context]: The build context.
+  /// - [text]: The message to display in the toast.
+  /// - [backgroundColor]: The background color of the toast.
+  /// - [borderColor]: The border color of the toast.
+  /// - [textColor]: The color of the text inside the toast.
+  /// - [seconds]: Duration in seconds before the toast disappears (default: `2`).
   static void showBottomToast({
     required Brightness brightness,
     required BuildContext context,
@@ -73,7 +96,8 @@ class CoconutToast {
                   text,
                   overflow: TextOverflow.ellipsis,
                   style: CoconutTypography.body2_14.copyWith(
-                    decoration: TextDecoration.none, // debug 모드에서 밑줄 표시됨
+                    decoration: TextDecoration
+                        .none, // Prevents underlining in debug mode
                     color: textColor ?? CoconutColors.onGray100(brightness),
                   ),
                 ),
@@ -88,6 +112,16 @@ class CoconutToast {
     dismiss(isDelay: true);
   }
 
+  /// Displays a toast message at the top of the screen.
+  ///
+  /// - [brightness]: Determines whether the theme is light or dark.
+  /// - [context]: The build context.
+  /// - [text]: The message to display in the toast.
+  /// - [isVisibleIcon]: Whether to show an icon next to the message.
+  /// - [seconds]: Duration in seconds before the toast disappears (default: `3`).
+  /// - [backgroundColor]: The background color of the toast.
+  /// - [borderColor]: The border color of the toast.
+  /// - [textColor]: The color of the text inside the toast.
   static void showToast({
     required Brightness brightness,
     required BuildContext context,
@@ -123,6 +157,7 @@ class CoconutToast {
   }
 }
 
+/// A widget representing a toast message.
 class CoconutToastWidget extends StatefulWidget {
   final String text;
   final Brightness brightness;
@@ -132,6 +167,8 @@ class CoconutToastWidget extends StatefulWidget {
   final Color? backgroundColor;
   final Color? borderColor;
   final Color? textColor;
+
+  /// Creates an instance of `CoconutToastWidget`.
   const CoconutToastWidget({
     super.key,
     required this.text,
@@ -153,35 +190,6 @@ class _CoconutToastWidgetState extends State<CoconutToastWidget>
   late AnimationController _controller;
   late Animation<Offset> _offsetAnimation;
   late Animation<double> _fadeAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _controller = AnimationController(
-        duration: const Duration(milliseconds: 300), vsync: this);
-
-    _offsetAnimation = Tween<Offset>(
-            begin: Offset.zero, end: const Offset(0.0, -1.0))
-        .animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
-
-    _fadeAnimation = Tween<double>(
-      begin: 1.0,
-      end: 0.4,
-    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
-
-    Future.delayed(Duration(seconds: widget.duration), () {
-      if (mounted) {
-        _startFadeOut();
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -236,7 +244,8 @@ class _CoconutToastWidgetState extends State<CoconutToastWidget>
                     child: Text(
                       widget.text,
                       style: CoconutTypography.body2_14.copyWith(
-                        decoration: TextDecoration.none, // debug 모드에서 밑줄 표시됨
+                        decoration: TextDecoration
+                            .none, // Prevents underlining in debug mode
                         color: widget.textColor ??
                             CoconutColors.onGray100(widget.brightness),
                       ),
@@ -251,11 +260,40 @@ class _CoconutToastWidgetState extends State<CoconutToastWidget>
     );
   }
 
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = AnimationController(
+        duration: const Duration(milliseconds: 300), vsync: this);
+
+    _offsetAnimation = Tween<Offset>(
+            begin: Offset.zero, end: const Offset(0.0, -1.0))
+        .animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
+
+    _fadeAnimation = Tween<double>(
+      begin: 1.0,
+      end: 0.4,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
+
+    Future.delayed(Duration(seconds: widget.duration), () {
+      if (mounted) {
+        _startFadeOut();
+      }
+    });
+  }
+
   void _startFadeOut() {
     _controller.forward().then((_) {
       if (mounted) {
         widget.onDismiss();
-        _isToastVisible = false;
+        CoconutToast._isToastVisible = false;
       }
     });
   }
