@@ -36,6 +36,9 @@ class CoconutToolTip extends StatefulWidget {
   /// Whether to show an icon in the tooltip (default: `true`).
   final bool showIcon;
 
+  /// The base background color of the tooltip. (default: 'tansparent', used in only **fixed** type).
+  final Color? baseBackgroundColor;
+
   /// The background color of the tooltip.
   final Color? backgroundColor;
 
@@ -66,6 +69,9 @@ class CoconutToolTip extends StatefulWidget {
   /// Whether the tooltip is currently visible.
   final bool isPlacementTooltipVisible;
 
+  /// Whether the tooltip should animate its appearance on the initial build.
+  final bool animateOnBuild;
+
   /// The style of the title text.
   final TextStyle titleStyle;
 
@@ -78,12 +84,14 @@ class CoconutToolTip extends StatefulWidget {
     this.tooltipState = CoconutTooltipState.info,
     this.isAvailableTapToClose = true,
     this.showIcon = true,
+    this.baseBackgroundColor = Colors.transparent,
     this.backgroundColor,
     this.borderColor,
     this.onTapRemove,
     this.padding,
     this.isBubbleClipperSideLeft = true,
     this.isPlacementTooltipVisible = false,
+    this.animateOnBuild = false,
     this.width,
     this.iconPosition = Offset.zero,
     this.iconSize = Size.zero,
@@ -145,7 +153,11 @@ class _CoconutToolTipState extends State<CoconutToolTip> {
           return Visibility(
             visible: widget.isPlacementTooltipVisible,
             child: AnimatedOpacity(
-              opacity: _isVisibleAnimated ? 1.0 : 0.0,
+              opacity: widget.animateOnBuild
+                  ? _isVisibleAnimated
+                      ? 1.0
+                      : 0.0
+                  : 1.0,
               duration: const Duration(milliseconds: 1000),
               child: GestureDetector(
                 onTap: () {
@@ -176,31 +188,39 @@ class _CoconutToolTipState extends State<CoconutToolTip> {
         }
       case CoconutTooltipType.fixed:
         {
-          return Container(
-            decoration: BoxDecoration(
-              color: CoconutColors.white,
-              borderRadius: BorderRadius.circular(CoconutStyles.radius_250),
-              border: Border.all(width: 1, color: _borderColor),
-            ),
-            child: Container(
-              padding: _padding,
-              decoration: BoxDecoration(
-                color: _backgroundColor,
-                borderRadius: BorderRadius.circular(CoconutStyles.radius_250),
-                border: Border.all(width: 1, color: _borderColor),
+          return Stack(
+            children: [
+              // Base background color layer (only for fixed tooltips)
+              Positioned.fill(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: widget.baseBackgroundColor,
+                    borderRadius:
+                        BorderRadius.circular(CoconutStyles.radius_250),
+                  ),
+                ),
               ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  if (widget.showIcon)
-                    Container(
-                      padding: const EdgeInsets.only(right: 8),
-                      child: _icon,
-                    ),
-                  Expanded(child: widget.richText)
-                ],
+              // Actual tooltip content
+              Container(
+                padding: _padding,
+                decoration: BoxDecoration(
+                  color: _backgroundColor,
+                  borderRadius: BorderRadius.circular(CoconutStyles.radius_250),
+                  border: Border.all(width: 1, color: _borderColor),
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if (widget.showIcon)
+                      Container(
+                        padding: const EdgeInsets.only(right: 8),
+                        child: _icon,
+                      ),
+                    Expanded(child: widget.richText),
+                  ],
+                ),
               ),
-            ),
+            ],
           );
         }
       case CoconutTooltipType.fixedClosable:
