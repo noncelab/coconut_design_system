@@ -128,6 +128,8 @@ enum CoconutTooltipType {
 }
 
 class _CoconutToolTipState extends State<CoconutToolTip> {
+  bool _isVisibleAnimated = false;
+
   late Color _borderColor;
   late Color _backgroundColor;
   late EdgeInsets _padding;
@@ -141,8 +143,9 @@ class _CoconutToolTipState extends State<CoconutToolTip> {
       case CoconutTooltipType.placement:
         {
           return Visibility(
+            visible: widget.isPlacementTooltipVisible,
             child: AnimatedOpacity(
-              opacity: widget.isPlacementTooltipVisible ? 1.0 : 0.0,
+              opacity: _isVisibleAnimated ? 1.0 : 0.0,
               duration: const Duration(milliseconds: 1000),
               child: GestureDetector(
                 onTap: () {
@@ -255,6 +258,27 @@ class _CoconutToolTipState extends State<CoconutToolTip> {
     if (widget.isBubbleClipperSideLeft != oldWidget.isBubbleClipperSideLeft) {
       setState(() {});
     }
+
+    if (widget.isPlacementTooltipVisible !=
+        oldWidget.isPlacementTooltipVisible) {
+      if (widget.isPlacementTooltipVisible) {
+        _showTooltip();
+      } else {
+        _hideTooltip();
+      }
+    }
+  }
+
+  void _showTooltip() {
+    setState(() {
+      _isVisibleAnimated = true;
+    });
+  }
+
+  void _hideTooltip() {
+    setState(() {
+      _isVisibleAnimated = false;
+    });
   }
 
   /// Initializes tooltip colors based on the theme and type.
@@ -295,6 +319,11 @@ class _CoconutToolTipState extends State<CoconutToolTip> {
     } else {
       _padding = widget.padding ??
           const EdgeInsets.only(top: 25, left: 18, right: 18, bottom: 10);
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (widget.isPlacementTooltipVisible) {
+          _showTooltip();
+        }
+      });
     }
   }
 
