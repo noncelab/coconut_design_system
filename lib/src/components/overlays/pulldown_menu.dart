@@ -5,11 +5,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 class CoconutPulldownMenu extends StatelessWidget {
   final Brightness brightness;
   final List<String> buttons;
-  final int selectedIndex;
+  final int? selectedIndex;
   final Function(int) onTap;
   final EdgeInsets margin;
   final double iconSize;
-  final bool isVisibleCheck;
   final int? dividerIndex;
   final Color? textColor;
   final Color? backgroundColor;
@@ -22,11 +21,10 @@ class CoconutPulldownMenu extends StatelessWidget {
     super.key,
     required this.brightness,
     required this.buttons,
-    required this.selectedIndex,
     required this.onTap,
+    this.selectedIndex,
     this.margin = EdgeInsets.zero,
     this.iconSize = 24,
-    this.isVisibleCheck = true,
     this.dividerIndex,
     this.textColor,
     this.backgroundColor,
@@ -107,7 +105,7 @@ class CoconutPulldownMenu extends StatelessWidget {
                     ),
                   ),
                   const Spacer(),
-                  if (isVisibleCheck && selectedIndex == index) ...{
+                  if (selectedIndex == index) ...{
                     SvgPicture.asset(
                       'packages/coconut_design_system/assets/svg/pulldown_check.svg',
                       width: iconSize,

@@ -298,8 +298,6 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
                             child: CoconutPulldownMenu(
                               brightness: brightness,
                               buttons: pulldownButtons2,
-                              selectedIndex: selectedPulldownIndex2,
-                              isVisibleCheck: false,
                               dividerIndex: 3,
                               onTap: (index) {
                                 selectedPulldownIndex2 = index;
