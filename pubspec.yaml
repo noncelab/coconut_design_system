@@ -34,6 +34,11 @@ flutter:
     - assets/svg/pulldown_open.svg
     - assets/svg/stepper_minus.svg
     - assets/svg/stepper_plus.svg
+    - assets/svg/tooltip/error.svg
+    - assets/svg/tooltip/info.svg
+    - assets/svg/tooltip/normal.svg
+    - assets/svg/tooltip/success.svg
+    - assets/svg/tooltip/warning.svg
 
   fonts:
     - family: SpaceGrotesk

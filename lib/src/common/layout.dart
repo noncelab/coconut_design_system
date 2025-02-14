@@ -60,6 +60,16 @@ class CoconutLayout {
   static const spacing_1300h = SizedBox(height: Sizes.size52);
   static const spacing_1400h = SizedBox(height: Sizes.size56);
   static const spacing_1500h = SizedBox(height: Sizes.size60);
+  static const spacing_1600h = SizedBox(height: Sizes.size64);
+  static const spacing_1700h = SizedBox(height: Sizes.size68);
+  static const spacing_1800h = SizedBox(height: Sizes.size72);
+  static const spacing_1900h = SizedBox(height: Sizes.size76);
+  static const spacing_2000h = SizedBox(height: Sizes.size80);
+  static const spacing_2100h = SizedBox(height: Sizes.size84);
+  static const spacing_2200h = SizedBox(height: Sizes.size88);
+  static const spacing_2300h = SizedBox(height: Sizes.size92);
+  static const spacing_2400h = SizedBox(height: Sizes.size96);
+  static const spacing_2500h = SizedBox(height: Sizes.size100);
 
   /// Horizontal Spacing
   static const spacing_50w = SizedBox(width: Sizes.size2);
@@ -78,6 +88,16 @@ class CoconutLayout {
   static const spacing_1300w = SizedBox(width: Sizes.size52);
   static const spacing_1400w = SizedBox(width: Sizes.size56);
   static const spacing_1500w = SizedBox(width: Sizes.size60);
+  static const spacing_1600w = SizedBox(width: Sizes.size64);
+  static const spacing_1700w = SizedBox(width: Sizes.size68);
+  static const spacing_1800w = SizedBox(width: Sizes.size72);
+  static const spacing_1900w = SizedBox(width: Sizes.size76);
+  static const spacing_2000w = SizedBox(width: Sizes.size80);
+  static const spacing_2100w = SizedBox(width: Sizes.size84);
+  static const spacing_2200w = SizedBox(width: Sizes.size88);
+  static const spacing_2300w = SizedBox(width: Sizes.size92);
+  static const spacing_2400w = SizedBox(width: Sizes.size96);
+  static const spacing_2500w = SizedBox(width: Sizes.size100);
 
   /// For layout default padding
   static const defaultPadding = Sizes.size16;
