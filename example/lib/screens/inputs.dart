@@ -168,7 +168,6 @@ class _InputsScreenState extends State<InputsScreen> {
                       children: [
                         CoconutCheckbox(
                           isSelected: isCheckbox1Selected,
-                          brightness: brightness,
                           onChanged: (value) {
                             isCheckbox1Selected = value;
                             setState(() {});
@@ -177,7 +176,6 @@ class _InputsScreenState extends State<InputsScreen> {
                         const SizedBox(width: 10),
                         CoconutCheckbox(
                           isSelected: isCheckbox2Selected,
-                          brightness: brightness,
                           color: CoconutColors.primary,
                           onChanged: (value) {
                             isCheckbox2Selected = value;
@@ -193,7 +191,6 @@ class _InputsScreenState extends State<InputsScreen> {
                       children: [
                         CoconutSwitch(
                           isOn: isSwitch1On,
-                          brightness: brightness,
                           onChanged: (value) {
                             isSwitch1On = value;
                             setState(() {});
@@ -202,7 +199,6 @@ class _InputsScreenState extends State<InputsScreen> {
                         const SizedBox(width: 10),
                         CoconutSwitch(
                           isOn: isSwitch2On,
-                          brightness: brightness,
                           activeColor: CoconutColors.primary,
                           thumbColor: CoconutColors.white,
                           onChanged: (value) {
@@ -216,14 +212,12 @@ class _InputsScreenState extends State<InputsScreen> {
                     _titleBox('Stepper', brightness),
                     CoconutStepper(
                       maxCount: 3,
-                      brightness: brightness,
                       onCount: (count) {},
                     ),
                     CoconutLayout.spacing_600h,
                     _titleBox('Pulldown', brightness),
                     CoconutPulldown(
                       title: 'TEXT',
-                      brightness: brightness,
                       isOpen: isPulldownOpen,
                       onChanged: (value) {
                         isPulldownOpen = value;

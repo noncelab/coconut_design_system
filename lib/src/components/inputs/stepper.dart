@@ -11,9 +11,6 @@ class CoconutStepper extends StatefulWidget {
   /// The maximum count value that the stepper can reach.
   final int maxCount;
 
-  /// Determines the brightness mode (light or dark) to adjust text and icon colors.
-  final Brightness brightness;
-
   /// The font size of the count displayed in the center.
   ///
   /// Defaults to `24.0`.
@@ -62,7 +59,6 @@ class CoconutStepper extends StatefulWidget {
   const CoconutStepper({
     super.key,
     required this.maxCount,
-    required this.brightness,
     required this.onCount,
     this.fontSize = 24.0,
     this.iconSize = 20.0,
@@ -100,7 +96,8 @@ class _CoconutStepperState extends State<CoconutStepper> {
   Widget _buildStepperButton(
       {required String asset,
       required bool isDisabled,
-      required VoidCallback onTap}) {
+      required VoidCallback onTap,
+      required Brightness brightness}) {
     return GestureDetector(
       onTap: isDisabled ? null : onTap,
       child: Container(
@@ -109,7 +106,7 @@ class _CoconutStepperState extends State<CoconutStepper> {
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           border: Border.all(
-            color: CoconutColors.onGray300(widget.brightness),
+            color: CoconutColors.onGray300(brightness),
             width: 1,
           ),
         ),
@@ -120,8 +117,8 @@ class _CoconutStepperState extends State<CoconutStepper> {
             height: widget.iconSize,
             colorFilter: ColorFilter.mode(
               isDisabled
-                  ? CoconutColors.onGray300(widget.brightness)
-                  : CoconutColors.onBlack(widget.brightness),
+                  ? CoconutColors.onGray300(brightness)
+                  : CoconutColors.onBlack(brightness),
               BlendMode.srcIn,
             ),
           ),
@@ -132,6 +129,7 @@ class _CoconutStepperState extends State<CoconutStepper> {
 
   @override
   Widget build(BuildContext context) {
+    final brightness = Theme.of(context).brightness;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -140,6 +138,7 @@ class _CoconutStepperState extends State<CoconutStepper> {
           asset: 'stepper_minus',
           isDisabled: _currentCount == 1,
           onTap: () => _updateCount(-1),
+          brightness: brightness,
         ),
         Container(
           width: widget.countWidth,
@@ -147,7 +146,7 @@ class _CoconutStepperState extends State<CoconutStepper> {
           child: Text(
             '$_currentCount',
             style: CoconutTypography.heading3_21_Number.copyWith(
-              color: CoconutColors.onBlack(widget.brightness),
+              color: CoconutColors.onBlack(brightness),
               fontSize: widget.fontSize,
             ),
           ),
@@ -156,6 +155,7 @@ class _CoconutStepperState extends State<CoconutStepper> {
           asset: 'stepper_plus',
           isDisabled: _currentCount == widget.maxCount,
           onTap: () => _updateCount(1),
+          brightness: brightness,
         ),
       ],
     );

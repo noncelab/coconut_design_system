@@ -26,9 +26,6 @@ import 'package:flutter/material.dart';
 /// );
 /// ```
 class CoconutPopup extends StatelessWidget {
-  /// The brightness mode (light or dark theme).
-  final Brightness brightness;
-
   /// The title of the popup dialog.
   final String title;
 
@@ -68,7 +65,6 @@ class CoconutPopup extends StatelessWidget {
   /// Creates an instance of `CoconutPopup`.
   const CoconutPopup(
       {super.key,
-      required this.brightness,
       required this.title,
       required this.description,
       required this.onTapRight,
@@ -84,6 +80,8 @@ class CoconutPopup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Brightness brightness = Theme.of(context).brightness;
+
     return Dialog(
       child: Container(
         padding: padding ??

@@ -1,4 +1,3 @@
-
 import 'package:coconut_design_system/coconut_design_system.dart';
 import 'package:example/appbar.dart';
 import 'package:example/provider/theme_provider.dart';

@@ -79,8 +79,8 @@ class CoconutToolTip extends StatefulWidget {
   const CoconutToolTip({
     super.key,
     required this.tooltipType,
-    required this.brightness,
     required this.richText,
+    this.brightness = Brightness.light,
     this.tooltipState = CoconutTooltipState.info,
     this.isAvailableTapToClose = true,
     this.showIcon = true,

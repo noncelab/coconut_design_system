@@ -22,9 +22,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 /// );
 /// ```
 class CoconutPulldownMenu extends StatelessWidget {
-  /// The brightness mode (light or dark theme).
-  final Brightness brightness;
-
   /// The list of button labels displayed in the dropdown.
   final List<String> buttons;
 
@@ -67,7 +64,6 @@ class CoconutPulldownMenu extends StatelessWidget {
   /// Creates an instance of `CoconutPulldownMenu`.
   const CoconutPulldownMenu({
     super.key,
-    required this.brightness,
     required this.buttons,
     required this.onTap,
     this.selectedIndex,
@@ -85,6 +81,8 @@ class CoconutPulldownMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final brightness = Theme.of(context).brightness;
+
     return Container(
       margin: margin,
       constraints:
@@ -103,7 +101,7 @@ class CoconutPulldownMenu extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: List.generate(buttons.length, (index) {
-            return _button(buttons[index], index);
+            return _button(buttons[index], index, brightness);
           }),
         ),
       ),
@@ -111,20 +109,20 @@ class CoconutPulldownMenu extends StatelessWidget {
   }
 
   /// Builds a single dropdown button item.
-  Widget _button(String title, int index) {
+  Widget _button(String title, int index, Brightness brightness) {
     return Column(
       children: [
         Material(
           color: backgroundColor ?? CoconutColors.onGray100(brightness),
           shape: RoundedRectangleBorder(
-            borderRadius:
-                _getBorderRadius(index, buttons.length) ?? BorderRadius.zero,
+            borderRadius: _getBorderRadius(index, buttons.length, brightness) ??
+                BorderRadius.zero,
           ),
           child: InkWell(
             onTap: () {
               onTap.call(index);
             },
-            borderRadius: _getBorderRadius(index, buttons.length),
+            borderRadius: _getBorderRadius(index, buttons.length, brightness),
             splashColor: splashColor ?? CoconutColors.onGray200(brightness),
             highlightColor: Colors.transparent,
             child: Container(
@@ -174,7 +172,7 @@ class CoconutPulldownMenu extends StatelessWidget {
   }
 
   /// Determines the border radius for the first and last items.
-  BorderRadius? _getBorderRadius(int index, int length) {
+  BorderRadius? _getBorderRadius(int index, int length, Brightness brightness) {
     if (index == 0) {
       return const BorderRadius.only(
         topLeft: Radius.circular(8),

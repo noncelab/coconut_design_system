@@ -118,8 +118,8 @@ class CoconutTextField extends StatefulWidget {
     super.key,
     required this.controller,
     required this.focusNode,
-    required this.brightness,
     required this.onChanged,
+    this.brightness = Brightness.light,
     this.activeColor,
     this.cursorColor,
     this.placeholderColor,
@@ -147,17 +147,6 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
 
   String _text = '';
   bool _isFocus = false;
-
-  /// Listens to text changes and updates the internal state.
-  // void _textControllerListener() {
-  //   String text = widget.controller.text;
-  //   if (widget.maxLength != null && text.runes.length > widget.maxLength!) {
-  //     text = String.fromCharCodes(text.runes.take(widget.maxLength!));
-  //   }
-  //   _text = text;
-  //   setState(() {});
-  //   widget.onChanged(_text);
-  // }
 
   /// Listens to focus changes and updates the UI accordingly.
   void _focusNodeListener() {

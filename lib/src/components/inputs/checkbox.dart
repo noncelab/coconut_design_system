@@ -11,9 +11,6 @@ class CoconutCheckbox extends StatelessWidget {
   /// Indicates whether the checkbox is selected.
   final bool isSelected;
 
-  /// Determines the brightness mode (light or dark) to adjust the checkbox color.
-  final Brightness brightness;
-
   /// Callback function that is triggered when the checkbox state changes.
   final Function(bool) onChanged;
 
@@ -46,7 +43,6 @@ class CoconutCheckbox extends StatelessWidget {
   const CoconutCheckbox({
     super.key,
     required this.isSelected,
-    required this.brightness,
     required this.onChanged,
     this.width = 20.0,
     this.color,
@@ -54,6 +50,7 @@ class CoconutCheckbox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final brightness = Theme.of(context).brightness;
     return GestureDetector(
       onTap: () {
         onChanged(!isSelected);

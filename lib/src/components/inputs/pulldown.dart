@@ -13,9 +13,6 @@ class CoconutPulldown extends StatelessWidget {
   /// The title text displayed next to the pulldown icon.
   final String title;
 
-  /// Determines the brightness mode (light or dark) to adjust text and icon colors.
-  final Brightness brightness;
-
   /// Indicates whether the pulldown is open or closed.
   final bool isOpen;
 
@@ -68,7 +65,6 @@ class CoconutPulldown extends StatelessWidget {
   const CoconutPulldown({
     super.key,
     required this.title,
-    required this.brightness,
     required this.isOpen,
     required this.onChanged,
     this.iconSize = 24,
@@ -79,6 +75,7 @@ class CoconutPulldown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final brightness = Theme.of(context).brightness;
     return GestureDetector(
       onTap: () {
         onChanged(!isOpen);

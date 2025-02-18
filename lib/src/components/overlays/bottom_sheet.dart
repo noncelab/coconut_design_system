@@ -24,9 +24,6 @@ import 'package:flutter/material.dart';
 /// );
 /// ```
 class CoconutBottomSheet extends StatelessWidget {
-  /// Defines the brightness mode (light or dark) to adjust colors accordingly.
-  final Brightness brightness;
-
   /// The app bar displayed at the top of the bottom sheet.
   final PreferredSizeWidget appBar;
 
@@ -48,7 +45,6 @@ class CoconutBottomSheet extends StatelessWidget {
   /// Creates an instance of `CoconutBottomSheet`.
   const CoconutBottomSheet({
     super.key,
-    required this.brightness,
     required this.appBar,
     required this.body,
     this.bottomMargin = 54,
@@ -58,6 +54,8 @@ class CoconutBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Brightness brightness = Theme.of(context).brightness;
+
     return LayoutBuilder(builder: (context, constraints) {
       // Define the maximum and minimum height of the bottom sheet based on screen size.
       double maxHeight = constraints.maxHeight * 0.9;

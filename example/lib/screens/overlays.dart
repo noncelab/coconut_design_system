@@ -107,7 +107,6 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
               context: context,
               isScrollControlled: true,
               builder: (context) => CoconutBottomSheet(
-                brightness: brightness,
                 appBar: CoconutAppBar.build(
                   title: 'Minimum',
                   context: context,
@@ -144,7 +143,6 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
               context: context,
               isScrollControlled: true,
               builder: (context) => CoconutBottomSheet(
-                brightness: brightness,
                 appBar: CoconutAppBar.buildWithNext(
                   title: 'Maximum',
                   context: context,
@@ -185,7 +183,6 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
               context: context,
               isScrollControlled: true,
               builder: (context) => CoconutBottomSheet(
-                brightness: brightness,
                 appBar: CoconutAppBar.buildWithNext(
                   title: 'Fixed',
                   context: context,
@@ -235,7 +232,6 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
               context: context,
               builder: (BuildContext context) {
                 return CoconutPopup(
-                  brightness: brightness,
                   title: 'Title',
                   description: 'description',
                   onTapRight: () {
@@ -255,7 +251,6 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
               context: context,
               builder: (BuildContext context) {
                 return CoconutPopup(
-                  brightness: brightness,
                   title: 'Title',
                   description: 'description',
                   rightButtonColor: CoconutColors.onAccent(brightness),
@@ -281,7 +276,6 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
               context: context,
               builder: (BuildContext context) {
                 return CoconutPopup(
-                  brightness: brightness,
                   title: 'Title',
                   description:
                       'Long description description description description description description description description description description description description description description description description description description',
@@ -307,7 +301,6 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
       [
         CoconutPulldown(
           title: pulldownButtons[selectedPulldownIndex],
-          brightness: brightness,
           isOpen: isPulldownOpen,
           fontSize: 12,
           onChanged: (value) {
@@ -321,7 +314,6 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
           child: Container(
             margin: const EdgeInsets.symmetric(vertical: 12),
             child: CoconutPulldownMenu(
-              brightness: brightness,
               buttons: pulldownButtons,
               selectedIndex: selectedPulldownIndex,
               onTap: (index) {
@@ -335,7 +327,6 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
         ),
         CoconutPulldown(
           title: pulldownButtons2[selectedPulldownIndex2],
-          brightness: brightness,
           isOpen: isPulldownOpen2,
           onChanged: (value) {
             isPulldownOpen = false;
@@ -348,7 +339,6 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
           child: Container(
             margin: const EdgeInsets.symmetric(vertical: 12),
             child: CoconutPulldownMenu(
-              brightness: brightness,
               buttons: pulldownButtons2,
               dividerIndex: 3,
               onTap: (index) {
@@ -375,7 +365,6 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
           textStyle: CoconutTypography.caption_10,
           onTap: () {
             CoconutToast.showToast(
-              brightness: brightness,
               context: context,
               text: 'Default toast',
             );
@@ -387,7 +376,6 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
           textStyle: CoconutTypography.caption_10,
           onTap: () {
             CoconutToast.showToast(
-              brightness: brightness,
               context: context,
               text:
                   'Long text text text text text text text text text text text text text',
@@ -400,7 +388,6 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
           textStyle: CoconutTypography.caption_10,
           onTap: () {
             CoconutToast.showToast(
-              brightness: brightness,
               context: context,
               isVisibleIcon: true,
               text: 'Icon toast',
@@ -413,7 +400,6 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
           textStyle: CoconutTypography.caption_10,
           onTap: () {
             CoconutToast.showToast(
-              brightness: brightness,
               context: context,
               isVisibleIcon: true,
               text:
@@ -463,12 +449,11 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
                 text: TextSpan(
                   text: 'This is a type of fixed tooltip.',
                   style: CoconutTypography.body2_14.setColor(
-                    CoconutColors.black,
+                    CoconutColors.onBlack(brightness),
                   ),
                 ),
               ),
               tooltipType: CoconutTooltipType.fixed,
-              brightness: brightness,
             ),
             CoconutLayout.spacing_300h,
             CoconutToolTip(
@@ -476,13 +461,12 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
                 text: TextSpan(
                   text: 'This is a type of fixed tooltip.(Error state)',
                   style: CoconutTypography.body2_14.setColor(
-                    CoconutColors.black,
+                    CoconutColors.onBlack(brightness),
                   ),
                 ),
               ),
               tooltipType: CoconutTooltipType.fixed,
               tooltipState: CoconutTooltipState.error,
-              brightness: brightness,
             ),
             CoconutLayout.spacing_300h,
             CoconutToolTip(
@@ -490,13 +474,12 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
                 text: TextSpan(
                   text: 'This is a type of fixed tooltip.(Warning state)',
                   style: CoconutTypography.body2_14.setColor(
-                    CoconutColors.black,
+                    CoconutColors.onBlack(brightness),
                   ),
                 ),
               ),
               tooltipType: CoconutTooltipType.fixed,
               tooltipState: CoconutTooltipState.warning,
-              brightness: brightness,
             ),
             CoconutLayout.spacing_300h,
             CoconutToolTip(
@@ -504,13 +487,12 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
                 text: TextSpan(
                   text: 'This is a type of fixed tooltip.(Normal state)',
                   style: CoconutTypography.body2_14.setColor(
-                    CoconutColors.black,
+                    CoconutColors.onBlack(brightness),
                   ),
                 ),
               ),
               tooltipType: CoconutTooltipType.fixed,
               tooltipState: CoconutTooltipState.normal,
-              brightness: brightness,
             ),
             CoconutLayout.spacing_300h,
             CoconutToolTip(
@@ -518,13 +500,12 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
                 text: TextSpan(
                   text: 'This is a type of fixed tooltip.(Success state)',
                   style: CoconutTypography.body2_14.setColor(
-                    CoconutColors.black,
+                    CoconutColors.onBlack(brightness),
                   ),
                 ),
               ),
               tooltipType: CoconutTooltipType.fixed,
               tooltipState: CoconutTooltipState.success,
-              brightness: brightness,
             ),
             CoconutLayout.spacing_600h,
           ],

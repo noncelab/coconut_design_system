@@ -123,7 +123,6 @@ class CoconutToast {
   /// - [borderColor]: The border color of the toast.
   /// - [textColor]: The color of the text inside the toast.
   static void showToast({
-    required Brightness brightness,
     required BuildContext context,
     required String text,
     isVisibleIcon = false,
@@ -142,28 +141,31 @@ class CoconutToast {
     _isToastVisible = true;
     late OverlayEntry overlayEntry;
     overlayEntry = OverlayEntry(
-      builder: (context) => SafeArea(
-        child: Align(
-          alignment: Alignment.topCenter,
-          child: CoconutToastWidget(
-            text: text,
-            brightness: brightness,
-            isVisibleIcon: isVisibleIcon,
-            backgroundColor: backgroundColor,
-            borderColor: borderColor,
-            textColor: textColor,
-            iconPath: iconPath,
-            iconSize: iconSize,
-            iconRightPadding: iconRightPadding,
-            fontSize: fontSize,
-            textPadding: textPadding,
-            onDismiss: () {
-              overlayEntry.remove();
-            },
-            duration: seconds <= 5 ? seconds : 5,
+      builder: (context) {
+        Brightness brightness = Theme.of(context).brightness;
+        return SafeArea(
+          child: Align(
+            alignment: Alignment.topCenter,
+            child: CoconutToastWidget(
+              brightness: brightness,
+              text: text,
+              isVisibleIcon: isVisibleIcon,
+              backgroundColor: backgroundColor,
+              borderColor: borderColor,
+              textColor: textColor,
+              iconPath: iconPath,
+              iconSize: iconSize,
+              iconRightPadding: iconRightPadding,
+              fontSize: fontSize,
+              textPadding: textPadding,
+              onDismiss: () {
+                overlayEntry.remove();
+              },
+              duration: seconds <= 5 ? seconds : 5,
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
 
     Overlay.of(context).insert(overlayEntry);
