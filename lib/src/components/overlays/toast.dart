@@ -128,9 +128,14 @@ class CoconutToast {
     required String text,
     isVisibleIcon = false,
     int seconds = 3,
+    double iconSize = 24,
+    double iconRightPadding = 4,
+    double fontSize = 14,
+    double textPadding = 3.5,
     Color? backgroundColor,
     Color? borderColor,
     Color? textColor,
+    String? iconPath,
   }) {
     if (_isToastVisible) return;
 
@@ -144,6 +149,14 @@ class CoconutToast {
             text: text,
             brightness: brightness,
             isVisibleIcon: isVisibleIcon,
+            backgroundColor: backgroundColor,
+            borderColor: borderColor,
+            textColor: textColor,
+            iconPath: iconPath,
+            iconSize: iconSize,
+            iconRightPadding: iconRightPadding,
+            fontSize: fontSize,
+            textPadding: textPadding,
             onDismiss: () {
               overlayEntry.remove();
             },
@@ -164,9 +177,14 @@ class CoconutToastWidget extends StatefulWidget {
   final bool isVisibleIcon;
   final int duration;
   final VoidCallback onDismiss;
+  final double iconSize;
+  final double iconRightPadding;
+  final double fontSize;
+  final double textPadding;
   final Color? backgroundColor;
   final Color? borderColor;
   final Color? textColor;
+  final String? iconPath;
 
   /// Creates an instance of `CoconutToastWidget`.
   const CoconutToastWidget({
@@ -176,9 +194,14 @@ class CoconutToastWidget extends StatefulWidget {
     required this.isVisibleIcon,
     required this.duration,
     required this.onDismiss,
+    this.iconSize = 24,
+    this.iconRightPadding = 4,
+    this.fontSize = 14,
+    this.textPadding = 3.5,
     this.backgroundColor,
     this.borderColor,
     this.textColor,
+    this.iconPath,
   });
 
   @override
@@ -222,25 +245,26 @@ class _CoconutToastWidgetState extends State<CoconutToastWidget>
               children: [
                 if (widget.isVisibleIcon) ...{
                   Padding(
-                    padding: const EdgeInsets.only(right: 4),
+                    padding: EdgeInsets.only(right: widget.iconRightPadding),
                     child: SvgPicture.asset(
-                      'packages/coconut_design_system/assets/svg/toast_info.svg',
-                      height: 24,
+                      widget.iconPath ??
+                          'packages/coconut_design_system/assets/svg/toast_info.svg',
+                      height: widget.iconSize,
                       colorFilter: ColorFilter.mode(
-                        widget.textColor ??
+                        widget.borderColor ??
                             CoconutColors.onGray100(widget.brightness),
                         BlendMode.srcIn,
                       ),
                     ),
                   ),
                 } else ...{
-                  const SizedBox(
-                    height: 24,
+                  SizedBox(
+                    height: widget.iconSize,
                   ),
                 },
                 Flexible(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 3.5),
+                    padding: EdgeInsets.symmetric(vertical: widget.textPadding),
                     child: Text(
                       widget.text,
                       style: CoconutTypography.body2_14.copyWith(
@@ -248,6 +272,7 @@ class _CoconutToastWidgetState extends State<CoconutToastWidget>
                             .none, // Prevents underlining in debug mode
                         color: widget.textColor ??
                             CoconutColors.onGray100(widget.brightness),
+                        fontSize: widget.fontSize,
                       ),
                     ),
                   ),
