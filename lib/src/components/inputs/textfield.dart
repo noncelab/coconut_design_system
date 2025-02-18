@@ -30,6 +30,11 @@ class CoconutTextField extends StatefulWidget {
   /// If `null`, it defaults to `CoconutColors.onBlack(brightness)`.
   final Color? activeColor;
 
+  /// The color of the text curosr.
+  ///
+  /// If `null`, it defaults to `CoconutColors.onBlack(brightness)`.
+  final Color? cursorColor;
+
   /// The color of the placeholder text.
   ///
   /// If `null`, it defaults to `CoconutColors.onGray300(brightness)`.
@@ -116,6 +121,7 @@ class CoconutTextField extends StatefulWidget {
     required this.brightness,
     required this.onChanged,
     this.activeColor,
+    this.cursorColor,
     this.placeholderColor,
     this.errorColor,
     this.maxLength,
@@ -137,20 +143,21 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
   late Color _activeColor;
   late Color _placeholderColor;
   late Color _errorColor;
+  late Color _cursorColor;
 
   String _text = '';
   bool _isFocus = false;
 
   /// Listens to text changes and updates the internal state.
-  void _textControllerListener() {
-    String text = widget.controller.text;
-    if (widget.maxLength != null && text.runes.length > widget.maxLength!) {
-      text = String.fromCharCodes(text.runes.take(widget.maxLength!));
-    }
-    _text = text;
-    setState(() {});
-    widget.onChanged(_text);
-  }
+  // void _textControllerListener() {
+  //   String text = widget.controller.text;
+  //   if (widget.maxLength != null && text.runes.length > widget.maxLength!) {
+  //     text = String.fromCharCodes(text.runes.take(widget.maxLength!));
+  //   }
+  //   _text = text;
+  //   setState(() {});
+  //   widget.onChanged(_text);
+  // }
 
   /// Listens to focus changes and updates the UI accordingly.
   void _focusNodeListener() {
@@ -160,13 +167,16 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
 
   @override
   void initState() {
-    widget.controller.addListener(_textControllerListener);
+    // widget.controller.addListener(_textControllerListener);
     widget.focusNode.addListener(_focusNodeListener);
     _activeColor =
         widget.activeColor ?? CoconutColors.onBlack(widget.brightness);
+    _cursorColor =
+        widget.cursorColor ?? CoconutColors.onBlack(widget.brightness);
     _placeholderColor =
         widget.placeholderColor ?? CoconutColors.onGray300(widget.brightness);
     _errorColor = widget.errorColor ?? CoconutColors.red;
+    _text = widget.controller.text;
     super.initState();
   }
 
@@ -175,14 +185,17 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
     super.didUpdateWidget(oldWidget);
     _activeColor =
         widget.activeColor ?? CoconutColors.onBlack(widget.brightness);
+    _cursorColor =
+        widget.cursorColor ?? CoconutColors.onBlack(widget.brightness);
     _placeholderColor =
         widget.placeholderColor ?? CoconutColors.onGray300(widget.brightness);
     _errorColor = widget.errorColor ?? CoconutColors.red;
+    _text = widget.controller.text;
   }
 
   @override
   void dispose() {
-    widget.controller.removeListener(_textControllerListener);
+    // widget.controller.removeListener(_textControllerListener);
     widget.controller.dispose();
     widget.focusNode.removeListener(_focusNodeListener);
     widget.focusNode.dispose();
@@ -219,7 +232,7 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
             placeholder: widget.placeholderText,
             placeholderStyle: CoconutTypography.body2_14
                 .copyWith(color: _placeholderColor, height: 1),
-            cursorColor: CoconutColors.onBlack(widget.brightness),
+            cursorColor: _cursorColor,
             decoration: const BoxDecoration(
               color: Colors.transparent,
             ),
@@ -227,6 +240,19 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
             maxLines: widget.obscureText ? 1 : widget.maxLines,
             prefix: widget.prefix,
             suffix: widget.suffix,
+            onChanged: (text) {
+              if (widget.maxLength != null) {
+                if (text.runes.length > widget.maxLength!) {
+                  text =
+                      String.fromCharCodes(text.runes.take(widget.maxLength!));
+                  widget.controller.text = text;
+                }
+              }
+
+              _text = text;
+              setState(() {});
+              widget.onChanged(_text);
+            },
           ),
         ),
         Padding(
