@@ -110,7 +110,6 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
                 appBar: CoconutAppBar.build(
                   title: 'Minimum',
                   context: context,
-                  brightness: brightness,
                   hasRightIcon: false,
                   isBottom: true,
                 ),

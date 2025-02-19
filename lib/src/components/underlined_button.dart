@@ -48,14 +48,14 @@ class CoconutUnderlinedButton extends StatefulWidget {
   /// - If `null`, it falls back to `defaultColor.withOpacity(0.5)`.
   final Color? pressingColor;
 
-  /// **Determines if the button is active or disabled.**
-  /// - If `false`, the button is grayed out and cannot be pressed.
   final bool isActive;
 
+  /// **Determines if the button is active or disabled.**
+  /// - If `false`, the button is grayed out and cannot be pressed.
   /// **Constructor for `CoconutUnderlinedButton`**
   CoconutUnderlinedButton({
     super.key,
-    required this.brightness,
+    this.brightness = Brightness.light,
     required this.text,
     TextStyle? textStyle,
     this.lineWidth = 1,

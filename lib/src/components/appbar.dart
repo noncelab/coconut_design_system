@@ -44,7 +44,6 @@ class CoconutAppBar {
     required String title,
     required BuildContext context,
     required bool hasRightIcon,
-    required Brightness brightness,
     Key? entireWidgetKey,
     Key? faucetIconKey,
     Color? backgroundColor,
@@ -56,6 +55,7 @@ class CoconutAppBar {
     Widget? subLabel,
     List<Widget>? actionButtonList,
   }) {
+    Brightness brightness = Theme.of(context).brightness;
     Widget? widget = Column(
       children: [
         if (onTitlePressed == null) ...{

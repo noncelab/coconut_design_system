@@ -88,12 +88,12 @@ class CoconutButton extends StatefulWidget {
   /// **Constructor for CoconutButton**
   CoconutButton({
     super.key,
-    required this.brightness,
     this.width,
     this.height,
     EdgeInsets? padding,
     this.borderWidth = 1,
     this.borderRadius = 12,
+    this.brightness = Brightness.light,
     required this.onPressed,
     required this.text,
     TextStyle? textStyle,

@@ -423,7 +423,6 @@ class AppbarScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: CoconutColors.surface(brightness),
       appBar: CoconutAppBar.build(
-        brightness: brightness,
         title: 'Top Navi',
         context: context,
         hasRightIcon: false,
