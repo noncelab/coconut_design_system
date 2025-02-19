@@ -36,10 +36,10 @@ class CoconutBottomSheet extends StatelessWidget {
   /// The margin at the bottom of the bottom sheet,
   final double bottomMargin;
 
-  /// Whether a fixed height is used instead of a relative height.
-  /// If `true`, the widget uses a fixed height in pixels.
-  /// If `false`, the height is determined based on `heightRatio`.
-  final bool useFixedHeight;
+  /// Whether to use IntrinsicHeight for measuring the height of the widget.
+  /// If `true`, the widget will wrap its content and measure the exact height required.
+  /// If `false`, the widget will use the default layout behavior without intrinsic height calculations.
+  final bool useIntrinsicHeight;
 
   /// The background color of the bottom sheet.
   final Color? backgroundColor;
@@ -51,7 +51,7 @@ class CoconutBottomSheet extends StatelessWidget {
     required this.body,
     this.heightRatio = 0.9,
     this.bottomMargin = 54,
-    this.useFixedHeight = false,
+    this.useIntrinsicHeight = false,
     this.backgroundColor,
   });
 
@@ -73,21 +73,28 @@ class CoconutBottomSheet extends StatelessWidget {
           maxHeight: maxHeight,
           minHeight: minHeight,
         ),
-        height: useFixedHeight ? maxHeight : null,
-        child: IntrinsicHeight(
-          child: Column(
-            children: [
-              /// App bar section
-              appBar,
+        child: useIntrinsicHeight
+            ? IntrinsicHeight(
+                child: Column(
+                  children: [
+                    /// App bar section
+                    appBar,
 
-              /// Body section with dynamic height adjustment
-              Expanded(child: SingleChildScrollView(child: body)),
+                    /// Body section with dynamic height adjustment
+                    Expanded(child: SingleChildScrollView(child: body)),
 
-              /// Bottom spacing to prevent UI from touching the screen edge
-              SizedBox(height: bottomMargin),
-            ],
-          ),
-        ),
+                    /// Bottom spacing to prevent UI from touching the screen edge
+                    SizedBox(height: bottomMargin),
+                  ],
+                ),
+              )
+            : Scaffold(
+                appBar: appBar,
+                body: Padding(
+                  padding: EdgeInsets.only(bottom: bottomMargin),
+                  child: body,
+                ),
+              ),
       );
     });
   }
