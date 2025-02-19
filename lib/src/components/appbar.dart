@@ -236,7 +236,7 @@ class CoconutAppBar {
     required String title,
     required BuildContext context,
     required VoidCallback onNextPressed,
-    required Brightness brightness,
+    Brightness brightness = Brightness.light,
     bool isActive = true,
     bool isBottom = false,
     bool usePrimaryActiveColor = false,
