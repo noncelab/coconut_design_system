@@ -192,7 +192,50 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
                   },
                   isBottom: true,
                 ),
-                bodyHeight: 300,
+                heightRatio: 0.5,
+                useFixedHeight: true,
+                body: Column(
+                  children: [
+                    Container(
+                      height: 300,
+                      color: CoconutColors.red,
+                    ),
+                    Container(
+                      height: 300,
+                      color: CoconutColors.yellow,
+                    ),
+                    Container(
+                      height: 300,
+                      color: CoconutColors.green,
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+        CoconutUnderlinedButton(
+          brightness: brightness,
+          text: 'Full',
+          textStyle: CoconutTypography.caption_10,
+          onTap: () {
+            showModalBottomSheet(
+              context: context,
+              isScrollControlled: true,
+              useSafeArea: true,
+              builder: (context) => CoconutBottomSheet(
+                appBar: CoconutAppBar.buildWithNext(
+                  title: 'Full',
+                  context: context,
+                  brightness: brightness,
+                  nextButtonTitle: '완료',
+                  onNextPressed: () {
+                    Navigator.pop(context);
+                  },
+                  isBottom: true,
+                ),
+                heightRatio: 1,
+                useFixedHeight: true,
                 body: Column(
                   children: [
                     Container(

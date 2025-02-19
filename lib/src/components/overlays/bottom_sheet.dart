@@ -30,14 +30,16 @@ class CoconutBottomSheet extends StatelessWidget {
   /// The main body content of the bottom sheet.
   final Widget body;
 
+  /// The height ratio relative to the screen height.
+  final double heightRatio;
+
   /// The margin at the bottom of the bottom sheet,
   final double bottomMargin;
 
-  /// An optional fixed height for the body content.
-  ///
-  /// If `bodyHeight` is provided, the body is wrapped inside a `SizedBox`
-  /// with the given height; otherwise, it expands dynamically.
-  final double? bodyHeight;
+  /// Whether a fixed height is used instead of a relative height.
+  /// If `true`, the widget uses a fixed height in pixels.
+  /// If `false`, the height is determined based on `heightRatio`.
+  final bool useFixedHeight;
 
   /// The background color of the bottom sheet.
   final Color? backgroundColor;
@@ -47,8 +49,9 @@ class CoconutBottomSheet extends StatelessWidget {
     super.key,
     required this.appBar,
     required this.body,
+    this.heightRatio = 0.9,
     this.bottomMargin = 54,
-    this.bodyHeight,
+    this.useFixedHeight = false,
     this.backgroundColor,
   });
 
@@ -58,7 +61,7 @@ class CoconutBottomSheet extends StatelessWidget {
 
     return LayoutBuilder(builder: (context, constraints) {
       // Define the maximum and minimum height of the bottom sheet based on screen size.
-      double maxHeight = constraints.maxHeight * 0.9;
+      double maxHeight = constraints.maxHeight * heightRatio;
       double minHeight = constraints.maxHeight * 0.1;
 
       return Container(
@@ -70,22 +73,23 @@ class CoconutBottomSheet extends StatelessWidget {
           maxHeight: maxHeight,
           minHeight: minHeight,
         ),
+        height: useFixedHeight ? maxHeight : null,
         child: IntrinsicHeight(
           child: Column(
             children: [
               /// App bar section
               appBar,
-
               /// Body section with dynamic height adjustment
-              if (bodyHeight != null) ...{
-                SizedBox(
-                  height: bodyHeight,
-                  child: SingleChildScrollView(child: body),
-                )
-              } else ...{
-                Expanded(child: SingleChildScrollView(child: body)),
-              },
-
+              Expanded(child: SingleChildScrollView(child: body)),
+              // /// Body section with dynamic height adjustment
+              // if (bodyHeight != null) ...{
+              //   SizedBox(
+              //     height: bodyHeight,
+              //     child: SingleChildScrollView(child: body),
+              //   )
+              // } else ...{
+              //   Expanded(child: SingleChildScrollView(child: body)),
+              // },
               /// Bottom spacing to prevent UI from touching the screen edge
               SizedBox(height: bottomMargin),
             ],
