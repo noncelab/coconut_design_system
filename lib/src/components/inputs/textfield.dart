@@ -77,6 +77,8 @@ class CoconutTextField extends StatefulWidget {
   /// Defaults to `false`.
   final bool? isVisibleErrorText;
 
+  final TextInputType? textInputType;
+
   /// Whether the text field should obscure input (e.g., for passwords).
   ///
   /// Defaults to `false`.
@@ -132,6 +134,7 @@ class CoconutTextField extends StatefulWidget {
     this.errorText,
     this.descriptionText,
     this.isVisibleErrorText,
+    this.textInputType,
     this.obscureText = false,
   });
 
@@ -229,6 +232,7 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
             maxLines: widget.obscureText ? 1 : widget.maxLines,
             prefix: widget.prefix,
             suffix: widget.suffix,
+            keyboardType: widget.textInputType,
             onChanged: (text) {
               if (widget.maxLength != null) {
                 if (text.runes.length > widget.maxLength!) {

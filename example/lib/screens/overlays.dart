@@ -193,7 +193,6 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
                   isBottom: true,
                 ),
                 heightRatio: 0.5,
-                useFixedHeight: true,
                 body: Column(
                   children: [
                     Container(
@@ -235,7 +234,6 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
                   isBottom: true,
                 ),
                 heightRatio: 1,
-                useFixedHeight: true,
                 body: Column(
                   children: [
                     Container(

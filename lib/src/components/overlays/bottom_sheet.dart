@@ -49,7 +49,7 @@ class CoconutBottomSheet extends StatelessWidget {
     super.key,
     required this.appBar,
     required this.body,
-    this.heightRatio = 0.9,
+    this.heightRatio = 0.95,
     this.bottomMargin = 54,
     this.useIntrinsicHeight = false,
     this.backgroundColor,
@@ -89,6 +89,7 @@ class CoconutBottomSheet extends StatelessWidget {
                 ),
               )
             : Scaffold(
+                backgroundColor: Colors.transparent,
                 appBar: appBar,
                 body: Padding(
                   padding: EdgeInsets.only(bottom: bottomMargin),
