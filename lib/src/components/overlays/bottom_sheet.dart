@@ -79,17 +79,10 @@ class CoconutBottomSheet extends StatelessWidget {
             children: [
               /// App bar section
               appBar,
+
               /// Body section with dynamic height adjustment
               Expanded(child: SingleChildScrollView(child: body)),
-              // /// Body section with dynamic height adjustment
-              // if (bodyHeight != null) ...{
-              //   SizedBox(
-              //     height: bodyHeight,
-              //     child: SingleChildScrollView(child: body),
-              //   )
-              // } else ...{
-              //   Expanded(child: SingleChildScrollView(child: body)),
-              // },
+
               /// Bottom spacing to prevent UI from touching the screen edge
               SizedBox(height: bottomMargin),
             ],
