@@ -45,6 +45,11 @@ class CoconutTextField extends StatefulWidget {
   /// If `null`, it defaults to `CoconutColors.red`.
   final Color? errorColor;
 
+  /// The color of the text field background
+  ///
+  /// If `null`, it defaults to `Colors.transparent`.
+  final Color? backgroundColor;
+
   /// The maximum length of the text input.
   ///
   /// If `null`, there is no limit.
@@ -83,6 +88,12 @@ class CoconutTextField extends StatefulWidget {
   ///
   /// Defaults to `false`.
   final bool obscureText;
+
+  /// Whether the text field should have a visible border.
+  final bool isVisibleBorder;
+
+  /// The font size of the text inside the text field.
+  final double fontSize;
 
   /// Creates a `CoconutTextField` widget.
   ///
@@ -126,6 +137,7 @@ class CoconutTextField extends StatefulWidget {
     this.cursorColor,
     this.placeholderColor,
     this.errorColor,
+    this.backgroundColor,
     this.maxLength,
     this.maxLines,
     this.prefix,
@@ -136,6 +148,8 @@ class CoconutTextField extends StatefulWidget {
     this.isVisibleErrorText,
     this.textInputType,
     this.obscureText = false,
+    this.isVisibleBorder = true,
+    this.fontSize = 14,
   });
 
   @override
@@ -147,6 +161,7 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
   late Color _placeholderColor;
   late Color _errorColor;
   late Color _cursorColor;
+  late Color _backgroundColor;
 
   String _text = '';
   bool _isFocus = false;
@@ -157,10 +172,7 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
     setState(() {});
   }
 
-  @override
-  void initState() {
-    // widget.controller.addListener(_textControllerListener);
-    widget.focusNode.addListener(_focusNodeListener);
+  void _updateData() {
     _activeColor =
         widget.activeColor ?? CoconutColors.onBlack(widget.brightness);
     _cursorColor =
@@ -168,26 +180,25 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
     _placeholderColor =
         widget.placeholderColor ?? CoconutColors.onGray300(widget.brightness);
     _errorColor = widget.errorColor ?? CoconutColors.red;
+    _backgroundColor = widget.backgroundColor ?? Colors.transparent;
     _text = widget.controller.text;
+  }
+
+  @override
+  void initState() {
+    widget.focusNode.addListener(_focusNodeListener);
+    _updateData();
     super.initState();
   }
 
   @override
   void didUpdateWidget(covariant CoconutTextField oldWidget) {
     super.didUpdateWidget(oldWidget);
-    _activeColor =
-        widget.activeColor ?? CoconutColors.onBlack(widget.brightness);
-    _cursorColor =
-        widget.cursorColor ?? CoconutColors.onBlack(widget.brightness);
-    _placeholderColor =
-        widget.placeholderColor ?? CoconutColors.onGray300(widget.brightness);
-    _errorColor = widget.errorColor ?? CoconutColors.red;
-    _text = widget.controller.text;
+    _updateData();
   }
 
   @override
   void dispose() {
-    // widget.controller.removeListener(_textControllerListener);
     widget.controller.dispose();
     widget.focusNode.removeListener(_focusNodeListener);
     widget.focusNode.dispose();
@@ -202,15 +213,17 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
       children: [
         Container(
           decoration: BoxDecoration(
-            border: Border.all(
-              color: _text.isEmpty
-                  ? _placeholderColor
-                  : _text.runes.length == widget.maxLength
-                      ? _errorColor
-                      : _activeColor,
-            ),
+            border: widget.isVisibleBorder
+                ? Border.all(
+                    color: _text.isEmpty
+                        ? _placeholderColor
+                        : _text.runes.length == widget.maxLength
+                            ? _errorColor
+                            : _activeColor,
+                  )
+                : null,
             borderRadius: BorderRadius.circular(12),
-            // color: MyColors.transparentWhite_15,
+            color: _backgroundColor,
           ),
           child: CupertinoTextField(
             focusNode: widget.focusNode,
@@ -220,10 +233,14 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                 EdgeInsets.fromLTRB(widget.prefix != null ? 0 : 16, 20, 16, 20),
             style: CoconutTypography.body2_14.copyWith(
               color: _activeColor,
+              fontSize: widget.fontSize,
             ),
             placeholder: widget.placeholderText,
-            placeholderStyle: CoconutTypography.body2_14
-                .copyWith(color: _placeholderColor, height: 1),
+            placeholderStyle: CoconutTypography.body2_14.copyWith(
+              color: _placeholderColor,
+              height: 1,
+              fontSize: widget.fontSize,
+            ),
             cursorColor: _cursorColor,
             decoration: const BoxDecoration(
               color: Colors.transparent,
