@@ -7,6 +7,9 @@ import 'package:flutter/material.dart';
 /// This widget supports various styling options, including colors, border radius,
 /// padding, and text styles. It is designed to fit seamlessly within the Coconut Design System.
 class CoconutSegmentedControl extends StatefulWidget {
+  /// A list of GlobalKeys assigned to each segment.
+  final List<GlobalKey>? keys;
+
   /// A list of labels for each segment.
   final List<String> labels;
 
@@ -58,6 +61,7 @@ class CoconutSegmentedControl extends StatefulWidget {
   /// ```
   const CoconutSegmentedControl({
     super.key,
+    this.keys,
     required this.labels,
     required this.isSelected,
     required this.onPressed,
@@ -116,6 +120,7 @@ class _CoconutSegmentedControlState extends State<CoconutSegmentedControl> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: List.generate(widget.labels.length, (index) {
           final bool isSelected = _selections[index];
+          final GlobalKey? key = widget.keys?[index];
 
           return Expanded(
             child: Padding(
@@ -135,6 +140,7 @@ class _CoconutSegmentedControlState extends State<CoconutSegmentedControl> {
                     alignment: Alignment.center,
                     padding: labelPadding,
                     child: Text(
+                      key: key,
                       widget.labels[index],
                       style: isSelected
                           ? CoconutTypography.body3_12_Bold
