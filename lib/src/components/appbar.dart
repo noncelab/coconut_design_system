@@ -50,6 +50,7 @@ class CoconutAppBar {
     bool isBottom = false,
     bool isLeadingVisible = true,
     bool showSubLabel = false,
+    bool isBackButton = false,
     VoidCallback? onTitlePressed,
     VoidCallback? onBackPressed,
     Widget? subLabel,
@@ -107,7 +108,7 @@ class CoconutAppBar {
                     CoconutLayout.spacing_200w,
                     IconButton(
                       icon: SvgPicture.asset(
-                        isBottom
+                        isBottom && !isBackButton
                             ? 'packages/coconut_design_system/assets/svg/close.svg'
                             : 'packages/coconut_design_system/assets/svg/arrow-back.svg',
                         colorFilter: ColorFilter.mode(
