@@ -237,7 +237,6 @@ class CoconutAppBar {
     required String title,
     required BuildContext context,
     required VoidCallback onNextPressed,
-    Brightness brightness = Brightness.light,
     bool isActive = true,
     bool isBottom = false,
     bool usePrimaryActiveColor = false,
@@ -246,6 +245,7 @@ class CoconutAppBar {
     VoidCallback? onBackPressed,
     List<Widget>? actionButtonList,
   }) {
+    Brightness brightness = Theme.of(context).brightness;
     return AppBar(
       title: Text(
         title,
