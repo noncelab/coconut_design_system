@@ -107,6 +107,7 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
               context: context,
               isScrollControlled: true,
               builder: (context) => CoconutBottomSheet(
+                useIntrinsicHeight: true,
                 appBar: CoconutAppBar.build(
                   title: 'Minimum',
                   context: context,
@@ -142,10 +143,10 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
               context: context,
               isScrollControlled: true,
               builder: (context) => CoconutBottomSheet(
+                useIntrinsicHeight: true,
                 appBar: CoconutAppBar.buildWithNext(
                   title: 'Maximum',
                   context: context,
-                  brightness: brightness,
                   nextButtonTitle: '완료',
                   usePrimaryActiveColor: true,
                   onNextPressed: () {
@@ -182,32 +183,33 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
               context: context,
               isScrollControlled: true,
               builder: (context) => CoconutBottomSheet(
+                heightRatio: 0.5,
                 appBar: CoconutAppBar.buildWithNext(
                   title: 'Fixed',
                   context: context,
-                  brightness: brightness,
                   nextButtonTitle: '완료',
                   onNextPressed: () {
                     Navigator.pop(context);
                   },
                   isBottom: true,
                 ),
-                heightRatio: 0.5,
-                body: Column(
-                  children: [
-                    Container(
-                      height: 300,
-                      color: CoconutColors.red,
-                    ),
-                    Container(
-                      height: 300,
-                      color: CoconutColors.yellow,
-                    ),
-                    Container(
-                      height: 300,
-                      color: CoconutColors.green,
-                    ),
-                  ],
+                body: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 300,
+                        color: CoconutColors.red,
+                      ),
+                      Container(
+                        height: 300,
+                        color: CoconutColors.yellow,
+                      ),
+                      Container(
+                        height: 300,
+                        color: CoconutColors.green,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             );
@@ -221,16 +223,12 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
             showModalBottomSheet(
               context: context,
               isScrollControlled: true,
-              useSafeArea: true,
               builder: (context) => CoconutBottomSheet(
-                appBar: CoconutAppBar.buildWithNext(
+                useIntrinsicHeight: true,
+                appBar: CoconutAppBar.build(
                   title: 'Full',
                   context: context,
-                  brightness: brightness,
-                  nextButtonTitle: '완료',
-                  onNextPressed: () {
-                    Navigator.pop(context);
-                  },
+                  hasRightIcon: false,
                   isBottom: true,
                 ),
                 heightRatio: 1,

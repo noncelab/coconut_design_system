@@ -357,7 +357,6 @@ class AppbarScreen extends StatelessWidget {
       return Scaffold(
         backgroundColor: CoconutColors.surface(brightness),
         appBar: CoconutAppBar.buildWithNext(
-          brightness: brightness,
           title: 'Top Navi',
           context: context,
           onBackPressed: () {
