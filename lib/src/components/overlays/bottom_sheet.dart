@@ -24,9 +24,6 @@ import 'package:flutter/material.dart';
 /// );
 /// ```
 class CoconutBottomSheet extends StatelessWidget {
-  /// The app bar displayed at the top of the bottom sheet.
-  final PreferredSizeWidget appBar;
-
   /// The main body content of the bottom sheet.
   final Widget body;
 
@@ -41,17 +38,20 @@ class CoconutBottomSheet extends StatelessWidget {
   /// If `false`, the widget will use the default layout behavior without intrinsic height calculations.
   final bool useIntrinsicHeight;
 
+  /// The app bar displayed at the top of the bottom sheet.
+  final PreferredSizeWidget? appBar;
+
   /// The background color of the bottom sheet.
   final Color? backgroundColor;
 
   /// Creates an instance of `CoconutBottomSheet`.
   const CoconutBottomSheet({
     super.key,
-    required this.appBar,
     required this.body,
     this.heightRatio = 0.95,
     this.bottomMargin = 54,
     this.useIntrinsicHeight = false,
+    this.appBar,
     this.backgroundColor,
   });
 
@@ -78,7 +78,7 @@ class CoconutBottomSheet extends StatelessWidget {
                 child: Column(
                   children: [
                     /// App bar section
-                    appBar,
+                    if (appBar != null) ...{appBar!},
 
                     /// Body section with dynamic height adjustment
                     Expanded(child: SingleChildScrollView(child: body)),
