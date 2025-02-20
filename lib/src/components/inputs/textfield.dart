@@ -199,9 +199,7 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
 
   @override
   void dispose() {
-    widget.controller.dispose();
     widget.focusNode.removeListener(_focusNodeListener);
-    widget.focusNode.dispose();
     super.dispose();
   }
 
