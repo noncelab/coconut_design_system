@@ -15,16 +15,20 @@ class AppbarScreen extends StatelessWidget {
       builder: (context, appbarProvider, themeProvider, child) {
         final isDarkMode = themeProvider.themeMode == ThemeMode.dark;
         final brightness = isDarkMode ? Brightness.dark : Brightness.light;
+        if (appbarProvider.appbarType == AppbarType.frosted) {
+          return _buildFrostedAppBar(
+              context, brightness, appbarProvider, themeProvider);
+        }
         if (appbarProvider.appbarType == AppbarType.topNavi) {
           return _buildTopNaviAppBar(
               context, brightness, appbarProvider, themeProvider);
         }
         return Scaffold(
-          backgroundColor: CoconutColors.surface(brightness),
           body: CustomScrollView(
             physics: const AlwaysScrollableScrollPhysics(),
             slivers: <Widget>[
               CoconutAppBar.buildHomeAppbar(
+                context: context,
                 leadingSvgAsset: SvgPicture.network(
                   'https://dev.w3.org/SVG/tools/svgweb/samples/svg-files/alphachannel.svg',
                   width: 24,
@@ -308,30 +312,92 @@ class AppbarScreen extends StatelessWidget {
     );
   }
 
+  Widget _buildFrostedOptionControlBox({
+    required Brightness brightness,
+    required bool isClosable,
+    required bool isTitleFadable,
+    required Function toggleClosable,
+    required Function toggleTitleFadable,
+  }) {
+    return Container(
+      padding: const EdgeInsets.all(Sizes.size16),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(
+          CoconutStyles.radius_200,
+        ),
+        color: CoconutColors.onPrimary(brightness).withOpacity(0.2),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            'Frosted Appbar Control Box',
+            style: CoconutTypography.body1_16_Bold,
+          ),
+          Column(
+            children: [
+              CoconutLayout.spacing_200h,
+              CheckboxListTile(
+                title: Text(
+                  'Use a close icon for the leading icon',
+                  style: CoconutTypography.body2_14.setColor(
+                    CoconutColors.onPrimary(brightness),
+                  ),
+                ),
+                value: isClosable,
+                onChanged: (bool? value) {
+                  toggleClosable();
+                },
+                enabled: true,
+                checkColor: CoconutColors.black,
+              ),
+              CoconutLayout.spacing_200h,
+              CheckboxListTile(
+                title: Text(
+                  'The title remains hidden unless the user scrolls at least 15 pixels.',
+                  style: CoconutTypography.body2_14.setColor(
+                    CoconutColors.onPrimary(brightness),
+                  ),
+                ),
+                value: isTitleFadable,
+                onChanged: (bool? value) {
+                  toggleTitleFadable();
+                },
+                enabled: true,
+                checkColor: CoconutColors.black,
+              ),
+            ],
+          ),
+          CoconutLayout.spacing_2500h,
+        ],
+      ),
+    );
+  }
+
   Widget _buildRadioOptions(
       AppbarProvider appbarProvider, Brightness brightness) {
     final List<Map<String, AppbarType>> options = [
       {'Home Style': AppbarType.home},
       {'TopNavi Style': AppbarType.topNavi},
+      {'Frosted Style': AppbarType.frosted},
     ];
 
-    return Row(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start, // 왼쪽 정렬
       children: options.map((option) {
         final String title = option.keys.first;
         final AppbarType value = option.values.first;
 
-        return Expanded(
-          child: RadioListTile(
-            title: Text(title),
-            value: value,
-            groupValue: appbarProvider.appbarType,
-            onChanged: (newValue) {
-              if (newValue != null && newValue != appbarProvider.appbarType) {
-                appbarProvider.toggleAppbar();
-              }
-            },
-            activeColor: CoconutColors.onPrimary(brightness),
-          ),
+        return RadioListTile<AppbarType>(
+          title: Text(title),
+          value: value,
+          groupValue: appbarProvider.appbarType,
+          onChanged: (newValue) {
+            if (newValue != null && newValue != appbarProvider.appbarType) {
+              appbarProvider.toggleAppbar(newValue);
+            }
+          },
+          activeColor: CoconutColors.onPrimary(brightness),
         );
       }).toList(),
     );
@@ -347,6 +413,66 @@ class AppbarScreen extends StatelessWidget {
       child: Text(
         'SubLabel',
         style: CoconutTypography.body3_12_Bold.setColor(CoconutColors.white),
+      ),
+    );
+  }
+
+  Widget _buildFrostedAppBar(BuildContext context, Brightness brightness,
+      AppbarProvider appbarProvider, ThemeProvider themeProvider) {
+    ScrollController controller = ScrollController();
+    return Scaffold(
+      extendBodyBehindAppBar: true, // essential
+      appBar: CoconutFrostedAppBar(
+        title: 'Frosted',
+        context: context,
+        onBackPressed: () {
+          Navigator.pop(context);
+        },
+        isBottom: appbarProvider.isClosable,
+        actionButtonList: [
+          IconButton(
+            icon: Icon(brightness == Brightness.dark
+                ? Icons.dark_mode
+                : Icons.light_mode),
+            onPressed: () => themeProvider.toggleTheme(),
+          ),
+        ],
+        hasTitleOpacity: appbarProvider.hasTitleOpacity,
+        controller: controller,
+      ),
+      body: SingleChildScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        controller: controller,
+        child: Container(
+          padding: EdgeInsets.only(
+            left: CoconutLayout.defaultPadding,
+            right: CoconutLayout.defaultPadding,
+            top: kToolbarHeight + MediaQuery.of(context).padding.top + 30,
+            bottom: Sizes.size40,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              _buildRadioOptions(appbarProvider, brightness),
+              CoconutLayout.spacing_600h,
+              SizedBox(
+                width: double.infinity,
+                child: _buildFrostedOptionControlBox(
+                  brightness: brightness,
+                  isClosable: appbarProvider.isClosable,
+                  isTitleFadable: appbarProvider.hasTitleOpacity,
+                  toggleClosable: appbarProvider.toggleClosable,
+                  toggleTitleFadable: appbarProvider.toggleTitleOpacity,
+                ),
+              ),
+              CoconutLayout.spacing_2500h,
+              CoconutLayout.spacing_2500h,
+              CoconutLayout.spacing_2500h,
+              CoconutLayout.spacing_2500h,
+              CoconutLayout.spacing_2500h,
+            ],
+          ),
+        ),
       ),
     );
   }

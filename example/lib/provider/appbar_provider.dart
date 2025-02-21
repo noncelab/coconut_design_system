@@ -9,6 +9,7 @@ class AppbarProvider with ChangeNotifier {
   bool _isActionButtonVisible = true;
   bool _isTitlePressable = false;
   bool _isClosable = false;
+  bool _hasTitleOpacity = true;
 
   AppbarType get appbarType => _appbarType;
   bool get isActionButtonVisible => _isActionButtonVisible;
@@ -18,15 +19,15 @@ class AppbarProvider with ChangeNotifier {
   bool get isNextButtonVisible => _isNextButtonVisible;
   bool get isSubLabelVisible => _isSubLabelVisible;
   bool get isTitlePressable => _isTitlePressable;
+  bool get hasTitleOpacity => _hasTitleOpacity;
 
   void toggleActionButtonVisible() {
     _isActionButtonVisible = !_isActionButtonVisible;
     notifyListeners();
   }
 
-  void toggleAppbar() {
-    _appbarType =
-        _appbarType == AppbarType.home ? AppbarType.topNavi : AppbarType.home;
+  void toggleAppbar(AppbarType type) {
+    _appbarType = type;
     notifyListeners();
   }
 
@@ -63,11 +64,17 @@ class AppbarProvider with ChangeNotifier {
     _isTitlePressable = !_isTitlePressable;
     notifyListeners();
   }
+
+  void toggleTitleOpacity() {
+    _hasTitleOpacity = !_hasTitleOpacity;
+    notifyListeners();
+  }
 }
 
 enum AppbarType {
   home,
   topNavi,
+  frosted,
 }
 
 enum ContainerType {
