@@ -246,29 +246,27 @@ class LayoutScreen extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  child: Row(
-                    children: [
-                      Container(
-                        color: CoconutColors.surface(brightness),
-                        width: 20,
-                        child: valueMap['type'] as Widget,
-                      ),
-                      CoconutLayout.spacing_100w,
-                      _guideLine(
-                        height: valueMap['value'],
-                      ),
-                      CoconutLayout.spacing_200w,
-                      Text(
-                        name,
-                        style: CoconutTypography.body1_16_Bold.merge(
-                          TextStyle(
-                            color: CoconutColors.surface(brightness),
-                          ),
+                Row(
+                  children: [
+                    Container(
+                      color: CoconutColors.surface(brightness),
+                      width: 20,
+                      child: valueMap['type'] as Widget,
+                    ),
+                    CoconutLayout.spacing_100w,
+                    _guideLine(
+                      height: valueMap['value'],
+                    ),
+                    CoconutLayout.spacing_200w,
+                    Text(
+                      name,
+                      style: CoconutTypography.body1_16_Bold.merge(
+                        TextStyle(
+                          color: CoconutColors.surface(brightness),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 )
               ],
             ),
