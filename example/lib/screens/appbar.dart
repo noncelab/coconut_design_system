@@ -550,7 +550,6 @@ class AppbarScreen extends StatelessWidget {
       appBar: CoconutAppBar.build(
         title: 'Top Navi',
         context: context,
-        hasRightIcon: false,
         onTitlePressed: appbarProvider.isTitlePressable
             ? () => showSnackBar(context, 'Title clicked', brightness)
             : null,

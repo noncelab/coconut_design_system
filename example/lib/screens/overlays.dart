@@ -111,7 +111,6 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
                 appBar: CoconutAppBar.build(
                   title: 'Minimum',
                   context: context,
-                  hasRightIcon: false,
                   isBottom: true,
                 ),
                 body: Column(
@@ -228,7 +227,6 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
                 appBar: CoconutAppBar.build(
                   title: 'Full',
                   context: context,
-                  hasRightIcon: false,
                   isBottom: true,
                 ),
                 heightRatio: 1,

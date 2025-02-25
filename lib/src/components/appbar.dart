@@ -17,7 +17,6 @@ import 'package:flutter_svg/svg.dart';
 ///   appBar: CoconutAppBar.build(
 ///     title: 'Example',
 ///     context: context,
-///     hasRightIcon: false,
 ///     brightness: Brightness.light,
 ///   ),
 ///   body: Container(),
@@ -29,7 +28,6 @@ class CoconutAppBar {
   /// #### Parameters:
   /// - `title` (String): The title displayed in the center of the AppBar.
   /// - `context` (BuildContext): The current build context.
-  /// - `hasRightIcon` (bool): Whether the AppBar has a right-side icon.
   /// - `brightness` (Brightness): Determines the theme (light or dark) for color adjustments.
   /// - `entireWidgetKey` (Key, optional): Key for the AppBar.
   /// - `faucetIconKey` (Key, optional): Key for the leading icon.
@@ -44,7 +42,6 @@ class CoconutAppBar {
   static AppBar build({
     required String title,
     required BuildContext context,
-    required bool hasRightIcon,
     Key? entireWidgetKey,
     Key? faucetIconKey,
     Color? backgroundColor,
