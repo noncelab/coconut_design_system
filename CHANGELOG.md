@@ -5,6 +5,32 @@ This project follows **[Semantic Versioning](https://semver.org/)**.
 
 ---
 
+## **[0.6.0] - 2025-02-25**  
+
+### ✨ New Features  
+- **Added `CoconutFrostedAppBar`** – A frosted glass effect app bar with adaptive status bar icon color.  
+- **Added `keys` property to `CoconutSegmentedControl`** – Allows better state management by using `GlobalKey`.  
+
+### 🛠 Fixes & Improvements  
+- **`CoconutTooltip`**
+  - Fixed **opacity transition issue** in tooltip animations.  
+  - Added **`baseBackgroundColor` support** for fixed tooltips.  
+
+- **`CoconutTextField`**
+  - Modified behavior to **prevent disposal of `FocusNode` and `TextEditingController`** in `dispose`, considering external injection.  
+
+- **`CoconutToast`**
+  - General bug fixes and stability improvements.  
+
+- **`CoconutBottomSheet`**
+  - Fixed unintended UI behavior.  
+
+- **`CoconutAppBar`**
+  - **Removed `hasRightIcon` parameter** – Now the app bar automatically determines if a right icon is needed.  
+  - Refactored `buildWithNext` to **derive brightness from `Theme.of(context)`** instead of using a default parameter.  
+
+---
+
 ## **[0.5.0] - 2025-02-14**  
 
 ### 🎉 New Features  
