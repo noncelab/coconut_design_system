@@ -177,8 +177,9 @@ class CoconutAppBar {
   /// Builds a `CoconutAppBar` designed for the home screen.
   ///
   /// This AppBar features a leading icon, a title, optional sub-labels,
-  /// and customizable action buttons. It provides a transparent background
-  /// with a blur effect, making it suitable for a modern home screen layout.
+  /// customizable action buttons, and an optional bottom widget.
+  /// It provides a transparent background with a blur effect,
+  /// making it suitable for a modern home screen layout.
   ///
   /// ### Example Usage:
   /// ```dart
@@ -195,6 +196,15 @@ class CoconutAppBar {
   ///   isLeadingSvgAssetVisible: true,
   ///   expandedHeight: 100,
   ///   subLabel: Text("Beta"),
+  ///   bottomWidget: PreferredSize(
+  ///     preferredSize: Size.fromHeight(30),
+  ///     child: Container(
+  ///       color: Colors.red,
+  ///       height: 30,
+  ///       child: Center(child: Text("Network Alert")),
+  ///     ),
+  ///   ),
+  ///   preferredSizeHeight: 30,
   /// );
   /// ```
   ///
@@ -207,6 +217,8 @@ class CoconutAppBar {
   /// - `automaticallyImplyLeading` (bool, optional): If `true`, Flutter determines whether to show a back button automatically. Default is `false`.
   /// - `expandedHeight` (double?, optional): The height of the expanded AppBar. Default is `84`.
   /// - `subLabel` (Widget?, optional): An optional widget displayed next to the title.
+  /// - `bottomWidget` (PreferredSizeWidget?, optional): A widget displayed below the AppBar, typically used for alerts or additional navigation. Default is `null`.
+  /// - `preferredSizeHeight` (double?, optional): The height of the `bottomWidget`. If `bottomWidget` is provided, this height will be added to `expandedHeight`. Default is `30`.
   static SliverAppBar buildHomeAppbar({
     required BuildContext context,
     required SvgPicture leadingSvgAsset,
@@ -216,6 +228,8 @@ class CoconutAppBar {
     bool automaticallyImplyLeading = false,
     double? expandedHeight,
     Widget? subLabel,
+    PreferredSizeWidget? bottomWidget,
+    double? preferredSizeHeight,
   }) {
     return SliverAppBar(
       systemOverlayStyle: Theme.of(context).brightness == Brightness.light
@@ -225,8 +239,16 @@ class CoconutAppBar {
       automaticallyImplyLeading: automaticallyImplyLeading,
       pinned: true,
       floating: false,
-      expandedHeight: expandedHeight ?? 84,
+      expandedHeight: expandedHeight != null
+          ? expandedHeight + (bottomWidget?.preferredSize.height ?? 0)
+          : 84 + (bottomWidget?.preferredSize.height ?? 0),
       backgroundColor: Colors.transparent,
+      bottom: bottomWidget != null
+          ? PreferredSize(
+              preferredSize: Size.fromHeight(preferredSizeHeight ?? 30),
+              child: bottomWidget,
+            )
+          : null,
       flexibleSpace: ClipRect(
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
