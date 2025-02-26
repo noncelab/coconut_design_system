@@ -41,53 +41,53 @@ class CoconutAppbarButton extends StatelessWidget {
   /// The text displayed on the button.
   final String text;
 
-  /// Determines the theme (light or dark) for color adjustments.
-  final Brightness brightness;
-
   /// Creates a `CoconutAppbarButton` with customizable properties.
   const CoconutAppbarButton({
     super.key,
     required this.isActive,
     required this.onPressed,
     required this.text,
-    required this.brightness,
     this.usePrimaryActiveColor = true,
     this.isUseInClosableAppbar = false,
   });
 
   @override
   Widget build(BuildContext context) {
+    Brightness brightness = Theme.of(context).brightness;
+
     return GestureDetector(
       onTap: isActive ? onPressed : null,
-      child: Padding(
-        padding: EdgeInsets.symmetric(
-          vertical: (isUseInClosableAppbar ? 7.0 : 4.0),
-        ),
-        child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(14.0),
-            border: Border.all(
-              color: isActive
-                  ? Colors.transparent
-                  : CoconutColors.onPrimary(brightness).withOpacity(0.2),
-            ),
-            color: isActive
-                ? usePrimaryActiveColor
-                    ? CoconutColors.primary
-                    : CoconutColors.onPrimary(brightness)
-                : CoconutColors.disabledButtonColor(brightness),
+      child: IntrinsicHeight(
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            vertical: (isUseInClosableAppbar ? 7.0 : 4.0),
           ),
-          child: Center(
-            child: Text(
-              text,
-              style: CoconutTypography.body2_14_Bold.copyWith(
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(14.0),
+              border: Border.all(
                 color: isActive
-                    ? usePrimaryActiveColor
-                        ? CoconutColors.black
-                        : CoconutColors.surface(brightness)
+                    ? Colors.transparent
                     : CoconutColors.onPrimary(brightness).withOpacity(0.2),
-                fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
+              ),
+              color: isActive
+                  ? usePrimaryActiveColor
+                      ? CoconutColors.primary
+                      : CoconutColors.onPrimary(brightness)
+                  : CoconutColors.disabledButtonColor(brightness),
+            ),
+            child: Center(
+              child: Text(
+                text,
+                style: CoconutTypography.body3_12.copyWith(
+                  color: isActive
+                      ? usePrimaryActiveColor
+                          ? CoconutColors.black
+                          : CoconutColors.surface(brightness)
+                      : CoconutColors.onPrimary(brightness).withOpacity(0.2),
+                  fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
+                ),
               ),
             ),
           ),

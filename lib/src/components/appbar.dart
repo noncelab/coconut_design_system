@@ -23,22 +23,46 @@ import 'package:flutter_svg/svg.dart';
 /// )
 /// ```
 class CoconutAppBar {
-  /// Builds a standard `CoconutAppBar`.
+  /// Builds a standard `CoconutAppBar` for navigation and actions.
+  ///
+  /// This AppBar displays a title, optional sub-label, leading (back/close) button,
+  /// and action buttons. It supports both top and bottom placements and provides a
+  /// blurred background effect when no explicit background color is set.
+  ///
+  /// ### Example Usage:
+  /// ```dart
+  /// AppBar customAppBar = CoconutAppBar.build(
+  ///   context: context,
+  ///   title: "Settings",
+  ///   isLeadingVisible: true,
+  ///   onBackPressed: () => Navigator.pop(context),
+  ///   actionButtonList: [
+  ///     IconButton(
+  ///       icon: Icon(Icons.settings),
+  ///       onPressed: () => print("Settings clicked"),
+  ///     ),
+  ///   ],
+  ///   showSubLabel: true,
+  ///   subLabel: Text("Beta"),
+  ///   backgroundColor: Colors.transparent,
+  /// );
+  /// ```
   ///
   /// #### Parameters:
-  /// - `title` (String): The title displayed in the center of the AppBar.
+  /// - `title` (String): The main title displayed in the center of the AppBar.
   /// - `context` (BuildContext): The current build context.
-  /// - `brightness` (Brightness): Determines the theme (light or dark) for color adjustments.
-  /// - `entireWidgetKey` (Key, optional): Key for the AppBar.
-  /// - `faucetIconKey` (Key, optional): Key for the leading icon.
-  /// - `backgroundColor` (Color, optional): Background color of the AppBar.
-  /// - `isBottom` (bool, optional): Whether the AppBar is placed at the bottom. Default is `false`.
-  /// - `isLeadingVisible` (bool, optional): Determines if the leading (back/close) icon should be shown. Default is `true`.
-  /// - `showSubLabel` (bool, optional): Whether to display a sub-label below the title.
-  /// - `onTitlePressed` (VoidCallback?, optional): Function triggered when the title is pressed.
-  /// - `onBackPressed` (VoidCallback?, optional): Function triggered when the back button is pressed.
-  /// - `subLabel` (Widget?, optional): A widget displayed below the title.
-  /// - `actionButtonList` (List<Widget>?, optional): List of action buttons displayed on the right side of the AppBar.
+  /// - `entireWidgetKey` (Key?, optional): A unique key for the AppBar.
+  /// - `faucetIconKey` (Key?, optional): A key for the leading icon.
+  /// - `backgroundColor` (Color?, optional): The background color of the AppBar.
+  /// - `isBottom` (bool, optional): Whether the AppBar is positioned at the bottom. Default is `false`.
+  /// - `isLeadingVisible` (bool, optional): Whether the back/close button should be displayed. Default is `true`.
+  /// - `showSubLabel` (bool, optional): Whether to display a sub-label below the title. Default is `false`.
+  /// - `isBackButton` (bool, optional): Whether to force a back button instead of a close icon in `isBottom` mode.
+  /// - `height` (double?, optional): Custom toolbar height. Defaults to `50` for bottom AppBars, `44` for iOS, and `56` for Android.
+  /// - `onTitlePressed` (VoidCallback?, optional): Function triggered when the title is tapped.
+  /// - `onBackPressed` (VoidCallback?, optional): Function triggered when the back button is tapped.
+  /// - `subLabel` (Widget?, optional): A widget displayed below the title, such as a version indicator.
+  /// - `actionButtonList` (List<Widget>?, optional): A list of action buttons displayed on the right side.
   static AppBar build({
     required String title,
     required BuildContext context,
@@ -49,6 +73,7 @@ class CoconutAppBar {
     bool isLeadingVisible = true,
     bool showSubLabel = false,
     bool isBackButton = false,
+    double? height,
     VoidCallback? onTitlePressed,
     VoidCallback? onBackPressed,
     Widget? subLabel,
@@ -92,11 +117,12 @@ class CoconutAppBar {
           ? SystemUiOverlayStyle.dark
           : SystemUiOverlayStyle.light,
       key: entireWidgetKey,
-      toolbarHeight: isBottom
-          ? 50
-          : Platform.isIOS
-              ? 44
-              : 56,
+      toolbarHeight: height ??
+          (isBottom
+              ? 50
+              : Platform.isIOS
+                  ? 44
+                  : 56),
       title: widget,
       scrolledUnderElevation: 0,
       centerTitle: true,
@@ -148,18 +174,39 @@ class CoconutAppBar {
     );
   }
 
-  /// Builds a home-style `CoconutAppBar` for the main screen.
+  /// Builds a `CoconutAppBar` designed for the home screen.
   ///
-  /// Displays a leading icon, a title, and action buttons.
+  /// This AppBar features a leading icon, a title, optional sub-labels,
+  /// and customizable action buttons. It provides a transparent background
+  /// with a blur effect, making it suitable for a modern home screen layout.
+  ///
+  /// ### Example Usage:
+  /// ```dart
+  /// SliverAppBar homeAppBar = CoconutAppBar.buildHomeAppbar(
+  ///   context: context,
+  ///   leadingSvgAsset: SvgPicture.asset('assets/svg/home_icon.svg'),
+  ///   appTitle: "Home",
+  ///   actionButtonList: [
+  ///     IconButton(
+  ///       icon: Icon(Icons.settings),
+  ///       onPressed: () => print("Settings clicked"),
+  ///     ),
+  ///   ],
+  ///   isLeadingSvgAssetVisible: true,
+  ///   expandedHeight: 100,
+  ///   subLabel: Text("Beta"),
+  /// );
+  /// ```
   ///
   /// #### Parameters:
   /// - `context` (BuildContext): The current build context.
-  /// - `leadingSvgAsset` (SvgPicture): SVG asset displayed on the left.
-  /// - `appTitle` (String): The title of the AppBar.
-  /// - `actionButtonList` (List<Widget>): List of widgets displayed on the right.
-  /// - `isLeadingSvgAssetVisible` (bool, optional): Whether to show the leading asset.
-  /// - `automaticallyImplyLeading` (bool, optional): Whether the leading button is automatically shown.
-  /// - `subLabel` (Widget?, optional): A sub-label displayed next to the title.
+  /// - `leadingSvgAsset` (SvgPicture): The SVG asset displayed on the left side.
+  /// - `appTitle` (String): The main title displayed in the AppBar.
+  /// - `actionButtonList` (List<Widget>): A list of action buttons displayed on the right.
+  /// - `isLeadingSvgAssetVisible` (bool, optional): Whether to display the leading icon. Default is `true`.
+  /// - `automaticallyImplyLeading` (bool, optional): If `true`, Flutter determines whether to show a back button automatically. Default is `false`.
+  /// - `expandedHeight` (double?, optional): The height of the expanded AppBar. Default is `84`.
+  /// - `subLabel` (Widget?, optional): An optional widget displayed next to the title.
   static SliverAppBar buildHomeAppbar({
     required BuildContext context,
     required SvgPicture leadingSvgAsset,
@@ -167,6 +214,7 @@ class CoconutAppBar {
     required List<Widget> actionButtonList,
     bool isLeadingSvgAssetVisible = true,
     bool automaticallyImplyLeading = false,
+    double? expandedHeight,
     Widget? subLabel,
   }) {
     return SliverAppBar(
@@ -177,7 +225,7 @@ class CoconutAppBar {
       automaticallyImplyLeading: automaticallyImplyLeading,
       pinned: true,
       floating: false,
-      expandedHeight: 84,
+      expandedHeight: expandedHeight ?? 84,
       backgroundColor: Colors.transparent,
       flexibleSpace: ClipRect(
         child: BackdropFilter(
@@ -224,22 +272,42 @@ class CoconutAppBar {
     );
   }
 
-  /// Builds an AppBar with a "Next" button.
+  /// Builds an AppBar with a "Next" button for navigation-based workflows.
   ///
-  /// Typically used for navigation-based flows where the user moves to the next step.
+  /// This AppBar is typically used in multi-step flows where the user moves to the next screen.
+  /// It supports customization options such as title, background color, back button handling,
+  /// and additional action buttons.
+  ///
+  /// ### Example Usage:
+  /// ```dart
+  /// AppBar appBar = CoconutAppBar.buildWithNext(
+  ///   title: "Setup Profile",
+  ///   context: context,
+  ///   onNextPressed: () {
+  ///     print("Next button clicked!");
+  ///   },
+  ///   isActive: true,
+  ///   usePrimaryActiveColor: true,
+  ///   nextButtonTitle: "Continue",
+  ///   onBackPressed: () {
+  ///     Navigator.pop(context);
+  ///   },
+  /// );
+  /// ```
   ///
   /// #### Parameters:
-  /// - `title` (String): Title displayed in the AppBar.
+  /// - `title` (String): The title displayed in the AppBar.
   /// - `context` (BuildContext): The current build context.
-  /// - `onNextPressed` (VoidCallback): Function triggered when the next button is pressed.
-  /// - `brightness` (Brightness): Defines light or dark mode.
-  /// - `isActive` (bool, optional): Determines whether the next button is enabled.
-  /// - `isBottom` (bool, optional): Whether the AppBar is at the bottom.
-  /// - `usePrimaryActiveColor` (bool, optional): Whether to use the primary color when active.
-  /// - `nextButtonTitle` (String, optional): Text of the next button.
-  /// - `backgroundColor` (Color?, optional): Background color of the AppBar.
-  /// - `onBackPressed` (VoidCallback?, optional): Callback for the back button.
-  /// - `actionButtonList` (List<Widget>?, optional): Additional action buttons.
+  /// - `onNextPressed` (VoidCallback): Callback function triggered when the "Next" button is pressed.
+  /// - `isActive` (bool, optional): Determines whether the "Next" button is enabled. Default is `true`.
+  /// - `isBottom` (bool, optional): Indicates whether the AppBar is positioned at the bottom. Default is `false`.
+  /// - `usePrimaryActiveColor` (bool, optional): If `true`, the "Next" button uses the primary color when active. Default is `false`.
+  /// - `nextButtonTitle` (String, optional): The text displayed on the "Next" button. Default is `'다음'`.
+  /// - `height` (double?, optional): Custom height for the AppBar.
+  /// - `backgroundColor` (Color?, optional): Background color of the AppBar. Default is `transparent`.
+  /// - `onBackPressed` (VoidCallback?, optional): Callback function for the back button. Defaults to `Navigator.pop()`.
+  /// - `actionButtonList` (List<Widget>?, optional): Additional action buttons displayed in the AppBar.
+  /// - `padding` (EdgeInsets?, optional): Custom padding for the AppBar.
   static AppBar buildWithNext({
     required String title,
     required BuildContext context,
@@ -248,28 +316,34 @@ class CoconutAppBar {
     bool isBottom = false,
     bool usePrimaryActiveColor = false,
     String nextButtonTitle = '다음',
+    double? height,
     Color? backgroundColor,
     VoidCallback? onBackPressed,
     List<Widget>? actionButtonList,
+    EdgeInsets? padding,
   }) {
     Brightness brightness = Theme.of(context).brightness;
     return AppBar(
       systemOverlayStyle: Theme.of(context).brightness == Brightness.light
           ? SystemUiOverlayStyle.dark
           : SystemUiOverlayStyle.light,
-      title: Text(
-        title,
-        style: CoconutTypography.heading4_18.setColor(
-          CoconutColors.onPrimary(brightness),
+      title: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Text(
+          title,
+          style: CoconutTypography.heading4_18.setColor(
+            CoconutColors.onPrimary(brightness),
+          ),
         ),
       ),
       centerTitle: true,
       scrolledUnderElevation: 0,
-      toolbarHeight: isBottom
-          ? 50
-          : Platform.isIOS
-              ? 44
-              : 56,
+      toolbarHeight: height ??
+          (isBottom
+              ? 50
+              : Platform.isIOS
+                  ? 44
+                  : 56),
       backgroundColor: backgroundColor ?? Colors.transparent,
       leading: Navigator.canPop(context)
           ? Row(
@@ -307,7 +381,6 @@ class CoconutAppBar {
             isUseInClosableAppbar: isBottom,
             text: nextButtonTitle,
             onPressed: onNextPressed,
-            brightness: brightness,
           ),
         ),
       ],
