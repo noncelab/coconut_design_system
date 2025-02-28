@@ -31,6 +31,14 @@ class CoconutChip extends StatelessWidget {
   /// Defaults to `1.0`.
   final double borderWidth;
 
+  /// The minimum width of the chip.
+  ///
+  /// - Ensures that the chip does not shrink below this width.
+  /// - If the chip's content is wider than `minWidth`, it will expand accordingly.
+  ///
+  /// Defaults to `40.0`.
+  final double minWidth;
+
   /// The color of the chip's border.
   ///
   /// - If `null`, it defaults to the same color as the chip's background.
@@ -49,6 +57,7 @@ class CoconutChip extends StatelessWidget {
   /// - [padding] adjusts the internal spacing inside the chip.
   /// - [borderWidth] defines the thickness of the chip's border.
   /// - [borderColor] allows customization of the border color.
+  /// - [minWidth] ensures that the chip maintains a minimum width.
   /// - [onTap] enables interactive behavior when the chip is tapped.
   ///
   /// Example usage:
@@ -56,6 +65,7 @@ class CoconutChip extends StatelessWidget {
   /// CoconutChip(
   ///   color: Colors.blue,
   ///   child: Text('Label', style: TextStyle(color: Colors.white)),
+  ///   minWidth: 40,  // Ensures the chip is at least 50px wide
   ///   isRectangle: false,
   ///   onTap: () {
   ///     print("Chip tapped!");
@@ -69,6 +79,7 @@ class CoconutChip extends StatelessWidget {
     this.isRectangle = false,
     this.padding = const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
     this.borderWidth = 1.0,
+    this.minWidth = 40,
     this.borderColor,
     this.onTap,
   });
@@ -83,6 +94,9 @@ class CoconutChip extends StatelessWidget {
           : null,
       child: Container(
           padding: padding,
+          constraints: BoxConstraints(
+            minWidth: minWidth,
+          ),
           decoration: BoxDecoration(
             color: color,
             borderRadius: BorderRadius.circular(
