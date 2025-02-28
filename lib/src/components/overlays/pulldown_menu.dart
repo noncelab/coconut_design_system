@@ -37,6 +37,12 @@ class CoconutPulldownMenu extends StatelessWidget {
   /// The size of the checkmark icon for selected items (default: `24`).
   final double iconSize;
 
+  /// The blur radius of the dropdown menu's shadow effect. (default: `12`)
+  final double blurRadius;
+
+  /// The spread radius of the dropdown menu's shadow effect. (default: `4`)
+  final double spreadRadius;
+
   /// The index where a thicker divider should be placed (optional).
   final int? dividerIndex;
 
@@ -68,6 +74,8 @@ class CoconutPulldownMenu extends StatelessWidget {
     required this.onTap,
     this.selectedIndex,
     this.margin = EdgeInsets.zero,
+    this.blurRadius = 12,
+    this.spreadRadius = 4,
     this.iconSize = 24,
     this.dividerIndex,
     this.textColor,
@@ -91,8 +99,8 @@ class CoconutPulldownMenu extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color: shadowColor ?? CoconutColors.onGray300(brightness),
-            spreadRadius: 0.5,
-            blurRadius: 10,
+            spreadRadius: spreadRadius,
+            blurRadius: blurRadius,
             offset: Offset.zero,
           ),
         ],

@@ -44,18 +44,17 @@ class CoconutPulldown extends StatelessWidget {
   /// Creates a `CoconutPulldown` widget.
   ///
   /// - [title] sets the text displayed in the pulldown.
-  /// - [brightness] is used to adjust colors for light or dark mode.
   /// - [isOpen] determines whether the pulldown is currently expanded or collapsed.
   /// - [onChanged] is called when the pulldown is tapped.
   /// - [iconSize] sets the icon's size (default: `24.0`).
   /// - [iconColor] allows customization of the pulldown icon color.
-  /// - [fontColor] allows customization of the title text color.
+  /// - [textColor] allows customization of the title text color.
+  /// - [fontSize] sets the title font size.
   ///
   /// Example usage:
   /// ```dart
   /// CoconutPulldown(
   ///   title: "Options",
-  ///   brightness: Theme.of(context).brightness,
   ///   isOpen: false,
   ///   onChanged: (bool isOpen) {
   ///     print("Pulldown state: $isOpen");
