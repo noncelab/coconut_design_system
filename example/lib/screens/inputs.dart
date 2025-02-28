@@ -56,80 +56,37 @@ class _InputsScreenState extends State<InputsScreen> {
                       runSpacing: 10,
                       crossAxisAlignment: WrapCrossAlignment.center,
                       children: [
-                        CoconutChip(
+                        const CoconutChip(
                           color: CoconutColors.primary,
-                          child: Text(
-                            'TEXT',
-                            style: CoconutTypography.caption_10_Bold.copyWith(
-                              color: CoconutColors.black,
-                            ),
-                          ),
+                          label: 'TEXT',
+                          labelColor: CoconutColors.black,
+                          labelSize: 10,
+                          isSelected: true,
                         ),
                         CoconutChip(
                           color: CoconutColors.onGray150(brightness),
-                          child: Text(
-                            'TEXT',
-                            style: CoconutTypography.caption_10_Bold.copyWith(
-                              color: CoconutColors.onBlack(brightness),
-                            ),
-                          ),
+                          label: 'TEXT',
+                          labelColor: CoconutColors.onBlack(brightness),
+                          labelSize: 10,
+                          isSelected: true,
                         ),
                         CoconutChip(
                           color: Colors.transparent,
+                          label: 'TEXT3',
+                          labelColor: CoconutColors.onBlack(brightness),
+                          labelSize: 10,
                           borderColor: CoconutColors.onBlack(brightness),
-                          child: Text(
-                            'TEXT3',
-                            style: CoconutTypography.caption_10_Bold.copyWith(
-                              color: CoconutColors.onBlack(brightness),
-                            ),
-                          ),
+                          isSelected: true,
                         ),
-                        CoconutChip(
+                        const CoconutChip(
                           color: CoconutColors.cyan,
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 2, horizontal: 8),
+                          padding:
+                              EdgeInsets.symmetric(vertical: 2, horizontal: 8),
                           isRectangle: true,
-                          child: Text(
-                            'TESTNET',
-                            style: CoconutTypography.caption_10.copyWith(
-                              color: CoconutColors.white,
-                            ),
-                          ),
-                        ),
-                        CoconutChip(
-                          color: CoconutColors.onGray150(brightness),
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 20),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                '2024.11.08',
-                                style:
-                                    CoconutTypography.body2_14_Number.copyWith(
-                                  color: CoconutColors.onBlack(brightness),
-                                ),
-                              ),
-                              Container(
-                                width: 1,
-                                height: 12,
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 8),
-                                color: CoconutColors.onGray600(brightness),
-                              ),
-                              Text(
-                                '18:50',
-                                style:
-                                    CoconutTypography.body2_14_Number.copyWith(
-                                  color: CoconutColors.onBlack(brightness),
-                                ),
-                              ),
-                            ],
-                          ),
-                          onTap: () {
-                            showSnackBar(
-                                context, '2024.11.08 | 18:50', brightness);
-                          },
+                          label: 'TESTNET',
+                          labelColor: CoconutColors.white,
+                          labelSize: 10,
+                          isSelected: true,
                         ),
                       ],
                     ),

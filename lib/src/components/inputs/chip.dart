@@ -10,8 +10,18 @@ class CoconutChip extends StatelessWidget {
   /// The background color of the chip.
   final Color color;
 
-  /// The child widget inside the chip, usually a `Text` or an `Icon`.
-  final Widget child;
+  /// The text label displayed inside the chip.
+  final String label;
+
+  /// The font family of the label text.
+  ///
+  /// Defaults to `CoconutTypography.kTextFontFamily`.
+  final String labelFontFamily;
+
+  /// The font size of the label text.
+  ///
+  /// Defaults to `12.0`.
+  final double labelSize;
 
   /// Determines whether the chip should have a rectangular shape.
   ///
@@ -21,6 +31,22 @@ class CoconutChip extends StatelessWidget {
   /// Defaults to `false` (rounded shape).
   final bool isRectangle;
 
+  /// Determines whether the chip is selected.
+  ///
+  /// - If `true`, the border width increases (`selectedBorderWidth`).
+  /// - If `false`, the default border width (`borderWidth`) is used.
+  ///
+  /// Defaults to `false` (not selected).
+  final bool isSelected;
+
+  /// Determines whether the chip has reduced opacity.
+  ///
+  /// - If `true`, the chip's background color will have lower opacity.
+  /// - If `false`, the background color remains fully opaque.
+  ///
+  /// Defaults to `false`.
+  final bool hasOpacity;
+
   /// Padding inside the chip.
   ///
   /// Defaults to `EdgeInsets.symmetric(horizontal: 8, vertical: 4)`.
@@ -28,8 +54,13 @@ class CoconutChip extends StatelessWidget {
 
   /// The width of the chip's border.
   ///
-  /// Defaults to `1.0`.
+  /// Defaults to `0.5`.
   final double borderWidth;
+
+  /// The width of the border when the chip is selected.
+  ///
+  /// Defaults to `1.0`.
+  final double selectedBorderWidth;
 
   /// The minimum width of the chip.
   ///
@@ -44,6 +75,11 @@ class CoconutChip extends StatelessWidget {
   /// - If `null`, it defaults to the same color as the chip's background.
   final Color? borderColor;
 
+  /// The color of the label text.
+  ///
+  /// - If `null`, it defaults to `borderColor`, or `CoconutColors.white`.
+  final Color? labelColor;
+
   /// Optional callback function triggered when the chip is tapped.
   ///
   /// If `null`, the chip will not respond to taps.
@@ -52,10 +88,18 @@ class CoconutChip extends StatelessWidget {
   /// Creates a `CoconutChip` widget.
   ///
   /// - [color] sets the chip's background color.
-  /// - [child] defines the content inside the chip (e.g., `Text`, `Icon`).
-  /// - [isRectangle] controls whether the chip is rectangular (`true`) or rounded (`false`).
+  /// - [label] defines the text content inside the chip.
+  /// - [labelFontFamily] specifies the font family for the label text.
+  /// - [labelSize] sets the font size of the label text.
+  /// - [labelColor] allows customization of the label text color.
+  /// - [isRectangle] controls whether the chip has a rectangular shape (`true`) or a rounded shape (`false`).
+  /// - [isSelected] determines whether the chip is in a selected state.
+  ///   - When `true`, the border width increases to `selectedBorderWidth`.
+  /// - [hasOpacity] controls whether the chip's background has reduced opacity.
+  ///   - If `true`, the background color will be slightly transparent.
   /// - [padding] adjusts the internal spacing inside the chip.
-  /// - [borderWidth] defines the thickness of the chip's border.
+  /// - [borderWidth] defines the thickness of the chip's border when not selected.
+  /// - [selectedBorderWidth] defines the thickness of the chip's border when selected.
   /// - [borderColor] allows customization of the border color.
   /// - [minWidth] ensures that the chip maintains a minimum width.
   /// - [onTap] enables interactive behavior when the chip is tapped.
@@ -64,9 +108,17 @@ class CoconutChip extends StatelessWidget {
   /// ```dart
   /// CoconutChip(
   ///   color: Colors.blue,
-  ///   child: Text('Label', style: TextStyle(color: Colors.white)),
-  ///   minWidth: 40,  // Ensures the chip is at least 50px wide
+  ///   label: 'Chip Label',
+  ///   labelFontFamily: 'Arial',
+  ///   labelSize: 14,
   ///   isRectangle: false,
+  ///   isSelected: true,
+  ///   hasOpacity: true,
+  ///   minWidth: 50,  // Ensures the chip is at least 50px wide
+  ///   borderWidth: 0.5,
+  ///   selectedBorderWidth: 1.5,
+  ///   borderColor: Colors.blueAccent,
+  ///   labelColor: Colors.white,
   ///   onTap: () {
   ///     print("Chip tapped!");
   ///   },
@@ -75,12 +127,18 @@ class CoconutChip extends StatelessWidget {
   const CoconutChip({
     super.key,
     required this.color,
-    required this.child,
+    required this.label,
+    this.labelFontFamily = CoconutTypography.kTextFontFamily,
+    this.labelSize = 12,
     this.isRectangle = false,
+    this.isSelected = false,
+    this.hasOpacity = false,
     this.padding = const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-    this.borderWidth = 1.0,
+    this.borderWidth = 0.5,
+    this.selectedBorderWidth = 1,
     this.minWidth = 40,
     this.borderColor,
+    this.labelColor,
     this.onTap,
   });
 
@@ -93,18 +151,39 @@ class CoconutChip extends StatelessWidget {
             }
           : null,
       child: Container(
-          padding: padding,
-          constraints: BoxConstraints(
-            minWidth: minWidth,
+        padding: padding,
+        constraints: BoxConstraints(
+          minWidth: minWidth,
+        ),
+        decoration: BoxDecoration(
+          color: getBackgroundColor(),
+          borderRadius: BorderRadius.circular(
+            isRectangle ? CoconutStyles.radius_50 : CoconutStyles.radius_500,
           ),
-          decoration: BoxDecoration(
-            color: color,
-            borderRadius: BorderRadius.circular(
-              isRectangle ? CoconutStyles.radius_50 : CoconutStyles.radius_500,
-            ),
-            border: Border.all(color: borderColor ?? color, width: borderWidth),
-          ),
-          child: child),
+          border: Border.all(
+              color: borderColor ?? color,
+              width: isSelected ? selectedBorderWidth : borderWidth),
+        ),
+        child: Text(
+          label,
+          style: getLabelStyle(),
+          textAlign: TextAlign.center,
+        ),
+      ),
     );
   }
+
+  Color getBackgroundColor() {
+    if (hasOpacity) {
+      return color.withOpacity(isSelected ? 0.35 : 0.18);
+    }
+    return color;
+  }
+
+  TextStyle getLabelStyle() => TextStyle(
+        fontFamily: labelFontFamily,
+        fontSize: labelSize,
+        fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+        color: labelColor ?? borderColor ?? CoconutColors.white,
+      );
 }
