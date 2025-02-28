@@ -1,6 +1,5 @@
 import 'package:coconut_design_system/coconut_design_system.dart';
 import 'package:example/appbar.dart';
-import 'package:example/main.dart';
 import 'package:example/provider/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -88,6 +87,35 @@ class _InputsScreenState extends State<InputsScreen> {
                           labelSize: 10,
                           isSelected: true,
                         ),
+                        CoconutChip(
+                          color: CoconutColors.colorPalette.first,
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 2, horizontal: 8),
+                          label: 'isSelected null',
+                          labelColor: CoconutColors.colorPalette.first,
+                          labelSize: 12,
+                          hasOpacity: true,
+                        ),
+                        CoconutChip(
+                          color: CoconutColors.colorPalette.last,
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 2, horizontal: 8),
+                          label: 'Selected',
+                          labelColor: CoconutColors.colorPalette.last,
+                          labelSize: 10,
+                          hasOpacity: true,
+                          isSelected: true,
+                        ),
+                        CoconutChip(
+                          color: CoconutColors.colorPalette.last,
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 2, horizontal: 8),
+                          label: 'Unselected',
+                          labelColor: CoconutColors.colorPalette.last,
+                          labelSize: 10,
+                          hasOpacity: true,
+                          isSelected: false,
+                        )
                       ],
                     ),
                     CoconutLayout.spacing_600h,

@@ -37,7 +37,7 @@ class CoconutChip extends StatelessWidget {
   /// - If `false`, the default border width (`borderWidth`) is used.
   ///
   /// Defaults to `false` (not selected).
-  final bool isSelected;
+  final bool? isSelected;
 
   /// Determines whether the chip has reduced opacity.
   ///
@@ -131,7 +131,7 @@ class CoconutChip extends StatelessWidget {
     this.labelFontFamily = CoconutTypography.kTextFontFamily,
     this.labelSize = 12,
     this.isRectangle = false,
-    this.isSelected = false,
+    this.isSelected,
     this.hasOpacity = false,
     this.padding = const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
     this.borderWidth = 0.5,
@@ -161,8 +161,9 @@ class CoconutChip extends StatelessWidget {
             isRectangle ? CoconutStyles.radius_50 : CoconutStyles.radius_500,
           ),
           border: Border.all(
-              color: borderColor ?? color,
-              width: isSelected ? selectedBorderWidth : borderWidth),
+              color: (borderColor ?? color)
+                  .withOpacity(isSelected == false ? 0.6 : 1.0),
+              width: isSelected == true ? selectedBorderWidth : borderWidth),
         ),
         child: Text(
           label,
@@ -175,15 +176,15 @@ class CoconutChip extends StatelessWidget {
 
   Color getBackgroundColor() {
     if (hasOpacity) {
-      return color.withOpacity(isSelected ? 0.35 : 0.18);
+      return color.withOpacity(isSelected == true ? 0.35 : 0.18);
     }
     return color;
   }
 
   TextStyle getLabelStyle() => TextStyle(
-        fontFamily: labelFontFamily,
-        fontSize: labelSize,
-        fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-        color: labelColor ?? borderColor ?? CoconutColors.white,
-      );
+      fontFamily: labelFontFamily,
+      fontSize: labelSize,
+      fontWeight: isSelected == true ? FontWeight.bold : FontWeight.normal,
+      color: (labelColor ?? borderColor ?? CoconutColors.white)
+          .withOpacity(isSelected == false ? 0.5 : 1.0));
 }
