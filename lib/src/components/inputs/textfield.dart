@@ -25,6 +25,12 @@ class CoconutTextField extends StatefulWidget {
   /// The function receives the new text value as an argument.
   final Function(String) onChanged;
 
+  /// The padding inside the text field.
+  ///
+  /// If `null`, it defaults to `EdgeInsets.fromLTRB(16, 20, 16, 20)`,
+  /// or `EdgeInsets.fromLTRB(0, 20, 16, 20)` if a `prefix` widget is provided.
+  final EdgeInsets? padding;
+
   /// The color of the text when the field is active.
   ///
   /// If `null`, it defaults to `CoconutColors.onBlack(brightness)`.
@@ -133,6 +139,7 @@ class CoconutTextField extends StatefulWidget {
     required this.focusNode,
     required this.onChanged,
     this.brightness = Brightness.light,
+    this.padding,
     this.activeColor,
     this.cursorColor,
     this.placeholderColor,
@@ -227,7 +234,7 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
             focusNode: widget.focusNode,
             controller: widget.controller,
             obscureText: widget.obscureText,
-            padding:
+            padding: widget.padding ??
                 EdgeInsets.fromLTRB(widget.prefix != null ? 0 : 16, 20, 16, 20),
             style: CoconutTypography.body2_14.copyWith(
               color: _activeColor,
