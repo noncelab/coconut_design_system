@@ -101,6 +101,9 @@ class CoconutTextField extends StatefulWidget {
   /// The font size of the text inside the text field.
   final double fontSize;
 
+  /// The font family of the text inside the text field.
+  final String fontFamily;
+
   /// The alignment of the text inside the text field.
   ///
   /// If `null`, it defaults to `TextAlign.start`.
@@ -176,6 +179,7 @@ class CoconutTextField extends StatefulWidget {
     this.obscureText = false,
     this.isVisibleBorder = true,
     this.fontSize = 14,
+    this.fontFamily = 'Pretendard',
     this.textAlign,
     this.isLengthVisible = true,
   });
@@ -234,7 +238,7 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisSize: MainAxisSize.min, // 컨텐츠 크기에 맞추기
+      mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Container(
@@ -262,6 +266,7 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
             style: CoconutTypography.body2_14.copyWith(
               color: _activeColor,
               fontSize: widget.fontSize,
+              fontFamily: widget.fontFamily,
             ),
             placeholder: widget.placeholderText,
             placeholderStyle: CoconutTypography.body2_14.copyWith(
