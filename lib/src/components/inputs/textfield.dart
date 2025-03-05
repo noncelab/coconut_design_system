@@ -101,19 +101,36 @@ class CoconutTextField extends StatefulWidget {
   /// The font size of the text inside the text field.
   final double fontSize;
 
+  /// The alignment of the text inside the text field.
+  ///
+  /// If `null`, it defaults to `TextAlign.start`.
+  final TextAlign? textAlign;
+
+  /// Whether to display the character length counter.
+  ///
+  /// If `true`, the length indicator (e.g., "10/50") is shown.
+  /// Defaults to `true`.
+  final bool isLengthVisible;
+
   /// Creates a `CoconutTextField` widget.
   ///
   /// - [controller] manages the text input.
   /// - [focusNode] handles focus-related behaviors.
   /// - [brightness] adjusts the colors based on light or dark mode.
   /// - [onChanged] is triggered when the text input changes.
-  /// - [activeColor], [placeholderColor], and [errorColor] customize text and border colors.
+  /// - [activeColor], [cursorColor], [placeholderColor], and [errorColor] customize text and border colors.
+  /// - [backgroundColor] sets the background color of the text field.
   /// - [maxLength] sets a character limit.
   /// - [maxLines] allows multi-line input.
   /// - [prefix] and [suffix] add leading/trailing widgets.
   /// - [placeholderText] displays a hint inside the text field.
   /// - [errorText] and [isVisibleErrorText] handle error messages.
+  /// - [descriptionText] provides additional information below the text field.
   /// - [obscureText] enables secure text entry.
+  /// - [isVisibleBorder] determines whether the text field has a border.
+  /// - [fontSize] sets the font size of the input text.
+  /// - [textAlign] controls the alignment of the text inside the field.
+  /// - [isLengthVisible] determines whether to display the character length counter.
   ///
   /// Example usage:
   /// ```dart
@@ -126,6 +143,8 @@ class CoconutTextField extends StatefulWidget {
   ///   },
   ///   placeholderText: "Enter your email",
   ///   maxLength: 50,
+  ///   textAlign: TextAlign.center,
+  ///   isLengthVisible: false,
   ///   prefix: Icon(Icons.email),
   ///   suffix: IconButton(
   ///     icon: Icon(Icons.clear),
@@ -157,6 +176,8 @@ class CoconutTextField extends StatefulWidget {
     this.obscureText = false,
     this.isVisibleBorder = true,
     this.fontSize = 14,
+    this.textAlign,
+    this.isLengthVisible = true,
   });
 
   @override
@@ -234,6 +255,7 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
             focusNode: widget.focusNode,
             controller: widget.controller,
             obscureText: widget.obscureText,
+            textAlign: widget.textAlign ?? TextAlign.start,
             padding: widget.padding ??
                 EdgeInsets.fromLTRB(widget.prefix != null ? 0 : 16, 20, 16, 20),
             style: CoconutTypography.body2_14.copyWith(
@@ -297,7 +319,7 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                   ),
                 ),
               },
-              if (widget.maxLength != null) ...{
+              if (widget.maxLength != null && widget.isLengthVisible) ...{
                 Container(),
                 Text(
                   '${_text.runes.length}/${widget.maxLength}',
