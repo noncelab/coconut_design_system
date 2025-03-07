@@ -97,23 +97,25 @@ class _CoconutUnderlinedButtonState extends State<CoconutUnderlinedButton> {
           _isPressing = false;
         });
       },
-      child: Container(
-        padding: widget.padding ?? const EdgeInsets.all(8),
-        child: Container(
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(
-                color: getColorForBrightness(),
-                width: widget.lineWidth,
+      child: IntrinsicWidth(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(padding: widget.padding ?? const EdgeInsets.all(8)),
+            Text(
+              widget.text,
+              textAlign: TextAlign.center,
+              softWrap: true,
+              style: widget.textStyle.setColor(
+                _getColorForBrightness(),
               ),
             ),
-          ),
-          child: Text(
-            widget.text,
-            style: widget.textStyle.setColor(
-              getColorForBrightness(),
+            Container(
+              width: _getTextWidth(context),
+              height: widget.lineWidth,
+              color: _getColorForBrightness(),
             ),
-          ),
+          ],
         ),
       ),
     );
@@ -124,7 +126,7 @@ class _CoconutUnderlinedButtonState extends State<CoconutUnderlinedButton> {
   /// - If `isActive` is `false`, returns a faded color.
   /// - If the button is pressed, returns `pressingColor` or a faded version of `defaultColor`.
   /// - Otherwise, returns `defaultColor` or the primary theme color.
-  Color getColorForBrightness() {
+  Color _getColorForBrightness() {
     if (!widget.isActive) {
       return CoconutColors.onPrimary(widget.brightness).withOpacity(0.2);
     }
@@ -134,6 +136,15 @@ class _CoconutUnderlinedButtonState extends State<CoconutUnderlinedButton> {
           CoconutColors.onPrimary(widget.brightness).withOpacity(0.5);
     }
     return widget.defaultColor ?? CoconutColors.onPrimary(widget.brightness);
+  }
+
+  double _getTextWidth(BuildContext context) {
+    final textPainter = TextPainter(
+      text: TextSpan(text: widget.text, style: widget.textStyle),
+      maxLines: 1,
+      textDirection: TextDirection.ltr,
+    )..layout();
+    return textPainter.width;
   }
 
   @override
