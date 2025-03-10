@@ -98,6 +98,12 @@ class CoconutTextField extends StatefulWidget {
   /// Whether the text field should have a visible border.
   final bool isVisibleBorder;
 
+  /// The height of the text field.
+  ///
+  /// If `null`, the height is determined by the text content and padding.
+  /// When set, it forces the text field to have a fixed height.
+  final double? height;
+
   /// The font size of the text inside the text field.
   final double fontSize;
 
@@ -131,7 +137,9 @@ class CoconutTextField extends StatefulWidget {
   /// - [descriptionText] provides additional information below the text field.
   /// - [obscureText] enables secure text entry.
   /// - [isVisibleBorder] determines whether the text field has a border.
+  /// - [height] sets a fixed height for the text field (optional).
   /// - [fontSize] sets the font size of the input text.
+  /// - [fontFamily] specifies the font family for the input text.
   /// - [textAlign] controls the alignment of the text inside the field.
   /// - [isLengthVisible] determines whether to display the character length counter.
   ///
@@ -178,6 +186,7 @@ class CoconutTextField extends StatefulWidget {
     this.textInputType,
     this.obscureText = false,
     this.isVisibleBorder = true,
+    this.height,
     this.fontSize = 14,
     this.fontFamily = 'Pretendard',
     this.textAlign,
@@ -242,6 +251,7 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Container(
+          height: widget.height,
           decoration: BoxDecoration(
             border: widget.isVisibleBorder
                 ? Border.all(
