@@ -62,25 +62,30 @@ class CoconutPopup extends StatefulWidget {
   /// The color of the right button text.
   final Color? rightButtonColor;
 
-  /// The padding around the popup content.
-  final EdgeInsets? padding;
+  /// The padding around the title content.
+  final EdgeInsets? titlePadding;
+
+  /// The padding around the description content.
+  final EdgeInsets? descriptionPadding;
 
   /// Creates an instance of `CoconutPopup`.
-  const CoconutPopup(
-      {super.key,
-      required this.title,
-      required this.description,
-      required this.onTapRight,
-      this.leftButtonText = '취소',
-      this.rightButtonText = '확인',
-      this.centerDescription = true,
-      this.onTapLeft,
-      this.backgroundColor,
-      this.titleColor,
-      this.descriptionColor,
-      this.leftButtonColor,
-      this.rightButtonColor,
-      this.padding});
+  const CoconutPopup({
+    super.key,
+    required this.title,
+    required this.description,
+    required this.onTapRight,
+    this.leftButtonText = '취소',
+    this.rightButtonText = '확인',
+    this.centerDescription = true,
+    this.onTapLeft,
+    this.backgroundColor,
+    this.titleColor,
+    this.descriptionColor,
+    this.leftButtonColor,
+    this.rightButtonColor,
+    this.titlePadding,
+    this.descriptionPadding,
+  });
 
   @override
   State<CoconutPopup> createState() => _CoconutPopupState();
@@ -95,8 +100,6 @@ class _CoconutPopupState extends State<CoconutPopup> {
 
     return Dialog(
       child: Container(
-        padding: widget.padding ??
-            const EdgeInsets.only(left: 24, right: 24, top: 24, bottom: 20),
         decoration: BoxDecoration(
           color: widget.backgroundColor ?? CoconutColors.onWhite(brightness),
           borderRadius: const BorderRadius.all(Radius.circular(16)),
@@ -107,7 +110,8 @@ class _CoconutPopupState extends State<CoconutPopup> {
             children: [
               /// Title Section
               Container(
-                margin: const EdgeInsets.only(bottom: 12),
+                padding: widget.titlePadding ??
+                    const EdgeInsets.only(top: 24, bottom: 12),
                 child: Text(
                   widget.title,
                   style: CoconutTypography.body1_16_Bold.setColor(
@@ -119,7 +123,9 @@ class _CoconutPopupState extends State<CoconutPopup> {
               /// Description Section
               Container(
                 alignment: Alignment.topCenter,
-                margin: const EdgeInsets.only(bottom: 12),
+                padding: widget.descriptionPadding ??
+                    const EdgeInsets.only(
+                        left: 24, right: 24, top: 12, bottom: 12),
                 constraints: const BoxConstraints(minHeight: 66),
                 child: Text(
                   widget.description,
@@ -154,6 +160,7 @@ class _CoconutPopupState extends State<CoconutPopup> {
                           });
                         },
                         child: Container(
+                          padding: const EdgeInsets.only(top: 16, bottom: 16),
                           color: _isLeftButtonPressing
                               ? CoconutColors.onPrimary(brightness)
                                   .withOpacity(0.5)
@@ -189,6 +196,7 @@ class _CoconutPopupState extends State<CoconutPopup> {
                         });
                       },
                       child: Container(
+                        padding: const EdgeInsets.only(top: 16, bottom: 16),
                         color: _isRightButtonPressing
                             ? CoconutColors.onPrimary(brightness)
                                 .withOpacity(0.5)
