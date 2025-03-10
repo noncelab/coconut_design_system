@@ -165,8 +165,8 @@ class _CoconutPopupState extends State<CoconutPopup> {
                           child: Container(
                             padding: const EdgeInsets.only(top: 16, bottom: 16),
                             color: _isLeftButtonPressing
-                                ? CoconutColors.surface(brightness)
-                                    .withOpacity(0.5)
+                                ? CoconutColors.onPrimary(brightness)
+                                    .withOpacity(0.2)
                                 : Colors.transparent,
                             alignment: Alignment.center,
                             child: Text(
@@ -202,7 +202,7 @@ class _CoconutPopupState extends State<CoconutPopup> {
                           padding: const EdgeInsets.only(top: 16, bottom: 16),
                           color: _isRightButtonPressing
                               ? CoconutColors.onPrimary(brightness)
-                                  .withOpacity(0.5)
+                                  .withOpacity(0.2)
                               : Colors.transparent,
                           alignment: Alignment.center,
                           child: Text(
