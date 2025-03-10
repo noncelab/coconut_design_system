@@ -44,6 +44,9 @@ class CoconutPopup extends StatelessWidget {
   /// The text for the right button (default: "확인" / "Confirm").
   final String rightButtonText;
 
+  /// Whether the description text should be centered (default: true).
+  final bool centerDescription;
+
   /// The background color of the popup.
   final Color? backgroundColor;
 
@@ -70,6 +73,7 @@ class CoconutPopup extends StatelessWidget {
       required this.onTapRight,
       this.leftButtonText = '취소',
       this.rightButtonText = '확인',
+      this.centerDescription = true,
       this.onTapLeft,
       this.backgroundColor,
       this.titleColor,
@@ -112,6 +116,7 @@ class CoconutPopup extends StatelessWidget {
                 constraints: const BoxConstraints(minHeight: 66),
                 child: Text(
                   description,
+                  textAlign: centerDescription ? TextAlign.center : null,
                   style: CoconutTypography.body1_16.setColor(
                     descriptionColor ?? CoconutColors.onGray900(brightness),
                   ),
