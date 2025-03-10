@@ -25,7 +25,7 @@ import 'package:flutter/material.dart';
 ///   ),
 /// );
 /// ```
-class CoconutPopup extends StatelessWidget {
+class CoconutPopup extends StatefulWidget {
   /// The title of the popup dialog.
   final String title;
 
@@ -83,15 +83,22 @@ class CoconutPopup extends StatelessWidget {
       this.padding});
 
   @override
+  State<CoconutPopup> createState() => _CoconutPopupState();
+}
+
+class _CoconutPopupState extends State<CoconutPopup> {
+  bool _isLeftButtonPressing = false;
+  bool _isRightButtonPressing = false;
+  @override
   Widget build(BuildContext context) {
     Brightness brightness = Theme.of(context).brightness;
 
     return Dialog(
       child: Container(
-        padding: padding ??
+        padding: widget.padding ??
             const EdgeInsets.only(left: 24, right: 24, top: 24, bottom: 20),
         decoration: BoxDecoration(
-          color: backgroundColor ?? CoconutColors.onWhite(brightness),
+          color: widget.backgroundColor ?? CoconutColors.onWhite(brightness),
           borderRadius: const BorderRadius.all(Radius.circular(16)),
         ),
         child: IntrinsicHeight(
@@ -102,9 +109,9 @@ class CoconutPopup extends StatelessWidget {
               Container(
                 margin: const EdgeInsets.only(bottom: 12),
                 child: Text(
-                  title,
+                  widget.title,
                   style: CoconutTypography.body1_16_Bold.setColor(
-                    titleColor ?? CoconutColors.onGray900(brightness),
+                    widget.titleColor ?? CoconutColors.onGray900(brightness),
                   ),
                 ),
               ),
@@ -115,10 +122,11 @@ class CoconutPopup extends StatelessWidget {
                 margin: const EdgeInsets.only(bottom: 12),
                 constraints: const BoxConstraints(minHeight: 66),
                 child: Text(
-                  description,
-                  textAlign: centerDescription ? TextAlign.center : null,
+                  widget.description,
+                  textAlign: widget.centerDescription ? TextAlign.center : null,
                   style: CoconutTypography.body1_16.setColor(
-                    descriptionColor ?? CoconutColors.onGray900(brightness),
+                    widget.descriptionColor ??
+                        CoconutColors.onGray800(brightness),
                   ),
                 ),
               ),
@@ -126,19 +134,35 @@ class CoconutPopup extends StatelessWidget {
               /// Action Buttons (Left & Right)
               Row(
                 children: [
-                  if (onTapLeft != null) ...{
+                  if (widget.onTapLeft != null) ...{
                     Expanded(
                       child: GestureDetector(
                         onTap: () {
-                          onTapLeft?.call();
+                          setState(() {
+                            _isLeftButtonPressing = false;
+                          });
+                          widget.onTapLeft?.call();
+                        },
+                        onTapCancel: () {
+                          setState(() {
+                            _isLeftButtonPressing = false;
+                          });
+                        },
+                        onTapDown: (details) {
+                          setState(() {
+                            _isLeftButtonPressing = true;
+                          });
                         },
                         child: Container(
-                          color: Colors.transparent,
+                          color: _isLeftButtonPressing
+                              ? CoconutColors.onPrimary(brightness)
+                                  .withOpacity(0.5)
+                              : Colors.transparent,
                           alignment: Alignment.center,
                           child: Text(
-                            leftButtonText,
+                            widget.leftButtonText,
                             style: CoconutTypography.body1_16.setColor(
-                              leftButtonColor ??
+                              widget.leftButtonColor ??
                                   CoconutColors.onGray900(brightness),
                             ),
                           ),
@@ -149,15 +173,31 @@ class CoconutPopup extends StatelessWidget {
                   Expanded(
                     child: GestureDetector(
                       onTap: () {
-                        onTapRight.call();
+                        setState(() {
+                          _isRightButtonPressing = false;
+                        });
+                        widget.onTapRight.call();
+                      },
+                      onTapCancel: () {
+                        setState(() {
+                          _isRightButtonPressing = false;
+                        });
+                      },
+                      onTapDown: (details) {
+                        setState(() {
+                          _isRightButtonPressing = true;
+                        });
                       },
                       child: Container(
-                        color: Colors.transparent,
+                        color: _isRightButtonPressing
+                            ? CoconutColors.onPrimary(brightness)
+                                .withOpacity(0.5)
+                            : Colors.transparent,
                         alignment: Alignment.center,
                         child: Text(
-                          rightButtonText,
+                          widget.rightButtonText,
                           style: CoconutTypography.body1_16_Bold.setColor(
-                            rightButtonColor ??
+                            widget.rightButtonColor ??
                                 CoconutColors.onGray900(brightness),
                           ),
                         ),
