@@ -83,10 +83,10 @@ class CoconutTextField extends StatefulWidget {
   /// Additional description text displayed below the text field.
   final String? descriptionText;
 
-  /// Whether to display the error text when an error occurs.
+  /// Whether to display the error text and error border when an error occurs.
   ///
   /// Defaults to `false`.
-  final bool? isVisibleErrorText;
+  final bool isError;
 
   final TextInputType? textInputType;
 
@@ -133,7 +133,7 @@ class CoconutTextField extends StatefulWidget {
   /// - [maxLines] allows multi-line input.
   /// - [prefix] and [suffix] add leading/trailing widgets.
   /// - [placeholderText] displays a hint inside the text field.
-  /// - [errorText] and [isVisibleErrorText] handle error messages.
+  /// - [errorText] and [isError] handle error messages and status.
   /// - [descriptionText] provides additional information below the text field.
   /// - [obscureText] enables secure text entry.
   /// - [isVisibleBorder] determines whether the text field has a border.
@@ -182,7 +182,7 @@ class CoconutTextField extends StatefulWidget {
     this.placeholderText,
     this.errorText,
     this.descriptionText,
-    this.isVisibleErrorText,
+    this.isError = false,
     this.textInputType,
     this.obscureText = false,
     this.isVisibleBorder = true,
@@ -255,12 +255,14 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
           decoration: BoxDecoration(
             border: widget.isVisibleBorder
                 ? Border.all(
-                    color: _text.isEmpty
-                        ? _placeholderColor
-                        : widget.maxLength != null &&
-                                _text.runes.length > widget.maxLength!
-                            ? _errorColor
-                            : _activeColor,
+                    color: widget.isError
+                        ? _errorColor
+                        : _text.isEmpty
+                            ? _placeholderColor
+                            : widget.maxLength != null &&
+                                    _text.runes.length > widget.maxLength!
+                                ? _errorColor
+                                : _activeColor,
                   )
                 : null,
             borderRadius: BorderRadius.circular(12),
@@ -313,8 +315,7 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              if (widget.errorText != null &&
-                  widget.isVisibleErrorText == true) ...{
+              if (widget.errorText != null && widget.isError == true) ...{
                 Expanded(
                   child: Text(
                     widget.errorText ?? '',
