@@ -221,7 +221,7 @@ class _InputsScreenState extends State<InputsScreen> {
                           descriptionText: 'Description text',
                           placeholderText: 'Placeholder text',
                           errorText: 'Error text',
-                          isVisibleErrorText: isVisibleErrorText,
+                          isError: isVisibleErrorText,
                           maxLength: maxLength,
                           prefix: Container(
                             margin: const EdgeInsets.only(left: 16),

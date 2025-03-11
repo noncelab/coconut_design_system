@@ -37,7 +37,7 @@ class CoconutUnderlinedButton extends StatefulWidget {
   final VoidCallback onTap;
 
   /// **Padding around the button (optional).**
-  /// - Default: `EdgeInsets.all(8)`
+  /// - Default: `EdgeInsets.all(4)`
   final EdgeInsetsGeometry? padding;
 
   /// **Default underline color (optional).**
@@ -78,6 +78,7 @@ class _CoconutUnderlinedButtonState extends State<CoconutUnderlinedButton> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      behavior: HitTestBehavior.translucent,
       onTap: () {
         if (!widget.isActive) return;
         widget.onTap();
@@ -97,25 +98,27 @@ class _CoconutUnderlinedButtonState extends State<CoconutUnderlinedButton> {
           _isPressing = false;
         });
       },
-      child: IntrinsicWidth(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Padding(padding: widget.padding ?? const EdgeInsets.all(8)),
-            Text(
-              widget.text,
-              textAlign: TextAlign.center,
-              softWrap: true,
-              style: widget.textStyle.setColor(
-                _getColorForBrightness(),
+      child: Padding(
+        padding: widget.padding ?? const EdgeInsets.all(4),
+        child: IntrinsicWidth(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                widget.text,
+                textAlign: TextAlign.center,
+                softWrap: true,
+                style: widget.textStyle.setColor(
+                  _getColorForBrightness(),
+                ),
               ),
-            ),
-            Container(
-              width: _getTextWidth(context),
-              height: widget.lineWidth,
-              color: _getColorForBrightness(),
-            ),
-          ],
+              Container(
+                width: _getTextWidth(context),
+                height: widget.lineWidth,
+                color: _getColorForBrightness(),
+              ),
+            ],
+          ),
         ),
       ),
     );
