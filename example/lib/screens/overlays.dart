@@ -376,7 +376,8 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
             margin: const EdgeInsets.symmetric(vertical: 12),
             child: CoconutPulldownMenu(
               buttons: pulldownButtons2,
-              dividerIndex: 3,
+              dividerHeight: 3,
+              dividerColor: CoconutColors.white,
               onTap: (index) {
                 selectedPulldownIndex2 = index;
                 isPulldownOpen = false;

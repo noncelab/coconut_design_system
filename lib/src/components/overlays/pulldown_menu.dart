@@ -18,7 +18,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 ///   onTap: (index) {
 ///     print("Selected: $index");
 ///   },
-///   dividerIndex: 2, // Adds a thicker divider after the second item
+///   dividerHeight: 2,
 /// );
 /// ```
 class CoconutPulldownMenu extends StatelessWidget {
@@ -40,11 +40,14 @@ class CoconutPulldownMenu extends StatelessWidget {
   /// The blur radius of the dropdown menu's shadow effect. (default: `12`)
   final double blurRadius;
 
+  /// The border radius of the dropdown menu. (default: `8`)
+  final double borderRadius;
+
   /// The spread radius of the dropdown menu's shadow effect. (default: `4`)
   final double spreadRadius;
 
-  /// The index where a thicker divider should be placed (optional).
-  final int? dividerIndex;
+  /// The height of divider between buttons. (default: `1`)
+  final double? dividerHeight;
 
   /// The text color of menu items.
   final Color? textColor;
@@ -54,9 +57,6 @@ class CoconutPulldownMenu extends StatelessWidget {
 
   /// The color of normal dividers between items.
   final Color? dividerColor;
-
-  /// The color of the thick divider (used for `dividerIndex`).
-  final Color? dividerPointColor;
 
   /// The color of the checkmark icon for selected items.
   final Color? iconColor;
@@ -74,14 +74,14 @@ class CoconutPulldownMenu extends StatelessWidget {
     required this.onTap,
     this.selectedIndex,
     this.margin = EdgeInsets.zero,
-    this.blurRadius = 12,
-    this.spreadRadius = 4,
+    this.blurRadius = 16,
+    this.spreadRadius = 1,
+    this.borderRadius = 16,
     this.iconSize = 24,
-    this.dividerIndex,
+    this.dividerHeight = 1,
     this.textColor,
     this.backgroundColor,
     this.dividerColor,
-    this.dividerPointColor,
     this.iconColor,
     this.splashColor,
     this.shadowColor,
@@ -91,52 +91,78 @@ class CoconutPulldownMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     final brightness = Theme.of(context).brightness;
 
-    return Container(
-      margin: margin,
-      constraints:
-          const BoxConstraints(minWidth: 124), // Minimum width for dropdown
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: shadowColor ?? CoconutColors.onGray300(brightness),
-            spreadRadius: spreadRadius,
-            blurRadius: blurRadius,
-            offset: Offset.zero,
+    return Material(
+      borderRadius: BorderRadius.circular(borderRadius),
+      child: Container(
+        margin: margin,
+        constraints:
+            const BoxConstraints(minWidth: 152), // Minimum width for dropdown
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: shadowColor ?? Colors.black.withOpacity(0.5),
+              spreadRadius: spreadRadius,
+              blurRadius: blurRadius,
+              offset: const Offset(5, 5),
+            ),
+          ],
+        ),
+        child: IntrinsicWidth(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: List.generate(buttons.length, (index) {
+              return _button(buttons[index], index, borderRadius, brightness);
+            }),
           ),
-        ],
-      ),
-      child: IntrinsicWidth(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: List.generate(buttons.length, (index) {
-            return _button(buttons[index], index, brightness);
-          }),
         ),
       ),
     );
   }
 
   /// Builds a single dropdown button item.
-  Widget _button(String title, int index, Brightness brightness) {
+  Widget _button(
+    String title,
+    int index,
+    double borderRadius,
+    Brightness brightness,
+  ) {
     return Column(
       children: [
         Material(
           color: backgroundColor ?? CoconutColors.onGray100(brightness),
           shape: RoundedRectangleBorder(
-            borderRadius: _getBorderRadius(index, buttons.length, brightness) ??
+            borderRadius: _getBorderRadius(
+                  index,
+                  buttons.length,
+                  borderRadius,
+                  brightness,
+                ) ??
                 BorderRadius.zero,
           ),
           child: InkWell(
             onTap: () {
               onTap.call(index);
             },
-            borderRadius: _getBorderRadius(index, buttons.length, brightness),
+            borderRadius: _getBorderRadius(
+              index,
+              buttons.length,
+              borderRadius,
+              brightness,
+            ),
             splashColor: splashColor ?? CoconutColors.onGray200(brightness),
             highlightColor: Colors.transparent,
             child: Container(
               height: 34,
               padding: const EdgeInsets.symmetric(horizontal: 8),
               alignment: Alignment.centerLeft,
+              decoration: BoxDecoration(
+                borderRadius: _getBorderRadius(
+                  index,
+                  buttons.length,
+                  borderRadius,
+                  brightness,
+                ),
+              ),
               child: Row(
                 children: [
                   /// Button Label
@@ -169,10 +195,8 @@ class CoconutPulldownMenu extends StatelessWidget {
         /// Adds a divider between items
         if (index < buttons.length - 1) ...{
           Container(
-            height: index + 1 == dividerIndex ? 3 : 2,
-            color: index + 1 == dividerIndex
-                ? dividerPointColor ?? CoconutColors.onGray350(brightness)
-                : dividerColor ?? CoconutColors.onGray200(brightness),
+            height: dividerHeight,
+            color: dividerColor ?? CoconutColors.onGray200(brightness),
           ),
         }
       ],
@@ -180,16 +204,17 @@ class CoconutPulldownMenu extends StatelessWidget {
   }
 
   /// Determines the border radius for the first and last items.
-  BorderRadius? _getBorderRadius(int index, int length, Brightness brightness) {
+  BorderRadius? _getBorderRadius(
+      int index, int length, double borderRadius, Brightness brightness) {
     if (index == 0) {
-      return const BorderRadius.only(
-        topLeft: Radius.circular(8),
-        topRight: Radius.circular(8),
+      return BorderRadius.only(
+        topLeft: Radius.circular(borderRadius),
+        topRight: Radius.circular(borderRadius),
       );
     } else if (index == length - 1) {
-      return const BorderRadius.only(
-        bottomLeft: Radius.circular(8),
-        bottomRight: Radius.circular(8),
+      return BorderRadius.only(
+        bottomLeft: Radius.circular(borderRadius),
+        bottomRight: Radius.circular(borderRadius),
       );
     }
     return null; // No border radius for middle items
