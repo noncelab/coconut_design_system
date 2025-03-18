@@ -62,6 +62,18 @@ class CoconutPopup extends StatefulWidget {
   /// The color of the right button text.
   final Color? rightButtonColor;
 
+  /// The TextStyle of the title text.
+  final TextStyle? titleTextStyle;
+
+  /// The TextStyle of the description text.
+  final TextStyle? descriptionTextStyle;
+
+  /// The TextStyle of the left button text.
+  final TextStyle? leftButtonTextStyle;
+
+  /// The TextStyle of the right button text.
+  final TextStyle? rightButtonTextStyle;
+
   /// The padding around the title content.
   final EdgeInsets? titlePadding;
 
@@ -83,6 +95,10 @@ class CoconutPopup extends StatefulWidget {
     this.descriptionColor,
     this.leftButtonColor,
     this.rightButtonColor,
+    this.titleTextStyle,
+    this.descriptionTextStyle,
+    this.leftButtonTextStyle,
+    this.rightButtonTextStyle,
     this.titlePadding,
     this.descriptionPadding,
   });
@@ -116,9 +132,12 @@ class _CoconutPopupState extends State<CoconutPopup> {
                       const EdgeInsets.only(top: 24, bottom: 12),
                   child: Text(
                     widget.title,
-                    style: CoconutTypography.body1_16_Bold.setColor(
-                      widget.titleColor ?? CoconutColors.onGray900(brightness),
-                    ),
+                    style: widget.titleTextStyle?.setColor(widget.titleColor ??
+                            CoconutColors.onGray900(brightness)) ??
+                        CoconutTypography.body1_16_Bold.setColor(
+                          widget.titleColor ??
+                              CoconutColors.onGray900(brightness),
+                        ),
                   ),
                 ),
 
@@ -133,10 +152,13 @@ class _CoconutPopupState extends State<CoconutPopup> {
                     widget.description,
                     textAlign:
                         widget.centerDescription ? TextAlign.center : null,
-                    style: CoconutTypography.body1_16.setColor(
-                      widget.descriptionColor ??
-                          CoconutColors.onGray800(brightness),
-                    ),
+                    style: widget.descriptionTextStyle?.setColor(
+                            widget.descriptionColor ??
+                                CoconutColors.onGray800(brightness)) ??
+                        CoconutTypography.body1_16.setColor(
+                          widget.descriptionColor ??
+                              CoconutColors.onGray800(brightness),
+                        ),
                   ),
                 ),
 
@@ -171,10 +193,13 @@ class _CoconutPopupState extends State<CoconutPopup> {
                             alignment: Alignment.center,
                             child: Text(
                               widget.leftButtonText,
-                              style: CoconutTypography.body1_16.setColor(
-                                widget.leftButtonColor ??
-                                    CoconutColors.onGray900(brightness),
-                              ),
+                              style: widget.leftButtonTextStyle?.setColor(widget
+                                          .leftButtonColor ??
+                                      CoconutColors.onGray900(brightness)) ??
+                                  CoconutTypography.body1_16.setColor(
+                                    widget.leftButtonColor ??
+                                        CoconutColors.onGray900(brightness),
+                                  ),
                             ),
                           ),
                         ),
@@ -207,10 +232,13 @@ class _CoconutPopupState extends State<CoconutPopup> {
                           alignment: Alignment.center,
                           child: Text(
                             widget.rightButtonText,
-                            style: CoconutTypography.body1_16_Bold.setColor(
-                              widget.rightButtonColor ??
-                                  CoconutColors.onGray900(brightness),
-                            ),
+                            style: widget.rightButtonTextStyle?.setColor(
+                                    widget.rightButtonColor ??
+                                        CoconutColors.onGray900(brightness)) ??
+                                CoconutTypography.body1_16_Bold.setColor(
+                                  widget.rightButtonColor ??
+                                      CoconutColors.onGray900(brightness),
+                                ),
                           ),
                         ),
                       ),
