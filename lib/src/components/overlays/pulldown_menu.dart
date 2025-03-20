@@ -18,6 +18,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 ///   onTap: (index) {
 ///     print("Selected: $index");
 ///   },
+///   buttonHeight: 50, // Custom button height
+///   buttonPadding: EdgeInsets.symmetric(horizontal: 20), // Custom padding
 ///   dividerHeight: 2,
 /// );
 /// ```
@@ -33,6 +35,12 @@ class CoconutPulldownMenu extends StatelessWidget {
 
   /// The margin around the dropdown menu (default: `EdgeInsets.zero`).
   final EdgeInsets margin;
+
+  /// The padding inside each button (default: `EdgeInsets.symmetric(horizontal: 16)`).
+  final EdgeInsets? buttonPadding;
+
+  /// The height of each dropdown button (default: `44.0`).
+  final double buttonHeight;
 
   /// The size of the checkmark icon for selected items (default: `24`).
   final double iconSize;
@@ -74,6 +82,8 @@ class CoconutPulldownMenu extends StatelessWidget {
     required this.onTap,
     this.selectedIndex,
     this.margin = EdgeInsets.zero,
+    this.buttonPadding,
+    this.buttonHeight = 44,
     this.blurRadius = 16,
     this.spreadRadius = 1,
     this.borderRadius = 16,
@@ -152,8 +162,9 @@ class CoconutPulldownMenu extends StatelessWidget {
             splashColor: splashColor ?? CoconutColors.onGray200(brightness),
             highlightColor: Colors.transparent,
             child: Container(
-              height: 34,
-              padding: const EdgeInsets.symmetric(horizontal: 8),
+              height: buttonHeight,
+              padding:
+                  buttonPadding ?? const EdgeInsets.symmetric(horizontal: 16),
               alignment: Alignment.centerLeft,
               decoration: BoxDecoration(
                 borderRadius: _getBorderRadius(
