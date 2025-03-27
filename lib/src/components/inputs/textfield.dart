@@ -90,6 +90,8 @@ class CoconutTextField extends StatefulWidget {
 
   final TextInputType? textInputType;
 
+  final TextInputAction? textInputAction;
+
   /// Whether the text field should obscure input (e.g., for passwords).
   ///
   /// Defaults to `false`.
@@ -184,6 +186,7 @@ class CoconutTextField extends StatefulWidget {
     this.descriptionText,
     this.isError = false,
     this.textInputType,
+    this.textInputAction,
     this.obscureText = false,
     this.isVisibleBorder = true,
     this.height,
@@ -295,6 +298,7 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
             prefix: widget.prefix,
             suffix: widget.suffix,
             keyboardType: widget.textInputType,
+            textInputAction: widget.textInputAction,
             onChanged: (text) {
               if (widget.maxLength != null) {
                 if (text.runes.length > widget.maxLength!) {
