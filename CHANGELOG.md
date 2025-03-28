@@ -5,6 +5,58 @@ This project follows **[Semantic Versioning](https://semver.org/)**.
 
 ---
 
+## **[0.7.0] - 2025-03-28**
+
+### ✨ New Features
+- **`CoconutAppBar`**
+  - Added `height` and `expandedHeight` properties.
+  - Added `bottomWidget` and `preferredSizeHeight` to `buildHomeAppbar`.
+
+- **`CoconutPulldownMenu`**
+  - Added `buttonHeight` and `buttonPadding` parameters.
+  - Support for customizing dropdown shadow via `blurRadius` and `spreadRadius`.
+
+- **`CoconutPopup`**
+  - Added `centerDescription` parameter.
+  - Added `ClipRRect` and press effect.
+  - Separated padding into `titlePadding` and `descriptionPadding`.
+  - Added customizable `TextStyle` for title, description, and buttons.
+
+- **`CoconutTextField`**
+  - Added `padding`, `height`, `textAlign`, `textInputAction`, `isLengthVisible`, and `fontFamily` parameters.
+
+- **`CoconutChip`**
+  - Removed `child` property.
+  - Added:
+    - `label`, `labelFontFamily`, `labelSize`, `labelColor`
+    - `isSelected`, `hasOpacity`, `selectedBorderWidth`, `minWidth`
+
+### 🛠 Fixes & Improvements
+- **`CoconutAppBar`**
+  - Fixed alignment issue in `buildHomeAppbar`.
+
+- **`CoconutTextField`**
+  - Fixed border color logic.
+  - Unified error handling: replaced `isVisibleErrorText` with `isError`.
+
+- **`CoconutUnderlinedButton`**
+  - Fixed underline occupying entire screen width.
+  - Enabled touch detection in padding area.
+
+- **`CoconutChip`**
+  - Changed `isSelected` to be nullable.
+
+- **`CoconutPulldown`**
+  - Refactored: Removed `dividerIndex` and `dividerPointColor`, added `dividerHeight` and `borderRadius`.
+
+- **`CoconutPopup`**
+  - Adjusted button press opacity effect.
+
+- **General**
+  - Removed unnecessary `Container` usage in widget tree.
+
+---
+
 ## **[0.6.0] - 2025-02-25**  
 
 ### ✨ New Features  
