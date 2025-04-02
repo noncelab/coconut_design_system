@@ -5,6 +5,14 @@ This project follows **[Semantic Versioning](https://semver.org/)**.
 
 ---
 
+## **[0.7.1] - 2025-04-02**
+
+### ✨ New Features
+- **`CoconutAppBar`**
+  - Added `titlePadding` parameter to allow custom padding around the title.
+
+---
+
 ## **[0.7.0] - 2025-03-28**
 
 ### ✨ New Features
