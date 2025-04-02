@@ -51,6 +51,7 @@ class CoconutAppBar {
   /// #### Parameters:
   /// - `title` (String): The main title displayed in the center of the AppBar.
   /// - `context` (BuildContext): The current build context.
+  /// - `titlePadding` (EdgeInsets): The Padding of the main title.
   /// - `entireWidgetKey` (Key?, optional): A unique key for the AppBar.
   /// - `faucetIconKey` (Key?, optional): A key for the leading icon.
   /// - `backgroundColor` (Color?, optional): The background color of the AppBar.
@@ -66,6 +67,7 @@ class CoconutAppBar {
   static AppBar build({
     required String title,
     required BuildContext context,
+    EdgeInsets titlePadding = const EdgeInsets.all(0),
     Key? entireWidgetKey,
     Key? faucetIconKey,
     Color? backgroundColor,
@@ -83,20 +85,23 @@ class CoconutAppBar {
     Widget? widget = Column(
       children: [
         if (onTitlePressed == null) ...{
-          Text(
-            title,
-            style: CoconutTypography.heading4_18.setColor(
-              CoconutColors.onPrimary(brightness),
+          Padding(
+            padding: titlePadding,
+            child: Text(
+              title,
+              style: CoconutTypography.heading4_18.setColor(
+                CoconutColors.onPrimary(brightness),
+              ),
             ),
           )
         } else ...{
           CoconutUnderlinedButton(
             text: title,
             onTap: onTitlePressed,
-            padding: const EdgeInsets.all(0),
+            padding: titlePadding,
             textStyle: CoconutTypography.heading4_18,
             brightness: brightness,
-          )
+          ),
         },
         showSubLabel
             ? Column(
