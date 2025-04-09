@@ -260,12 +260,12 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                 ? Border.all(
                     color: widget.isError
                         ? _errorColor
-                        : _text.isEmpty
-                            ? _placeholderColor
-                            : widget.maxLength != null &&
+                        : _isFocus
+                            ? widget.maxLength != null &&
                                     _text.runes.length > widget.maxLength!
                                 ? _errorColor
-                                : _activeColor,
+                                : _activeColor
+                            : _placeholderColor,
                   )
                 : null,
             borderRadius: BorderRadius.circular(12),
