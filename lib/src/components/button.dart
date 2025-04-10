@@ -196,13 +196,15 @@ class _CoconutButtonState extends State<CoconutButton> {
             widget.borderRadius,
           ),
         ),
-        child: Text(
-          widget.text,
-          textAlign: TextAlign.center,
-          style: widget.textStyle.merge(
-            TextStyle(
-              color: getForegroundColor(
-                  isDarkMode: widget.brightness == Brightness.dark),
+        child: Center(
+          child: Text(
+            widget.text,
+            textAlign: TextAlign.center,
+            style: widget.textStyle.merge(
+              TextStyle(
+                color: getForegroundColor(
+                    isDarkMode: widget.brightness == Brightness.dark),
+              ),
             ),
           ),
         ),
