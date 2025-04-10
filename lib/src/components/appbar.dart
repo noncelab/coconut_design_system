@@ -119,7 +119,14 @@ class CoconutAppBar {
     );
     return AppBar(
       systemOverlayStyle: Theme.of(context).brightness == Brightness.light
-          ? SystemUiOverlayStyle.dark
+          ? const SystemUiOverlayStyle(
+              statusBarColor: CoconutColors.white, // 상태바 배경
+              statusBarBrightness: Brightness.light, // 상태바 아이콘 (iOS)
+              statusBarIconBrightness: Brightness.dark, // 상태바 아이콘 (Android)
+              systemNavigationBarColor: CoconutColors.white, // 하단 네비게이션바 배경
+              systemNavigationBarIconBrightness:
+                  Brightness.dark, // 하단 네비게이션바 아이콘
+            )
           : SystemUiOverlayStyle.light,
       key: entireWidgetKey,
       toolbarHeight: height ??
