@@ -228,16 +228,9 @@ class CoconutAppBar {
   /// - `isLeadingSvgAssetVisible` (bool, optional): Whether to display the leading icon. Default is `true`.
   /// - `automaticallyImplyLeading` (bool, optional): If `true`, Flutter determines whether to show a back button automatically. Default is `false`.
   /// - `subLabel` (Widget?, optional): An optional widget displayed next to the title.
-  /// - `bottomWidget` A `PreferredSize` widget rendered below the AppBar
-  /// - `appBarHeight` (double, optional): The height of the AppBar excluding the bottomWidget. Default is `58.0`.
-  /// - `bottomWidgetHeight` (double, optional): The height of the bottom widget, used for calculating expandedHeight. Default is `32`.
-  /// - `isBottomWidgetVisible` (bool, optional): Whether the bottom widget is visible and animated. Default is `false`.
+  /// - `appBarHeight` (double, optional): The height of the AppBar. widget is visible and animated. Default is `false`.
   /// - `iconSize` (double, optional): The size of the icons in the app bar, applied to both the leading icon and action buttons (if they are `IconButton`s).
   ///   Defaults to `40.0`. This ensures visual consistency in icon sizing and is passed to the `IconButton.iconSize` parameter rather than the `Icon` widget itself.
-  ///
-  /// ### Notes:
-  /// When `isBottomWidgetVisible` is `true`, a vertical margin of 8px is added
-  /// above the bottom widget for spacing.
   ///
   /// This widget is intended for use in `CustomScrollView`'s sliver list.
   static SliverAppBar buildHomeAppbar({
@@ -248,41 +241,16 @@ class CoconutAppBar {
     bool isLeadingSvgAssetVisible = true,
     bool automaticallyImplyLeading = false,
     Widget? subLabel,
-    PreferredSize? bottomWidget,
     double appBarHeight = 56.0,
-    double bottomWidgetHeight = 32.0,
-    bool isBottomWidgetVisible = false,
     double iconSize = 40,
   }) {
-    final double expandedHeight = appBarHeight + (isBottomWidgetVisible ? bottomWidgetHeight : 0);
-
     return SliverAppBar(
       scrolledUnderElevation: 0,
       automaticallyImplyLeading: automaticallyImplyLeading,
       floating: false,
       pinned: true,
-      expandedHeight: expandedHeight,
+      expandedHeight: appBarHeight,
       backgroundColor: Colors.transparent,
-      bottom: PreferredSize(
-          preferredSize: Size.fromHeight(isBottomWidgetVisible ? bottomWidgetHeight : 0),
-          child: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 300),
-              transitionBuilder: (Widget child, Animation<double> animation) {
-                final isHiding = child.key == const ValueKey('hidden');
-
-                return SizeTransition(
-                  sizeFactor: isHiding ? ReverseAnimation(animation) : animation,
-                  axisAlignment: -1.0,
-                  child: child,
-                );
-              },
-              child: isBottomWidgetVisible && bottomWidget != null
-                  ? SizedBox(
-                      key: const ValueKey('visible'),
-                      height: bottomWidgetHeight,
-                      child: bottomWidget,
-                    )
-                  : SizedBox(key: const ValueKey('hidden'), height: bottomWidgetHeight))),
       flexibleSpace: ClipRect(
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
