@@ -88,10 +88,10 @@ class CoconutTypography {
 
   /// **H1 - 32px, Regular**
   static const TextStyle heading1_32 = TextStyle(
-    fontSize: 32,
-    fontWeight: FontWeight.w400,
-    fontFamily: kTextFontFamily,
-  );
+      fontSize: 32,
+      fontWeight: FontWeight.w400,
+      fontFamily: kTextFontFamily,
+      height: 1.2);
 
   static final TextStyle heading1_32_Bold =
       applyVariation(heading1_32, isBold: true);
@@ -102,10 +102,10 @@ class CoconutTypography {
 
   /// **H2 - 28px, Regular**
   static const TextStyle heading2_28 = TextStyle(
-    fontSize: 28,
-    fontWeight: FontWeight.w400,
-    fontFamily: kTextFontFamily,
-  );
+      fontSize: 28,
+      fontWeight: FontWeight.w400,
+      fontFamily: kTextFontFamily,
+      height: 1.2);
 
   static final TextStyle heading2_28_Bold =
       applyVariation(heading2_28, isBold: true);
@@ -116,10 +116,10 @@ class CoconutTypography {
 
   /// **H3 - 21px, Regular**
   static const TextStyle heading3_21 = TextStyle(
-    fontSize: 21,
-    fontWeight: FontWeight.w400,
-    fontFamily: kTextFontFamily,
-  );
+      fontSize: 21,
+      fontWeight: FontWeight.w400,
+      fontFamily: kTextFontFamily,
+      height: 1.4);
 
   static final TextStyle heading3_21_Bold =
       applyVariation(heading3_21, isBold: true);
@@ -130,10 +130,10 @@ class CoconutTypography {
 
   /// **H4 - 18px, Regular**
   static const TextStyle heading4_18 = TextStyle(
-    fontSize: 18,
-    fontWeight: FontWeight.w400,
-    fontFamily: kTextFontFamily,
-  );
+      fontSize: 18,
+      fontWeight: FontWeight.w400,
+      fontFamily: kTextFontFamily,
+      height: 1.4);
 
   static final TextStyle heading4_18_Bold =
       applyVariation(heading4_18, isBold: true);
@@ -144,10 +144,10 @@ class CoconutTypography {
 
   /// **Body 1 - 16px, Regular**
   static const TextStyle body1_16 = TextStyle(
-    fontSize: 16,
-    fontWeight: FontWeight.w400,
-    fontFamily: kTextFontFamily,
-  );
+      fontSize: 16,
+      fontWeight: FontWeight.w400,
+      fontFamily: kTextFontFamily,
+      height: 1.4);
 
   static final TextStyle body1_16_Bold = applyVariation(body1_16, isBold: true);
   static final TextStyle body1_16_Number =
@@ -160,6 +160,7 @@ class CoconutTypography {
     fontSize: 14,
     fontWeight: FontWeight.w400,
     fontFamily: kTextFontFamily,
+    height: 1.4,
   );
 
   static final TextStyle body2_14_Bold = applyVariation(body2_14, isBold: true);
@@ -173,6 +174,7 @@ class CoconutTypography {
     fontSize: 12,
     fontWeight: FontWeight.w400,
     fontFamily: kTextFontFamily,
+    height: 1.4,
   );
 
   static final TextStyle body3_12_Bold = applyVariation(body3_12, isBold: true);
@@ -186,6 +188,7 @@ class CoconutTypography {
     fontSize: 10,
     fontWeight: FontWeight.w400,
     fontFamily: kTextFontFamily,
+    height: 1.4,
   );
 
   static final TextStyle caption_10_Bold =
