@@ -5,6 +5,24 @@ This project follows **[Semantic Versioning](https://semver.org/)**.
 
 ---
 
+## **[0.7.2] - 2025-04-15**
+
+### ✨ New Features
+- **`CoconutAppBar`**
+  - Explicitly set `SystemUiOverlayStyle` for light mode to ensure consistent status bar appearance.
+
+### 🛠 Fixes & Improvements
+- **`CoconutTextField`**
+  - `activeColor` is now applied only when the field is focused, improving border color behavior.
+
+- **`CoconutButton`**
+  - Fixed text alignment by wrapping label with `Center` to ensure both vertical and horizontal centering.
+
+- **`CoconutTypography`**
+  - Set default line height for better text layout consistency.
+
+---
+
 ## **[0.7.1] - 2025-04-02**
 
 ### ✨ New Features
