@@ -150,9 +150,8 @@ class CoconutAppBar {
                         isBottom && !isBackButton
                             ? 'packages/coconut_design_system/assets/svg/close.svg'
                             : 'packages/coconut_design_system/assets/svg/arrow-back.svg',
-                        colorFilter: ColorFilter.mode(
-                            CoconutColors.onPrimary(brightness),
-                            BlendMode.srcIn),
+                        colorFilter:
+                            ColorFilter.mode(CoconutColors.onPrimary(brightness), BlendMode.srcIn),
                         width: 24,
                         height: 24,
                       ),
@@ -188,13 +187,19 @@ class CoconutAppBar {
 
   /// Builds a `CoconutAppBar` designed for the home screen.
   ///
-  /// This AppBar features a leading icon, a title, optional sub-labels,
-  /// customizable action buttons, and an optional bottom widget.
-  /// It provides a transparent background with a blur effect,
-  /// making it suitable for a modern home screen layout.
+  /// This SliverAppBar includes:
+  /// - A leading SVG icon (optional)
+  /// - A title with optional sub-label
+  /// - A customizable list of action buttons (with default icon size of 40)
+  /// - An optional bottom widget (e.g., for alerts or tabs)
   ///
   /// The `bottomWidget` is attached at the bottom of the AppBar and supports
-  /// animations when its height changes dynamically.
+  /// animations when its visibility toggles. When visible, it appears with a
+  /// vertical margin (`kMarginHeight`) above it to separate it visually from
+  /// the main content.
+  ///
+  /// The AppBar uses a transparent background with a blur effect, making it
+  /// suitable for modern UIs with a floating feel.
   ///
   /// ### Example Usage:
   /// ```dart
@@ -209,7 +214,6 @@ class CoconutAppBar {
   ///     ),
   ///   ],
   ///   isLeadingSvgAssetVisible: true,
-  ///   expandedHeight: 100,
   ///   subLabel: Text("Beta"),
   ///   bottomWidget: PreferredSize(
   ///     preferredSize: Size.fromHeight(30),
@@ -219,79 +223,113 @@ class CoconutAppBar {
   ///       child: Center(child: Text("Network Alert")),
   ///     ),
   ///   ),
-  ///   appBarInnerMargin: EdgeInsets.only(top: 30), // Adjust top margin
+  ///   isBottomWidgetVisible: true,
   /// );
   /// ```
   ///
   /// #### Parameters:
-  /// - `context` (BuildContext): The current build context.
-  /// - `leadingSvgAsset` (SvgPicture): The SVG asset displayed on the left side.
-  /// - `appTitle` (String): The main title displayed in the AppBar.
+  /// - `context` (BuildContext): Build context.
+  /// - `leadingSvgAsset` (Widget): SVG asset displayed on the left side.(e.g., app icon)
+  /// - `appTitle` (String): The title string
   /// - `actionButtonList` (List<Widget>): A list of action buttons displayed on the right.
   /// - `isLeadingSvgAssetVisible` (bool, optional): Whether to display the leading icon. Default is `true`.
   /// - `automaticallyImplyLeading` (bool, optional): If `true`, Flutter determines whether to show a back button automatically. Default is `false`.
-  /// - `expandedHeight` (double?, optional): The height of the expanded AppBar, excluding the `bottomWidget`. Default is `84`.
   /// - `subLabel` (Widget?, optional): An optional widget displayed next to the title.
-  /// - `bottomWidget` (PreferredSize?, optional): A widget displayed below the AppBar, typically used for alerts or additional navigation.
-  ///   - If this widget has an `AnimatedContainer`, its height changes will animate correctly.
-  /// - `appBarInnerMargin` (EdgeInsets?, optional): Adjusts the margin inside the AppBar.
+  /// - `appBarHeight` (double, optional): The height of the AppBar. widget is visible and animated. Default is `false`.
+  /// - `iconSize` (double, optional): The size of the icons in the app bar, applied to both the leading icon and action buttons (if they are `IconButton`s).
+  ///   Defaults to `40.0`. This ensures visual consistency in icon sizing and is passed to the `IconButton.iconSize` parameter rather than the `Icon` widget itself.
+  ///
+  /// This widget is intended for use in `CustomScrollView`'s sliver list.
   static SliverAppBar buildHomeAppbar({
     required BuildContext context,
-    required SvgPicture leadingSvgAsset,
+    required Widget leadingSvgAsset,
     required String appTitle,
     required List<Widget> actionButtonList,
     bool isLeadingSvgAssetVisible = true,
     bool automaticallyImplyLeading = false,
-    double? expandedHeight,
     Widget? subLabel,
-    PreferredSize? bottomWidget,
-    EdgeInsets? appBarInnerMargin,
+    double appBarHeight = 56.0,
+    double iconSize = 40,
   }) {
     return SliverAppBar(
       scrolledUnderElevation: 0,
       automaticallyImplyLeading: automaticallyImplyLeading,
-      pinned: true,
       floating: false,
-      expandedHeight: 84 + (bottomWidget?.preferredSize.height ?? 0),
+      pinned: true,
+      expandedHeight: appBarHeight,
       backgroundColor: Colors.transparent,
-      bottom: bottomWidget,
       flexibleSpace: ClipRect(
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: CoconutLayout.defaultPadding),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Container(
-                margin: appBarInnerMargin,
-                child: Row(
-                  children: [
-                    if (isLeadingSvgAssetVisible)
-                      Padding(
-                        padding: const EdgeInsets.only(left: 4),
-                        child: leadingSvgAsset,
-                      ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 4),
-                        child: Row(
-                          children: [
-                            Text(
-                              appTitle,
-                              style: CoconutTypography.heading3_21_NumberBold,
+          child: SafeArea(
+            bottom: false,
+            child: SizedBox(
+              height: appBarHeight,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        if (isLeadingSvgAssetVisible) ...{
+                          SizedBox(
+                              height: iconSize,
+                              width: iconSize,
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 4.0),
+                                child: leadingSvgAsset,
+                              )),
+                        },
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                SizedBox(
+                                  height: iconSize,
+                                  child: Center(
+                                    child: Text(
+                                      appTitle,
+                                      style: CoconutTypography.heading3_21_NumberBold,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 4,
+                                ),
+                                subLabel ?? Container(),
+                              ],
                             ),
-                            const SizedBox(
-                              width: 4,
-                            ),
-                            subLabel ?? Container(),
-                          ],
+                          ),
                         ),
-                      ),
+                        for (Widget action in actionButtonList) ...[
+                          if (action is IconButton)
+                            IconButton(
+                              icon: action.icon,
+                              onPressed: action.onPressed,
+                              iconSize: iconSize,
+                              padding: action.padding,
+                              constraints: action.constraints,
+                              tooltip: action.tooltip,
+                              alignment: action.alignment,
+                              splashRadius: action.splashRadius,
+                              color: action.color,
+                              focusColor: action.focusColor,
+                              hoverColor: action.hoverColor,
+                              highlightColor: action.highlightColor,
+                              disabledColor: action.disabledColor,
+                            )
+                          else
+                            action,
+                        ]
+                      ],
                     ),
-                    for (Widget action in actionButtonList) ...[action]
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -382,8 +420,8 @@ class CoconutAppBar {
                     isBottom
                         ? 'packages/coconut_design_system/assets/svg/close.svg'
                         : 'packages/coconut_design_system/assets/svg/arrow-back.svg',
-                    colorFilter: ColorFilter.mode(
-                        CoconutColors.onPrimary(brightness), BlendMode.srcIn),
+                    colorFilter:
+                        ColorFilter.mode(CoconutColors.onPrimary(brightness), BlendMode.srcIn),
                     width: 24,
                     height: 24,
                   ),
@@ -436,8 +474,7 @@ class CoconutAppBar {
 /// - Dynamic title opacity based on scroll position.
 /// - Custom action buttons.
 /// - An optional back button with a custom callback.
-class CoconutFrostedAppBar extends StatefulWidget
-    implements PreferredSizeWidget {
+class CoconutFrostedAppBar extends StatefulWidget implements PreferredSizeWidget {
   /// The title of the AppBar.
   final String title;
 
@@ -545,8 +582,7 @@ class _CoconutFrostedAppBarState extends State<CoconutFrostedAppBar> {
         newTitleVisible != _isTitleVisible) {
       setState(() {
         _isScrollOverTitleHeight = newScrollOverTitleHeight;
-        _isTitleVisible =
-            widget.hasTitleOpacity ? newTitleVisible : _isTitleVisible;
+        _isTitleVisible = widget.hasTitleOpacity ? newTitleVisible : _isTitleVisible;
       });
     }
   }
@@ -593,8 +629,8 @@ class _CoconutFrostedAppBarState extends State<CoconutFrostedAppBar> {
                     widget.isBottom
                         ? 'packages/coconut_design_system/assets/svg/close.svg'
                         : 'packages/coconut_design_system/assets/svg/arrow-back.svg',
-                    colorFilter: ColorFilter.mode(
-                        CoconutColors.onPrimary(brightness), BlendMode.srcIn),
+                    colorFilter:
+                        ColorFilter.mode(CoconutColors.onPrimary(brightness), BlendMode.srcIn),
                     width: 24,
                     height: 24,
                   ),
