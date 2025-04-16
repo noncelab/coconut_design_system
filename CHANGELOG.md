@@ -5,6 +5,33 @@ This project follows **[Semantic Versioning](https://semver.org/)**.
 
 ---
 
+## **[0.7.3] - 2025-04-16**
+
+### ✨ Features
+- Added `CoconutFrostedAppBar`, a new `PreferredSizeWidget` variant with blur background, scroll-based title opacity, and dynamic background color adjustment based on scroll.
+- Added support for automatic `line-height` (`height`) scaling based on font size via `applyVariation()`.
+  - Headings (`≥ 24px`): `1.2`
+  - Body text and captions (`< 24px`): `1.4`
+
+### ♻️ Refactor
+- Unified theming logic by removing `brightness` parameters and using `Theme.of(context).brightness` internally.
+- Simplified AppBar button icon rendering using shared asset logic.
+- Extracted and renamed internal AppBar builder functions for clarity and modularity:
+  - `build()` – general AppBar with optional back/close icon, sublabel, etc.
+  - `buildHomeAppbar()` – sliver-based AppBar optimized for home layouts.
+  - `buildWithNext()` – AppBar variant with a trailing "Next" action button.
+
+### 💄 UI Improvements
+- Consistent spacing, padding, and icon sizing across all AppBar types.
+- Added support for `PreferredSize bottomWidget` and `EdgeInsets appBarInnerMargin` in `buildHomeAppbar` for dynamic layout flexibility.
+
+### 🧼 Cleanup
+- Improved documentation with usage examples and detailed parameter descriptions.
+- Removed unnecessary keys and parameters like `faucetIconKey` for simplification.
+- All predefined `TextStyle` entries in `CoconutTypography` now include consistent `height` values for better vertical rhythm and layout consistency.
+
+---
+
 ## **[0.7.2] - 2025-04-15**
 
 ### ✨ New Features
