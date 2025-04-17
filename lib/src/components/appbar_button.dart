@@ -14,7 +14,6 @@ import 'package:flutter/material.dart';
 ///     print("Button clicked!");
 ///   },
 ///   text: "Next",
-///   brightness: Brightness.light,
 /// )
 /// ```
 ///
@@ -22,7 +21,6 @@ import 'package:flutter/material.dart';
 /// - `isActive` (bool): Determines whether the button is enabled or disabled.
 /// - `onPressed` (VoidCallback?): Callback function triggered when the button is tapped.
 /// - `text` (String): The text displayed on the button.
-/// - `brightness` (Brightness): Determines the theme (light or dark) for color adjustments.
 /// - `usePrimaryActiveColor` (bool, optional): Defines whether to use the primary color for the button when active. Default is `true`.
 /// - `isUseInClosableAppbar` (bool, optional): Adjusts vertical padding when used inside a closable app bar. Default is `false`.
 class CoconutAppbarButton extends StatelessWidget {
@@ -53,7 +51,7 @@ class CoconutAppbarButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Brightness brightness = Theme.of(context).brightness;
+    Brightness brightness = CoconutTheme.brightness();
 
     return GestureDetector(
       onTap: isActive ? onPressed : null,

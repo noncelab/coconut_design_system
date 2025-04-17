@@ -24,9 +24,7 @@ class HomeScreen extends StatelessWidget {
         child: Consumer<ThemeProvider>(
           builder: (context, themeProvider, child) {
             final isDarkMode = themeProvider.themeMode == ThemeMode.dark;
-            final theme = isDarkMode
-                ? CoconutThemeData.darkTheme
-                : CoconutThemeData.lightTheme;
+            final theme = isDarkMode ? CoconutThemeData.darkTheme : CoconutThemeData.lightTheme;
 
             return ListView.separated(
               itemCount: routes.length,
