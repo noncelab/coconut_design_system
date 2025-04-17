@@ -31,3 +31,4 @@ export 'src/common/colors.dart';
 export 'src/common/layout.dart';
 export 'src/common/sizes.dart';
 export 'src/common/styles.dart';
+export 'src/common/theme.dart';

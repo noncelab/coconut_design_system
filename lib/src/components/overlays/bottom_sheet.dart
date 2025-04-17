@@ -15,7 +15,6 @@ import 'package:flutter/material.dart';
 ///   context: context,
 ///   isScrollControlled: true,
 ///   builder: (context) => CoconutBottomSheet(
-///     brightness: Brightness.light,
 ///     appBar: AppBar(title: Text("Bottom Sheet")),
 ///     body: Column(
 ///       children: [Text("This is a bottom sheet content.")],
@@ -57,7 +56,7 @@ class CoconutBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Brightness brightness = Theme.of(context).brightness;
+    Brightness brightness = CoconutTheme.brightness();
 
     return LayoutBuilder(builder: (context, constraints) {
       // Define the maximum and minimum height of the bottom sheet based on screen size.

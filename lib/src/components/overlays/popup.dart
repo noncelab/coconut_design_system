@@ -13,7 +13,6 @@ import 'package:flutter/material.dart';
 /// showDialog(
 ///   context: context,
 ///   builder: (context) => CoconutPopup(
-///     brightness: Brightness.light,
 ///     title: "Alert",
 ///     description: "Are you sure you want to proceed?",
 ///     onTapRight: () {
@@ -112,7 +111,7 @@ class _CoconutPopupState extends State<CoconutPopup> {
   bool _isRightButtonPressing = false;
   @override
   Widget build(BuildContext context) {
-    Brightness brightness = Theme.of(context).brightness;
+    Brightness brightness = CoconutTheme.brightness();
 
     return Dialog(
       child: ClipRRect(
@@ -128,15 +127,13 @@ class _CoconutPopupState extends State<CoconutPopup> {
               children: [
                 /// Title Section
                 Container(
-                  padding: widget.titlePadding ??
-                      const EdgeInsets.only(top: 24, bottom: 12),
+                  padding: widget.titlePadding ?? const EdgeInsets.only(top: 24, bottom: 12),
                   child: Text(
                     widget.title,
-                    style: widget.titleTextStyle?.setColor(widget.titleColor ??
-                            CoconutColors.onGray900(brightness)) ??
+                    style: widget.titleTextStyle
+                            ?.setColor(widget.titleColor ?? CoconutColors.onGray900(brightness)) ??
                         CoconutTypography.body1_16_Bold.setColor(
-                          widget.titleColor ??
-                              CoconutColors.onGray900(brightness),
+                          widget.titleColor ?? CoconutColors.onGray900(brightness),
                         ),
                   ),
                 ),
@@ -145,19 +142,15 @@ class _CoconutPopupState extends State<CoconutPopup> {
                 Container(
                   alignment: Alignment.topCenter,
                   padding: widget.descriptionPadding ??
-                      const EdgeInsets.only(
-                          left: 24, right: 24, top: 12, bottom: 12),
+                      const EdgeInsets.only(left: 24, right: 24, top: 12, bottom: 12),
                   constraints: const BoxConstraints(minHeight: 66),
                   child: Text(
                     widget.description,
-                    textAlign:
-                        widget.centerDescription ? TextAlign.center : null,
+                    textAlign: widget.centerDescription ? TextAlign.center : null,
                     style: widget.descriptionTextStyle?.setColor(
-                            widget.descriptionColor ??
-                                CoconutColors.onGray800(brightness)) ??
+                            widget.descriptionColor ?? CoconutColors.onGray800(brightness)) ??
                         CoconutTypography.body1_16.setColor(
-                          widget.descriptionColor ??
-                              CoconutColors.onGray800(brightness),
+                          widget.descriptionColor ?? CoconutColors.onGray800(brightness),
                         ),
                   ),
                 ),
@@ -187,18 +180,15 @@ class _CoconutPopupState extends State<CoconutPopup> {
                           child: Container(
                             padding: const EdgeInsets.only(top: 16, bottom: 16),
                             color: _isLeftButtonPressing
-                                ? CoconutColors.onPrimary(brightness)
-                                    .withOpacity(0.2)
+                                ? CoconutColors.onPrimary(brightness).withOpacity(0.2)
                                 : Colors.transparent,
                             alignment: Alignment.center,
                             child: Text(
                               widget.leftButtonText,
-                              style: widget.leftButtonTextStyle?.setColor(widget
-                                          .leftButtonColor ??
+                              style: widget.leftButtonTextStyle?.setColor(widget.leftButtonColor ??
                                       CoconutColors.onGray900(brightness)) ??
                                   CoconutTypography.body1_16.setColor(
-                                    widget.leftButtonColor ??
-                                        CoconutColors.onGray900(brightness),
+                                    widget.leftButtonColor ?? CoconutColors.onGray900(brightness),
                                   ),
                             ),
                           ),
@@ -226,18 +216,15 @@ class _CoconutPopupState extends State<CoconutPopup> {
                         child: Container(
                           padding: const EdgeInsets.only(top: 16, bottom: 16),
                           color: _isRightButtonPressing
-                              ? CoconutColors.onPrimary(brightness)
-                                  .withOpacity(0.2)
+                              ? CoconutColors.onPrimary(brightness).withOpacity(0.2)
                               : Colors.transparent,
                           alignment: Alignment.center,
                           child: Text(
                             widget.rightButtonText,
-                            style: widget.rightButtonTextStyle?.setColor(
-                                    widget.rightButtonColor ??
-                                        CoconutColors.onGray900(brightness)) ??
+                            style: widget.rightButtonTextStyle?.setColor(widget.rightButtonColor ??
+                                    CoconutColors.onGray900(brightness)) ??
                                 CoconutTypography.body1_16_Bold.setColor(
-                                  widget.rightButtonColor ??
-                                      CoconutColors.onGray900(brightness),
+                                  widget.rightButtonColor ?? CoconutColors.onGray900(brightness),
                                 ),
                           ),
                         ),

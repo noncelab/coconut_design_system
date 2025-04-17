@@ -25,7 +25,6 @@ class CoconutCheckbox extends StatelessWidget {
   /// Creates a `CoconutCheckbox` widget.
   ///
   /// - [isSelected] determines whether the checkbox is checked or not.
-  /// - [brightness] is used to adjust colors for light or dark mode.
   /// - [onChanged] is triggered when the checkbox is tapped.
   /// - [width] sets the checkbox size (default: `20.0`).
   /// - [color] allows customization of the checkbox color.
@@ -34,7 +33,6 @@ class CoconutCheckbox extends StatelessWidget {
   /// ```dart
   /// CoconutCheckbox(
   ///   isSelected: true,
-  ///   brightness: Theme.of(context).brightness,
   ///   onChanged: (bool value) {
   ///     print("Checkbox state: $value");
   ///   },
@@ -50,7 +48,7 @@ class CoconutCheckbox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final brightness = Theme.of(context).brightness;
+    final brightness = CoconutTheme.brightness();
     return GestureDetector(
       onTap: () {
         onChanged(!isSelected);

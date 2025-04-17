@@ -1,3 +1,4 @@
+import 'package:coconut_design_system/coconut_design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
@@ -71,8 +72,7 @@ class CoconutCircularIndicator extends StatefulWidget {
   });
 
   @override
-  State<CoconutCircularIndicator> createState() =>
-      _CoconutCircularIndicatorState();
+  State<CoconutCircularIndicator> createState() => _CoconutCircularIndicatorState();
 }
 
 class _CoconutCircularIndicatorState extends State<CoconutCircularIndicator>
@@ -81,7 +81,7 @@ class _CoconutCircularIndicatorState extends State<CoconutCircularIndicator>
 
   @override
   Widget build(BuildContext context) {
-    Brightness brightness = Theme.of(context).brightness;
+    Brightness brightness = CoconutTheme.brightness();
     return SizedBox(
         width: widget.size,
         height: widget.size,

@@ -12,7 +12,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 /// Example Usage:
 /// ```dart
 /// CoconutPulldownMenu(
-///   brightness: Brightness.light,
 ///   buttons: ["Option 1", "Option 2", "Option 3"],
 ///   selectedIndex: 1,
 ///   onTap: (index) {
@@ -99,14 +98,13 @@ class CoconutPulldownMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final brightness = Theme.of(context).brightness;
+    final brightness = CoconutTheme.brightness();
 
     return Material(
       borderRadius: BorderRadius.circular(borderRadius),
       child: Container(
         margin: margin,
-        constraints:
-            const BoxConstraints(minWidth: 152), // Minimum width for dropdown
+        constraints: const BoxConstraints(minWidth: 152), // Minimum width for dropdown
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
@@ -163,8 +161,7 @@ class CoconutPulldownMenu extends StatelessWidget {
             highlightColor: Colors.transparent,
             child: Container(
               height: buttonHeight,
-              padding:
-                  buttonPadding ?? const EdgeInsets.symmetric(horizontal: 16),
+              padding: buttonPadding ?? const EdgeInsets.symmetric(horizontal: 16),
               alignment: Alignment.centerLeft,
               decoration: BoxDecoration(
                 borderRadius: _getBorderRadius(

@@ -1,3 +1,4 @@
+import 'package:coconut_design_system/coconut_design_system.dart';
 import 'package:flutter/material.dart';
 
 /// [ThemeProvider] is a ChangeNotifier that manages the application's theme mode (light/dark).
@@ -12,8 +13,9 @@ import 'package:flutter/material.dart';
 /// )
 /// ```
 class ThemeProvider with ChangeNotifier {
-  /// The current theme mode of the app (default: `ThemeMode.light`).
-  ThemeMode _themeMode = ThemeMode.light;
+  /// The current theme mode of the app (default: `ThemeMode.system`).
+  ThemeMode _themeMode =
+      CoconutTheme.brightness() == Brightness.dark ? ThemeMode.dark : ThemeMode.light;
 
   /// Returns the current theme mode.
   ///
@@ -41,8 +43,10 @@ class ThemeProvider with ChangeNotifier {
   /// themeProvider.toggleTheme();
   /// ```
   void toggleTheme() {
-    _themeMode =
-        _themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
+    _themeMode = _themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
+    CoconutTheme.setTheme(_themeMode == ThemeMode.light
+        ? Brightness.light
+        : Brightness.dark); // Set the theme globally
     notifyListeners(); // Notify UI updates
   }
 }

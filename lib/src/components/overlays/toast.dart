@@ -11,7 +11,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 /// Example Usage:
 /// ```dart
 /// CoconutToast.showBottomToast(
-///   brightness: Brightness.light,
 ///   context: context,
 ///   text: "This is a bottom toast message.",
 /// );
@@ -21,7 +20,6 @@ class CoconutToast {
 
   /// Displays a toast message at the bottom of the screen.
   ///
-  /// - [brightness]: Determines whether the theme is light or dark.
   /// - [context]: The build context.
   /// - [text]: The message to display in the toast.
   /// - [backgroundColor]: The background color of the toast.
@@ -29,7 +27,11 @@ class CoconutToast {
   /// - [textColor]: The color of the text inside the toast.
   /// - [seconds]: Duration in seconds before the toast disappears (default: `2`).
   static void showBottomToast({
-    required Brightness brightness,
+    /// - Deprecated: This parameter will be removed in version `0.8.0`.
+    /// - Now automatically inferred from `CoconutTheme.brightness()`.
+    @Deprecated(
+        'This parameter will be removed in version 0.8. It is now inferred from CoconutTheme.brightness.')
+    Brightness? brightness,
     required BuildContext context,
     required String text,
     Color? backgroundColor,
@@ -37,6 +39,7 @@ class CoconutToast {
     Color? textColor,
     int seconds = 2,
   }) {
+    Brightness brightness = CoconutTheme.brightness();
     if (_isToastVisible) return;
     _isToastVisible = true;
 
@@ -81,8 +84,7 @@ class CoconutToast {
               },
               child: Container(
                 margin: const EdgeInsets.all(12),
-                padding:
-                    const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+                padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
                 height: 50,
                 decoration: BoxDecoration(
                   color: backgroundColor ?? CoconutColors.onGray900(brightness),
@@ -96,8 +98,7 @@ class CoconutToast {
                   text,
                   overflow: TextOverflow.ellipsis,
                   style: CoconutTypography.body2_14.copyWith(
-                    decoration: TextDecoration
-                        .none, // Prevents underlining in debug mode
+                    decoration: TextDecoration.none, // Prevents underlining in debug mode
                     color: textColor ?? CoconutColors.onGray100(brightness),
                   ),
                 ),
@@ -114,7 +115,6 @@ class CoconutToast {
 
   /// Displays a toast message at the top of the screen.
   ///
-  /// - [brightness]: Determines whether the theme is light or dark.
   /// - [context]: The build context.
   /// - [text]: The message to display in the toast.
   /// - [isVisibleIcon]: Whether to show an icon next to the message.
@@ -142,7 +142,7 @@ class CoconutToast {
     late OverlayEntry overlayEntry;
     overlayEntry = OverlayEntry(
       builder: (context) {
-        Brightness brightness = Theme.of(context).brightness;
+        Brightness brightness = CoconutTheme.brightness();
         return SafeArea(
           child: Align(
             alignment: Alignment.topCenter,
@@ -175,7 +175,11 @@ class CoconutToast {
 /// A widget representing a toast message.
 class CoconutToastWidget extends StatefulWidget {
   final String text;
-  final Brightness brightness;
+
+  @Deprecated(
+      'This parameter will be removed in version 0.8. It is now inferred from CoconutTheme.brightness.')
+  final Brightness? brightness;
+
   final bool isVisibleIcon;
   final int duration;
   final VoidCallback onDismiss;
@@ -192,7 +196,7 @@ class CoconutToastWidget extends StatefulWidget {
   const CoconutToastWidget({
     super.key,
     required this.text,
-    required this.brightness,
+    this.brightness,
     required this.isVisibleIcon,
     required this.duration,
     required this.onDismiss,
@@ -218,6 +222,7 @@ class _CoconutToastWidgetState extends State<CoconutToastWidget>
 
   @override
   Widget build(BuildContext context) {
+    Brightness brightness = CoconutTheme.brightness();
     return SlideTransition(
       position: _offsetAnimation,
       child: FadeTransition(
@@ -233,12 +238,10 @@ class _CoconutToastWidgetState extends State<CoconutToastWidget>
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 13),
             width: double.maxFinite,
             decoration: BoxDecoration(
-              color: widget.backgroundColor ??
-                  CoconutColors.onGray900(widget.brightness),
+              color: widget.backgroundColor ?? CoconutColors.onGray900(brightness),
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                color: widget.borderColor ??
-                    CoconutColors.onGray300(widget.brightness),
+                color: widget.borderColor ?? CoconutColors.onGray300(brightness),
                 width: 1,
               ),
             ),
@@ -249,12 +252,10 @@ class _CoconutToastWidgetState extends State<CoconutToastWidget>
                   Padding(
                     padding: EdgeInsets.only(right: widget.iconRightPadding),
                     child: SvgPicture.asset(
-                      widget.iconPath ??
-                          'packages/coconut_design_system/assets/svg/toast_info.svg',
+                      widget.iconPath ?? 'packages/coconut_design_system/assets/svg/toast_info.svg',
                       height: widget.iconSize,
                       colorFilter: ColorFilter.mode(
-                        widget.borderColor ??
-                            CoconutColors.onGray100(widget.brightness),
+                        widget.borderColor ?? CoconutColors.onGray100(brightness),
                         BlendMode.srcIn,
                       ),
                     ),
@@ -270,10 +271,8 @@ class _CoconutToastWidgetState extends State<CoconutToastWidget>
                     child: Text(
                       widget.text,
                       style: CoconutTypography.body2_14.copyWith(
-                        decoration: TextDecoration
-                            .none, // Prevents underlining in debug mode
-                        color: widget.textColor ??
-                            CoconutColors.onGray100(widget.brightness),
+                        decoration: TextDecoration.none, // Prevents underlining in debug mode
+                        color: widget.textColor ?? CoconutColors.onGray100(brightness),
                         fontSize: widget.fontSize,
                       ),
                     ),
@@ -297,11 +296,9 @@ class _CoconutToastWidgetState extends State<CoconutToastWidget>
   void initState() {
     super.initState();
 
-    _controller = AnimationController(
-        duration: const Duration(milliseconds: 300), vsync: this);
+    _controller = AnimationController(duration: const Duration(milliseconds: 300), vsync: this);
 
-    _offsetAnimation = Tween<Offset>(
-            begin: Offset.zero, end: const Offset(0.0, -1.0))
+    _offsetAnimation = Tween<Offset>(begin: Offset.zero, end: const Offset(0.0, -1.0))
         .animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
 
     _fadeAnimation = Tween<double>(

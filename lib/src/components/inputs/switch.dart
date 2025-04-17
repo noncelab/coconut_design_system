@@ -1,6 +1,5 @@
 import 'package:coconut_design_system/coconut_design_system.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 /// A customizable switch widget based on `CupertinoSwitch`.
 ///
@@ -30,7 +29,6 @@ class CoconutSwitch extends StatelessWidget {
   /// Creates a `CoconutSwitch` widget.
   ///
   /// - [isOn] determines whether the switch is turned on or off.
-  /// - [brightness] is used to adjust colors for light or dark mode.
   /// - [onChanged] is triggered when the switch state changes.
   /// - [activeColor] customizes the active track color.
   /// - [thumbColor] customizes the switch thumb color.
@@ -39,7 +37,6 @@ class CoconutSwitch extends StatelessWidget {
   /// ```dart
   /// CoconutSwitch(
   ///   isOn: true,
-  ///   brightness: Theme.of(context).brightness,
   ///   onChanged: (bool value) {
   ///     print("Switch state: $value");
   ///   },
@@ -55,7 +52,7 @@ class CoconutSwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final brightness = Theme.of(context).brightness;
+    final brightness = CoconutTheme.brightness();
 
     final active = activeColor == null
         ? isOn

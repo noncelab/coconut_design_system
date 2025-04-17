@@ -87,16 +87,13 @@ class _CoconutProgressIndicatorState extends State<CoconutProgressIndicator> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        Brightness brightness = Theme.of(context).brightness;
+        Brightness brightness = CoconutTheme.brightness();
         double progress = widget.progress;
 
         // Set default colors based on theme
-        Color progressColor =
-            widget.progressColor ?? CoconutColors.onPrimary(brightness);
+        Color progressColor = widget.progressColor ?? CoconutColors.onPrimary(brightness);
         Color backgroundColor = widget.backgroundColor ??
-            (brightness == Brightness.light
-                ? CoconutColors.gray300
-                : CoconutColors.gray700);
+            (brightness == Brightness.light ? CoconutColors.gray300 : CoconutColors.gray700);
 
         // Define default values
         double borderRadius = widget.borderRadius ?? CoconutStyles.radius_100;
