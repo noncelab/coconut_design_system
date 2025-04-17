@@ -5,6 +5,14 @@ This project follows **[Semantic Versioning](https://semver.org/)**.
 
 ---
 
+## **[0.7.4] - 2025-04-17**
+
+### ✨ Features
+- **`CoconutPulldownMenu`**
+  - Added `textInputFormatter` parameter.
+
+---
+
 ## **[0.7.3] - 2025-04-16**
 
 ### ✨ Features
