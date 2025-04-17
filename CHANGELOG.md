@@ -8,7 +8,7 @@ This project follows **[Semantic Versioning](https://semver.org/)**.
 ## **[0.7.4] - 2025-04-17**
 
 ### ✨ Features
-- **`CoconutPulldownMenu`**
+- **`CoconutTextField`**
   - Added `textInputFormatter` parameter.
 
 ---
