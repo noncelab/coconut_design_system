@@ -1,6 +1,7 @@
 import 'package:coconut_design_system/coconut_design_system.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 /// A customizable text field widget with a Cupertino-style appearance.
 ///
@@ -91,6 +92,9 @@ class CoconutTextField extends StatefulWidget {
   final TextInputType? textInputType;
 
   final TextInputAction? textInputAction;
+
+  /// The text input formatter to control the input format.
+  final List<TextInputFormatter>? textInputFormatter;
 
   /// Whether the text field should obscure input (e.g., for passwords).
   ///
@@ -187,6 +191,7 @@ class CoconutTextField extends StatefulWidget {
     this.isError = false,
     this.textInputType,
     this.textInputAction,
+    this.textInputFormatter,
     this.obscureText = false,
     this.isVisibleBorder = true,
     this.height,
@@ -217,12 +222,9 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
   }
 
   void _updateData() {
-    _activeColor =
-        widget.activeColor ?? CoconutColors.onBlack(widget.brightness);
-    _cursorColor =
-        widget.cursorColor ?? CoconutColors.onBlack(widget.brightness);
-    _placeholderColor =
-        widget.placeholderColor ?? CoconutColors.onGray300(widget.brightness);
+    _activeColor = widget.activeColor ?? CoconutColors.onBlack(widget.brightness);
+    _cursorColor = widget.cursorColor ?? CoconutColors.onBlack(widget.brightness);
+    _placeholderColor = widget.placeholderColor ?? CoconutColors.onGray300(widget.brightness);
     _errorColor = widget.errorColor ?? CoconutColors.red;
     _backgroundColor = widget.backgroundColor ?? Colors.transparent;
     _text = widget.controller.text;
@@ -261,8 +263,7 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                     color: widget.isError
                         ? _errorColor
                         : _isFocus
-                            ? widget.maxLength != null &&
-                                    _text.runes.length > widget.maxLength!
+                            ? widget.maxLength != null && _text.runes.length > widget.maxLength!
                                 ? _errorColor
                                 : _activeColor
                             : _placeholderColor,
@@ -274,10 +275,11 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
           child: CupertinoTextField(
             focusNode: widget.focusNode,
             controller: widget.controller,
+            inputFormatters: widget.textInputFormatter,
             obscureText: widget.obscureText,
             textAlign: widget.textAlign ?? TextAlign.start,
-            padding: widget.padding ??
-                EdgeInsets.fromLTRB(widget.prefix != null ? 0 : 16, 20, 16, 20),
+            padding:
+                widget.padding ?? EdgeInsets.fromLTRB(widget.prefix != null ? 0 : 16, 20, 16, 20),
             style: CoconutTypography.body2_14.copyWith(
               color: _activeColor,
               fontSize: widget.fontSize,
@@ -302,8 +304,7 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
             onChanged: (text) {
               if (widget.maxLength != null) {
                 if (text.runes.length > widget.maxLength!) {
-                  text =
-                      String.fromCharCodes(text.runes.take(widget.maxLength!));
+                  text = String.fromCharCodes(text.runes.take(widget.maxLength!));
                   widget.controller.text = text;
                 }
               }
