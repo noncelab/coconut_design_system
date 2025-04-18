@@ -76,7 +76,7 @@ class CoconutPulldownMenu extends StatelessWidget {
   /// The margin around the dropdown menu (default: `EdgeInsets.zero`).
   final EdgeInsets margin;
 
-  /// The padding inside each button (default: `EdgeInsets.symmetric(horizontal: 16)`).
+  /// The padding inside each button (default: `EdgeInsets.symmetric(horizontal: 20)`).
   final EdgeInsets? buttonPadding;
 
   /// The height of each dropdown button (default: `44.0`).
@@ -195,7 +195,7 @@ class CoconutPulldownMenu extends StatelessWidget {
                   children: [
                     Container(
                       padding: groupTitlePadding ??
-                          const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                          const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
                       alignment: Alignment.centerLeft,
                       decoration: BoxDecoration(
                         borderRadius: index == 0
@@ -289,7 +289,7 @@ class CoconutPulldownMenu extends StatelessWidget {
             highlightColor: Colors.transparent,
             child: Container(
               height: buttonHeight,
-              padding: buttonPadding ?? const EdgeInsets.symmetric(horizontal: 16),
+              padding: buttonPadding ?? const EdgeInsets.symmetric(horizontal: 20),
               alignment: Alignment.centerLeft,
               decoration: BoxDecoration(
                 borderRadius: _getBorderRadius(
