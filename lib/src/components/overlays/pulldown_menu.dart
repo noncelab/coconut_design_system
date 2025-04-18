@@ -2,36 +2,76 @@ import 'package:coconut_design_system/coconut_design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-/// A customizable dropdown menu with selectable items and dividers.
+abstract class CoconutPulldownMenuEntry {}
+
+class CoconutPulldownMenuItem extends CoconutPulldownMenuEntry {
+  final String title;
+
+  CoconutPulldownMenuItem({
+    required this.title,
+  });
+}
+
+class CoconutPulldownMenuGroup extends CoconutPulldownMenuEntry {
+  final String groupTitle;
+  final List<CoconutPulldownMenuItem> items;
+
+  CoconutPulldownMenuGroup({
+    required this.groupTitle,
+    required this.items,
+  });
+}
+
+/// ## CoconutPulldownMenu
 ///
-/// The `CoconutPulldownMenu` provides a structured dropdown menu:
-/// - Displays a **list of buttons** with optional selection states.
-/// - Supports **custom dividers** between specific items.
-/// - Allows **custom styling** for background, text, and icons.
+/// A flexible dropdown menu widget that supports both flat and grouped item structures.
 ///
-/// Example Usage:
+/// This widget replaces the previous `buttons`-based version with a more extensible model using
+/// `CoconutPulldownMenuItem` and `CoconutPulldownMenuGroup`. Group titles and dividers are supported.
+///
+/// ### Example:
 /// ```dart
 /// CoconutPulldownMenu(
-///   brightness: Brightness.light,
-///   buttons: ["Option 1", "Option 2", "Option 3"],
-///   selectedIndex: 1,
-///   onTap: (index) {
-///     print("Selected: $index");
+///   entries: [
+///     CoconutPulldownMenuItem(title: 'Item 1'),
+///     CoconutPulldownMenuGroup(
+///       groupTitle: 'Group Title',
+///       items: [
+///         CoconutPulldownMenuItem(title: 'Group Item 1'),
+///         CoconutPulldownMenuItem(title: 'Group Item 2'),
+///       ],
+///     ),
+///   ],
+///   selectedIndex: 2,
+///   onSelected: (index, title) {
+///     print('Selected $index: $title');
 ///   },
-///   buttonHeight: 50, // Custom button height
-///   buttonPadding: EdgeInsets.symmetric(horizontal: 20), // Custom padding
-///   dividerHeight: 2,
-/// );
+/// )
 /// ```
+///
+/// ### Deprecation Notice:
+/// - `buttons` and `onTap` are deprecated and will be removed in version 1.0.0.
+/// - Use `entries` and `onSelected` instead for improved flexibility.
 class CoconutPulldownMenu extends StatelessWidget {
   /// The list of button labels displayed in the dropdown.
-  final List<String> buttons;
+  @Deprecated('Use `entries` instead. This will be removed in version 1.0.0.')
+  final List<String>? buttons;
+
+  /// The list of items displayed in the dropdown.
+  final List<CoconutPulldownMenuEntry> entries;
+
+  /// The index list of thick divider between buttons.
+  final List<int>? thickDividerIndexList;
 
   /// The index of the currently selected item (optional).
   final int? selectedIndex;
 
   /// Callback function when an item is tapped.
-  final Function(int) onTap;
+  @Deprecated('Use `onSelected` instead. This will be removed in version 1.0.0.')
+  final Function(int)? onTap;
+
+  /// Callback function when an item is tapped.
+  final Function(int, String) onSelected;
 
   /// The margin around the dropdown menu (default: `EdgeInsets.zero`).
   final EdgeInsets margin;
@@ -57,6 +97,9 @@ class CoconutPulldownMenu extends StatelessWidget {
   /// The height of divider between buttons. (default: `1`)
   final double? dividerHeight;
 
+  /// The height of thick divider between buttons. (default: `2`)
+  final double? thickDividerHeight;
+
   /// The text color of menu items.
   final Color? textColor;
 
@@ -75,11 +118,17 @@ class CoconutPulldownMenu extends StatelessWidget {
   /// The color of the shadow effect under the dropdown.
   final Color? shadowColor;
 
+  final TextStyle? groupTitleStyle;
+  final Color? groupTitleColor;
+  final EdgeInsets? groupTitlePadding;
+
   /// Creates an instance of `CoconutPulldownMenu`.
   const CoconutPulldownMenu({
     super.key,
-    required this.buttons,
-    required this.onTap,
+    this.buttons,
+    required this.entries,
+    this.onTap,
+    required this.onSelected,
     this.selectedIndex,
     this.margin = EdgeInsets.zero,
     this.buttonPadding,
@@ -89,24 +138,42 @@ class CoconutPulldownMenu extends StatelessWidget {
     this.borderRadius = 16,
     this.iconSize = 24,
     this.dividerHeight = 1,
+    this.thickDividerHeight = 2,
+    this.thickDividerIndexList,
     this.textColor,
     this.backgroundColor,
     this.dividerColor,
     this.iconColor,
     this.splashColor,
     this.shadowColor,
+    this.groupTitleColor,
+    this.groupTitlePadding,
+    this.groupTitleStyle,
   });
 
   @override
   Widget build(BuildContext context) {
     final brightness = Theme.of(context).brightness;
+    final List<_IndexedEntry> flattenedEntries = [];
+    int runningIndex = 0;
+    int groupCount = 0;
+    for (final entry in entries) {
+      if (entry is CoconutPulldownMenuGroup) {
+        groupCount++;
+        flattenedEntries.add(_IndexedEntry(entry.groupTitle, -1)); // indicator for group title
+        for (final item in entry.items) {
+          flattenedEntries.add(_IndexedEntry(item.title, runningIndex++));
+        }
+      } else if (entry is CoconutPulldownMenuItem) {
+        flattenedEntries.add(_IndexedEntry(entry.title, runningIndex++));
+      }
+    }
 
     return Material(
       borderRadius: BorderRadius.circular(borderRadius),
       child: Container(
         margin: margin,
-        constraints:
-            const BoxConstraints(minWidth: 152), // Minimum width for dropdown
+        constraints: const BoxConstraints(minWidth: 152), // Minimum width for dropdown
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
@@ -120,8 +187,52 @@ class CoconutPulldownMenu extends StatelessWidget {
         child: IntrinsicWidth(
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            children: List.generate(buttons.length, (index) {
-              return _button(buttons[index], index, borderRadius, brightness);
+            children: List.generate(flattenedEntries.length, (index) {
+              final element = flattenedEntries[index];
+
+              if (element.index == -1) {
+                return Column(
+                  children: [
+                    Container(
+                      padding: groupTitlePadding ??
+                          const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                      alignment: Alignment.centerLeft,
+                      decoration: BoxDecoration(
+                        borderRadius: index == 0
+                            ? BorderRadius.only(
+                                topLeft: Radius.circular(borderRadius),
+                                topRight: Radius.circular(borderRadius),
+                              )
+                            : null,
+                        color: backgroundColor ?? CoconutColors.onGray100(brightness),
+                      ),
+                      child: Text(
+                        element.title,
+                        style: groupTitleStyle ??
+                            CoconutTypography.body3_12.copyWith(
+                              color: groupTitleColor ?? CoconutColors.onGray500(brightness),
+                            ),
+                      ),
+                    ),
+                    if (thickDividerIndexList != null &&
+                        thickDividerIndexList!.contains(element.index)) ...{
+                      /// Adds a thick divider between items
+                      Container(
+                        height: thickDividerHeight,
+                        color: CoconutColors.onGray200(brightness),
+                      ),
+                    } else if (element.index < flattenedEntries.length - 1 - groupCount) ...{
+                      /// Adds a divider between items
+                      Container(
+                        height: dividerHeight,
+                        color: dividerColor ?? CoconutColors.onGray200(brightness),
+                      ),
+                    }
+                  ],
+                );
+              }
+              return _button(element.title, element.index, flattenedEntries.length, groupCount,
+                  borderRadius, brightness);
             }),
           ),
         ),
@@ -133,9 +244,12 @@ class CoconutPulldownMenu extends StatelessWidget {
   Widget _button(
     String title,
     int index,
+    int flattenedEntryListLenght,
+    int groupCount,
     double borderRadius,
     Brightness brightness,
   ) {
+    debugPrint('index: $index, flaatened: $flattenedEntryListLenght');
     return Column(
       children: [
         Material(
@@ -143,7 +257,13 @@ class CoconutPulldownMenu extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: _getBorderRadius(
                   index,
-                  buttons.length,
+                  entries
+                      .map((e) => e is CoconutPulldownMenuItem
+                          ? 1
+                          : e is CoconutPulldownMenuGroup
+                              ? e.items.length
+                              : 0)
+                      .fold(0, (a, b) => a + b),
                   borderRadius,
                   brightness,
                 ) ??
@@ -151,11 +271,17 @@ class CoconutPulldownMenu extends StatelessWidget {
           ),
           child: InkWell(
             onTap: () {
-              onTap.call(index);
+              onSelected.call(index, title);
             },
             borderRadius: _getBorderRadius(
               index,
-              buttons.length,
+              entries
+                  .map((e) => e is CoconutPulldownMenuItem
+                      ? 1
+                      : e is CoconutPulldownMenuGroup
+                          ? e.items.length
+                          : 0)
+                  .fold(0, (a, b) => a + b),
               borderRadius,
               brightness,
             ),
@@ -163,13 +289,12 @@ class CoconutPulldownMenu extends StatelessWidget {
             highlightColor: Colors.transparent,
             child: Container(
               height: buttonHeight,
-              padding:
-                  buttonPadding ?? const EdgeInsets.symmetric(horizontal: 16),
+              padding: buttonPadding ?? const EdgeInsets.symmetric(horizontal: 16),
               alignment: Alignment.centerLeft,
               decoration: BoxDecoration(
                 borderRadius: _getBorderRadius(
                   index,
-                  buttons.length,
+                  entries.length,
                   borderRadius,
                   brightness,
                 ),
@@ -202,9 +327,14 @@ class CoconutPulldownMenu extends StatelessWidget {
             ),
           ),
         ),
-
-        /// Adds a divider between items
-        if (index < buttons.length - 1) ...{
+        if (thickDividerIndexList != null && thickDividerIndexList!.contains(index)) ...{
+          /// Adds a thick divider between items
+          Container(
+            height: thickDividerHeight,
+            color: CoconutColors.onGray200(brightness),
+          ),
+        } else if (index < flattenedEntryListLenght - 1 - groupCount) ...{
+          /// Adds a divider between items
           Container(
             height: dividerHeight,
             color: dividerColor ?? CoconutColors.onGray200(brightness),
@@ -217,12 +347,7 @@ class CoconutPulldownMenu extends StatelessWidget {
   /// Determines the border radius for the first and last items.
   BorderRadius? _getBorderRadius(
       int index, int length, double borderRadius, Brightness brightness) {
-    if (index == 0) {
-      return BorderRadius.only(
-        topLeft: Radius.circular(borderRadius),
-        topRight: Radius.circular(borderRadius),
-      );
-    } else if (index == length - 1) {
+    if (index == length - 1) {
       return BorderRadius.only(
         bottomLeft: Radius.circular(borderRadius),
         bottomRight: Radius.circular(borderRadius),
@@ -230,4 +355,10 @@ class CoconutPulldownMenu extends StatelessWidget {
     }
     return null; // No border radius for middle items
   }
+}
+
+class _IndexedEntry {
+  final String title;
+  final int index;
+  _IndexedEntry(this.title, this.index);
 }
