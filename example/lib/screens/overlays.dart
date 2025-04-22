@@ -542,7 +542,7 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
               backgroundColor: CoconutColors.gray900,
               borderColor: CoconutColors.gray900,
               icon: SvgPicture.asset(
-                'packages/coconut_design_system/assets/svg/toast_info.svg',
+                'packages/coconut_design_system/assets/svg/info_circle.svg',
                 colorFilter: const ColorFilter.mode(
                   CoconutColors.white,
                   BlendMode.srcIn,
