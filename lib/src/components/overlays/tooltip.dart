@@ -206,23 +206,36 @@ class _CoconutToolTipState extends State<CoconutToolTip> {
                   borderRadius: BorderRadius.circular(CoconutStyles.radius_250),
                   border: Border.all(width: 1, color: _borderColor),
                 ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    if (widget.showIcon)
-                      if (widget.icon != null) ...{
-                        Container(
-                          padding: const EdgeInsets.only(right: 8),
-                          child: widget.icon,
-                        ),
-                      } else ...{
-                        Container(
-                          padding: const EdgeInsets.only(right: 8),
-                          child: _icon,
-                        ),
-                      },
-                    Expanded(child: widget.richText),
-                  ],
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    final textPainter = TextPainter(
+                      text: widget.richText.text,
+                      maxLines: null,
+                      textDirection: TextDirection.ltr,
+                    )..layout(maxWidth: constraints.maxWidth);
+
+                    final isMultiline = textPainter.computeLineMetrics().length > 1;
+
+                    return Row(
+                      crossAxisAlignment:
+                          isMultiline ? CrossAxisAlignment.start : CrossAxisAlignment.center,
+                      children: [
+                        if (widget.showIcon)
+                          if (widget.icon != null) ...{
+                            Container(
+                              padding: const EdgeInsets.only(right: 8),
+                              child: widget.icon,
+                            )
+                          } else ...{
+                            Container(
+                              padding: const EdgeInsets.only(right: 8),
+                              child: _icon,
+                            ),
+                          },
+                        Expanded(child: widget.richText),
+                      ],
+                    );
+                  },
                 ),
               ),
             ],
