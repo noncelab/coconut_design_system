@@ -249,41 +249,38 @@ class CoconutPulldownMenu extends StatelessWidget {
     double borderRadius,
     Brightness brightness,
   ) {
-    debugPrint('index: $index, flaatened: $flattenedEntryListLenght');
+    final isBottomRounded = index ==
+        entries
+                .map((e) => e is CoconutPulldownMenuItem
+                    ? 1
+                    : e is CoconutPulldownMenuGroup
+                        ? e.items.length
+                        : 0)
+                .fold(0, (a, b) => a + b) -
+            1;
+
+    final isTopRounded = index == 0 && entries[index] is! CoconutPulldownMenuGroup;
     return Column(
       children: [
         Material(
           color: backgroundColor ?? CoconutColors.onGray100(brightness),
           shape: RoundedRectangleBorder(
             borderRadius: _getBorderRadius(
-                  index,
-                  entries
-                      .map((e) => e is CoconutPulldownMenuItem
-                          ? 1
-                          : e is CoconutPulldownMenuGroup
-                              ? e.items.length
-                              : 0)
-                      .fold(0, (a, b) => a + b),
-                  borderRadius,
-                  brightness,
-                ) ??
-                BorderRadius.zero,
+              borderRadius,
+              brightness,
+              isBottomRounded: isBottomRounded,
+              isTopRounded: isTopRounded,
+            ),
           ),
           child: InkWell(
             onTap: () {
               onSelected.call(index, title);
             },
             borderRadius: _getBorderRadius(
-              index,
-              entries
-                  .map((e) => e is CoconutPulldownMenuItem
-                      ? 1
-                      : e is CoconutPulldownMenuGroup
-                          ? e.items.length
-                          : 0)
-                  .fold(0, (a, b) => a + b),
               borderRadius,
               brightness,
+              isBottomRounded: isBottomRounded,
+              isTopRounded: isTopRounded,
             ),
             splashColor: splashColor ?? CoconutColors.onGray200(brightness),
             highlightColor: Colors.transparent,
@@ -293,10 +290,10 @@ class CoconutPulldownMenu extends StatelessWidget {
               alignment: Alignment.centerLeft,
               decoration: BoxDecoration(
                 borderRadius: _getBorderRadius(
-                  index,
-                  entries.length,
                   borderRadius,
                   brightness,
+                  isBottomRounded: isBottomRounded,
+                  isTopRounded: isTopRounded,
                 ),
               ),
               child: Row(
@@ -345,15 +342,14 @@ class CoconutPulldownMenu extends StatelessWidget {
   }
 
   /// Determines the border radius for the first and last items.
-  BorderRadius? _getBorderRadius(
-      int index, int length, double borderRadius, Brightness brightness) {
-    if (index == length - 1) {
-      return BorderRadius.only(
-        bottomLeft: Radius.circular(borderRadius),
-        bottomRight: Radius.circular(borderRadius),
-      );
-    }
-    return null; // No border radius for middle items
+  BorderRadius _getBorderRadius(double borderRadius, Brightness brightness,
+      {bool isTopRounded = false, bool isBottomRounded = false}) {
+    return BorderRadius.only(
+      topLeft: isTopRounded ? Radius.circular(borderRadius) : const Radius.circular(0),
+      topRight: isTopRounded ? Radius.circular(borderRadius) : const Radius.circular(0),
+      bottomLeft: isBottomRounded ? Radius.circular(borderRadius) : const Radius.circular(0),
+      bottomRight: isBottomRounded ? Radius.circular(borderRadius) : const Radius.circular(0),
+    );
   }
 }
 
