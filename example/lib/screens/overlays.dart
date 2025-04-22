@@ -2,6 +2,7 @@ import 'package:coconut_design_system/coconut_design_system.dart';
 import 'package:example/appbar.dart';
 import 'package:example/provider/theme_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 class OverlaysScreen extends StatefulWidget {
@@ -12,23 +13,11 @@ class OverlaysScreen extends StatefulWidget {
 }
 
 class _OverlaysScreenState extends State<OverlaysScreen> {
-  List<String> pulldownButtons = [
-    'Pulldown1',
-    'Pulldown2',
-    'Pulldown3',
-    'Pulldown4',
-    'Pulldown5'
-  ];
+  List<String> pulldownButtons = ['Pulldown1', 'Pulldown2', 'Pulldown3', 'Pulldown4', 'Pulldown5'];
   int selectedPulldownIndex = 0;
   bool isPulldownOpen = false;
 
-  List<String> pulldownButtons2 = [
-    'Pulldown1',
-    'Pulldown2',
-    'Pulldown3',
-    'Pulldown4',
-    'Pulldown5'
-  ];
+  List<String> pulldownButtons2 = ['Pulldown1', 'Pulldown2', 'Pulldown3', 'Pulldown4', 'Pulldown5'];
   int selectedPulldownIndex2 = 0;
   bool isPulldownOpen2 = false;
   bool isClosableTooltipVisible = true;
@@ -46,8 +35,7 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
           child: Consumer<ThemeProvider>(
             builder: (context, themeProvider, child) {
               final isDarkMode = themeProvider.themeMode == ThemeMode.dark;
-              final brightness =
-                  isDarkMode ? Brightness.dark : Brightness.light;
+              final brightness = isDarkMode ? Brightness.dark : Brightness.light;
 
               return Padding(
                 padding: const EdgeInsets.only(
@@ -92,8 +80,7 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
     );
   }
 
-  Widget _buildBottomSheetExampleList(
-      Brightness brightness, BuildContext context) {
+  Widget _buildBottomSheetExampleList(Brightness brightness, BuildContext context) {
     return _box(
       'BottomSheet',
       brightness,
@@ -414,8 +401,7 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
           onTap: () {
             CoconutToast.showToast(
               context: context,
-              text:
-                  'Long text text text text text text text text text text text text text',
+              text: 'Long text text text text text text text text text text text text text',
             );
           },
         ),
@@ -439,8 +425,7 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
             CoconutToast.showToast(
               context: context,
               isVisibleIcon: true,
-              text:
-                  'Long text text text text text text text text text text text text text',
+              text: 'Long text text text text text text text text text text text text text',
             );
           },
         ),
@@ -465,8 +450,7 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
               brightness: brightness,
               context: context,
               seconds: 3,
-              text:
-                  'Long text text text text text text text text text text text text text',
+              text: 'Long text text text text text text text text text text text text text',
             );
           },
         ),
@@ -543,6 +527,27 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
               ),
               tooltipType: CoconutTooltipType.fixed,
               tooltipState: CoconutTooltipState.success,
+            ),
+            CoconutLayout.spacing_300h,
+            CoconutToolTip(
+              richText: RichText(
+                text: TextSpan(
+                  text: 'This is a type of fixed tooltip with custom icon and color.',
+                  style: CoconutTypography.body2_14.setColor(
+                    CoconutColors.onWhite(brightness),
+                  ),
+                ),
+              ),
+              tooltipType: CoconutTooltipType.fixed,
+              backgroundColor: CoconutColors.gray900,
+              borderColor: CoconutColors.gray900,
+              icon: SvgPicture.asset(
+                'packages/coconut_design_system/assets/svg/toast_info.svg',
+                colorFilter: const ColorFilter.mode(
+                  CoconutColors.white,
+                  BlendMode.srcIn,
+                ),
+              ),
             ),
             CoconutLayout.spacing_600h,
           ],
