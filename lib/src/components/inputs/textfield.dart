@@ -212,13 +212,20 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
   late Color _cursorColor;
   late Color _backgroundColor;
 
+  final GlobalKey _prefixGlobalKey = GlobalKey();
+  Size _prefixSize = const Size(0, 0);
+  Offset _prefixPosition = Offset.zero;
+
   String _text = '';
+  String _placeholderText = '';
   bool _isFocus = false;
 
   /// Listens to focus changes and updates the UI accordingly.
   void _focusNodeListener() {
     _isFocus = widget.focusNode.hasFocus;
-    setState(() {});
+    setState(() {
+      _placeholderText = (_isFocus || _text.isNotEmpty) ? '' : (widget.placeholderText ?? '');
+    });
   }
 
   void _updateData() {
@@ -232,9 +239,18 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
 
   @override
   void initState() {
+    super.initState();
+    _placeholderText = widget.prefix == null ? widget.placeholderText ?? '' : '';
     widget.focusNode.addListener(_focusNodeListener);
     _updateData();
-    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_prefixGlobalKey.currentContext != null) {
+        final prefixRenderBox = _prefixGlobalKey.currentContext?.findRenderObject() as RenderBox;
+        _prefixSize = prefixRenderBox.size;
+        _prefixPosition = prefixRenderBox.localToGlobal(Offset.zero);
+        _placeholderText = widget.placeholderText ?? '';
+      }
+    });
   }
 
   @override
@@ -272,47 +288,64 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
             borderRadius: BorderRadius.circular(12),
             color: _backgroundColor,
           ),
-          child: CupertinoTextField(
-            focusNode: widget.focusNode,
-            controller: widget.controller,
-            inputFormatters: widget.textInputFormatter,
-            obscureText: widget.obscureText,
-            textAlign: widget.textAlign ?? TextAlign.start,
-            padding:
-                widget.padding ?? EdgeInsets.fromLTRB(widget.prefix != null ? 0 : 16, 20, 16, 20),
-            style: CoconutTypography.body2_14.copyWith(
-              color: _activeColor,
-              fontSize: widget.fontSize,
-              fontFamily: widget.fontFamily,
-            ),
-            placeholder: widget.placeholderText,
-            placeholderStyle: CoconutTypography.body2_14.copyWith(
-              color: _placeholderColor,
-              height: 1,
-              fontSize: widget.fontSize,
-            ),
-            cursorColor: _cursorColor,
-            decoration: const BoxDecoration(
-              color: Colors.transparent,
-            ),
-            maxLength: widget.maxLength,
-            maxLines: widget.obscureText ? 1 : widget.maxLines,
-            prefix: widget.prefix,
-            suffix: widget.suffix,
-            keyboardType: widget.textInputType,
-            textInputAction: widget.textInputAction,
-            onChanged: (text) {
-              if (widget.maxLength != null) {
-                if (text.runes.length > widget.maxLength!) {
-                  text = String.fromCharCodes(text.runes.take(widget.maxLength!));
-                  widget.controller.text = text;
-                }
-              }
+          child: Stack(
+            children: [
+              CupertinoTextField(
+                focusNode: widget.focusNode,
+                controller: widget.controller,
+                inputFormatters: widget.textInputFormatter,
+                obscureText: widget.obscureText,
+                textAlign: widget.textAlign ?? TextAlign.start,
+                padding: widget.padding ??
+                    EdgeInsets.fromLTRB(widget.prefix != null ? 0 : 16, 20, 16, 20),
+                style: CoconutTypography.body2_14.copyWith(
+                  color: _activeColor,
+                  fontSize: widget.fontSize,
+                  fontFamily: widget.fontFamily,
+                ),
+                cursorColor: _cursorColor,
+                decoration: const BoxDecoration(
+                  color: Colors.transparent,
+                ),
+                maxLength: widget.maxLength,
+                maxLines: widget.obscureText ? 1 : widget.maxLines,
+                prefix: Container(
+                  key: _prefixGlobalKey,
+                  child: widget.prefix,
+                ),
+                suffix: widget.suffix,
+                keyboardType: widget.textInputType,
+                textInputAction: widget.textInputAction,
+                textAlignVertical: TextAlignVertical.bottom,
+                onChanged: (text) {
+                  if (widget.maxLength != null) {
+                    if (text.runes.length > widget.maxLength!) {
+                      text = String.fromCharCodes(text.runes.take(widget.maxLength!));
+                      widget.controller.text = text;
+                    }
+                  }
 
-              _text = text;
-              setState(() {});
-              widget.onChanged(_text);
-            },
+                  _text = text;
+                  setState(() {});
+                  widget.onChanged(_text);
+                },
+              ),
+              Container(
+                height: widget.prefix != null ? _prefixSize.height : null,
+                margin: widget.prefix == null
+                    ? widget.padding ?? const EdgeInsets.fromLTRB(16, 20, 16, 20)
+                    : EdgeInsets.only(left: _prefixSize.width, top: widget.padding?.top ?? 20),
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  _placeholderText,
+                  style: CoconutTypography.body2_14.copyWith(
+                    color: _placeholderColor,
+                    height: 1,
+                    fontSize: widget.fontSize,
+                  ),
+                ),
+              )
+            ],
           ),
         ),
         Padding(
