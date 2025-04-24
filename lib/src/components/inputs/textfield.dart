@@ -339,7 +339,6 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                     _placeholderText,
                     style: CoconutTypography.body2_14.copyWith(
                       color: _placeholderColor,
-                      height: 1,
                       fontSize: widget.fontSize,
                     ),
                   ),
