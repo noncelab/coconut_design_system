@@ -214,7 +214,6 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
 
   final GlobalKey _prefixGlobalKey = GlobalKey();
   Size _prefixSize = const Size(0, 0);
-  Offset _prefixPosition = Offset.zero;
 
   String _text = '';
   String _placeholderText = '';
@@ -247,7 +246,6 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
       if (_prefixGlobalKey.currentContext != null) {
         final prefixRenderBox = _prefixGlobalKey.currentContext?.findRenderObject() as RenderBox;
         _prefixSize = prefixRenderBox.size;
-        _prefixPosition = prefixRenderBox.localToGlobal(Offset.zero);
         _placeholderText = widget.placeholderText ?? '';
       }
     });
@@ -330,21 +328,22 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                   widget.onChanged(_text);
                 },
               ),
-              Container(
-                height: widget.prefix != null ? _prefixSize.height : null,
-                margin: widget.prefix == null
-                    ? widget.padding ?? const EdgeInsets.fromLTRB(16, 20, 16, 20)
-                    : EdgeInsets.only(left: _prefixSize.width, top: widget.padding?.top ?? 20),
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  _placeholderText,
-                  style: CoconutTypography.body2_14.copyWith(
-                    color: _placeholderColor,
-                    height: 1,
-                    fontSize: widget.fontSize,
+              IgnorePointer(
+                child: Container(
+                  height: widget.prefix != null ? _prefixSize.height : null,
+                  margin: widget.prefix == null
+                      ? widget.padding ?? const EdgeInsets.fromLTRB(16, 20, 16, 20)
+                      : EdgeInsets.only(left: _prefixSize.width, top: widget.padding?.top ?? 20),
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    _placeholderText,
+                    style: CoconutTypography.body2_14.copyWith(
+                      color: _placeholderColor,
+                      fontSize: widget.fontSize,
+                    ),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -379,11 +378,7 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                 Text(
                   '${_text.runes.length}/${widget.maxLength}',
                   style: CoconutTypography.body3_12_Number.copyWith(
-                    color: _text.isEmpty
-                        ? _placeholderColor
-                        : _text.runes.length == widget.maxLength
-                            ? _errorColor
-                            : _activeColor,
+                    color: _isFocus ? _activeColor : _placeholderColor,
                   ),
                 ),
               }
