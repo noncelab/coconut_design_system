@@ -2,6 +2,7 @@ import 'package:coconut_design_system/coconut_design_system.dart';
 import 'package:example/appbar.dart';
 import 'package:example/provider/theme_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 class OverlaysScreen extends StatefulWidget {
@@ -560,6 +561,27 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
               ),
               tooltipType: CoconutTooltipType.fixed,
               tooltipState: CoconutTooltipState.success,
+            ),
+            CoconutLayout.spacing_300h,
+            CoconutToolTip(
+              richText: RichText(
+                text: TextSpan(
+                  text: 'This is a type of fixed tooltip with custom icon and color.',
+                  style: CoconutTypography.body2_14.setColor(
+                    CoconutColors.onWhite(brightness),
+                  ),
+                ),
+              ),
+              tooltipType: CoconutTooltipType.fixed,
+              backgroundColor: CoconutColors.gray900,
+              borderColor: CoconutColors.gray900,
+              icon: SvgPicture.asset(
+                'packages/coconut_design_system/assets/svg/info_circle.svg',
+                colorFilter: const ColorFilter.mode(
+                  CoconutColors.white,
+                  BlendMode.srcIn,
+                ),
+              ),
             ),
             CoconutLayout.spacing_600h,
           ],

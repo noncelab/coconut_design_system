@@ -36,6 +36,10 @@ class CoconutToolTip extends StatefulWidget {
   /// Whether to show an icon in the tooltip (default: `true`).
   final bool showIcon;
 
+  /// The custom icon in the tooltip.
+  /// If `null`, the default icon corresponding to the `tooltipState` will be used.
+  final Widget? icon;
+
   /// The base background color of the tooltip. (default: 'tansparent', used in only **fixed** type).
   final Color? baseBackgroundColor;
 
@@ -84,6 +88,7 @@ class CoconutToolTip extends StatefulWidget {
     this.tooltipState = CoconutTooltipState.info,
     this.isAvailableTapToClose = true,
     this.showIcon = true,
+    this.icon,
     this.baseBackgroundColor = Colors.transparent,
     this.backgroundColor,
     this.borderColor,
@@ -96,9 +101,7 @@ class CoconutToolTip extends StatefulWidget {
     this.iconPosition = Offset.zero,
     this.iconSize = Size.zero,
     this.titleStyle = CoconutTypography.caption_10,
-  }) : assert(
-            tooltipType != CoconutTooltipType.placement ||
-                (width != null && onTapRemove != null),
+  }) : assert(tooltipType != CoconutTooltipType.placement || (width != null && onTapRemove != null),
             'When using CoconutTooltipType.placement, width and onTapRemove must not be null.');
 
   @override
@@ -108,14 +111,10 @@ class CoconutToolTip extends StatefulWidget {
 /// Defines different tooltip states with corresponding icons and colors.
 enum CoconutTooltipState {
   info('info', 4, 'packages/coconut_design_system/assets/svg/tooltip/info.svg'),
-  normal('normal', 8,
-      'packages/coconut_design_system/assets/svg/tooltip/normal.svg'),
-  success('success', 3,
-      'packages/coconut_design_system/assets/svg/tooltip/success.svg'),
-  warning('warning', 2,
-      'packages/coconut_design_system/assets/svg/tooltip/warning.svg'),
-  error('error', 5,
-      'packages/coconut_design_system/assets/svg/tooltip/error.svg');
+  normal('normal', 8, 'packages/coconut_design_system/assets/svg/tooltip/normal.svg'),
+  success('success', 3, 'packages/coconut_design_system/assets/svg/tooltip/success.svg'),
+  warning('warning', 2, 'packages/coconut_design_system/assets/svg/tooltip/warning.svg'),
+  error('error', 5, 'packages/coconut_design_system/assets/svg/tooltip/error.svg');
 
   final String code;
   final int colorIndex;
@@ -195,8 +194,7 @@ class _CoconutToolTipState extends State<CoconutToolTip> {
                 child: Container(
                   decoration: BoxDecoration(
                     color: widget.baseBackgroundColor,
-                    borderRadius:
-                        BorderRadius.circular(CoconutStyles.radius_250),
+                    borderRadius: BorderRadius.circular(CoconutStyles.radius_250),
                   ),
                 ),
               ),
@@ -208,16 +206,36 @@ class _CoconutToolTipState extends State<CoconutToolTip> {
                   borderRadius: BorderRadius.circular(CoconutStyles.radius_250),
                   border: Border.all(width: 1, color: _borderColor),
                 ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    if (widget.showIcon)
-                      Container(
-                        padding: const EdgeInsets.only(right: 8),
-                        child: _icon,
-                      ),
-                    Expanded(child: widget.richText),
-                  ],
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    final textPainter = TextPainter(
+                      text: widget.richText.text,
+                      maxLines: null,
+                      textDirection: TextDirection.ltr,
+                    )..layout(maxWidth: constraints.maxWidth);
+
+                    final isMultiline = textPainter.computeLineMetrics().length > 1;
+
+                    return Row(
+                      crossAxisAlignment:
+                          isMultiline ? CrossAxisAlignment.start : CrossAxisAlignment.center,
+                      children: [
+                        if (widget.showIcon)
+                          if (widget.icon != null) ...{
+                            Container(
+                              padding: const EdgeInsets.only(right: 8),
+                              child: widget.icon,
+                            )
+                          } else ...{
+                            Container(
+                              padding: const EdgeInsets.only(right: 8),
+                              child: _icon,
+                            ),
+                          },
+                        Expanded(child: widget.richText),
+                      ],
+                    );
+                  },
                 ),
               ),
             ],
@@ -229,12 +247,10 @@ class _CoconutToolTipState extends State<CoconutToolTip> {
             builder: (context, constraints) {
               return Container(
                 constraints: BoxConstraints(
-                    minHeight: Sizes.size60,
-                    minWidth: widget.width ?? constraints.maxWidth),
+                    minHeight: Sizes.size60, minWidth: widget.width ?? constraints.maxWidth),
                 decoration: BoxDecoration(
                     color: _backgroundColor,
-                    borderRadius:
-                        BorderRadius.circular(CoconutStyles.radius_250),
+                    borderRadius: BorderRadius.circular(CoconutStyles.radius_250),
                     border: Border.all(width: 1, color: _borderColor)),
                 child: Stack(
                   children: [
@@ -251,8 +267,7 @@ class _CoconutToolTipState extends State<CoconutToolTip> {
                         icon: SvgPicture.asset(
                           'packages/coconut_design_system/assets/svg/close.svg',
                           colorFilter: ColorFilter.mode(
-                              CoconutColors.onPrimary(widget.brightness),
-                              BlendMode.srcIn),
+                              CoconutColors.onPrimary(widget.brightness), BlendMode.srcIn),
                         ),
                       ),
                     ),
@@ -279,8 +294,7 @@ class _CoconutToolTipState extends State<CoconutToolTip> {
       setState(() {});
     }
 
-    if (widget.isPlacementTooltipVisible !=
-        oldWidget.isPlacementTooltipVisible) {
+    if (widget.isPlacementTooltipVisible != oldWidget.isPlacementTooltipVisible) {
       if (widget.isPlacementTooltipVisible) {
         _showTooltip();
       } else {
@@ -318,8 +332,7 @@ class _CoconutToolTipState extends State<CoconutToolTip> {
     if (widget.tooltipType == CoconutTooltipType.fixed) {
       _borderColor = widget.borderColor ?? color.withOpacity(0.7);
       _backgroundColor = widget.backgroundColor ??
-          CoconutColors
-              .backgroundColorPaletteLight[widget.tooltipState.colorIndex]
+          CoconutColors.backgroundColorPaletteLight[widget.tooltipState.colorIndex]
               .withOpacity(0.18);
     }
   }
@@ -332,13 +345,11 @@ class _CoconutToolTipState extends State<CoconutToolTip> {
     if (widget.tooltipType == CoconutTooltipType.fixed) {
       _icon = SvgPicture.asset(widget.tooltipState.svgPath,
           colorFilter: ColorFilter.mode(color, BlendMode.srcIn), width: 18);
-      _padding =
-          widget.padding ?? const EdgeInsets.all(CoconutLayout.defaultPadding);
+      _padding = widget.padding ?? const EdgeInsets.all(CoconutLayout.defaultPadding);
     } else if (widget.tooltipType == CoconutTooltipType.fixedClosable) {
       _padding = widget.padding ?? const EdgeInsets.all(Sizes.size12);
     } else {
-      _padding = widget.padding ??
-          const EdgeInsets.only(top: 25, left: 18, right: 18, bottom: 10);
+      _padding = widget.padding ?? const EdgeInsets.only(top: 25, left: 18, right: 18, bottom: 10);
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (widget.isPlacementTooltipVisible) {
           _showTooltip();
