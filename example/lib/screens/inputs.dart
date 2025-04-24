@@ -285,13 +285,15 @@ class _InputsScreenState extends State<InputsScreen> {
                               child: Container(
                                 margin: const EdgeInsets.only(right: 13),
                                 child: SvgPicture.asset(
-                                  'assets/svg/textfield_view.svg',
+                                  obscureText
+                                      ? 'assets/svg/textfield_hide.svg'
+                                      : 'assets/svg/textfield_view.svg',
                                   width: 16,
                                   height: 16,
                                   colorFilter: ColorFilter.mode(
-                                    controller3Text.isEmpty
-                                        ? CoconutColors.onGray300(brightness)
-                                        : CoconutColors.onBlack(brightness),
+                                    focusNode3.hasFocus
+                                        ? CoconutColors.onBlack(brightness)
+                                        : CoconutColors.onGray300(brightness),
                                     BlendMode.srcIn,
                                   ),
                                 ),

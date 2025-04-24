@@ -61,6 +61,7 @@ flutter:
   assets:
     - assets/svg/textfield_clear.svg
     - assets/svg/textfield_view.svg
+    - assets/svg/textfield_hide.svg
 
   fonts:
     - family: SpaceGrotesk
