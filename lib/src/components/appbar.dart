@@ -403,12 +403,7 @@ class CoconutAppBar {
       ),
       centerTitle: true,
       scrolledUnderElevation: 0,
-      toolbarHeight: height ??
-          (isBottom
-              ? 60
-              : Platform.isIOS
-                  ? 44
-                  : 56),
+      toolbarHeight: height ?? (isBottom ? 60 : 56),
       backgroundColor: backgroundColor ?? Colors.transparent,
       leading: Navigator.canPop(context)
           ? Column(
