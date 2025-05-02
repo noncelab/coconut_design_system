@@ -238,41 +238,58 @@ class _CoconutToastWidgetState extends State<CoconutToastWidget>
                 width: 1,
               ),
             ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (widget.isVisibleIcon) ...{
-                  Padding(
-                    padding: EdgeInsets.only(right: widget.iconRightPadding),
-                    child: SvgPicture.asset(
-                      widget.iconPath ??
-                          'packages/coconut_design_system/assets/svg/info_circle.svg',
-                      height: widget.iconSize,
-                      colorFilter: ColorFilter.mode(
-                        widget.borderColor ?? CoconutColors.onGray100(widget.brightness),
-                        BlendMode.srcIn,
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final textPainter = TextPainter(
+                  text: TextSpan(text: widget.text),
+                  maxLines: null,
+                  textDirection: TextDirection.ltr,
+                )..layout(maxWidth: constraints.maxWidth);
+
+                final isMultiline = textPainter.computeLineMetrics().length > 1;
+
+                return Row(
+                  crossAxisAlignment:
+                      isMultiline ? CrossAxisAlignment.start : CrossAxisAlignment.center,
+                  children: [
+                    if (widget.isVisibleIcon) ...{
+                      Padding(
+                        padding: EdgeInsets.only(
+                          right: widget.iconRightPadding,
+                          top: widget.textPadding,
+                          bottom: widget.textPadding,
+                        ),
+                        child: SvgPicture.asset(
+                          widget.iconPath ??
+                              'packages/coconut_design_system/assets/svg/info_circle.svg',
+                          height: widget.iconSize,
+                          colorFilter: ColorFilter.mode(
+                            widget.borderColor ?? CoconutColors.onGray100(widget.brightness),
+                            BlendMode.srcIn,
+                          ),
+                        ),
+                      ),
+                    } else ...{
+                      SizedBox(
+                        height: widget.iconSize,
+                      ),
+                    },
+                    Flexible(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: widget.textPadding),
+                        child: Text(
+                          widget.text,
+                          style: CoconutTypography.body2_14.copyWith(
+                            decoration: TextDecoration.none, // Prevents underlining in debug mode
+                            color: widget.textColor ?? CoconutColors.onGray100(widget.brightness),
+                            fontSize: widget.fontSize,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                } else ...{
-                  SizedBox(
-                    height: widget.iconSize,
-                  ),
-                },
-                Flexible(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: widget.textPadding),
-                    child: Text(
-                      widget.text,
-                      style: CoconutTypography.body2_14.copyWith(
-                        decoration: TextDecoration.none, // Prevents underlining in debug mode
-                        color: widget.textColor ?? CoconutColors.onGray100(widget.brightness),
-                        fontSize: widget.fontSize,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+                  ],
+                );
+              },
             ),
           ),
         ),
