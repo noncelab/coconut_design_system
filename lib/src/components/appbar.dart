@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:ui';
 
 import 'package:coconut_design_system/coconut_design_system.dart';
