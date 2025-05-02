@@ -71,35 +71,38 @@ class CoconutToast {
     }
 
     overlayEntry = OverlayEntry(
-      builder: (context) => SafeArea(
-        child: FadeTransition(
-          opacity: fadeAnimation,
-          child: Align(
-            alignment: Alignment.bottomCenter,
-            child: GestureDetector(
-              onVerticalDragUpdate: (details) {
-                if (details.primaryDelta! > 5) {
-                  dismiss();
-                }
-              },
-              child: Container(
-                margin: const EdgeInsets.all(12),
-                padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
-                height: 50,
-                decoration: BoxDecoration(
-                  color: backgroundColor ?? CoconutColors.onGray900(brightness),
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: borderColor ?? CoconutColors.onGray300(brightness),
-                    width: 1,
+      builder: (context) => Material(
+        type: MaterialType.transparency,
+        child: SafeArea(
+          child: FadeTransition(
+            opacity: fadeAnimation,
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: GestureDetector(
+                onVerticalDragUpdate: (details) {
+                  if (details.primaryDelta! > 5) {
+                    dismiss();
+                  }
+                },
+                child: Container(
+                  margin: const EdgeInsets.all(12),
+                  padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: backgroundColor ?? CoconutColors.onGray900(brightness),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: borderColor ?? CoconutColors.onGray300(brightness),
+                      width: 1,
+                    ),
                   ),
-                ),
-                child: Text(
-                  text,
-                  overflow: TextOverflow.ellipsis,
-                  style: CoconutTypography.body2_14.copyWith(
-                    decoration: TextDecoration.none, // Prevents underlining in debug mode
-                    color: textColor ?? CoconutColors.onGray100(brightness),
+                  child: Text(
+                    text,
+                    overflow: TextOverflow.ellipsis,
+                    style: CoconutTypography.body2_14.copyWith(
+                      decoration: TextDecoration.none, // Prevents underlining in debug mode
+                      color: textColor ?? CoconutColors.onGray100(brightness),
+                    ),
                   ),
                 ),
               ),
@@ -144,25 +147,28 @@ class CoconutToast {
     overlayEntry = OverlayEntry(
       builder: (context) {
         Brightness brightness = Theme.of(context).brightness;
-        return SafeArea(
-          child: Align(
-            alignment: Alignment.topCenter,
-            child: CoconutToastWidget(
-              brightness: brightness,
-              text: text,
-              isVisibleIcon: isVisibleIcon,
-              backgroundColor: backgroundColor,
-              borderColor: borderColor,
-              textColor: textColor,
-              iconPath: iconPath,
-              iconSize: iconSize,
-              iconRightPadding: iconRightPadding,
-              textStyle: textStyle,
-              textPadding: textPadding,
-              onDismiss: () {
-                overlayEntry.remove();
-              },
-              duration: seconds <= 5 ? seconds : 5,
+        return Material(
+          type: MaterialType.transparency,
+          child: SafeArea(
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: CoconutToastWidget(
+                brightness: brightness,
+                text: text,
+                isVisibleIcon: isVisibleIcon,
+                backgroundColor: backgroundColor,
+                borderColor: borderColor,
+                textColor: textColor,
+                iconPath: iconPath,
+                iconSize: iconSize,
+                iconRightPadding: iconRightPadding,
+                textStyle: textStyle,
+                textPadding: textPadding,
+                onDismiss: () {
+                  overlayEntry.remove();
+                },
+                duration: seconds <= 5 ? seconds : 5,
+              ),
             ),
           ),
         );
@@ -195,24 +201,27 @@ class CoconutToast {
     overlayEntry = OverlayEntry(
       builder: (context) {
         Brightness brightness = Theme.of(context).brightness;
-        return SafeArea(
-          child: Align(
-            alignment: Alignment.topCenter,
-            child: CoconutToastWidget(
-              brightness: brightness,
-              text: text,
-              isVisibleIcon: true,
-              backgroundColor: warningYellowBackground,
-              borderColor: warningYellow,
-              iconPath: 'packages/coconut_design_system/assets/svg/triangle_warning.svg',
-              iconSize: iconSize,
-              iconRightPadding: iconRightPadding,
-              textStyle: textStyle,
-              textPadding: textPadding,
-              onDismiss: () {
-                overlayEntry.remove();
-              },
-              duration: seconds <= 5 ? seconds : 5,
+        return Material(
+          type: MaterialType.transparency,
+          child: SafeArea(
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: CoconutToastWidget(
+                brightness: brightness,
+                text: text,
+                isVisibleIcon: true,
+                backgroundColor: warningYellowBackground,
+                borderColor: warningYellow,
+                iconPath: 'packages/coconut_design_system/assets/svg/triangle_warning.svg',
+                iconSize: iconSize,
+                iconRightPadding: iconRightPadding,
+                textStyle: textStyle,
+                textPadding: textPadding,
+                onDismiss: () {
+                  overlayEntry.remove();
+                },
+                duration: seconds <= 5 ? seconds : 5,
+              ),
             ),
           ),
         );
@@ -280,6 +289,7 @@ class _CoconutToastWidgetState extends State<CoconutToastWidget>
             }
           },
           child: Material(
+            type: MaterialType.transparency,
             child: Container(
               margin: const EdgeInsets.all(12),
               padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 13),
