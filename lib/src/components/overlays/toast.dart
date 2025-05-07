@@ -24,13 +24,13 @@ class CoconutToast {
 
   /// Displays a toast message at the bottom of the screen.
   ///
-  /// - [brightness]: Determines whether the theme is light or dark.
-  /// - [context]: The build context.
-  /// - [text]: The message to display in the toast.
-  /// - [backgroundColor]: The background color of the toast.
-  /// - [borderColor]: The border color of the toast.
-  /// - [textColor]: The color of the text inside the toast.
-  /// - [seconds]: Duration in seconds before the toast disappears (default: `2`).
+  /// - [brightness]: Brightness mode used to determine default colors.
+  /// - [context]: Context to access the [Overlay] and theme.
+  /// - [text]: Text message shown in the toast.
+  /// - [backgroundColor]: Optional override for the toast background.
+  /// - [borderColor]: Optional override for the toast border.
+  /// - [textColor]: Optional override for the toast text color.
+  /// - [seconds]: Time in seconds before the toast fades out (max: 3s).
   static void showBottomToast({
     required Brightness brightness,
     required BuildContext context,
@@ -118,20 +118,24 @@ class CoconutToast {
 
   /// Displays a toast message at the top of the screen.
   ///
-  /// - [brightness]: Determines whether the theme is light or dark.
-  /// - [context]: The build context.
-  /// - [text]: The message to display in the toast.
-  /// - [isVisibleIcon]: Whether to show an icon next to the message.
-  /// - [seconds]: Duration in seconds before the toast disappears (default: `3`).
-  /// - [backgroundColor]: The background color of the toast.
-  /// - [borderColor]: The border color of the toast.
-  /// - [textColor]: The color of the text inside the toast.
+  /// - [context]: BuildContext used to insert the overlay.
+  /// - [text]: Message text to display.
+  /// - [isVisibleIcon]: Whether to show an info icon.
+  /// - [seconds]: Toast duration in seconds (max: 5s).
+  /// - [iconSize]: Size of the icon displayed (default: 16).
+  /// - [iconRightPadding]: Padding between icon and text.
+  /// - [textPadding]: Vertical padding around the text.
+  /// - [textStyle]: Optional override for text style.
+  /// - [backgroundColor]: Background color of the toast.
+  /// - [borderColor]: Border color around the toast.
+  /// - [textColor]: Text color override.
+  /// - [iconPath]: Optional custom icon path.
   static void showToast({
     required BuildContext context,
     required String text,
     isVisibleIcon = false,
     int seconds = 3,
-    double iconSize = 24,
+    double iconSize = 16,
     double iconRightPadding = 4,
     double textPadding = 3.5,
     TextStyle textStyle = CoconutTypography.body2_14,
@@ -159,6 +163,7 @@ class CoconutToast {
                 backgroundColor: backgroundColor,
                 borderColor: borderColor,
                 textColor: textColor,
+                iconColor: borderColor ?? CoconutColors.onGray100(brightness),
                 iconPath: iconPath,
                 iconSize: iconSize,
                 iconRightPadding: iconRightPadding,
@@ -180,18 +185,24 @@ class CoconutToast {
 
   /// Displays a warning toast message at the top of the screen.
   ///
-  /// - [context]: The build context.
-  /// - [text]: The message to display in the toast.
-  /// - [seconds]: Duration in seconds before the toast disappears (default: `5`).
-  /// - [backgroundColor]: The background color of the toast.
-  /// - [borderColor]: The border color of the toast.
+  /// - [context]: Context for displaying the overlay.
+  /// - [text]: Warning message to display.
+  /// - [seconds]: Toast duration in seconds (max: 5s).
+  /// - [iconSize]: Icon size in pixels.
+  /// - [iconRightPadding]: Space between icon and text.
+  /// - [textPadding]: Padding above and below the text.
+  /// - [backgroundColor]: Optional background override.
+  /// - [borderColor]: Optional border override.
+  /// - [textStyle]: Optional override for text style.
   static void showWarningToast({
     required BuildContext context,
     required String text,
     int seconds = 5,
-    double iconSize = 24,
+    double iconSize = 16,
     double iconRightPadding = 4,
     double textPadding = 3.5,
+    Color? backgroundColor,
+    Color? borderColor,
     TextStyle textStyle = CoconutTypography.body2_14,
   }) {
     if (_isToastVisible) return;
@@ -210,8 +221,9 @@ class CoconutToast {
                 brightness: brightness,
                 text: text,
                 isVisibleIcon: true,
-                backgroundColor: warningYellowBackground,
-                borderColor: warningYellow,
+                backgroundColor: backgroundColor ?? warningYellowBackground,
+                borderColor: borderColor ?? backgroundColor ?? warningYellowBackground,
+                iconColor: warningYellow,
                 iconPath: 'packages/coconut_design_system/assets/svg/triangle_warning.svg',
                 iconSize: iconSize,
                 iconRightPadding: iconRightPadding,
@@ -246,6 +258,7 @@ class CoconutToastWidget extends StatefulWidget {
   final Color? backgroundColor;
   final Color? borderColor;
   final Color? textColor;
+  final Color iconColor;
   final String? iconPath;
 
   /// Creates an instance of `CoconutToastWidget`.
@@ -256,7 +269,8 @@ class CoconutToastWidget extends StatefulWidget {
     required this.isVisibleIcon,
     required this.duration,
     required this.onDismiss,
-    this.iconSize = 24,
+    required this.iconColor,
+    this.iconSize = 16,
     this.iconRightPadding = 4,
     this.textStyle = CoconutTypography.body2_14,
     this.textPadding = 3.5,
@@ -298,7 +312,9 @@ class _CoconutToastWidgetState extends State<CoconutToastWidget>
                 color: widget.backgroundColor ?? CoconutColors.onGray900(widget.brightness),
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
-                  color: widget.borderColor ?? CoconutColors.onGray300(widget.brightness),
+                  color: widget.borderColor ??
+                      widget.backgroundColor ??
+                      CoconutColors.onGray900(widget.brightness),
                   width: 1,
                 ),
               ),
@@ -325,10 +341,10 @@ class _CoconutToastWidgetState extends State<CoconutToastWidget>
                           ),
                           child: SvgPicture.asset(
                             widget.iconPath ??
-                                'packages/coconut_design_system/assets/svg/info_circle.svg',
+                                'packages/coconut_design_system/assets/svg/circle_info.svg',
                             height: widget.iconSize,
                             colorFilter: ColorFilter.mode(
-                              widget.borderColor ?? CoconutColors.onGray100(widget.brightness),
+                              widget.iconColor,
                               BlendMode.srcIn,
                             ),
                           ),
