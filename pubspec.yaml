@@ -41,7 +41,8 @@ flutter:
     - assets/svg/tooltip/normal.svg
     - assets/svg/tooltip/success.svg
     - assets/svg/tooltip/warning.svg
-    - assets/svg/info_circle.svg
+    - assets/svg/circle_info.svg
+    - assets/svg/triangle_warning.svg
     - assets/lottie/loading_dark.json
     - assets/lottie/loading_light.json
 
