@@ -272,13 +272,10 @@ class CoconutAppBar {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         if (isLeadingSvgAssetVisible) ...{
-                          SizedBox(
-                              height: iconSize,
-                              width: iconSize,
-                              child: Padding(
-                                padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 4.0),
-                                child: leadingSvgAsset,
-                              )),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 8.0),
+                            child: leadingSvgAsset,
+                          )
                         },
                         Expanded(
                           child: Align(
