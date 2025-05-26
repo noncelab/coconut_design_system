@@ -29,6 +29,7 @@ class CoconutColors {
   static const Color pink = Color(0xFFEE6579);
   static const Color red = Color(0xFFDB3937);
   static const Color orange = Color(0xFFF56321);
+  static const Color warningText = Color.fromRGBO(206, 91, 111, 1);
   static const Color mint = Color(0xFF33BFB8);
 
   /// **Light mode color palette**
@@ -73,23 +74,17 @@ class CoconutColors {
     Color(0x2D9EE2E6), // Mint (opacity 0.18)
   ];
 
-  static Color onPrimary(Brightness brightness) => brightness == Brightness.dark
-      ? const Color(0xFFFFFFFF)
-      : const Color(0xFF141318);
+  static Color onPrimary(Brightness brightness) =>
+      brightness == Brightness.dark ? const Color(0xFFFFFFFF) : const Color(0xFF141318);
 
-  static Color surface(Brightness brightness) => brightness == Brightness.dark
-      ? const Color(0xFF141318)
-      : const Color(0xFFFFFFFF);
+  static Color surface(Brightness brightness) =>
+      brightness == Brightness.dark ? const Color(0xFF141318) : const Color(0xFFFFFFFF);
 
   static Color normalButtonColor(Brightness brightness) =>
-      brightness == Brightness.dark
-          ? const Color(0xFFFFFFFF)
-          : const Color(0xFF141318);
+      brightness == Brightness.dark ? const Color(0xFFFFFFFF) : const Color(0xFF141318);
 
   static Color pressedButtonColor(Brightness brightness) =>
-      brightness == Brightness.dark
-          ? const Color(0x80FFFFFF)
-          : const Color(0x80141318);
+      brightness == Brightness.dark ? const Color(0x80FFFFFF) : const Color(0x80141318);
 
   static Color normalPrimaryButtonColor() => const Color(0xFFDEFF58);
   static Color pressedPrimaryButtonColor() => const Color(0x80DEFF58);
@@ -103,14 +98,11 @@ class CoconutColors {
       brightness == Brightness.dark ? gray700 : gray350;
 
   // TODO: green
-  static Color onAccent(Brightness brightness) =>
-      brightness == Brightness.light ? green : primary;
+  static Color onAccent(Brightness brightness) => brightness == Brightness.light ? green : primary;
 
-  static Color onBlack(Brightness brightness) =>
-      brightness == Brightness.light ? black : white;
+  static Color onBlack(Brightness brightness) => brightness == Brightness.light ? black : white;
 
-  static Color onWhite(Brightness brightness) =>
-      brightness == Brightness.light ? white : black;
+  static Color onWhite(Brightness brightness) => brightness == Brightness.light ? white : black;
 
   static Color onGray100(Brightness brightness) =>
       brightness == Brightness.light ? gray100 : gray900;
