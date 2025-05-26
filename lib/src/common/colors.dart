@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 ///
 /// Provides easy access to theme-aware colors.
 class CoconutColors {
+  /// origin colors
   static const Color primary = Color(0xFFDEFF58);
   static const Color black = Color(0xFF141318);
   static const Color white = Color(0xFFFFFFFF);
@@ -20,13 +21,12 @@ class CoconutColors {
   static const Color gray800 = Color(0xFF303030);
   static const Color gray850 = Color(0xFF232323);
   static const Color gray900 = Color(0xFF1C1C1C);
-  static const Color secondaryText = Color(0xFFDDDBE6);
-  static const Color borderGray = Color.fromRGBO(81, 81, 96, 1);
-  static const Color borderLightGray = Color.fromRGBO(235, 231, 228, 1);
-  static const Color searchbarBackground = Color.fromRGBO(241, 242, 245, 1);
-  static const Color searchbarHint = Color.fromRGBO(154, 158, 168, 1);
-  static const Color searchbarText = Color.fromRGBO(20, 23, 24, 1);
-
+  static const Color mint = Color(0xFF33BFB8);
+  static const Color green = Color(0xFF88C125);
+  static const Color sky = Color(0xFF41A4D8);
+  static const Color pink = Color(0xFFEE6579);
+  static const Color red = Color(0xFFDB3937);
+  static const Color orange = Color(0xFFF56321);
   static const Color hotPink = Color(0xFFDA415C);
   static const Color hotPink150 = Color(0x26DA415C);
   static const Color cyan = Color(0xFF45CCEE);
@@ -35,13 +35,17 @@ class CoconutColors {
   static const Color purple = Color(0xFFA364D9);
   static const Color tangerine = Color(0xFFFA9C5A);
   static const Color yellow = Color(0xFFFECC2F);
-  static const Color green = Color(0xFF88C125);
-  static const Color sky = Color(0xFF41A4D8);
-  static const Color pink = Color(0xFFEE6579);
-  static const Color red = Color(0xFFDB3937);
-  static const Color orange = Color(0xFFF56321);
+
+  /// custom colors
+  static const Color warningYellow = Color(0xFFFFAF03);
+  static const Color warningYellowBackground = Color(0xFFFFF3BE);
   static const Color warningText = Color.fromRGBO(206, 91, 111, 1);
-  static const Color mint = Color(0xFF33BFB8);
+  static const Color borderGray = Color.fromRGBO(81, 81, 96, 1);
+  static const Color borderLightGray = Color.fromRGBO(235, 231, 228, 1);
+  static const Color secondaryText = Color(0xFFDDDBE6);
+  static const Color searchbarBackground = Color.fromRGBO(241, 242, 245, 1);
+  static const Color searchbarHint = Color.fromRGBO(154, 158, 168, 1);
+  static const Color searchbarText = Color.fromRGBO(20, 23, 24, 1);
 
   /// **Light mode color palette**
   static const List<Color> colorPalette = [
