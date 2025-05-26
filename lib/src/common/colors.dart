@@ -7,6 +7,7 @@ class CoconutColors {
   static const Color primary = Color(0xFFDEFF58);
   static const Color black = Color(0xFF141318);
   static const Color white = Color(0xFFFFFFFF);
+  static const Color whiteLilac = Color.fromRGBO(243, 241, 247, 1);
   static const Color gray100 = Color(0xFFFCFCFC);
   static const Color gray150 = Color(0xFFF5F5F5);
   static const Color gray200 = Color(0xFFEEEEEE);
