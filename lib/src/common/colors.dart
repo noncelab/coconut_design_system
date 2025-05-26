@@ -18,6 +18,8 @@ class CoconutColors {
   static const Color gray700 = Color(0xFF555555);
   static const Color gray800 = Color(0xFF303030);
   static const Color gray900 = Color(0xFF1C1C1C);
+  static const Color borderGray = Color.fromRGBO(81, 81, 96, 1);
+
   static const Color hotPink = Color(0xFFDA415C);
   static const Color hotPink150 = Color(0x26DA415C);
   static const Color cyan = Color(0xFF45CCEE);
