@@ -24,6 +24,7 @@ class CoconutColors {
   static const Color hotPink = Color(0xFFDA415C);
   static const Color hotPink150 = Color(0x26DA415C);
   static const Color cyan = Color(0xFF45CCEE);
+  static const Color oceanBlue = Color.fromRGBO(88, 135, 249, 1);
   static const Color purple = Color(0xFFA364D9);
   static const Color tangerine = Color(0xFFFA9C5A);
   static const Color yellow = Color(0xFFFECC2F);
