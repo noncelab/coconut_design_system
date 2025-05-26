@@ -2,6 +2,7 @@ import 'package:coconut_design_system/coconut_design_system.dart';
 import 'package:example/appbar.dart';
 import 'package:example/provider/theme_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 class OverlaysScreen extends StatefulWidget {
@@ -12,24 +13,42 @@ class OverlaysScreen extends StatefulWidget {
 }
 
 class _OverlaysScreenState extends State<OverlaysScreen> {
-  List<String> pulldownButtons = [
-    'Pulldown1',
-    'Pulldown2',
-    'Pulldown3',
-    'Pulldown4',
-    'Pulldown5'
+  List<CoconutPulldownMenuEntry> pulldownMenuList = [
+    CoconutPulldownMenuGroup(
+      groupTitle: 'Group Title',
+      items: [
+        CoconutPulldownMenuItem(title: 'Group Item1'),
+        CoconutPulldownMenuItem(title: 'Group Item2'),
+        CoconutPulldownMenuItem(title: 'Group Item3'),
+      ],
+    ),
+    CoconutPulldownMenuItem(title: 'Pulldown1'),
+    CoconutPulldownMenuItem(title: 'Pulldown2'),
+    CoconutPulldownMenuItem(title: 'Pulldown3'),
+    CoconutPulldownMenuItem(title: 'Pulldown4'),
+    CoconutPulldownMenuItem(title: 'Pulldown5'),
   ];
   int selectedPulldownIndex = 0;
+  String selectedPulldownTitle = 'Group Item1';
   bool isPulldownOpen = false;
 
-  List<String> pulldownButtons2 = [
-    'Pulldown1',
-    'Pulldown2',
-    'Pulldown3',
-    'Pulldown4',
-    'Pulldown5'
+  List<CoconutPulldownMenuEntry> pulldownMenuList2 = [
+    CoconutPulldownMenuGroup(
+      groupTitle: 'Group Title',
+      items: [
+        CoconutPulldownMenuItem(title: 'Group Item1'),
+        CoconutPulldownMenuItem(title: 'Group Item2'),
+        CoconutPulldownMenuItem(title: 'Group Item3'),
+      ],
+    ),
+    CoconutPulldownMenuItem(title: 'Pulldown1'),
+    CoconutPulldownMenuItem(title: 'Pulldown2'),
+    CoconutPulldownMenuItem(title: 'Pulldown3'),
+    CoconutPulldownMenuItem(title: 'Pulldown4'),
+    CoconutPulldownMenuItem(title: 'Pulldown5'),
   ];
   int selectedPulldownIndex2 = 0;
+  String selectedPulldownTitle2 = 'Group Item1';
   bool isPulldownOpen2 = false;
   bool isClosableTooltipVisible = true;
   bool isLeftPlacementTooltipVisible = true;
@@ -46,8 +65,7 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
           child: Consumer<ThemeProvider>(
             builder: (context, themeProvider, child) {
               final isDarkMode = themeProvider.themeMode == ThemeMode.dark;
-              final brightness =
-                  isDarkMode ? Brightness.dark : Brightness.light;
+              final brightness = isDarkMode ? Brightness.dark : Brightness.light;
 
               return Padding(
                 padding: const EdgeInsets.only(
@@ -92,8 +110,7 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
     );
   }
 
-  Widget _buildBottomSheetExampleList(
-      Brightness brightness, BuildContext context) {
+  Widget _buildBottomSheetExampleList(Brightness brightness, BuildContext context) {
     return _box(
       'BottomSheet',
       brightness,
@@ -336,7 +353,7 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
       brightness,
       [
         CoconutPulldown(
-          title: pulldownButtons[selectedPulldownIndex],
+          title: selectedPulldownTitle,
           isOpen: isPulldownOpen,
           fontSize: 12,
           onChanged: (value) {
@@ -350,10 +367,13 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
           child: Container(
             margin: const EdgeInsets.symmetric(vertical: 12),
             child: CoconutPulldownMenu(
-              buttons: pulldownButtons,
+              entries: pulldownMenuList,
               selectedIndex: selectedPulldownIndex,
-              onTap: (index) {
+              thickDividerIndexList: const [2],
+              thickDividerHeight: 6,
+              onSelected: (index, title) {
                 selectedPulldownIndex = index;
+                selectedPulldownTitle = title;
                 isPulldownOpen = false;
                 isPulldownOpen2 = false;
                 setState(() {});
@@ -362,7 +382,7 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
           ),
         ),
         CoconutPulldown(
-          title: pulldownButtons2[selectedPulldownIndex2],
+          title: selectedPulldownTitle2,
           isOpen: isPulldownOpen2,
           onChanged: (value) {
             isPulldownOpen = false;
@@ -375,11 +395,12 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
           child: Container(
             margin: const EdgeInsets.symmetric(vertical: 12),
             child: CoconutPulldownMenu(
-              buttons: pulldownButtons2,
+              entries: pulldownMenuList2,
               dividerHeight: 3,
               dividerColor: CoconutColors.white,
-              onTap: (index) {
+              onSelected: (index, title) {
                 selectedPulldownIndex2 = index;
+                selectedPulldownTitle2 = title;
                 isPulldownOpen = false;
                 isPulldownOpen2 = false;
                 setState(() {});
@@ -414,8 +435,7 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
           onTap: () {
             CoconutToast.showToast(
               context: context,
-              text:
-                  'Long text text text text text text text text text text text text text',
+              text: 'Long text text text text text text text text text text text text text',
             );
           },
         ),
@@ -439,8 +459,7 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
             CoconutToast.showToast(
               context: context,
               isVisibleIcon: true,
-              text:
-                  'Long text text text text text text text text text text text text text',
+              text: 'Long text text text text text text text text text text text text text',
             );
           },
         ),
@@ -465,8 +484,7 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
               brightness: brightness,
               context: context,
               seconds: 3,
-              text:
-                  'Long text text text text text text text text text text text text text',
+              text: 'Long text text text text text text text text text text text text text',
             );
           },
         ),
@@ -543,6 +561,27 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
               ),
               tooltipType: CoconutTooltipType.fixed,
               tooltipState: CoconutTooltipState.success,
+            ),
+            CoconutLayout.spacing_300h,
+            CoconutToolTip(
+              richText: RichText(
+                text: TextSpan(
+                  text: 'This is a type of fixed tooltip with custom icon and color.',
+                  style: CoconutTypography.body2_14.setColor(
+                    CoconutColors.onWhite(brightness),
+                  ),
+                ),
+              ),
+              tooltipType: CoconutTooltipType.fixed,
+              backgroundColor: CoconutColors.gray900,
+              borderColor: CoconutColors.gray900,
+              icon: SvgPicture.asset(
+                'packages/coconut_design_system/assets/svg/circle_info.svg',
+                colorFilter: const ColorFilter.mode(
+                  CoconutColors.white,
+                  BlendMode.srcIn,
+                ),
+              ),
             ),
             CoconutLayout.spacing_600h,
           ],

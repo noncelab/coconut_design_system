@@ -5,6 +5,56 @@ This project follows **[Semantic Versioning](https://semver.org/)**.
 
 ---
 
+## **[0.8.0] - 2025-05-09**
+
+### ⚠️ Breaking Changes
+- **`CoconutPulldownMenu`**
+  - Replaced `buttons` and `onTap` with `entries` and `onSelected`.
+  - `entries` is now **required**.
+  - Introduced `CoconutPulldownMenuGroup` to support grouped items.
+  - Deprecated `buttons` and `onTap`. Backward compatibility maintained temporarily.
+  - ⚠️ Update your implementations to use the new `entries` model.
+  - Improved divider and border handling for dynamic structures.
+
+### ✨ Features
+- **`CoconutToolTip`**
+  - Added support for optional custom icons.
+  - Adjusted icon alignment dynamically based on `richText` line count.
+- **`CoconutTextField`**
+  - Placeholder now stays top-aligned and toggles visibility with focus.
+  - Counter color logic refined and placeholder ignores pointer events.
+  - Placeholder text height now aligns with input text height.
+  - Added demo `svg` asset for `obscureText` mode.
+- **`CoconutToast`**
+  - New method: `showWarningToast()` with warning color and icon.
+  - Icon alignment now adjusts based on `richText` line count.
+
+### 🛠 Fixes
+- **`CoconutPulldownMenu`**
+  - Default horizontal padding corrected to `20`.
+  - Top border radius now applied correctly when the first item is not a group.
+- **`CoconutTextField`**
+  - Placeholder behavior and layout improved as above.
+- **`CoconutAppBar` / `CoconutPopup`**
+  - `buildWithNext`'s `toolbarHeight` adjusted for bottom app bars.
+  - Fixed leading icon padding and popup dialog radius mismatch.
+- **`CoconutToast`**
+  - Fixed iOS dark background issue by setting `MaterialType.transparency`.
+
+### ♻️ Refactor
+- Renamed toast icon asset: `circle_info.svg` → `info_circle.svg`.
+- Adjusted icon sizing and alignment within toast components.
+
+---
+
+## **[0.7.4] - 2025-04-17**
+
+### ✨ Features
+- **`CoconutTextField`**
+  - Added `textInputFormatter` parameter.
+
+---
+
 ## **[0.7.3] - 2025-04-16**
 
 ### ✨ Features

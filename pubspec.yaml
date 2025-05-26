@@ -1,6 +1,6 @@
 name: coconut_design_system
 description: "The Coconut Design System For Coconut Vault/Wallet. Anyone who wants to use this design system is free to do so."
-version: 0.7.3
+version: 0.8.0
 homepage: "https://www.noncelab.com"
 repository: "https://github.com/noncelab/coconut_design_system"
 
@@ -41,7 +41,8 @@ flutter:
     - assets/svg/tooltip/normal.svg
     - assets/svg/tooltip/success.svg
     - assets/svg/tooltip/warning.svg
-    - assets/svg/toast_info.svg
+    - assets/svg/circle_info.svg
+    - assets/svg/triangle_warning.svg
     - assets/lottie/loading_dark.json
     - assets/lottie/loading_light.json
 

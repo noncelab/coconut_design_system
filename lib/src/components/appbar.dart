@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:ui';
 
 import 'package:coconut_design_system/coconut_design_system.dart';
@@ -127,12 +126,7 @@ class CoconutAppBar {
             )
           : SystemUiOverlayStyle.light,
       key: entireWidgetKey,
-      toolbarHeight: height ??
-          (isBottom
-              ? 50
-              : Platform.isIOS
-                  ? 44
-                  : 56),
+      toolbarHeight: height ?? (isBottom ? 60 : 56),
       title: widget,
       scrolledUnderElevation: 0,
       centerTitle: true,
@@ -140,26 +134,31 @@ class CoconutAppBar {
       backgroundColor: backgroundColor ?? Colors.transparent,
       leading: isLeadingVisible
           ? Navigator.canPop(context)
-              ? Row(
+              ? Column(
                   children: [
-                    CoconutLayout.spacing_200w,
-                    IconButton(
-                      icon: SvgPicture.asset(
-                        isBottom && !isBackButton
-                            ? 'packages/coconut_design_system/assets/svg/close.svg'
-                            : 'packages/coconut_design_system/assets/svg/arrow-back.svg',
-                        colorFilter:
-                            ColorFilter.mode(CoconutColors.onPrimary(brightness), BlendMode.srcIn),
-                        width: 24,
-                        height: 24,
-                      ),
-                      onPressed: () {
-                        if (onBackPressed != null) {
-                          onBackPressed();
-                        } else {
-                          Navigator.pop(context);
-                        }
-                      },
+                    CoconutLayout.spacing_100h,
+                    Row(
+                      children: [
+                        CoconutLayout.spacing_100w,
+                        IconButton(
+                          icon: SvgPicture.asset(
+                            isBottom && !isBackButton
+                                ? 'packages/coconut_design_system/assets/svg/close.svg'
+                                : 'packages/coconut_design_system/assets/svg/arrow-back.svg',
+                            colorFilter: ColorFilter.mode(
+                                CoconutColors.onPrimary(brightness), BlendMode.srcIn),
+                            width: 24,
+                            height: 24,
+                          ),
+                          onPressed: () {
+                            if (onBackPressed != null) {
+                              onBackPressed();
+                            } else {
+                              Navigator.pop(context);
+                            }
+                          },
+                        ),
+                      ],
                     ),
                   ],
                 )
@@ -272,13 +271,10 @@ class CoconutAppBar {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         if (isLeadingSvgAssetVisible) ...{
-                          SizedBox(
-                              height: iconSize,
-                              width: iconSize,
-                              child: Padding(
-                                padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 4.0),
-                                child: leadingSvgAsset,
-                              )),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 8.0),
+                            child: leadingSvgAsset,
+                          )
                         },
                         Expanded(
                           child: Align(
@@ -402,34 +398,34 @@ class CoconutAppBar {
       ),
       centerTitle: true,
       scrolledUnderElevation: 0,
-      toolbarHeight: height ??
-          (isBottom
-              ? 50
-              : Platform.isIOS
-                  ? 44
-                  : 56),
+      toolbarHeight: height ?? (isBottom ? 60 : 56),
       backgroundColor: backgroundColor ?? Colors.transparent,
       leading: Navigator.canPop(context)
-          ? Row(
+          ? Column(
               children: [
-                CoconutLayout.spacing_200w,
-                IconButton(
-                  icon: SvgPicture.asset(
-                    isBottom
-                        ? 'packages/coconut_design_system/assets/svg/close.svg'
-                        : 'packages/coconut_design_system/assets/svg/arrow-back.svg',
-                    colorFilter:
-                        ColorFilter.mode(CoconutColors.onPrimary(brightness), BlendMode.srcIn),
-                    width: 24,
-                    height: 24,
-                  ),
-                  onPressed: () {
-                    if (onBackPressed != null) {
-                      onBackPressed();
-                    } else {
-                      Navigator.pop(context);
-                    }
-                  },
+                CoconutLayout.spacing_100h,
+                Row(
+                  children: [
+                    CoconutLayout.spacing_100w,
+                    IconButton(
+                      icon: SvgPicture.asset(
+                        isBottom
+                            ? 'packages/coconut_design_system/assets/svg/close.svg'
+                            : 'packages/coconut_design_system/assets/svg/arrow-back.svg',
+                        colorFilter:
+                            ColorFilter.mode(CoconutColors.onPrimary(brightness), BlendMode.srcIn),
+                        width: 24,
+                        height: 24,
+                      ),
+                      onPressed: () {
+                        if (onBackPressed != null) {
+                          onBackPressed();
+                        } else {
+                          Navigator.pop(context);
+                        }
+                      },
+                    ),
+                  ],
                 ),
               ],
             )

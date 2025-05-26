@@ -18,6 +18,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 class CoconutToast {
   static bool _isToastVisible = false;
 
+  static const warningYellow = Color.fromRGBO(255, 175, 3, 1.0);
+  static const warningYellowBackground = Color.fromRGBO(255, 243, 190, 1.0);
+
   /// Displays a toast message at the bottom of the screen.
   ///
   /// - [context]: The build context.
@@ -71,35 +74,38 @@ class CoconutToast {
     }
 
     overlayEntry = OverlayEntry(
-      builder: (context) => SafeArea(
-        child: FadeTransition(
-          opacity: fadeAnimation,
-          child: Align(
-            alignment: Alignment.bottomCenter,
-            child: GestureDetector(
-              onVerticalDragUpdate: (details) {
-                if (details.primaryDelta! > 5) {
-                  dismiss();
-                }
-              },
-              child: Container(
-                margin: const EdgeInsets.all(12),
-                padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
-                height: 50,
-                decoration: BoxDecoration(
-                  color: backgroundColor ?? CoconutColors.onGray900(brightness),
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: borderColor ?? CoconutColors.onGray300(brightness),
-                    width: 1,
+      builder: (context) => Material(
+        type: MaterialType.transparency,
+        child: SafeArea(
+          child: FadeTransition(
+            opacity: fadeAnimation,
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: GestureDetector(
+                onVerticalDragUpdate: (details) {
+                  if (details.primaryDelta! > 5) {
+                    dismiss();
+                  }
+                },
+                child: Container(
+                  margin: const EdgeInsets.all(12),
+                  padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: backgroundColor ?? CoconutColors.onGray900(brightness),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: borderColor ?? CoconutColors.onGray300(brightness),
+                      width: 1,
+                    ),
                   ),
-                ),
-                child: Text(
-                  text,
-                  overflow: TextOverflow.ellipsis,
-                  style: CoconutTypography.body2_14.copyWith(
-                    decoration: TextDecoration.none, // Prevents underlining in debug mode
-                    color: textColor ?? CoconutColors.onGray100(brightness),
+                  child: Text(
+                    text,
+                    overflow: TextOverflow.ellipsis,
+                    style: CoconutTypography.body2_14.copyWith(
+                      decoration: TextDecoration.none, // Prevents underlining in debug mode
+                      color: textColor ?? CoconutColors.onGray100(brightness),
+                    ),
                   ),
                 ),
               ),
@@ -115,22 +121,27 @@ class CoconutToast {
 
   /// Displays a toast message at the top of the screen.
   ///
-  /// - [context]: The build context.
-  /// - [text]: The message to display in the toast.
-  /// - [isVisibleIcon]: Whether to show an icon next to the message.
-  /// - [seconds]: Duration in seconds before the toast disappears (default: `3`).
-  /// - [backgroundColor]: The background color of the toast.
-  /// - [borderColor]: The border color of the toast.
-  /// - [textColor]: The color of the text inside the toast.
+  /// - [context]: BuildContext used to insert the overlay.
+  /// - [text]: Message text to display.
+  /// - [isVisibleIcon]: Whether to show an info icon.
+  /// - [seconds]: Toast duration in seconds (max: 5s).
+  /// - [iconSize]: Size of the icon displayed (default: 16).
+  /// - [iconRightPadding]: Padding between icon and text.
+  /// - [textPadding]: Vertical padding around the text.
+  /// - [textStyle]: Optional override for text style.
+  /// - [backgroundColor]: Background color of the toast.
+  /// - [borderColor]: Border color around the toast.
+  /// - [textColor]: Text color override.
+  /// - [iconPath]: Optional custom icon path.
   static void showToast({
     required BuildContext context,
     required String text,
     isVisibleIcon = false,
     int seconds = 3,
-    double iconSize = 24,
+    double iconSize = 16,
     double iconRightPadding = 4,
-    double fontSize = 14,
     double textPadding = 3.5,
+    TextStyle textStyle = CoconutTypography.body2_14,
     Color? backgroundColor,
     Color? borderColor,
     Color? textColor,
@@ -143,25 +154,89 @@ class CoconutToast {
     overlayEntry = OverlayEntry(
       builder: (context) {
         Brightness brightness = CoconutTheme.brightness();
-        return SafeArea(
-          child: Align(
-            alignment: Alignment.topCenter,
-            child: CoconutToastWidget(
-              brightness: brightness,
-              text: text,
-              isVisibleIcon: isVisibleIcon,
-              backgroundColor: backgroundColor,
-              borderColor: borderColor,
-              textColor: textColor,
-              iconPath: iconPath,
-              iconSize: iconSize,
-              iconRightPadding: iconRightPadding,
-              fontSize: fontSize,
-              textPadding: textPadding,
-              onDismiss: () {
-                overlayEntry.remove();
-              },
-              duration: seconds <= 5 ? seconds : 5,
+        return Material(
+          type: MaterialType.transparency,
+          child: SafeArea(
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: CoconutToastWidget(
+                brightness: brightness,
+                text: text,
+                isVisibleIcon: isVisibleIcon,
+                backgroundColor: backgroundColor,
+                borderColor: borderColor,
+                textColor: textColor,
+                iconColor: borderColor ?? CoconutColors.onGray100(brightness),
+                iconPath: iconPath,
+                iconSize: iconSize,
+                iconRightPadding: iconRightPadding,
+                textStyle: textStyle,
+                textPadding: textPadding,
+                onDismiss: () {
+                  overlayEntry.remove();
+                },
+                duration: seconds <= 5 ? seconds : 5,
+              ),
+            ),
+          ),
+        );
+      },
+    );
+
+    Overlay.of(context).insert(overlayEntry);
+  }
+
+  /// Displays a warning toast message at the top of the screen.
+  ///
+  /// - [context]: Context for displaying the overlay.
+  /// - [text]: Warning message to display.
+  /// - [seconds]: Toast duration in seconds (max: 5s).
+  /// - [iconSize]: Icon size in pixels.
+  /// - [iconRightPadding]: Space between icon and text.
+  /// - [textPadding]: Padding above and below the text.
+  /// - [backgroundColor]: Optional background override.
+  /// - [borderColor]: Optional border override.
+  /// - [textStyle]: Optional override for text style.
+  static void showWarningToast({
+    required BuildContext context,
+    required String text,
+    int seconds = 5,
+    double iconSize = 16,
+    double iconRightPadding = 4,
+    double textPadding = 3.5,
+    Color? backgroundColor,
+    Color? borderColor,
+    TextStyle textStyle = CoconutTypography.body2_14,
+  }) {
+    if (_isToastVisible) return;
+
+    _isToastVisible = true;
+    late OverlayEntry overlayEntry;
+    overlayEntry = OverlayEntry(
+      builder: (context) {
+        Brightness brightness = Theme.of(context).brightness;
+        return Material(
+          type: MaterialType.transparency,
+          child: SafeArea(
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: CoconutToastWidget(
+                brightness: brightness,
+                text: text,
+                isVisibleIcon: true,
+                backgroundColor: backgroundColor ?? warningYellowBackground,
+                borderColor: borderColor ?? backgroundColor ?? warningYellowBackground,
+                iconColor: warningYellow,
+                iconPath: 'packages/coconut_design_system/assets/svg/triangle_warning.svg',
+                iconSize: iconSize,
+                iconRightPadding: iconRightPadding,
+                textStyle: textStyle,
+                textPadding: textPadding,
+                onDismiss: () {
+                  overlayEntry.remove();
+                },
+                duration: seconds <= 5 ? seconds : 5,
+              ),
             ),
           ),
         );
@@ -185,11 +260,12 @@ class CoconutToastWidget extends StatefulWidget {
   final VoidCallback onDismiss;
   final double iconSize;
   final double iconRightPadding;
-  final double fontSize;
   final double textPadding;
+  final TextStyle textStyle;
   final Color? backgroundColor;
   final Color? borderColor;
   final Color? textColor;
+  final Color iconColor;
   final String? iconPath;
 
   /// Creates an instance of `CoconutToastWidget`.
@@ -200,9 +276,10 @@ class CoconutToastWidget extends StatefulWidget {
     required this.isVisibleIcon,
     required this.duration,
     required this.onDismiss,
-    this.iconSize = 24,
+    required this.iconColor,
+    this.iconSize = 16,
     this.iconRightPadding = 4,
-    this.fontSize = 14,
+    this.textStyle = CoconutTypography.body2_14,
     this.textPadding = 3.5,
     this.backgroundColor,
     this.borderColor,
@@ -233,52 +310,74 @@ class _CoconutToastWidgetState extends State<CoconutToastWidget>
               _startFadeOut();
             }
           },
-          child: Container(
-            margin: const EdgeInsets.all(12),
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 13),
-            width: double.maxFinite,
-            decoration: BoxDecoration(
-              color: widget.backgroundColor ?? CoconutColors.onGray900(brightness),
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(
-                color: widget.borderColor ?? CoconutColors.onGray300(brightness),
-                width: 1,
-              ),
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (widget.isVisibleIcon) ...{
-                  Padding(
-                    padding: EdgeInsets.only(right: widget.iconRightPadding),
-                    child: SvgPicture.asset(
-                      widget.iconPath ?? 'packages/coconut_design_system/assets/svg/toast_info.svg',
-                      height: widget.iconSize,
-                      colorFilter: ColorFilter.mode(
-                        widget.borderColor ?? CoconutColors.onGray100(brightness),
-                        BlendMode.srcIn,
-                      ),
-                    ),
-                  ),
-                } else ...{
-                  SizedBox(
-                    height: widget.iconSize,
-                  ),
-                },
-                Flexible(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: widget.textPadding),
-                    child: Text(
-                      widget.text,
-                      style: CoconutTypography.body2_14.copyWith(
-                        decoration: TextDecoration.none, // Prevents underlining in debug mode
-                        color: widget.textColor ?? CoconutColors.onGray100(brightness),
-                        fontSize: widget.fontSize,
-                      ),
-                    ),
-                  ),
+          child: Material(
+            type: MaterialType.transparency,
+            child: Container(
+              margin: const EdgeInsets.all(12),
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 13),
+              width: double.maxFinite,
+              decoration: BoxDecoration(
+                color: widget.backgroundColor ?? CoconutColors.onGray900(brightness),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: widget.borderColor ??
+                      widget.backgroundColor ??
+                      CoconutColors.onGray900(brightness),
+                  width: 1,
                 ),
-              ],
+              ),
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  final textPainter = TextPainter(
+                    text: TextSpan(text: widget.text),
+                    maxLines: null,
+                    textDirection: TextDirection.ltr,
+                  )..layout(maxWidth: constraints.maxWidth);
+
+                  final isMultiline = textPainter.computeLineMetrics().length > 1;
+
+                  return Row(
+                    crossAxisAlignment:
+                        isMultiline ? CrossAxisAlignment.start : CrossAxisAlignment.center,
+                    children: [
+                      if (widget.isVisibleIcon) ...{
+                        Padding(
+                          padding: EdgeInsets.only(
+                            right: widget.iconRightPadding,
+                            top: widget.textPadding,
+                            bottom: widget.textPadding,
+                          ),
+                          child: SvgPicture.asset(
+                            widget.iconPath ??
+                                'packages/coconut_design_system/assets/svg/circle_info.svg',
+                            height: widget.iconSize,
+                            colorFilter: ColorFilter.mode(
+                              widget.iconColor,
+                              BlendMode.srcIn,
+                            ),
+                          ),
+                        ),
+                      } else ...{
+                        SizedBox(
+                          height: widget.iconSize,
+                        ),
+                      },
+                      Flexible(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(vertical: widget.textPadding),
+                          child: Text(
+                            widget.text,
+                            style: widget.textStyle.copyWith(
+                              decoration: TextDecoration.none, // Prevents underlining in debug mode
+                              color: widget.textColor ?? CoconutColors.onGray100(brightness),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              ),
             ),
           ),
         ),

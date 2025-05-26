@@ -79,6 +79,9 @@ class CoconutPopup extends StatefulWidget {
   /// The padding around the description content.
   final EdgeInsets? descriptionPadding;
 
+  /// The padding around the whole dialog.
+  final EdgeInsets? insetPadding;
+
   /// Creates an instance of `CoconutPopup`.
   const CoconutPopup({
     super.key,
@@ -100,6 +103,7 @@ class CoconutPopup extends StatefulWidget {
     this.rightButtonTextStyle,
     this.titlePadding,
     this.descriptionPadding,
+    this.insetPadding,
   });
 
   @override
@@ -114,6 +118,11 @@ class _CoconutPopupState extends State<CoconutPopup> {
     Brightness brightness = CoconutTheme.brightness();
 
     return Dialog(
+      insetPadding: widget.insetPadding,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(16)),
+      ),
+      backgroundColor: Theme.of(context).dialogBackgroundColor,
       child: ClipRRect(
         borderRadius: const BorderRadius.all(Radius.circular(16)),
         child: Container(

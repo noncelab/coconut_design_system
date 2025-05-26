@@ -38,6 +38,10 @@ class CoconutToolTip extends StatefulWidget {
   /// Whether to show an icon in the tooltip (default: `true`).
   final bool showIcon;
 
+  /// The custom icon in the tooltip.
+  /// If `null`, the default icon corresponding to the `tooltipState` will be used.
+  final Widget? icon;
+
   /// The base background color of the tooltip. (default: 'tansparent', used in only **fixed** type).
   final Color? baseBackgroundColor;
 
@@ -86,6 +90,7 @@ class CoconutToolTip extends StatefulWidget {
     this.tooltipState = CoconutTooltipState.info,
     this.isAvailableTapToClose = true,
     this.showIcon = true,
+    this.icon,
     this.baseBackgroundColor = Colors.transparent,
     this.backgroundColor,
     this.borderColor,
@@ -205,16 +210,36 @@ class _CoconutToolTipState extends State<CoconutToolTip> {
                   borderRadius: BorderRadius.circular(CoconutStyles.radius_250),
                   border: Border.all(width: 1, color: _borderColor),
                 ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    if (widget.showIcon)
-                      Container(
-                        padding: const EdgeInsets.only(right: 8),
-                        child: _icon,
-                      ),
-                    Expanded(child: widget.richText),
-                  ],
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    final textPainter = TextPainter(
+                      text: widget.richText.text,
+                      maxLines: null,
+                      textDirection: TextDirection.ltr,
+                    )..layout(maxWidth: constraints.maxWidth);
+
+                    final isMultiline = textPainter.computeLineMetrics().length > 1;
+
+                    return Row(
+                      crossAxisAlignment:
+                          isMultiline ? CrossAxisAlignment.start : CrossAxisAlignment.center,
+                      children: [
+                        if (widget.showIcon)
+                          if (widget.icon != null) ...{
+                            Container(
+                              padding: const EdgeInsets.only(right: 8),
+                              child: widget.icon,
+                            )
+                          } else ...{
+                            Container(
+                              padding: const EdgeInsets.only(right: 8),
+                              child: _icon,
+                            ),
+                          },
+                        Expanded(child: widget.richText),
+                      ],
+                    );
+                  },
                 ),
               ),
             ],
