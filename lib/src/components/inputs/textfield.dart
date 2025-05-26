@@ -17,7 +17,7 @@ class CoconutTextField extends StatefulWidget {
   /// The focus node for handling focus events.
   final FocusNode focusNode;
 
-  /// - Deprecated: This parameter will be removed in version `0.8.0`.
+  /// - Deprecated: This parameter will be removed in version `0.9.0`.
   /// - Now automatically inferred from `CoconutTheme.brightness()`.
   @Deprecated(
       'This parameter will be removed in version 0.8. It is now inferred from CoconutTheme.brightness.')

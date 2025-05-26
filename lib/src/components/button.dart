@@ -21,7 +21,7 @@ import 'package:flutter/material.dart';
 /// ```
 class CoconutButton extends StatefulWidget {
   /// **Brightness of the button**
-  /// - Deprecated: This parameter will be removed in version `0.8.0`.
+  /// - Deprecated: This parameter will be removed in version `0.9.0`.
   /// - Now automatically inferred from `CoconutTheme.brightness()`.
   @Deprecated(
       'This parameter will be removed in version 0.8. It is now inferred from CoconutTheme.brightness.')

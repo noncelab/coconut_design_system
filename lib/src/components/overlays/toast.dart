@@ -27,7 +27,7 @@ class CoconutToast {
   /// - [textColor]: The color of the text inside the toast.
   /// - [seconds]: Duration in seconds before the toast disappears (default: `2`).
   static void showBottomToast({
-    /// - Deprecated: This parameter will be removed in version `0.8.0`.
+    /// - Deprecated: This parameter will be removed in version `0.9.0`.
     /// - Now automatically inferred from `CoconutTheme.brightness()`.
     @Deprecated(
         'This parameter will be removed in version 0.8. It is now inferred from CoconutTheme.brightness.')

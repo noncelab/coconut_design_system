@@ -26,7 +26,7 @@ class CoconutToolTip extends StatefulWidget {
   /// Tooltip state that determines the icon and color scheme.
   final CoconutTooltipState tooltipState;
 
-  /// - Deprecated: This parameter will be removed in version `0.8.0`.
+  /// - Deprecated: This parameter will be removed in version `0.9.0`.
   /// - Now automatically inferred from `CoconutTheme.brightness()`.
   @Deprecated(
       'This parameter will be removed in version 0.8. It is now inferred from CoconutTheme.brightness.')
