@@ -14,7 +14,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 /// ```dart
 /// CoconutToolTip(
 ///   tooltipType: CoconutTooltipType.fixed,
-///   brightness: Brightness.light,
 ///   richText: RichText(
 ///     text: TextSpan(text: "This is a tooltip."),
 ///   ),
@@ -27,8 +26,11 @@ class CoconutToolTip extends StatefulWidget {
   /// Tooltip state that determines the icon and color scheme.
   final CoconutTooltipState tooltipState;
 
-  /// The brightness setting (light or dark mode).
-  final Brightness brightness;
+  /// - Deprecated: This parameter will be removed in version `0.9.0`.
+  /// - Now automatically inferred from `CoconutTheme.brightness()`.
+  @Deprecated(
+      'This parameter will be removed in version 0.8. It is now inferred from CoconutTheme.brightness.')
+  final Brightness? brightness;
 
   /// The text content inside the tooltip.
   final RichText richText;
@@ -84,7 +86,7 @@ class CoconutToolTip extends StatefulWidget {
     super.key,
     required this.tooltipType,
     required this.richText,
-    this.brightness = Brightness.light,
+    this.brightness,
     this.tooltipState = CoconutTooltipState.info,
     this.isAvailableTapToClose = true,
     this.showIcon = true,
@@ -143,6 +145,8 @@ class _CoconutToolTipState extends State<CoconutToolTip> {
   SvgPicture? _icon;
 
   late Color color;
+
+  Brightness brightness = CoconutTheme.brightness();
 
   @override
   Widget build(BuildContext context) {
@@ -267,7 +271,7 @@ class _CoconutToolTipState extends State<CoconutToolTip> {
                         icon: SvgPicture.asset(
                           'packages/coconut_design_system/assets/svg/close.svg',
                           colorFilter: ColorFilter.mode(
-                              CoconutColors.onPrimary(widget.brightness), BlendMode.srcIn),
+                              CoconutColors.onPrimary(brightness), BlendMode.srcIn),
                         ),
                       ),
                     ),
@@ -320,12 +324,12 @@ class _CoconutToolTipState extends State<CoconutToolTip> {
     _borderColor = widget.borderColor ??
         (widget.tooltipType == CoconutTooltipType.fixedClosable
             ? _getBorderColorForBrighness()
-            : CoconutColors.onPrimary(widget.brightness));
+            : CoconutColors.onPrimary(brightness));
     _backgroundColor = widget.backgroundColor ??
         (widget.tooltipType == CoconutTooltipType.fixedClosable ||
                 widget.tooltipType == CoconutTooltipType.placement
             ? _getBackgroundColorForBrighness()
-            : CoconutColors.surface(widget.brightness));
+            : CoconutColors.surface(brightness));
 
     color = CoconutColors.colorPalette[widget.tooltipState.colorIndex];
 

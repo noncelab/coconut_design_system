@@ -18,8 +18,7 @@ class ButtonScreen extends StatelessWidget {
             final brightness = isDarkMode ? Brightness.dark : Brightness.light;
 
             return Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: CoconutLayout.defaultPadding),
+              padding: const EdgeInsets.symmetric(horizontal: CoconutLayout.defaultPadding),
               child: Center(
                 child: Column(
                   children: [

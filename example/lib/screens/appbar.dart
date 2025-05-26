@@ -16,12 +16,10 @@ class AppbarScreen extends StatelessWidget {
         final isDarkMode = themeProvider.themeMode == ThemeMode.dark;
         final brightness = isDarkMode ? Brightness.dark : Brightness.light;
         if (appbarProvider.appbarType == AppbarType.frosted) {
-          return _buildFrostedAppBar(
-              context, brightness, appbarProvider, themeProvider);
+          return _buildFrostedAppBar(context, brightness, appbarProvider, themeProvider);
         }
         if (appbarProvider.appbarType == AppbarType.topNavi) {
-          return _buildTopNaviAppBar(
-              context, brightness, appbarProvider, themeProvider);
+          return _buildTopNaviAppBar(context, brightness, appbarProvider, themeProvider);
         }
         return Scaffold(
           body: CustomScrollView(
@@ -36,8 +34,7 @@ class AppbarScreen extends StatelessWidget {
                 isLeadingSvgAssetVisible: appbarProvider.isAppIconVisible,
                 automaticallyImplyLeading: appbarProvider.isLeadingVisible,
                 appTitle: 'Home',
-                subLabel:
-                    appbarProvider.isSubLabelVisible ? _buildSubLabel() : null,
+                subLabel: appbarProvider.isSubLabelVisible ? _buildSubLabel() : null,
                 actionButtonList: [
                   IconButton(
                     icon: Icon(isDarkMode ? Icons.dark_mode : Icons.light_mode),
@@ -46,8 +43,7 @@ class AppbarScreen extends StatelessWidget {
                   if (appbarProvider.isActionButtonVisible)
                     IconButton(
                       onPressed: () {
-                        showSnackBar(
-                            context, 'Action Button Clicked!', brightness);
+                        showSnackBar(context, 'Action Button Clicked!', brightness);
                       },
                       icon: const Icon(
                         Icons.add,
@@ -71,26 +67,18 @@ class AppbarScreen extends StatelessWidget {
                       SizedBox(
                         width: double.infinity,
                         child: _buildOptionControlBox(
-                          brightness: brightness,
-                          isHomeSt:
-                              appbarProvider.appbarType == AppbarType.home,
+                          isHomeSt: appbarProvider.appbarType == AppbarType.home,
                           isAppIconVisible: appbarProvider.isAppIconVisible,
                           isLeadingVisible: appbarProvider.isLeadingVisible,
                           isClosable: appbarProvider.isClosable,
                           isSubLabelVisible: appbarProvider.isSubLabelVisible,
-                          isActionButtonVisible:
-                              appbarProvider.isActionButtonVisible,
-                          toggleAppIconVisible:
-                              appbarProvider.toggleAppIconVisible,
-                          toggleLeadingVisible:
-                              appbarProvider.toggleLeadingVisible,
+                          isActionButtonVisible: appbarProvider.isActionButtonVisible,
+                          toggleAppIconVisible: appbarProvider.toggleAppIconVisible,
+                          toggleLeadingVisible: appbarProvider.toggleLeadingVisible,
                           toggleClosable: appbarProvider.toggleClosable,
-                          toggleSubLabelVisible:
-                              appbarProvider.toggleSubLabelVisible,
-                          toggleActionButtonVisible:
-                              appbarProvider.toggleActionButtonVisible,
-                          toggleTitlePressable:
-                              appbarProvider.toggleTitlePressable,
+                          toggleSubLabelVisible: appbarProvider.toggleSubLabelVisible,
+                          toggleActionButtonVisible: appbarProvider.toggleActionButtonVisible,
+                          toggleTitlePressable: appbarProvider.toggleTitlePressable,
                         ),
                       ),
                     ],
@@ -105,7 +93,6 @@ class AppbarScreen extends StatelessWidget {
   }
 
   Widget _buildOptionControlBox({
-    required Brightness brightness,
     required bool isHomeSt,
     required bool isLeadingVisible,
     required bool isClosable,
@@ -123,6 +110,7 @@ class AppbarScreen extends StatelessWidget {
     Function? toggleNextButtonVisible,
   }) {
     debugPrint('isNextButtonVisible : $isNextButtonVisible');
+    Brightness brightness = CoconutTheme.brightness(); // Get the current brightness
     return Container(
       padding: const EdgeInsets.all(Sizes.size16),
       decoration: BoxDecoration(
@@ -313,12 +301,12 @@ class AppbarScreen extends StatelessWidget {
   }
 
   Widget _buildFrostedOptionControlBox({
-    required Brightness brightness,
     required bool isClosable,
     required bool isTitleFadable,
     required Function toggleClosable,
     required Function toggleTitleFadable,
   }) {
+    Brightness brightness = CoconutTheme.brightness(); // Get the current brightness
     return Container(
       padding: const EdgeInsets.all(Sizes.size16),
       decoration: BoxDecoration(
@@ -374,8 +362,7 @@ class AppbarScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildRadioOptions(
-      AppbarProvider appbarProvider, Brightness brightness) {
+  Widget _buildRadioOptions(AppbarProvider appbarProvider, Brightness brightness) {
     final List<Map<String, AppbarType>> options = [
       {'Home Style': AppbarType.home},
       {'TopNavi Style': AppbarType.topNavi},
@@ -431,9 +418,7 @@ class AppbarScreen extends StatelessWidget {
         isBottom: appbarProvider.isClosable,
         actionButtonList: [
           IconButton(
-            icon: Icon(brightness == Brightness.dark
-                ? Icons.dark_mode
-                : Icons.light_mode),
+            icon: Icon(brightness == Brightness.dark ? Icons.dark_mode : Icons.light_mode),
             onPressed: () => themeProvider.toggleTheme(),
           ),
         ],
@@ -458,7 +443,6 @@ class AppbarScreen extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: _buildFrostedOptionControlBox(
-                  brightness: brightness,
                   isClosable: appbarProvider.isClosable,
                   isTitleFadable: appbarProvider.hasTitleOpacity,
                   toggleClosable: appbarProvider.toggleClosable,
@@ -495,9 +479,7 @@ class AppbarScreen extends StatelessWidget {
           },
           actionButtonList: [
             IconButton(
-              icon: Icon(brightness == Brightness.dark
-                  ? Icons.dark_mode
-                  : Icons.light_mode),
+              icon: Icon(brightness == Brightness.dark ? Icons.dark_mode : Icons.light_mode),
               onPressed: () => themeProvider.toggleTheme(),
             ),
           ],
@@ -519,7 +501,6 @@ class AppbarScreen extends StatelessWidget {
                 SizedBox(
                   width: double.infinity,
                   child: _buildOptionControlBox(
-                    brightness: brightness,
                     isHomeSt: appbarProvider.appbarType == AppbarType.home,
                     isAppIconVisible: appbarProvider.isAppIconVisible,
                     isTitlePressable: appbarProvider.isTitlePressable,
@@ -533,10 +514,8 @@ class AppbarScreen extends StatelessWidget {
                     toggleLeadingVisible: appbarProvider.toggleLeadingVisible,
                     toggleClosable: appbarProvider.toggleClosable,
                     toggleSubLabelVisible: appbarProvider.toggleSubLabelVisible,
-                    toggleActionButtonVisible:
-                        appbarProvider.toggleActionButtonVisible,
-                    toggleNextButtonVisible:
-                        appbarProvider.toggleNextButtonVisible,
+                    toggleActionButtonVisible: appbarProvider.toggleActionButtonVisible,
+                    toggleNextButtonVisible: appbarProvider.toggleNextButtonVisible,
                   ),
                 ),
               ],
@@ -558,9 +537,7 @@ class AppbarScreen extends StatelessWidget {
         },
         actionButtonList: [
           IconButton(
-            icon: Icon(brightness == Brightness.dark
-                ? Icons.dark_mode
-                : Icons.light_mode),
+            icon: Icon(brightness == Brightness.dark ? Icons.dark_mode : Icons.light_mode),
             onPressed: () => themeProvider.toggleTheme(),
           ),
         ],
@@ -586,7 +563,6 @@ class AppbarScreen extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: _buildOptionControlBox(
-                  brightness: brightness,
                   isHomeSt: appbarProvider.appbarType == AppbarType.home,
                   isAppIconVisible: appbarProvider.isAppIconVisible,
                   isTitlePressable: appbarProvider.isTitlePressable,
@@ -600,10 +576,8 @@ class AppbarScreen extends StatelessWidget {
                   toggleLeadingVisible: appbarProvider.toggleLeadingVisible,
                   toggleClosable: appbarProvider.toggleClosable,
                   toggleSubLabelVisible: appbarProvider.toggleSubLabelVisible,
-                  toggleActionButtonVisible:
-                      appbarProvider.toggleActionButtonVisible,
-                  toggleNextButtonVisible:
-                      appbarProvider.toggleNextButtonVisible,
+                  toggleActionButtonVisible: appbarProvider.toggleActionButtonVisible,
+                  toggleNextButtonVisible: appbarProvider.toggleNextButtonVisible,
                 ),
               ),
             ],

@@ -18,8 +18,11 @@ class CoconutTextField extends StatefulWidget {
   /// The focus node for handling focus events.
   final FocusNode focusNode;
 
-  /// Determines the brightness mode (light or dark) to adjust colors.
-  final Brightness brightness;
+  /// - Deprecated: This parameter will be removed in version `0.9.0`.
+  /// - Now automatically inferred from `CoconutTheme.brightness()`.
+  @Deprecated(
+      'This parameter will be removed in version 0.8. It is now inferred from CoconutTheme.brightness.')
+  final Brightness? brightness;
 
   /// Callback function triggered when the text changes.
   ///
@@ -131,7 +134,6 @@ class CoconutTextField extends StatefulWidget {
   ///
   /// - [controller] manages the text input.
   /// - [focusNode] handles focus-related behaviors.
-  /// - [brightness] adjusts the colors based on light or dark mode.
   /// - [onChanged] is triggered when the text input changes.
   /// - [activeColor], [cursorColor], [placeholderColor], and [errorColor] customize text and border colors.
   /// - [backgroundColor] sets the background color of the text field.
@@ -154,7 +156,6 @@ class CoconutTextField extends StatefulWidget {
   /// CoconutTextField(
   ///   controller: TextEditingController(),
   ///   focusNode: FocusNode(),
-  ///   brightness: Theme.of(context).brightness,
   ///   onChanged: (text) {
   ///     print("Text input: $text");
   ///   },
@@ -174,7 +175,7 @@ class CoconutTextField extends StatefulWidget {
     required this.controller,
     required this.focusNode,
     required this.onChanged,
-    this.brightness = Brightness.light,
+    this.brightness,
     this.padding,
     this.activeColor,
     this.cursorColor,
@@ -211,6 +212,7 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
   late Color _errorColor;
   late Color _cursorColor;
   late Color _backgroundColor;
+  Brightness brightness = CoconutTheme.brightness();
 
   final GlobalKey _prefixGlobalKey = GlobalKey();
   Size _prefixSize = const Size(0, 0);
@@ -228,9 +230,9 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
   }
 
   void _updateData() {
-    _activeColor = widget.activeColor ?? CoconutColors.onBlack(widget.brightness);
-    _cursorColor = widget.cursorColor ?? CoconutColors.onBlack(widget.brightness);
-    _placeholderColor = widget.placeholderColor ?? CoconutColors.onGray300(widget.brightness);
+    _activeColor = widget.activeColor ?? CoconutColors.onBlack(brightness);
+    _cursorColor = widget.cursorColor ?? CoconutColors.onBlack(brightness);
+    _placeholderColor = widget.placeholderColor ?? CoconutColors.onGray300(brightness);
     _errorColor = widget.errorColor ?? CoconutColors.red;
     _backgroundColor = widget.backgroundColor ?? Colors.transparent;
     _text = widget.controller.text;

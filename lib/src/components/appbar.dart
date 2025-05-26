@@ -16,7 +16,6 @@ import 'package:flutter_svg/svg.dart';
 ///   appBar: CoconutAppBar.build(
 ///     title: 'Example',
 ///     context: context,
-///     brightness: Brightness.light,
 ///   ),
 ///   body: Container(),
 /// )
@@ -80,7 +79,7 @@ class CoconutAppBar {
     Widget? subLabel,
     List<Widget>? actionButtonList,
   }) {
-    Brightness brightness = Theme.of(context).brightness;
+    Brightness brightness = CoconutTheme.brightness();
     Widget? widget = Column(
       children: [
         if (onTitlePressed == null) ...{
@@ -117,7 +116,7 @@ class CoconutAppBar {
       ],
     );
     return AppBar(
-      systemOverlayStyle: Theme.of(context).brightness == Brightness.light
+      systemOverlayStyle: CoconutTheme.brightness() == Brightness.light
           ? const SystemUiOverlayStyle(
               statusBarColor: CoconutColors.white, // 상태바 배경
               statusBarBrightness: Brightness.light, // 상태바 아이콘 (iOS)
@@ -383,7 +382,7 @@ class CoconutAppBar {
     List<Widget>? actionButtonList,
     EdgeInsets? padding,
   }) {
-    Brightness brightness = Theme.of(context).brightness;
+    Brightness brightness = CoconutTheme.brightness();
     return AppBar(
       systemOverlayStyle: Theme.of(context).brightness == Brightness.light
           ? SystemUiOverlayStyle.dark
@@ -594,7 +593,7 @@ class _CoconutFrostedAppBarState extends State<CoconutFrostedAppBar> {
 
   @override
   Widget build(BuildContext context) {
-    Brightness brightness = Theme.of(context).brightness;
+    Brightness brightness = CoconutTheme.brightness();
     Color backgroundColor = _getBackgroundColor(brightness);
 
     return AppBar(

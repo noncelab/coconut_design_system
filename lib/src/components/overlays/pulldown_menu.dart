@@ -153,7 +153,7 @@ class CoconutPulldownMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final brightness = Theme.of(context).brightness;
+    final brightness = CoconutTheme.brightness();
     final List<_IndexedEntry> flattenedEntries = [];
     int runningIndex = 0;
     int groupCount = 0;

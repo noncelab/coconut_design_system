@@ -39,7 +39,6 @@ import 'package:coconut_design_system/coconut_design_system.dart';
 ```
 CoconutButton(
   text: "Click Me",
-  brightness: Brightness.light,
   onPressed: () {
     print("Button Clicked!");
   },
@@ -49,7 +48,6 @@ CoconutButton(
 ```
 CoconutToast.showToast(
   context: context,
-  brightness: Brightness.dark,
   text: "This is a toast message!",
 );
 ```
@@ -58,7 +56,6 @@ CoconutToast.showToast(
 showModalBottomSheet(
   context: context,
   builder: (context) => CoconutBottomSheet(
-    brightness: Brightness.light,
     appBar: AppBar(title: Text("Title")),
     body: Text("This is a bottom sheet."),
   ),

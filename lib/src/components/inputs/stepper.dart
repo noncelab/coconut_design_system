@@ -39,7 +39,6 @@ class CoconutStepper extends StatefulWidget {
   /// Creates a `CoconutStepper` widget.
   ///
   /// - [maxCount] defines the upper limit for the stepper value.
-  /// - [brightness] is used to adjust colors for light or dark mode.
   /// - [onCount] is triggered whenever the count value changes.
   /// - [fontSize] customizes the text size of the displayed count.
   /// - [iconSize] defines the size of the stepper icons.
@@ -50,7 +49,6 @@ class CoconutStepper extends StatefulWidget {
   /// ```dart
   /// CoconutStepper(
   ///   maxCount: 10,
-  ///   brightness: Theme.of(context).brightness,
   ///   onCount: (int count) {
   ///     print("Current stepper count: $count");
   ///   },
@@ -129,7 +127,7 @@ class _CoconutStepperState extends State<CoconutStepper> {
 
   @override
   Widget build(BuildContext context) {
-    final brightness = Theme.of(context).brightness;
+    final brightness = CoconutTheme.brightness();
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,

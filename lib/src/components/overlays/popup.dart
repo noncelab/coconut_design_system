@@ -13,7 +13,6 @@ import 'package:flutter/material.dart';
 /// showDialog(
 ///   context: context,
 ///   builder: (context) => CoconutPopup(
-///     brightness: Brightness.light,
 ///     title: "Alert",
 ///     description: "Are you sure you want to proceed?",
 ///     onTapRight: () {
@@ -116,7 +115,7 @@ class _CoconutPopupState extends State<CoconutPopup> {
   bool _isRightButtonPressing = false;
   @override
   Widget build(BuildContext context) {
-    Brightness brightness = Theme.of(context).brightness;
+    Brightness brightness = CoconutTheme.brightness();
 
     return Dialog(
       insetPadding: widget.insetPadding,

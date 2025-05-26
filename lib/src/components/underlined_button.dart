@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 /// ### **Example Usage**
 /// ```dart
 /// CoconutUnderlinedButton(
-///   brightness: Brightness.light,
 ///   text: "Click Me",
 ///   onTap: () {
 ///     print("Underlined Button Clicked!");
@@ -20,8 +19,11 @@ import 'package:flutter/material.dart';
 /// ```
 
 class CoconutUnderlinedButton extends StatefulWidget {
-  /// **Determines whether the button is in light or dark mode.**
-  final Brightness brightness;
+  /// - Deprecated: This parameter will be removed in version `0.9.0`.
+  /// - Now automatically inferred from `CoconutTheme.brightness()`.
+  @Deprecated(
+      'This parameter will be removed in version 0.8. It is now inferred from CoconutTheme.brightness.')
+  final Brightness? brightness;
 
   /// **The text label displayed on the button.**
   final String text;
@@ -55,7 +57,7 @@ class CoconutUnderlinedButton extends StatefulWidget {
   /// **Constructor for `CoconutUnderlinedButton`**
   CoconutUnderlinedButton({
     super.key,
-    this.brightness = Brightness.light,
+    this.brightness,
     required this.text,
     TextStyle? textStyle,
     this.lineWidth = 1,
@@ -67,13 +69,13 @@ class CoconutUnderlinedButton extends StatefulWidget {
   }) : textStyle = textStyle ?? CoconutTypography.body2_14_Bold;
 
   @override
-  State<CoconutUnderlinedButton> createState() =>
-      _CoconutUnderlinedButtonState();
+  State<CoconutUnderlinedButton> createState() => _CoconutUnderlinedButtonState();
 }
 
 class _CoconutUnderlinedButtonState extends State<CoconutUnderlinedButton> {
   /// **Tracks whether the button is currently being pressed.**
   late bool _isPressing;
+  Brightness brightnesss = CoconutTheme.brightness();
 
   @override
   Widget build(BuildContext context) {
@@ -109,13 +111,13 @@ class _CoconutUnderlinedButtonState extends State<CoconutUnderlinedButton> {
                 textAlign: TextAlign.center,
                 softWrap: true,
                 style: widget.textStyle.setColor(
-                  _getColorForBrightness(),
+                  _getColorForBrightness(brightnesss),
                 ),
               ),
               Container(
                 width: _getTextWidth(context),
                 height: widget.lineWidth,
-                color: _getColorForBrightness(),
+                color: _getColorForBrightness(brightnesss),
               ),
             ],
           ),
@@ -129,16 +131,16 @@ class _CoconutUnderlinedButtonState extends State<CoconutUnderlinedButton> {
   /// - If `isActive` is `false`, returns a faded color.
   /// - If the button is pressed, returns `pressingColor` or a faded version of `defaultColor`.
   /// - Otherwise, returns `defaultColor` or the primary theme color.
-  Color _getColorForBrightness() {
+  Color _getColorForBrightness(Brightness brightness) {
     if (!widget.isActive) {
-      return CoconutColors.onPrimary(widget.brightness).withOpacity(0.2);
+      return CoconutColors.onPrimary(brightness).withOpacity(0.2);
     }
     if (_isPressing) {
       return widget.pressingColor ??
           widget.defaultColor?.withOpacity(0.5) ??
-          CoconutColors.onPrimary(widget.brightness).withOpacity(0.5);
+          CoconutColors.onPrimary(brightness).withOpacity(0.5);
     }
-    return widget.defaultColor ?? CoconutColors.onPrimary(widget.brightness);
+    return widget.defaultColor ?? CoconutColors.onPrimary(brightness);
   }
 
   double _getTextWidth(BuildContext context) {
