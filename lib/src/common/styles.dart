@@ -1,3 +1,6 @@
+import 'package:coconut_design_system/coconut_design_system.dart';
+import 'package:flutter/material.dart';
+
 class CoconutStyles {
   /// **radius-500 (32px)**
   /// - Used for **Bottom Sheet's left/right top border radius**.
@@ -37,4 +40,28 @@ class CoconutStyles {
   /// - Used for **chip UI elements and very small rounded components**.
   /// - **Examples:** Filter chips, Tag labels, Small progress indicators
   static const radius_50 = 4.0;
+}
+
+abstract class CoconutBorder {
+  static final BorderRadius defaultRadius = BorderRadius.circular(CoconutStyles.radius_400);
+  static final BorderRadius boxDecorationRadius = BorderRadius.circular(CoconutStyles.radius_100);
+}
+
+class CoconutPadding {
+  static const EdgeInsets container = EdgeInsets.symmetric(horizontal: 16, vertical: 20);
+  static const EdgeInsets widgetContainer = EdgeInsets.symmetric(horizontal: 24, vertical: 20);
+}
+
+class CoconutBoxDecoration {
+  static BoxDecoration shadowBoxDecoration = BoxDecoration(
+    borderRadius: CoconutBorder.boxDecorationRadius,
+    color: CoconutColors.white,
+    boxShadow: [
+      BoxShadow(
+        color: CoconutColors.black.withOpacity(0.06),
+        spreadRadius: 4,
+        blurRadius: 20,
+      ),
+    ],
+  );
 }
