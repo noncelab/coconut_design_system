@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:coconut_design_system/coconut_design_system.dart';
@@ -385,9 +386,21 @@ class CoconutAppBar {
   }) {
     Brightness brightness = CoconutTheme.brightness();
     return AppBar(
-      systemOverlayStyle: Theme.of(context).brightness == Brightness.light
-          ? SystemUiOverlayStyle.dark
-          : SystemUiOverlayStyle.light,
+      systemOverlayStyle: Platform.isIOS
+          ? (brightness == Brightness.light
+              ? const SystemUiOverlayStyle(
+                  statusBarIconBrightness: Brightness.dark, // iOS → 검정 텍스트
+                )
+              : const SystemUiOverlayStyle(
+                  statusBarIconBrightness: Brightness.light, // iOS → 흰색 텍스트
+                ))
+          : (brightness == Brightness.light
+              ? const SystemUiOverlayStyle(
+                  statusBarIconBrightness: Brightness.dark, // Android → 검정 텍스트
+                )
+              : const SystemUiOverlayStyle(
+                  statusBarIconBrightness: Brightness.light, // Android → 흰색 텍스트
+                )),
       title: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Text(
