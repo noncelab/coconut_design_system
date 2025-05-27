@@ -73,6 +73,7 @@ class CoconutAppBar {
     bool isLeadingVisible = true,
     bool showSubLabel = false,
     bool isBackButton = false,
+    bool hasBackDropFilter = false,
     double? height,
     VoidCallback? onTitlePressed,
     VoidCallback? onBackPressed,
@@ -178,7 +179,7 @@ class CoconutAppBar {
                 ),
               ),
             )
-          : null,
+          : Container(),
     );
   }
 
@@ -444,7 +445,7 @@ class CoconutAppBar {
           ),
         ),
       ],
-      flexibleSpace: !isBottom
+      flexibleSpace: !isBottom && backgroundColor == null
           ? ClipRect(
               child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
@@ -453,7 +454,7 @@ class CoconutAppBar {
                 ),
               ),
             )
-          : null,
+          : Container(),
     );
   }
 }
