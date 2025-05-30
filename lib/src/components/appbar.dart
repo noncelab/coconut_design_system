@@ -118,15 +118,21 @@ class CoconutAppBar {
       ],
     );
     return AppBar(
-      systemOverlayStyle: CoconutTheme.brightness() == Brightness.light
-          ? const SystemUiOverlayStyle(
-              statusBarColor: CoconutColors.white, // 상태바 배경
-              statusBarBrightness: Brightness.light, // 상태바 아이콘 (iOS)
-              statusBarIconBrightness: Brightness.dark, // 상태바 아이콘 (Android)
-              systemNavigationBarColor: CoconutColors.white, // 하단 네비게이션바 배경
-              systemNavigationBarIconBrightness: Brightness.dark, // 하단 네비게이션바 아이콘
-            )
-          : SystemUiOverlayStyle.light,
+      systemOverlayStyle: Platform.isIOS
+          ? (brightness == Brightness.light
+              ? const SystemUiOverlayStyle(
+                  statusBarIconBrightness: Brightness.dark, // iOS → 검정 텍스트
+                )
+              : const SystemUiOverlayStyle(
+                  statusBarIconBrightness: Brightness.light, // iOS → 흰색 텍스트
+                ))
+          : (brightness == Brightness.light
+              ? const SystemUiOverlayStyle(
+                  statusBarIconBrightness: Brightness.dark, // Android → 검정 텍스트
+                )
+              : const SystemUiOverlayStyle(
+                  statusBarIconBrightness: Brightness.light, // Android → 흰색 텍스트
+                )),
       key: entireWidgetKey,
       toolbarHeight: height ?? (isBottom ? 60 : 56),
       title: widget,
