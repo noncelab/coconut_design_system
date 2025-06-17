@@ -5,6 +5,30 @@ This project follows **[Semantic Versioning](https://semver.org/)**.
 
 ---
 
+## **[0.9.0] - 2025-06-17**
+
+### ✨ Features
+- **`CoconutColors`**
+  - Added `warningText`, `borderGray`, `borderLightGray`, `oceanBlue`, `whiteLilac`, `searchbarBackground`, `searchbarHint`, `searchbarText`, `cyanBlue`, `secondaryText`, `gray850`, `warningYellow`, `warningYellowBackground`.
+- **Styles**
+  - Introduced `CoconutBorder`, `CoconutPadding`, `CoconutBoxDecoration` utility classes for standardized styling.
+- **`CoconutToast`**
+  - Added support for replacing an existing toast.
+
+### 🛠 Fixes
+- **Color**
+  - Fixed typo in color name: `borderLightgray` → `borderLightGray`.
+- **`CoconutTextField`**
+  - Fixed placeholder text to always initialize regardless of prefix presence.
+- **`CoconutAppBar`**
+  - Fixed platform-specific `systemOverlayStyle` handling for accurate status bar icon brightness.
+  - Replaced `null` with an empty `Container` as `flexibleSpace` fallback to avoid rendering issues.
+
+### ♻️ Refactor
+- Simplified `home-appbar-icon` layout and padding logic.
+
+---
+
 ## **[0.8.0] - 2025-05-09**
 
 ### ⚠️ Breaking Changes
