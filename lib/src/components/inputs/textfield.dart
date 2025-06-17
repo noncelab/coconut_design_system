@@ -241,14 +241,17 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
   @override
   void initState() {
     super.initState();
-    _placeholderText = widget.prefix == null ? widget.placeholderText ?? '' : '';
+    _placeholderText = widget.placeholderText ?? '';
     widget.focusNode.addListener(_focusNodeListener);
     _updateData();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_prefixGlobalKey.currentContext != null) {
         final prefixRenderBox = _prefixGlobalKey.currentContext?.findRenderObject() as RenderBox;
         _prefixSize = prefixRenderBox.size;
-        _placeholderText = widget.placeholderText ?? '';
+
+        setState(() {
+          _placeholderText = widget.placeholderText ?? '';
+        });
       }
     });
   }
