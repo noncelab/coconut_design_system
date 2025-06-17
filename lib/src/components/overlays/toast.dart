@@ -16,6 +16,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 /// );
 /// ```
 class CoconutToast {
+  static OverlayEntry? _currentToastOverlay;
   static bool _isToastVisible = false;
 
   static const warningYellow = Color.fromRGBO(255, 175, 3, 1.0);
@@ -124,6 +125,7 @@ class CoconutToast {
   /// - [context]: BuildContext used to insert the overlay.
   /// - [text]: Message text to display.
   /// - [isVisibleIcon]: Whether to show an info icon.
+  /// - [removePrevToast]: If `true`, removes any existing toast before showing a new one.
   /// - [seconds]: Toast duration in seconds (max: 5s).
   /// - [iconSize]: Size of the icon displayed (default: 16).
   /// - [iconRightPadding]: Padding between icon and text.
@@ -136,7 +138,8 @@ class CoconutToast {
   static void showToast({
     required BuildContext context,
     required String text,
-    isVisibleIcon = false,
+    bool isVisibleIcon = false,
+    bool removePrevToast = true,
     int seconds = 3,
     double iconSize = 16,
     double iconRightPadding = 4,
@@ -147,7 +150,15 @@ class CoconutToast {
     Color? textColor,
     String? iconPath,
   }) {
-    if (_isToastVisible) return;
+    if (removePrevToast && _currentToastOverlay != null) {
+      try {
+        _currentToastOverlay?.remove();
+      } catch (_) {}
+      _currentToastOverlay = null;
+      _isToastVisible = false;
+    } else if (_isToastVisible) {
+      return;
+    }
 
     _isToastVisible = true;
     late OverlayEntry overlayEntry;
@@ -183,13 +194,15 @@ class CoconutToast {
       },
     );
 
-    Overlay.of(context).insert(overlayEntry);
+    Overlay.of(context, rootOverlay: true).insert(overlayEntry);
+    _currentToastOverlay = overlayEntry;
   }
 
   /// Displays a warning toast message at the top of the screen.
   ///
   /// - [context]: Context for displaying the overlay.
   /// - [text]: Warning message to display.
+  /// - [removePrevToast]: If `true`, removes any existing toast before showing a new one.
   /// - [seconds]: Toast duration in seconds (max: 5s).
   /// - [iconSize]: Icon size in pixels.
   /// - [iconRightPadding]: Space between icon and text.
@@ -200,6 +213,7 @@ class CoconutToast {
   static void showWarningToast({
     required BuildContext context,
     required String text,
+    bool removePrevToast = true,
     int seconds = 5,
     double iconSize = 16,
     double iconRightPadding = 4,
@@ -208,7 +222,15 @@ class CoconutToast {
     Color? borderColor,
     TextStyle textStyle = CoconutTypography.body2_14,
   }) {
-    if (_isToastVisible) return;
+    if (removePrevToast && _currentToastOverlay != null) {
+      try {
+        _currentToastOverlay?.remove();
+      } catch (_) {}
+      _currentToastOverlay = null;
+      _isToastVisible = false;
+    } else if (_isToastVisible) {
+      return;
+    }
 
     _isToastVisible = true;
     late OverlayEntry overlayEntry;
@@ -243,7 +265,8 @@ class CoconutToast {
       },
     );
 
-    Overlay.of(context).insert(overlayEntry);
+    Overlay.of(context, rootOverlay: true).insert(overlayEntry);
+    _currentToastOverlay = overlayEntry;
   }
 }
 
