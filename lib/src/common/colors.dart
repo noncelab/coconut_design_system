@@ -18,6 +18,7 @@ class CoconutColors {
   static const Color gray500 = Color(0xFF949494);
   static const Color gray600 = Color(0xFF777777);
   static const Color gray700 = Color(0xFF555555);
+  static const Color gray750 = Color(0xFF3D3D3D);
   static const Color gray800 = Color(0xFF303030);
   static const Color gray850 = Color(0xFF232323);
   static const Color gray900 = Color(0xFF1C1C1C);
