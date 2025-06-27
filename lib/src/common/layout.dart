@@ -46,6 +46,7 @@ class CoconutLayout {
   /// Vertical Spacing
   static const spacing_50h = SizedBox(height: Sizes.size2);
   static const spacing_100h = SizedBox(height: Sizes.size4);
+  static const spacing_150h = SizedBox(height: Sizes.size6);
   static const spacing_200h = SizedBox(height: Sizes.size8);
   static const spacing_300h = SizedBox(height: Sizes.size12);
   static const spacing_400h = SizedBox(height: Sizes.size16);
@@ -74,6 +75,7 @@ class CoconutLayout {
   /// Horizontal Spacing
   static const spacing_50w = SizedBox(width: Sizes.size2);
   static const spacing_100w = SizedBox(width: Sizes.size4);
+  static const spacing_150w = SizedBox(width: Sizes.size6);
   static const spacing_200w = SizedBox(width: Sizes.size8);
   static const spacing_300w = SizedBox(width: Sizes.size12);
   static const spacing_400w = SizedBox(width: Sizes.size16);
