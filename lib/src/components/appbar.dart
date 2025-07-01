@@ -62,6 +62,7 @@ class CoconutAppBar {
   /// - `onTitlePressed` (VoidCallback?, optional): Function triggered when the title is tapped.
   /// - `onBackPressed` (VoidCallback?, optional): Function triggered when the back button is tapped.
   /// - `subLabel` (Widget?, optional): A widget displayed below the title, such as a version indicator.
+  /// - `customTitle` (Widget?, optional): A widget centrally displayed on the title. if you use this, `subLabel` `showSubLabel` will be ignored.
   /// - `actionButtonList` (List<Widget>?, optional): A list of action buttons displayed on the right side.
   static AppBar build({
     required String title,
@@ -79,44 +80,52 @@ class CoconutAppBar {
     VoidCallback? onTitlePressed,
     VoidCallback? onBackPressed,
     Widget? subLabel,
+    Widget? customTitle,
     List<Widget>? actionButtonList,
   }) {
+    if (customTitle != null) {
+      customTitle = GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onTap: onTitlePressed,
+          child: Padding(padding: titlePadding, child: customTitle));
+    }
     Brightness brightness = CoconutTheme.brightness();
-    Widget? widget = Column(
-      children: [
-        if (onTitlePressed == null) ...{
-          Padding(
-            padding: titlePadding,
-            child: Text(
-              title,
-              style: CoconutTypography.heading4_18.setColor(
-                CoconutColors.onPrimary(brightness),
-              ),
-            ),
-          )
-        } else ...{
-          CoconutUnderlinedButton(
-            text: title,
-            onTap: onTitlePressed,
-            padding: titlePadding,
-            textStyle: CoconutTypography.heading4_18,
-            brightness: brightness,
-          ),
-        },
-        showSubLabel
-            ? Column(
-                children: [
-                  const SizedBox(
-                    height: 3,
+    Widget? widget = customTitle ??
+        Column(
+          children: [
+            if (onTitlePressed == null) ...{
+              Padding(
+                padding: titlePadding,
+                child: Text(
+                  title,
+                  style: CoconutTypography.heading4_18.setColor(
+                    CoconutColors.onPrimary(brightness),
                   ),
-                  subLabel ?? Container(),
-                ],
+                ),
               )
-            : Container(
-                width: 1,
+            } else ...{
+              CoconutUnderlinedButton(
+                text: title,
+                onTap: onTitlePressed,
+                padding: titlePadding,
+                textStyle: CoconutTypography.heading4_18,
+                brightness: brightness,
               ),
-      ],
-    );
+            },
+            showSubLabel
+                ? Column(
+                    children: [
+                      const SizedBox(
+                        height: 3,
+                      ),
+                      subLabel ?? Container(),
+                    ],
+                  )
+                : Container(
+                    width: 1,
+                  ),
+          ],
+        );
     return AppBar(
       systemOverlayStyle: Platform.isIOS
           ? (brightness == Brightness.light
