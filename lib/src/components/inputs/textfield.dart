@@ -107,6 +107,9 @@ class CoconutTextField extends StatefulWidget {
   /// Whether the text field should have a visible border.
   final bool isVisibleBorder;
 
+  /// The border radius of the text field
+  final double borderRadius;
+
   /// The height of the text field.
   ///
   /// If `null`, the height is determined by the text content and padding.
@@ -148,6 +151,7 @@ class CoconutTextField extends StatefulWidget {
   /// - [descriptionText] provides additional information below the text field.
   /// - [obscureText] enables secure text entry.
   /// - [isVisibleBorder] determines whether the text field has a border.
+  /// - [borderRadius] sets the border radius of the text field.
   /// - [height] sets a fixed height for the text field (optional).
   /// - [fontSize] sets the font size of the input text.
   /// - [fontFamily] specifies the font family for the input text.
@@ -199,6 +203,7 @@ class CoconutTextField extends StatefulWidget {
     this.textInputFormatter,
     this.obscureText = false,
     this.isVisibleBorder = true,
+    this.borderRadius = 12,
     this.height,
     this.fontSize = 14,
     this.fontFamily = 'Pretendard',
@@ -293,7 +298,7 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                             : _placeholderColor,
                   )
                 : null,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(widget.borderRadius),
             color: _backgroundColor,
           ),
           child: Stack(
