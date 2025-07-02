@@ -119,6 +119,9 @@ class CoconutTextField extends StatefulWidget {
   /// The font family of the text inside the text field.
   final String fontFamily;
 
+  /// The font weight of the text inside the text field.
+  final FontWeight fontWeight;
+
   /// The alignment of the text inside the text field.
   ///
   /// If `null`, it defaults to `TextAlign.start`.
@@ -148,6 +151,7 @@ class CoconutTextField extends StatefulWidget {
   /// - [height] sets a fixed height for the text field (optional).
   /// - [fontSize] sets the font size of the input text.
   /// - [fontFamily] specifies the font family for the input text.
+  /// - [fontWeight] specifies the font weight for the input text.
   /// - [textAlign] controls the alignment of the text inside the field.
   /// - [isLengthVisible] determines whether to display the character length counter.
   ///
@@ -198,6 +202,7 @@ class CoconutTextField extends StatefulWidget {
     this.height,
     this.fontSize = 14,
     this.fontFamily = 'Pretendard',
+    this.fontWeight = FontWeight.normal,
     this.textAlign,
     this.isLengthVisible = true,
   });
@@ -305,6 +310,7 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                   color: _activeColor,
                   fontSize: widget.fontSize,
                   fontFamily: widget.fontFamily,
+                  fontWeight: widget.fontWeight,
                 ),
                 cursorColor: _cursorColor,
                 decoration: const BoxDecoration(
@@ -345,6 +351,7 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                     style: CoconutTypography.body2_14.copyWith(
                       color: _placeholderColor,
                       fontSize: widget.fontSize,
+                      fontWeight: widget.fontWeight,
                     ),
                   ),
                 ),
