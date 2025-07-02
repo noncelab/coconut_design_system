@@ -85,7 +85,6 @@ class CoconutAppBar {
   }) {
     if (customTitle != null) {
       customTitle = GestureDetector(
-          behavior: HitTestBehavior.translucent,
           onTap: onTitlePressed,
           child: Padding(padding: titlePadding, child: customTitle));
     }
