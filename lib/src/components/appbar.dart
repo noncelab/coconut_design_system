@@ -62,11 +62,11 @@ class CoconutAppBar {
   /// - `onTitlePressed` (VoidCallback?, optional): Function triggered when the title is tapped.
   /// - `onBackPressed` (VoidCallback?, optional): Function triggered when the back button is tapped.
   /// - `subLabel` (Widget?, optional): A widget displayed below the title, such as a version indicator.
-  /// - `customTitle` (Widget?, optional): A widget centrally displayed on the title. if you use this, `subLabel` `showSubLabel` will be ignored.
+  /// - `customTitle` (Widget?, optional): A widget centrally displayed on the title. if you use this, `title` `subLabel` `showSubLabel` will be ignored.
   /// - `actionButtonList` (List<Widget>?, optional): A list of action buttons displayed on the right side.
   static AppBar build({
-    required String title,
     required BuildContext context,
+    String title = "",
     EdgeInsets titlePadding = const EdgeInsets.all(0),
     Key? entireWidgetKey,
     Key? faucetIconKey,
