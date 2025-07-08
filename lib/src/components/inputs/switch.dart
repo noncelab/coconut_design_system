@@ -26,12 +26,25 @@ class CoconutSwitch extends StatelessWidget {
   /// and `CoconutColors.onGray200(brightness)` when inactive.
   final Color? thumbColor;
 
+  /// The color of the switch's track when inactive.
+  ///
+  /// If `null`, it defaults to `CoconutColors.onGray300(brightness)`.
+  final Color? trackColor;
+
+  /// Scales the entire switch widget.
+  ///
+  /// A value less than 1 shrinks the switch, and greater than 1 enlarges it.
+  /// Defaults to 1 (no scaling).
+  final double scale;
+
   /// Creates a `CoconutSwitch` widget.
   ///
   /// - [isOn] determines whether the switch is turned on or off.
   /// - [onChanged] is triggered when the switch state changes.
   /// - [activeColor] customizes the active track color.
   /// - [thumbColor] customizes the switch thumb color.
+  /// - [trackColor] customizes the inactive track color.
+  /// - [scale] adjusts the size of the switch.
   ///
   /// Example usage:
   /// ```dart
@@ -40,6 +53,10 @@ class CoconutSwitch extends StatelessWidget {
   ///   onChanged: (bool value) {
   ///     print("Switch state: $value");
   ///   },
+  ///   activeColor: Colors.green,
+  ///   thumbColor: Colors.white,
+  ///   trackColor: Colors.grey,
+  ///   scale: 0.8,
   /// )
   /// ```
   const CoconutSwitch({
@@ -48,6 +65,8 @@ class CoconutSwitch extends StatelessWidget {
     required this.onChanged,
     this.activeColor,
     this.thumbColor,
+    this.trackColor,
+    this.scale = 1,
   });
 
   @override
@@ -65,13 +84,19 @@ class CoconutSwitch extends StatelessWidget {
             : CoconutColors.onGray200(brightness)
         : thumbColor!;
 
-    return CupertinoSwitch(
-      value: isOn,
-      activeColor: active,
-      thumbColor: thumb,
-      onChanged: (value) {
-        onChanged(value);
-      },
+    final track = trackColor == null ? CoconutColors.onGray300(brightness) : trackColor!;
+
+    return Transform.scale(
+      scale: scale,
+      child: CupertinoSwitch(
+        value: isOn,
+        activeColor: active,
+        thumbColor: thumb,
+        trackColor: track,
+        onChanged: (value) {
+          onChanged(value);
+        },
+      ),
     );
   }
 }
