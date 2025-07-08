@@ -23,6 +23,7 @@ export 'src/components/overlays/tooltip.dart';
 export 'src/components/overlays/toast.dart';
 export 'src/components/indicator/progress_indicator.dart';
 export 'src/components/indicator/circular_indicator.dart';
+export 'src/animation/shake_animation.dart';
 
 // 📌 Theme & Styling
 export 'src/theme/typography.dart';
