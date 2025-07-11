@@ -237,8 +237,11 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
         if (text.runes.length > widget.maxLength!) {
           text = String.fromCharCodes(text.runes.take(widget.maxLength!));
           widget.controller.text = text;
+          return;
         }
       }
+
+      if(text == _text) return;
 
       _text = text;
       setState(() {});
