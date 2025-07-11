@@ -231,12 +231,24 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
   String _placeholderText = '';
   bool _isFocus = false;
 
+  void _controllerListener() {
+    String text = widget.controller.text;
+      if (widget.maxLength != null) {
+        if (text.runes.length > widget.maxLength!) {
+          text = String.fromCharCodes(text.runes.take(widget.maxLength!));
+          widget.controller.text = text;
+        }
+      }
+
+      _text = text;
+      setState(() {});
+      widget.onChanged(_text);
+  }
+
   /// Listens to focus changes and updates the UI accordingly.
   void _focusNodeListener() {
     _isFocus = widget.focusNode.hasFocus;
-    setState(() {
-      _placeholderText = (_isFocus || _text.isNotEmpty) ? '' : (widget.placeholderText ?? '');
-    });
+    setState(() {});
   }
 
   void _updateData() {
@@ -252,16 +264,14 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
   void initState() {
     super.initState();
     _placeholderText = widget.placeholderText ?? '';
+    widget.controller.addListener(_controllerListener);
     widget.focusNode.addListener(_focusNodeListener);
     _updateData();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_prefixGlobalKey.currentContext != null) {
         final prefixRenderBox = _prefixGlobalKey.currentContext?.findRenderObject() as RenderBox;
         _prefixSize = prefixRenderBox.size;
-
-        setState(() {
-          _placeholderText = widget.placeholderText ?? '';
-        });
+        setState(() {});
       }
     });
   }
@@ -274,6 +284,7 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
 
   @override
   void dispose() {
+    widget.controller.removeListener(_controllerListener);
     widget.focusNode.removeListener(_focusNodeListener);
     super.dispose();
   }
@@ -331,18 +342,6 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                 keyboardType: widget.textInputType,
                 textInputAction: widget.textInputAction,
                 textAlignVertical: TextAlignVertical.bottom,
-                onChanged: (text) {
-                  if (widget.maxLength != null) {
-                    if (text.runes.length > widget.maxLength!) {
-                      text = String.fromCharCodes(text.runes.take(widget.maxLength!));
-                      widget.controller.text = text;
-                    }
-                  }
-
-                  _text = text;
-                  setState(() {});
-                  widget.onChanged(_text);
-                },
               ),
               IgnorePointer(
                 child: Container(
@@ -352,7 +351,7 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                       : EdgeInsets.only(left: _prefixSize.width, top: widget.padding?.top ?? 20),
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    _placeholderText,
+                    _isFocus || _text.isNotEmpty ? '' : _placeholderText,
                     style: CoconutTypography.body2_14.copyWith(
                       color: _placeholderColor,
                       fontSize: widget.fontSize,
