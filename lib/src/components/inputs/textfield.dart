@@ -107,6 +107,9 @@ class CoconutTextField extends StatefulWidget {
   /// Whether the text field should have a visible border.
   final bool isVisibleBorder;
 
+  /// The border radius of the text field
+  final double borderRadius;
+
   /// The height of the text field.
   ///
   /// If `null`, the height is determined by the text content and padding.
@@ -118,6 +121,9 @@ class CoconutTextField extends StatefulWidget {
 
   /// The font family of the text inside the text field.
   final String fontFamily;
+
+  /// The font weight of the text inside the text field.
+  final FontWeight fontWeight;
 
   /// The alignment of the text inside the text field.
   ///
@@ -145,9 +151,11 @@ class CoconutTextField extends StatefulWidget {
   /// - [descriptionText] provides additional information below the text field.
   /// - [obscureText] enables secure text entry.
   /// - [isVisibleBorder] determines whether the text field has a border.
+  /// - [borderRadius] sets the border radius of the text field.
   /// - [height] sets a fixed height for the text field (optional).
   /// - [fontSize] sets the font size of the input text.
   /// - [fontFamily] specifies the font family for the input text.
+  /// - [fontWeight] specifies the font weight for the input text.
   /// - [textAlign] controls the alignment of the text inside the field.
   /// - [isLengthVisible] determines whether to display the character length counter.
   ///
@@ -195,9 +203,11 @@ class CoconutTextField extends StatefulWidget {
     this.textInputFormatter,
     this.obscureText = false,
     this.isVisibleBorder = true,
+    this.borderRadius = 12,
     this.height,
     this.fontSize = 14,
     this.fontFamily = 'Pretendard',
+    this.fontWeight = FontWeight.normal,
     this.textAlign,
     this.isLengthVisible = true,
   });
@@ -221,12 +231,27 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
   String _placeholderText = '';
   bool _isFocus = false;
 
+  void _controllerListener() {
+    String text = widget.controller.text;
+      if (widget.maxLength != null) {
+        if (text.runes.length > widget.maxLength!) {
+          text = String.fromCharCodes(text.runes.take(widget.maxLength!));
+          widget.controller.text = text;
+          return;
+        }
+      }
+
+      if(text == _text) return;
+
+      _text = text;
+      setState(() {});
+      widget.onChanged(_text);
+  }
+
   /// Listens to focus changes and updates the UI accordingly.
   void _focusNodeListener() {
     _isFocus = widget.focusNode.hasFocus;
-    setState(() {
-      _placeholderText = (_isFocus || _text.isNotEmpty) ? '' : (widget.placeholderText ?? '');
-    });
+    setState(() {});
   }
 
   void _updateData() {
@@ -242,16 +267,14 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
   void initState() {
     super.initState();
     _placeholderText = widget.placeholderText ?? '';
+    widget.controller.addListener(_controllerListener);
     widget.focusNode.addListener(_focusNodeListener);
     _updateData();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_prefixGlobalKey.currentContext != null) {
         final prefixRenderBox = _prefixGlobalKey.currentContext?.findRenderObject() as RenderBox;
         _prefixSize = prefixRenderBox.size;
-
-        setState(() {
-          _placeholderText = widget.placeholderText ?? '';
-        });
+        setState(() {});
       }
     });
   }
@@ -264,6 +287,7 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
 
   @override
   void dispose() {
+    widget.controller.removeListener(_controllerListener);
     widget.focusNode.removeListener(_focusNodeListener);
     super.dispose();
   }
@@ -288,7 +312,7 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                             : _placeholderColor,
                   )
                 : null,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(widget.borderRadius),
             color: _backgroundColor,
           ),
           child: Stack(
@@ -305,6 +329,7 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                   color: _activeColor,
                   fontSize: widget.fontSize,
                   fontFamily: widget.fontFamily,
+                  fontWeight: widget.fontWeight,
                 ),
                 cursorColor: _cursorColor,
                 decoration: const BoxDecoration(
@@ -320,18 +345,6 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                 keyboardType: widget.textInputType,
                 textInputAction: widget.textInputAction,
                 textAlignVertical: TextAlignVertical.bottom,
-                onChanged: (text) {
-                  if (widget.maxLength != null) {
-                    if (text.runes.length > widget.maxLength!) {
-                      text = String.fromCharCodes(text.runes.take(widget.maxLength!));
-                      widget.controller.text = text;
-                    }
-                  }
-
-                  _text = text;
-                  setState(() {});
-                  widget.onChanged(_text);
-                },
               ),
               IgnorePointer(
                 child: Container(
@@ -341,10 +354,11 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                       : EdgeInsets.only(left: _prefixSize.width, top: widget.padding?.top ?? 20),
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    _placeholderText,
+                    _isFocus || _text.isNotEmpty ? '' : _placeholderText,
                     style: CoconutTypography.body2_14.copyWith(
                       color: _placeholderColor,
                       fontSize: widget.fontSize,
+                      fontWeight: widget.fontWeight,
                     ),
                   ),
                 ),

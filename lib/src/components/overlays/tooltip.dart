@@ -51,6 +51,9 @@ class CoconutToolTip extends StatefulWidget {
   /// The border color of the tooltip.
   final Color? borderColor;
 
+  /// The border radius of the tooltip.
+  final double? borderRadius;
+
   /// Callback function when the tooltip is closed.
   final VoidCallback? onTapRemove;
 
@@ -94,6 +97,7 @@ class CoconutToolTip extends StatefulWidget {
     this.baseBackgroundColor = Colors.transparent,
     this.backgroundColor,
     this.borderColor,
+    this.borderRadius,
     this.onTapRemove,
     this.padding,
     this.isBubbleClipperSideLeft = true,
@@ -198,7 +202,7 @@ class _CoconutToolTipState extends State<CoconutToolTip> {
                 child: Container(
                   decoration: BoxDecoration(
                     color: widget.baseBackgroundColor,
-                    borderRadius: BorderRadius.circular(CoconutStyles.radius_250),
+                    borderRadius: BorderRadius.circular(widget.borderRadius ?? CoconutStyles.radius_250),
                   ),
                 ),
               ),
@@ -207,7 +211,7 @@ class _CoconutToolTipState extends State<CoconutToolTip> {
                 padding: _padding,
                 decoration: BoxDecoration(
                   color: _backgroundColor,
-                  borderRadius: BorderRadius.circular(CoconutStyles.radius_250),
+                  borderRadius: BorderRadius.circular(widget.borderRadius ?? CoconutStyles.radius_250),
                   border: Border.all(width: 1, color: _borderColor),
                 ),
                 child: LayoutBuilder(
@@ -254,7 +258,7 @@ class _CoconutToolTipState extends State<CoconutToolTip> {
                     minHeight: Sizes.size60, minWidth: widget.width ?? constraints.maxWidth),
                 decoration: BoxDecoration(
                     color: _backgroundColor,
-                    borderRadius: BorderRadius.circular(CoconutStyles.radius_250),
+                    borderRadius: BorderRadius.circular(widget.borderRadius ?? CoconutStyles.radius_250),
                     border: Border.all(width: 1, color: _borderColor)),
                 child: Stack(
                   children: [
