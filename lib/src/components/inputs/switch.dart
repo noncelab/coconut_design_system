@@ -7,6 +7,10 @@ import 'package:flutter/cupertino.dart';
 /// It supports theming based on brightness (light/dark mode) and provides options
 /// for customizing the active track color and thumb color.
 class CoconutSwitch extends StatelessWidget {
+  /// Default size of CupertinoSwitch
+  static const double cupertinoSwitchWidth = 51.0;
+  static const double cupertinoSwitchHeight = 31.0;
+
   /// Indicates whether the switch is in the "on" state.
   final bool isOn;
 
@@ -86,16 +90,20 @@ class CoconutSwitch extends StatelessWidget {
 
     final track = trackColor == null ? CoconutColors.onGray300(brightness) : trackColor!;
 
-    return Transform.scale(
-      scale: scale,
-      child: CupertinoSwitch(
-        value: isOn,
-        activeColor: active,
-        thumbColor: thumb,
-        trackColor: track,
-        onChanged: (value) {
-          onChanged(value);
-        },
+    return SizedBox(
+      width: cupertinoSwitchWidth * scale,
+      height: cupertinoSwitchHeight * scale,
+      child: Transform.scale(
+        scale: scale,
+        child: CupertinoSwitch(
+          value: isOn,
+          activeColor: active,
+          thumbColor: thumb,
+          trackColor: track,
+          onChanged: (value) {
+            onChanged(value);
+          },
+        ),
       ),
     );
   }
