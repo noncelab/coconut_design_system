@@ -5,6 +5,46 @@ This project follows **[Semantic Versioning](https://semver.org/)**.
 
 ---
 
+## **[0.9.1] - 2025-07-18**
+
+### ✨ Features
+
+- **Colors**
+  - Added `gray750` to `CoconutColors`.
+
+- **Layout**
+  - Added `spacing_150` to `CoconutLayout`.
+
+- **AppBar**
+  - Added `customTitle` attribute.
+  - Removed `HitTestBehavior.translucent` from `GestureDetector` on `customTitle`.
+  - Made `title` attribute optional.
+
+- **TextField**
+  - Added `fontWeight` and `borderRadius` attributes.
+  - Added `enableInteractiveSelection`.
+
+- **Tooltip**
+  - Added `borderRadius` attribute.
+
+- **Switch**
+  - Added support for `trackColor` and `scale`.
+  - Applied minimum size constraints.
+
+- **Animation**
+  - Introduced `CoconutShakeAnimation` widget for reusable shake effects.
+
+### 🛠 Fixes
+
+- **TextField**
+  - Fixed `onChanged` not triggering when `controller.text` changes.
+  - Prevented multiple listener calls when text is unchanged.
+
+- **Switch**
+  - Ensured minimum size application to `CoconutSwitch`.
+
+---
+
 ## **[0.9.0] - 2025-06-17**
 
 ### ✨ Features
