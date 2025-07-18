@@ -136,6 +136,12 @@ class CoconutTextField extends StatefulWidget {
   /// Defaults to `true`.
   final bool isLengthVisible;
 
+  /// If false, disables the ability to:
+  /// - long-press and show the selection toolbar (cut/copy/paste),
+  /// - tap and drag to select text.
+  /// Useful when you want to prevent the user from modifying cursor position or interacting with text selection features.
+  final bool? enableInteractiveSelection;
+
   /// Creates a `CoconutTextField` widget.
   ///
   /// - [controller] manages the text input.
@@ -158,7 +164,7 @@ class CoconutTextField extends StatefulWidget {
   /// - [fontWeight] specifies the font weight for the input text.
   /// - [textAlign] controls the alignment of the text inside the field.
   /// - [isLengthVisible] determines whether to display the character length counter.
-  ///
+  /// - [enableInteractiveSelection] disables text selection and long-press actions.
   /// Example usage:
   /// ```dart
   /// CoconutTextField(
@@ -210,6 +216,7 @@ class CoconutTextField extends StatefulWidget {
     this.fontWeight = FontWeight.normal,
     this.textAlign,
     this.isLengthVisible = true,
+    this.enableInteractiveSelection,
   });
 
   @override
@@ -345,6 +352,7 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                 keyboardType: widget.textInputType,
                 textInputAction: widget.textInputAction,
                 textAlignVertical: TextAlignVertical.bottom,
+                enableInteractiveSelection: widget.enableInteractiveSelection,
               ),
               IgnorePointer(
                 child: Container(
