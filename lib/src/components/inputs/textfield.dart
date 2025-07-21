@@ -142,6 +142,12 @@ class CoconutTextField extends StatefulWidget {
   /// Useful when you want to prevent the user from modifying cursor position or interacting with text selection features.
   final bool? enableInteractiveSelection;
 
+  /// Whether to enable autocorrect.
+  final bool autocorrect;
+
+  /// Whether to enable suggestions while typing.
+  final bool enableSuggestions;
+
   /// Creates a `CoconutTextField` widget.
   ///
   /// - [controller] manages the text input.
@@ -217,6 +223,8 @@ class CoconutTextField extends StatefulWidget {
     this.textAlign,
     this.isLengthVisible = true,
     this.enableInteractiveSelection,
+    this.autocorrect = false,
+    this.enableSuggestions = false,
   });
 
   @override
@@ -240,19 +248,19 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
 
   void _controllerListener() {
     String text = widget.controller.text;
-      if (widget.maxLength != null) {
-        if (text.runes.length > widget.maxLength!) {
-          text = String.fromCharCodes(text.runes.take(widget.maxLength!));
-          widget.controller.text = text;
-          return;
-        }
+    if (widget.maxLength != null) {
+      if (text.runes.length > widget.maxLength!) {
+        text = String.fromCharCodes(text.runes.take(widget.maxLength!));
+        widget.controller.text = text;
+        return;
       }
+    }
 
-      if(text == _text) return;
+    if (text == _text) return;
 
-      _text = text;
-      setState(() {});
-      widget.onChanged(_text);
+    _text = text;
+    setState(() {});
+    widget.onChanged(_text);
   }
 
   /// Listens to focus changes and updates the UI accordingly.
@@ -353,6 +361,8 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                 textInputAction: widget.textInputAction,
                 textAlignVertical: TextAlignVertical.bottom,
                 enableInteractiveSelection: widget.enableInteractiveSelection,
+                autocorrect: widget.autocorrect,
+                enableSuggestions: widget.enableSuggestions,
               ),
               IgnorePointer(
                 child: Container(
