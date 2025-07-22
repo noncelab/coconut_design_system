@@ -29,6 +29,12 @@ class CoconutTextField extends StatefulWidget {
   /// The function receives the new text value as an argument.
   final Function(String) onChanged;
 
+  /// Callback function triggered when the user finishes editing (e.g., presses "done").
+  ///
+  /// This is called when the editing is complete, such as when the user submits the field.
+  /// Useful for actions like moving focus or submitting forms.
+  final VoidCallback? onEditingComplete;
+
   /// The padding inside the text field.
   ///
   /// If `null`, it defaults to `EdgeInsets.fromLTRB(16, 20, 16, 20)`,
@@ -195,6 +201,7 @@ class CoconutTextField extends StatefulWidget {
     required this.controller,
     required this.focusNode,
     required this.onChanged,
+    this.onEditingComplete,
     this.brightness,
     this.padding,
     this.activeColor,
@@ -363,6 +370,7 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                 enableInteractiveSelection: widget.enableInteractiveSelection,
                 autocorrect: widget.autocorrect,
                 enableSuggestions: widget.enableSuggestions,
+                onEditingComplete: widget.onEditingComplete,
               ),
               IgnorePointer(
                 child: Container(
