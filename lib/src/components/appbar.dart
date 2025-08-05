@@ -85,8 +85,7 @@ class CoconutAppBar {
   }) {
     if (customTitle != null) {
       customTitle = GestureDetector(
-          onTap: onTitlePressed,
-          child: Padding(padding: titlePadding, child: customTitle));
+          onTap: onTitlePressed, child: Padding(padding: titlePadding, child: customTitle));
     }
     Brightness brightness = CoconutTheme.brightness();
     Widget? widget = customTitle ??
@@ -264,7 +263,23 @@ class CoconutAppBar {
     double appBarHeight = 56.0,
     double iconSize = 40,
   }) {
+    Brightness brightness = CoconutTheme.brightness();
     return SliverAppBar(
+      systemOverlayStyle: Platform.isIOS
+          ? (brightness == Brightness.light
+              ? const SystemUiOverlayStyle(
+                  statusBarIconBrightness: Brightness.dark, // iOS → 검정 텍스트
+                )
+              : const SystemUiOverlayStyle(
+                  statusBarIconBrightness: Brightness.light, // iOS → 흰색 텍스트
+                ))
+          : (brightness == Brightness.light
+              ? const SystemUiOverlayStyle(
+                  statusBarIconBrightness: Brightness.dark, // Android → 검정 텍스트
+                )
+              : const SystemUiOverlayStyle(
+                  statusBarIconBrightness: Brightness.light, // Android → 흰색 텍스트
+                )),
       scrolledUnderElevation: 0,
       automaticallyImplyLeading: automaticallyImplyLeading,
       floating: false,
