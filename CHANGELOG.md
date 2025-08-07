@@ -2,6 +2,18 @@
 
 All notable changes to the **Coconut Design System** will be documented in this file.  
 This project follows **[Semantic Versioning](https://semver.org/)**.
+---
+
+## **[0.9.2] - 2025-08-07**
+
+### ✨ Features
+
+- **TextField**
+  - Added `autocorrect` and `enableSuggestions` options.
+  - Added `onEditingComplete` callback to `CoconutTextField`.
+
+- **AppBar**
+  - Applied `systemOverlayStyle` to `buildHomeAppbar` based on platform and brightness.
 
 ---
 
