@@ -276,9 +276,11 @@ class CoconutAppBar {
           : (brightness == Brightness.light
               ? const SystemUiOverlayStyle(
                   statusBarIconBrightness: Brightness.dark, // Android → 검정 텍스트
+                  statusBarColor: Colors.transparent,
                 )
               : const SystemUiOverlayStyle(
                   statusBarIconBrightness: Brightness.light, // Android → 흰색 텍스트
+                  statusBarColor: Colors.transparent,
                 )),
       scrolledUnderElevation: 0,
       automaticallyImplyLeading: automaticallyImplyLeading,
