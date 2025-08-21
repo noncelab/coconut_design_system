@@ -429,6 +429,7 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                       overflow: TextOverflow.ellipsis,
                       color: _isFocus ? _activeColor : _placeholderColor,
                     ),
+                    textScaler: TextScaler.linear(1.0),
                   ),
                 ),
               },
