@@ -191,12 +191,15 @@ class _CoconutButtonState extends State<CoconutButton> {
           ),
         ),
         child: Center(
-          child: Text(
-            widget.text,
-            textAlign: TextAlign.center,
-            style: textStyle.merge(
-              TextStyle(
-                color: getForegroundColor(isDarkMode: brightness == Brightness.dark),
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              widget.text,
+              textAlign: TextAlign.center,
+              style: textStyle.merge(
+                TextStyle(
+                  color: getForegroundColor(isDarkMode: brightness == Brightness.dark),
+                ),
               ),
             ),
           ),

@@ -378,15 +378,29 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                   margin: widget.prefix == null
                       ? widget.padding ?? const EdgeInsets.fromLTRB(16, 20, 16, 20)
                       : EdgeInsets.only(left: _prefixSize.width, top: widget.padding?.top ?? 20),
+                  padding: widget.suffix != null ? const EdgeInsets.only(right: 40) : null,
                   alignment: Alignment.centerLeft,
-                  child: Text(
-                    _isFocus || _text.isNotEmpty ? '' : _placeholderText,
-                    style: CoconutTypography.body2_14.copyWith(
-                      color: _placeholderColor,
-                      fontSize: widget.fontSize,
-                      fontWeight: widget.fontWeight,
-                    ),
-                  ),
+                  child: widget.placeholderText == null || _isFocus || _text.isNotEmpty
+                      ? Text(
+                          '',
+                          style: CoconutTypography.body2_14.copyWith(
+                            color: _placeholderColor,
+                            fontSize: widget.fontSize,
+                            fontWeight: widget.fontWeight,
+                          ),
+                        )
+                      : FittedBox(
+                          fit: BoxFit.scaleDown,
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            _placeholderText,
+                            style: CoconutTypography.body2_14.copyWith(
+                              color: _placeholderColor,
+                              fontSize: widget.fontSize,
+                              fontWeight: widget.fontWeight,
+                            ),
+                          ),
+                        ),
                 ),
               ),
             ],
