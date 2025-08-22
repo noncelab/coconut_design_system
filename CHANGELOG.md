@@ -4,6 +4,22 @@ All notable changes to the **Coconut Design System** will be documented in this 
 This project follows **[Semantic Versioning](https://semver.org/)**.
 ---
 
+## **[0.9.3] - 2025-08-22**
+
+### ✨ Features
+
+- **AppBar**
+  - Set `statusBarColor` to transparent in Android `SystemUiOverlayStyle`.
+
+- **TextField**
+  - Added `textScaler` to `CoconutTextField` description text.
+
+### 🛠 Fixes
+
+- Applied `FittedBox` to `CoconutTextField` placeholder and `CoconutButton` text for proper scaling.
+
+---
+
 ## **[0.9.2] - 2025-08-07**
 
 ### ✨ Features
