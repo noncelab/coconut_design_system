@@ -154,6 +154,8 @@ class CoconutTextField extends StatefulWidget {
   /// Whether to enable suggestions while typing.
   final bool enableSuggestions;
 
+  final bool enabled;
+
   /// Creates a `CoconutTextField` widget.
   ///
   /// - [controller] manages the text input.
@@ -232,6 +234,7 @@ class CoconutTextField extends StatefulWidget {
     this.enableInteractiveSelection,
     this.autocorrect = false,
     this.enableSuggestions = false,
+    this.enabled = true
   });
 
   @override
@@ -371,6 +374,7 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                 autocorrect: widget.autocorrect,
                 enableSuggestions: widget.enableSuggestions,
                 onEditingComplete: widget.onEditingComplete,
+                enabled: widget.enabled,
               ),
               IgnorePointer(
                 child: Container(
