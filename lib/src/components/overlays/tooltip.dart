@@ -202,7 +202,8 @@ class _CoconutToolTipState extends State<CoconutToolTip> {
                 child: Container(
                   decoration: BoxDecoration(
                     color: widget.baseBackgroundColor,
-                    borderRadius: BorderRadius.circular(widget.borderRadius ?? CoconutStyles.radius_250),
+                    borderRadius:
+                        BorderRadius.circular(widget.borderRadius ?? CoconutStyles.radius_250),
                   ),
                 ),
               ),
@@ -211,22 +212,26 @@ class _CoconutToolTipState extends State<CoconutToolTip> {
                 padding: _padding,
                 decoration: BoxDecoration(
                   color: _backgroundColor,
-                  borderRadius: BorderRadius.circular(widget.borderRadius ?? CoconutStyles.radius_250),
+                  borderRadius:
+                      BorderRadius.circular(widget.borderRadius ?? CoconutStyles.radius_250),
                   border: Border.all(width: 1, color: _borderColor),
                 ),
                 child: LayoutBuilder(
                   builder: (context, constraints) {
-                    final textPainter = TextPainter(
-                      text: widget.richText.text,
-                      maxLines: null,
-                      textDirection: TextDirection.ltr,
-                    )..layout(maxWidth: constraints.maxWidth);
+                    // final textPainter = TextPainter(
+                    //   text: widget.richText.text,
+                    //   maxLines: null,
+                    //   textDirection: TextDirection.ltr,
+                    //   textScaler: MediaQuery.textScalerOf(context),
+                    // )..layout(maxWidth: constraints.maxWidth);
 
-                    final isMultiline = textPainter.computeLineMetrics().length > 1;
+                    // final isMultiline = textPainter.didExceedMaxLines ||
+                    //     textPainter.computeLineMetrics().length > 1;
 
                     return Row(
-                      crossAxisAlignment:
-                          isMultiline ? CrossAxisAlignment.start : CrossAxisAlignment.center,
+                      // crossAxisAlignment:
+                      //     isMultiline ? CrossAxisAlignment.start : CrossAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         if (widget.showIcon)
                           if (widget.icon != null) ...{
@@ -258,7 +263,8 @@ class _CoconutToolTipState extends State<CoconutToolTip> {
                     minHeight: Sizes.size60, minWidth: widget.width ?? constraints.maxWidth),
                 decoration: BoxDecoration(
                     color: _backgroundColor,
-                    borderRadius: BorderRadius.circular(widget.borderRadius ?? CoconutStyles.radius_250),
+                    borderRadius:
+                        BorderRadius.circular(widget.borderRadius ?? CoconutStyles.radius_250),
                     border: Border.all(width: 1, color: _borderColor)),
                 child: Stack(
                   children: [
