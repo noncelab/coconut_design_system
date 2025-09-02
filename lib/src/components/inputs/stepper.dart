@@ -11,6 +11,12 @@ class CoconutStepper extends StatefulWidget {
   /// The maximum count value that the stepper can reach.
   final int maxCount;
 
+  /// The minimum count value that the stepper can reach.
+  final int minCount;
+
+  /// The initial count value.
+  final int initialCount;
+
   /// The font size of the count displayed in the center.
   ///
   /// Defaults to `24.0`.
@@ -62,6 +68,8 @@ class CoconutStepper extends StatefulWidget {
     this.iconSize = 20.0,
     this.buttonSize = 32.0,
     this.countWidth = 80.0,
+    this.minCount = 1,
+    this.initialCount = 1,
   });
 
   @override
@@ -69,8 +77,14 @@ class CoconutStepper extends StatefulWidget {
 }
 
 class _CoconutStepperState extends State<CoconutStepper> {
-  /// Stores the current count value.
-  int _currentCount = 1;
+  /// Stores the initial count value.
+  late int _currentCount;
+
+  @override
+  void initState() {
+    super.initState();
+    _currentCount = widget.initialCount;
+  }
 
   /// Updates the count when the plus or minus button is pressed.
   ///
@@ -78,7 +92,7 @@ class _CoconutStepperState extends State<CoconutStepper> {
   /// - Calls `onCount` callback with the updated value.
   void _updateCount(int change) {
     int newCount = _currentCount + change;
-    if (newCount >= 1 && newCount <= widget.maxCount) {
+    if (newCount >= widget.minCount && newCount <= widget.maxCount) {
       setState(() {
         _currentCount = newCount;
       });
@@ -134,7 +148,7 @@ class _CoconutStepperState extends State<CoconutStepper> {
       children: [
         _buildStepperButton(
           asset: 'stepper_minus',
-          isDisabled: _currentCount == 1,
+          isDisabled: _currentCount == widget.minCount,
           onTap: () => _updateCount(-1),
           brightness: brightness,
         ),
