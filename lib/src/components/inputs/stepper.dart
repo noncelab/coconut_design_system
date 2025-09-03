@@ -17,6 +17,9 @@ class CoconutStepper extends StatefulWidget {
   /// The initial count value.
   final int initialCount;
 
+  /// The current count value. If provided, this will override initialCount and update when changed.
+  final int? currentCount;
+
   /// The font size of the count displayed in the center.
   ///
   /// Defaults to `24.0`.
@@ -50,6 +53,7 @@ class CoconutStepper extends StatefulWidget {
   /// - [iconSize] defines the size of the stepper icons.
   /// - [buttonSize] sets the circular button size surrounding the icons.
   /// - [countWidth] adjusts the width of the center count display.
+  /// - [currentCount] allows external control of the current value.
   ///
   /// Example usage:
   /// ```dart
@@ -70,6 +74,7 @@ class CoconutStepper extends StatefulWidget {
     this.countWidth = 80.0,
     this.minCount = 1,
     this.initialCount = 1,
+    this.currentCount,
   });
 
   @override
@@ -83,7 +88,15 @@ class _CoconutStepperState extends State<CoconutStepper> {
   @override
   void initState() {
     super.initState();
-    _currentCount = widget.initialCount;
+    _currentCount = widget.currentCount ?? widget.initialCount;
+  }
+
+  @override
+  void didUpdateWidget(covariant CoconutStepper oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.currentCount != null) {
+      _currentCount = widget.currentCount!;
+    }
   }
 
   /// Updates the count when the plus or minus button is pressed.
@@ -128,9 +141,7 @@ class _CoconutStepperState extends State<CoconutStepper> {
             width: widget.iconSize,
             height: widget.iconSize,
             colorFilter: ColorFilter.mode(
-              isDisabled
-                  ? CoconutColors.onGray300(brightness)
-                  : CoconutColors.onBlack(brightness),
+              isDisabled ? CoconutColors.onGray300(brightness) : CoconutColors.onBlack(brightness),
               BlendMode.srcIn,
             ),
           ),
