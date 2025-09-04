@@ -196,7 +196,7 @@ class _CoconutPopupState extends State<CoconutPopup> {
                               widget.leftButtonText,
                               style: widget.leftButtonTextStyle?.setColor(widget.leftButtonColor ??
                                       CoconutColors.onGray900(brightness)) ??
-                                  CoconutTypography.body1_16.setColor(
+                                  CoconutTypography.body2_14_Bold.setColor(
                                     widget.leftButtonColor ?? CoconutColors.onGray900(brightness),
                                   ),
                             ),
@@ -232,7 +232,7 @@ class _CoconutPopupState extends State<CoconutPopup> {
                             widget.rightButtonText,
                             style: widget.rightButtonTextStyle?.setColor(widget.rightButtonColor ??
                                     CoconutColors.onGray900(brightness)) ??
-                                CoconutTypography.body1_16_Bold.setColor(
+                                CoconutTypography.body2_14_Bold.setColor(
                                   widget.rightButtonColor ?? CoconutColors.onGray900(brightness),
                                 ),
                           ),
