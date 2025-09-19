@@ -4,6 +4,37 @@ All notable changes to the **Coconut Design System** will be documented in this 
 This project follows **[Semantic Versioning](https://semver.org/)**.
 ---
 
+## **[0.9.4] - 2025-09-19**
+
+### ✨ Features
+
+- **General**
+  - Added `currentCount` field for enhanced state tracking.
+
+- **SegmentedControl**
+  - Added option to toggle selection animation.
+
+### 🛠 Fixes
+
+- **TextField**
+  - Added `enabled` property for better control over interactivity.
+
+- **Stepper**
+  - Added `minCount` and `initialCount` to prevent invalid states.
+
+- **CoconutPopup**
+  - Updated default button font style for consistency.
+
+- **SegmentedControl**
+  - Synced selection state with parent updates and reset animation to ensure UI consistency.
+
+### ♻️ Refactor
+
+- **Tooltip**
+  - Removed multiline detection logic using `TextPainter` for simplification.
+  
+---
+
 ## **[0.9.3] - 2025-08-22**
 
 ### ✨ Features
