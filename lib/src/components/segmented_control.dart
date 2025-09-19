@@ -128,7 +128,7 @@ class _CoconutSegmentedControlState extends State<CoconutSegmentedControl>
       ),
       child: widget.showAnimation
           ? _buildAnimatedSegmentedControl(
-              MediaQuery.sizeOf(context).width - labelPadding.horizontal,
+              (MediaQuery.sizeOf(context).width - 24) / 2 - 2,
               containerBorderRadius,
               labelBorderRadius,
               labelPadding,
@@ -185,7 +185,8 @@ class _CoconutSegmentedControlState extends State<CoconutSegmentedControl>
               top: 2.0,
               bottom: 2.0,
               child: Container(
-                width: (containerWidth / widget.labels.length) - 4,
+                width: containerWidth,
+                padding: const EdgeInsets.all(2.0),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(labelBorderRadius),
                   color: selectedColor,
@@ -203,7 +204,7 @@ class _CoconutSegmentedControlState extends State<CoconutSegmentedControl>
 
             return Expanded(
               child: Padding(
-                padding: const EdgeInsets.all(2.0),
+                padding: const EdgeInsets.all(2),
                 child: Material(
                   color: Colors.transparent,
                   child: InkWell(
@@ -336,9 +337,7 @@ class _CoconutSegmentedControlState extends State<CoconutSegmentedControl>
 
   /// Calculates the left position for the animated background based on the index.
   double _calculatePosition(int index, double containerWidth) {
-    // Each segment has 2.0 padding, so total segment width includes padding
-    final totalSegmentWidth = containerWidth / widget.labels.length;
-    return 2.0 + (totalSegmentWidth * index);
+    return 2 + (containerWidth * index) + 4 * (index);
   }
 
   /// Handles segment selection when a user taps a segment.
