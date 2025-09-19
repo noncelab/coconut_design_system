@@ -4,6 +4,15 @@ All notable changes to the **Coconut Design System** will be documented in this 
 This project follows **[Semantic Versioning](https://semver.org/)**.
 ---
 
+# ## **[0.9.5] - 2025-09-19**
+#
+# ### 🛠 Fixes
+#
+# - **SegmentedControl**
+#   - Adjusted position calculation logic for the animated background to ensure the indicator aligns correctly with the selected segment.
+
+---
+
 ## **[0.9.4] - 2025-09-19**
 
 ### ✨ Features
