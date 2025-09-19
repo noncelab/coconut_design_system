@@ -170,6 +170,7 @@ class _CoconutSegmentedControlState extends State<CoconutSegmentedControl>
           parent: _animationController,
           curve: Curves.easeInOut,
         ));
+        if (mounted) setState(() {});
       }
     });
 
@@ -303,6 +304,25 @@ class _CoconutSegmentedControlState extends State<CoconutSegmentedControl>
         parent: _animationController,
         curve: Curves.easeInOut,
       ));
+    }
+  }
+
+  @override
+  void didUpdateWidget(covariant CoconutSegmentedControl oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // Sync selections and current index when parent updates selection state
+    if (oldWidget.isSelected != widget.isSelected) {
+      _selections = List.from(widget.isSelected);
+      int newIndex = _selections.indexWhere((selected) => selected);
+      if (newIndex == -1) newIndex = 0;
+      if (newIndex != _currentSelectedIndex) {
+        _currentSelectedIndex = newIndex;
+        if (widget.showAnimation) {
+          // Ensure next frame re-evaluates the position at the new index
+          _animationController.reset();
+        }
+        if (mounted) setState(() {});
+      }
     }
   }
 
