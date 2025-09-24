@@ -43,6 +43,9 @@ class CoconutPopup extends StatefulWidget {
   /// The text for the right button (default: "확인" / "Confirm").
   final String rightButtonText;
 
+  /// Whether the title text should be centered (default: true).
+  final bool centerTitle;
+
   /// Whether the description text should be centered (default: true).
   final bool centerDescription;
 
@@ -90,6 +93,7 @@ class CoconutPopup extends StatefulWidget {
     required this.onTapRight,
     this.leftButtonText = '취소',
     this.rightButtonText = '확인',
+    this.centerTitle = true,
     this.centerDescription = true,
     this.onTapLeft,
     this.backgroundColor,
@@ -139,25 +143,24 @@ class _CoconutPopupState extends State<CoconutPopup> {
                   padding: widget.titlePadding ?? const EdgeInsets.only(top: 24, bottom: 12),
                   child: Text(
                     widget.title,
-                    style: widget.titleTextStyle
-                            ?.setColor(widget.titleColor ?? CoconutColors.onGray900(brightness)) ??
+                    style: widget.titleTextStyle?.setColor(widget.titleColor ?? CoconutColors.onGray900(brightness)) ??
                         CoconutTypography.body1_16_Bold.setColor(
                           widget.titleColor ?? CoconutColors.onGray900(brightness),
                         ),
+                    textAlign: widget.centerTitle ? TextAlign.center : null,
                   ),
                 ),
 
                 /// Description Section
                 Container(
                   alignment: Alignment.topCenter,
-                  padding: widget.descriptionPadding ??
-                      const EdgeInsets.only(left: 24, right: 24, top: 12, bottom: 12),
+                  padding: widget.descriptionPadding ?? const EdgeInsets.only(left: 24, right: 24, top: 12, bottom: 12),
                   constraints: const BoxConstraints(minHeight: 66),
                   child: Text(
                     widget.description,
                     textAlign: widget.centerDescription ? TextAlign.center : null,
-                    style: widget.descriptionTextStyle?.setColor(
-                            widget.descriptionColor ?? CoconutColors.onGray800(brightness)) ??
+                    style: widget.descriptionTextStyle
+                            ?.setColor(widget.descriptionColor ?? CoconutColors.onGray800(brightness)) ??
                         CoconutTypography.body1_16.setColor(
                           widget.descriptionColor ?? CoconutColors.onGray800(brightness),
                         ),
@@ -194,8 +197,8 @@ class _CoconutPopupState extends State<CoconutPopup> {
                             alignment: Alignment.center,
                             child: Text(
                               widget.leftButtonText,
-                              style: widget.leftButtonTextStyle?.setColor(widget.leftButtonColor ??
-                                      CoconutColors.onGray900(brightness)) ??
+                              style: widget.leftButtonTextStyle
+                                      ?.setColor(widget.leftButtonColor ?? CoconutColors.onGray900(brightness)) ??
                                   CoconutTypography.body2_14_Bold.setColor(
                                     widget.leftButtonColor ?? CoconutColors.onGray900(brightness),
                                   ),
@@ -230,8 +233,8 @@ class _CoconutPopupState extends State<CoconutPopup> {
                           alignment: Alignment.center,
                           child: Text(
                             widget.rightButtonText,
-                            style: widget.rightButtonTextStyle?.setColor(widget.rightButtonColor ??
-                                    CoconutColors.onGray900(brightness)) ??
+                            style: widget.rightButtonTextStyle
+                                    ?.setColor(widget.rightButtonColor ?? CoconutColors.onGray900(brightness)) ??
                                 CoconutTypography.body2_14_Bold.setColor(
                                   widget.rightButtonColor ?? CoconutColors.onGray900(brightness),
                                 ),
