@@ -116,7 +116,10 @@ class CoconutAppBar {
                       const SizedBox(
                         height: 3,
                       ),
-                      subLabel ?? Container(),
+                      FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: subLabel ?? Container(),
+                      ),
                     ],
                   )
                 : Container(
@@ -124,6 +127,34 @@ class CoconutAppBar {
                   ),
           ],
         );
+    Widget defaultLeading = Column(
+      children: [
+        CoconutLayout.spacing_100h,
+        Row(
+          children: [
+            CoconutLayout.spacing_100w,
+            IconButton(
+              icon: SvgPicture.asset(
+                isBottom && !isBackButton
+                    ? 'packages/coconut_design_system/assets/svg/close.svg'
+                    : 'packages/coconut_design_system/assets/svg/arrow-back.svg',
+                colorFilter: ColorFilter.mode(CoconutColors.onPrimary(brightness), BlendMode.srcIn),
+                width: 24,
+                height: 24,
+              ),
+              onPressed: () {
+                if (onBackPressed != null) {
+                  onBackPressed();
+                } else {
+                  Navigator.pop(context);
+                }
+              },
+            ),
+          ],
+        ),
+      ],
+    );
+
     return AppBar(
       systemOverlayStyle: Platform.isIOS
           ? (brightness == Brightness.light
@@ -147,41 +178,25 @@ class CoconutAppBar {
       centerTitle: true,
       automaticallyImplyLeading: false,
       backgroundColor: backgroundColor ?? Colors.transparent,
-      leading: isLeadingVisible
-          ? Navigator.canPop(context)
-              ? Column(
-                  children: [
-                    CoconutLayout.spacing_100h,
-                    Row(
-                      children: [
-                        CoconutLayout.spacing_100w,
-                        IconButton(
-                          icon: SvgPicture.asset(
-                            isBottom && !isBackButton
-                                ? 'packages/coconut_design_system/assets/svg/close.svg'
-                                : 'packages/coconut_design_system/assets/svg/arrow-back.svg',
-                            colorFilter: ColorFilter.mode(
-                                CoconutColors.onPrimary(brightness), BlendMode.srcIn),
-                            width: 24,
-                            height: 24,
-                          ),
-                          onPressed: () {
-                            if (onBackPressed != null) {
-                              onBackPressed();
-                            } else {
-                              Navigator.pop(context);
-                            }
-                          },
-                        ),
-                      ],
-                    ),
-                  ],
-                )
-              : null
-          : null,
+      leading: Visibility(
+        visible: isLeadingVisible && Navigator.canPop(context),
+        maintainAnimation: true,
+        maintainState: true,
+        maintainSize: true,
+        child: defaultLeading,
+      ),
       actions: [
-        if (actionButtonList != null)
+        if (actionButtonList != null) ...[
           for (Widget action in actionButtonList) ...[action],
+        ] else ...[
+          Visibility(
+            maintainAnimation: true,
+            maintainState: true,
+            maintainSize: true,
+            visible: false,
+            child: defaultLeading,
+          )
+        ],
         CoconutLayout.spacing_300w
       ],
       flexibleSpace: !isBottom && backgroundColor == null
