@@ -22,12 +22,16 @@ class CoconutCheckbox extends StatelessWidget {
   /// If not provided, it defaults to the appropriate color based on the brightness mode.
   final Color? color;
 
+  /// The color of the checkbox when it is disabled.
+  final Color? disabledColor;
+
   /// Creates a `CoconutCheckbox` widget.
   ///
   /// - [isSelected] determines whether the checkbox is checked or not.
   /// - [onChanged] is triggered when the checkbox is tapped.
   /// - [width] sets the checkbox size (default: `20.0`).
   /// - [color] allows customization of the checkbox color.
+  /// - [disabledColor] allows customization of the checkbox color when it is disabled.
   ///
   /// Example usage:
   /// ```dart
@@ -44,6 +48,7 @@ class CoconutCheckbox extends StatelessWidget {
     required this.onChanged,
     this.width = 20.0,
     this.color,
+    this.disabledColor,
   });
 
   @override
@@ -58,10 +63,17 @@ class CoconutCheckbox extends StatelessWidget {
         width: width,
         height: width,
         colorFilter: ColorFilter.mode(
-          color ?? CoconutColors.onBlack(brightness),
+          _getColor(brightness),
           BlendMode.srcIn,
         ),
       ),
     );
+  }
+
+  Color _getColor(Brightness brightness) {
+    if (!isSelected) {
+      return disabledColor ?? CoconutColors.onGray200(brightness);
+    }
+    return color ?? CoconutColors.onBlack(brightness);
   }
 }
