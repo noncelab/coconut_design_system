@@ -14,10 +14,7 @@ class ColorTable extends StatelessWidget {
       children: [
         Row(
           children: [
-            const Expanded(
-                flex: 2,
-                child:
-                    Text(" ", style: TextStyle(fontWeight: FontWeight.bold))),
+            const Expanded(flex: 2, child: Text(" ", style: TextStyle(fontWeight: FontWeight.bold))),
             Expanded(
               flex: 3,
               child: Text(
@@ -69,9 +66,7 @@ class ColorTable extends StatelessWidget {
               style: CoconutTypography.body2_14_Bold,
             )),
         Expanded(flex: 3, child: Text(textAlign: TextAlign.center, lightColor)),
-        if (darkColor != null)
-          Expanded(
-              flex: 3, child: Text(textAlign: TextAlign.center, darkColor)),
+        if (darkColor != null) Expanded(flex: 3, child: Text(textAlign: TextAlign.center, darkColor)),
       ],
     );
   }
@@ -101,8 +96,8 @@ class SegmentedConrolScreen extends StatefulWidget {
 }
 
 class _SegmentedConrolScreenState extends State<SegmentedConrolScreen> {
-  List<bool> isSelected = [true, false];
   List<String> labels = ["Design Guide", "Color Specification"];
+  late List<bool> isSelected = List<bool>.generate(labels.length, (i) => i == 0);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -113,8 +108,7 @@ class _SegmentedConrolScreenState extends State<SegmentedConrolScreen> {
           child: Consumer<ThemeProvider>(
             builder: (context, themeProvider, child) {
               final isDarkMode = themeProvider.themeMode == ThemeMode.dark;
-              final brightness =
-                  isDarkMode ? Brightness.dark : Brightness.light;
+              final brightness = isDarkMode ? Brightness.dark : Brightness.light;
 
               return Column(
                 children: [
@@ -123,16 +117,14 @@ class _SegmentedConrolScreenState extends State<SegmentedConrolScreen> {
                     isSelected: isSelected,
                     onPressed: (index) {
                       setState(() {
-                        isSelected =
-                            List.generate(isSelected.length, (i) => i == index);
+                        isSelected = List<bool>.generate(labels.length, (i) => i == index);
                       });
                     },
                   ),
                   CoconutLayout.spacing_1000h,
                   if (isSelected[0]) ...{
                     Container(
-                      color:
-                          CoconutColors.onPrimary(brightness).withOpacity(0.9),
+                      color: CoconutColors.onPrimary(brightness).withOpacity(0.9),
                       padding: const EdgeInsets.symmetric(
                         horizontal: CoconutLayout.defaultPadding,
                         vertical: 150,
@@ -142,13 +134,12 @@ class _SegmentedConrolScreenState extends State<SegmentedConrolScreen> {
                           children: [
                             CoconutSegmentedControl(
                               labels: labels,
-                              isSelected: const [true, false],
+                              isSelected: const [true, false, false, false],
                               onPressed: (index) {},
                             ),
                             Container(
                               decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(
-                                      CoconutStyles.radius_200),
+                                  borderRadius: BorderRadius.circular(CoconutStyles.radius_200),
                                   color: CoconutColors.white.withOpacity(0.6)),
                               height: 46,
                             ),
@@ -158,18 +149,15 @@ class _SegmentedConrolScreenState extends State<SegmentedConrolScreen> {
                               child: Container(
                                 decoration: BoxDecoration(
                                   color: Colors.transparent,
-                                  border: Border.all(
-                                      color: CoconutColors.pink, width: 1),
-                                  borderRadius: BorderRadius.circular(
-                                      CoconutStyles.radius_150),
+                                  border: Border.all(color: CoconutColors.pink, width: 1),
+                                  borderRadius: BorderRadius.circular(CoconutStyles.radius_150),
                                 ),
                                 width: 20,
                                 height: 20,
                                 child: Center(
                                   child: Text(
                                     '10',
-                                    style: CoconutTypography.caption_10
-                                        .setColor(CoconutColors.pink),
+                                    style: CoconutTypography.caption_10.setColor(CoconutColors.pink),
                                   ),
                                 ),
                               ),
@@ -180,33 +168,26 @@ class _SegmentedConrolScreenState extends State<SegmentedConrolScreen> {
                               child: Container(
                                 decoration: BoxDecoration(
                                   color: Colors.transparent,
-                                  border: Border.all(
-                                      color: CoconutColors.pink, width: 1),
-                                  borderRadius: BorderRadius.circular(
-                                      CoconutStyles.radius_200),
+                                  border: Border.all(color: CoconutColors.pink, width: 1),
+                                  borderRadius: BorderRadius.circular(CoconutStyles.radius_200),
                                 ),
                                 width: 24,
                                 height: 24,
                                 child: Center(
                                   child: Text(
                                     '12',
-                                    style: CoconutTypography.caption_10
-                                        .setColor(CoconutColors.pink),
+                                    style: CoconutTypography.caption_10.setColor(CoconutColors.pink),
                                   ),
                                 ),
                               ),
                             ),
                             Positioned(
-                              left:
-                                  (MediaQuery.sizeOf(context).width - 64) / 6 -
-                                      10,
+                              left: (MediaQuery.sizeOf(context).width - 64) / 6 - 10,
                               top: 2,
                               child: _guideLine(height: 12),
                             ),
                             Positioned(
-                              left:
-                                  (MediaQuery.sizeOf(context).width - 64) / 6 +
-                                      5,
+                              left: (MediaQuery.sizeOf(context).width - 64) / 6 + 5,
                               top: 0,
                               child: const Text(
                                 'labelPadding(default: 12px)',

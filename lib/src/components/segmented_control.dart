@@ -83,8 +83,7 @@ class CoconutSegmentedControl extends StatefulWidget {
   State<CoconutSegmentedControl> createState() => _CoconutSegmentedControlState();
 }
 
-class _CoconutSegmentedControlState extends State<CoconutSegmentedControl>
-    with TickerProviderStateMixin {
+class _CoconutSegmentedControlState extends State<CoconutSegmentedControl> with TickerProviderStateMixin {
   /// Stores the selection state of each segment.
   late List<bool> _selections;
 
@@ -96,6 +95,21 @@ class _CoconutSegmentedControlState extends State<CoconutSegmentedControl>
 
   /// Current selected index for animation.
   int _currentSelectedIndex = 0;
+
+  /// Ensures `_selections` length matches `widget.labels.length`.
+  /// If lengths differ, it will resize safely keeping a single selected index.
+  List<bool> _normalizeSelections(List<bool> inputSelections, int labelCount) {
+    if (labelCount <= 0) return <bool>[];
+
+    // Determine selected index from provided selections
+    int selectedIndex = inputSelections.indexWhere((v) => v);
+    if (selectedIndex < 0 || selectedIndex >= labelCount) {
+      selectedIndex = 0;
+    }
+
+    // Build normalized selections of the correct length
+    return List<bool>.generate(labelCount, (i) => i == selectedIndex);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -111,15 +125,13 @@ class _CoconutSegmentedControlState extends State<CoconutSegmentedControl>
           horizontal: 16,
           vertical: 12,
         );
-    final selectedColor =
-        widget.selectedColor ?? (isDarkMode ? CoconutColors.gray900 : CoconutColors.gray900);
+    final selectedColor = widget.selectedColor ?? (isDarkMode ? CoconutColors.gray900 : CoconutColors.gray900);
     final unselectedColor = widget.unselectedColor ?? Colors.transparent;
-    final segmentedControlContainerColor = widget.segmentedControlContainerColor ??
-        (isDarkMode ? CoconutColors.gray800 : CoconutColors.gray150);
+    final segmentedControlContainerColor =
+        widget.segmentedControlContainerColor ?? (isDarkMode ? CoconutColors.gray800 : CoconutColors.gray150);
     final selectedTextColor = widget.selectedTextColor ?? CoconutColors.white;
     final unselectedTextColor =
         widget.unselectedTextColor ?? (isDarkMode ? CoconutColors.gray500 : CoconutColors.gray400);
-
     return Container(
       width: MediaQuery.sizeOf(context).width,
       decoration: BoxDecoration(
@@ -127,15 +139,23 @@ class _CoconutSegmentedControlState extends State<CoconutSegmentedControl>
         color: segmentedControlContainerColor,
       ),
       child: widget.showAnimation
-          ? _buildAnimatedSegmentedControl(
-              (MediaQuery.sizeOf(context).width - 24) / 2 - 2,
-              containerBorderRadius,
-              labelBorderRadius,
-              labelPadding,
-              selectedColor,
-              unselectedColor,
-              selectedTextColor,
-              unselectedTextColor,
+          ? LayoutBuilder(
+              builder: (context, constraints) {
+                final int numberOfSegments = widget.labels.length;
+                final double segmentWidth = numberOfSegments > 0
+                    ? (constraints.maxWidth - 4 * numberOfSegments) / numberOfSegments
+                    : constraints.maxWidth;
+                return _buildAnimatedSegmentedControl(
+                  segmentWidth,
+                  containerBorderRadius,
+                  labelBorderRadius,
+                  labelPadding,
+                  selectedColor,
+                  unselectedColor,
+                  selectedTextColor,
+                  unselectedTextColor,
+                );
+              },
             )
           : _buildStaticSegmentedControl(
               labelBorderRadius,
@@ -174,62 +194,65 @@ class _CoconutSegmentedControlState extends State<CoconutSegmentedControl>
       }
     });
 
-    return Stack(
-      children: [
-        // Animated background
-        AnimatedBuilder(
-          animation: _positionAnimation,
-          builder: (context, child) {
-            return Positioned(
-              left: _positionAnimation.value,
-              top: 2.0,
-              bottom: 2.0,
-              child: Container(
-                width: containerWidth,
-                padding: const EdgeInsets.all(2.0),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(labelBorderRadius),
-                  color: selectedColor,
-                ),
-              ),
-            );
-          },
-        ),
-        // Labels
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: List.generate(widget.labels.length, (index) {
-            final bool isSelected = _selections[index];
-            final GlobalKey? key = widget.keys?[index];
-
-            return Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(2),
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
+    return IntrinsicHeight(
+      child: Stack(
+        children: [
+          // Animated background
+          AnimatedBuilder(
+            animation: _positionAnimation,
+            builder: (context, child) {
+              return Positioned(
+                left: _positionAnimation.value,
+                top: 2.0,
+                bottom: 2.0,
+                child: Container(
+                  width: containerWidth,
+                  padding: const EdgeInsets.all(2.0),
+                  decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(labelBorderRadius),
-                    splashColor: selectedColor.withOpacity(0.2),
-                    highlightColor: selectedColor.withOpacity(0.4),
-                    onTap: () => _handlePress(index, containerWidth),
-                    child: Container(
-                      alignment: Alignment.center,
-                      padding: labelPadding,
-                      child: Text(
-                        key: key,
-                        widget.labels[index],
-                        style: isSelected
-                            ? CoconutTypography.body3_12_Bold.setColor(selectedTextColor)
-                            : CoconutTypography.body3_12.setColor(unselectedTextColor),
+                    color: selectedColor,
+                  ),
+                ),
+              );
+            },
+          ),
+          // Labels
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(widget.labels.length, (index) {
+              final bool isSelected = _selections[index];
+              final GlobalKey? key = widget.keys?[index];
+
+              return Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(2),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(labelBorderRadius),
+                      splashColor: selectedColor.withOpacity(0.2),
+                      highlightColor: selectedColor.withOpacity(0.4),
+                      onTap: () => _handlePress(index, containerWidth),
+                      child: Container(
+                        alignment: Alignment.center,
+                        padding: labelPadding,
+                        child: Text(
+                          key: key,
+                          widget.labels[index],
+                          style: isSelected
+                              ? CoconutTypography.body3_12_Bold.setColor(selectedTextColor)
+                              : CoconutTypography.body3_12.setColor(unselectedTextColor),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            );
-          }),
-        ),
-      ],
+              );
+            }),
+          ),
+        ],
+      ),
     );
   }
 
@@ -242,49 +265,52 @@ class _CoconutSegmentedControlState extends State<CoconutSegmentedControl>
     Color selectedTextColor,
     Color unselectedTextColor,
   ) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(widget.labels.length, (index) {
-        final bool isSelected = _selections[index];
-        final GlobalKey? key = widget.keys?[index];
+    return IntrinsicHeight(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: List.generate(widget.labels.length, (index) {
+          final bool isSelected = _selections[index];
+          final GlobalKey? key = widget.keys?[index];
 
-        return Expanded(
-          child: Padding(
-            padding: const EdgeInsets.all(2.0),
-            child: Material(
-              color: Colors.transparent,
-              child: InkWell(
-                borderRadius: BorderRadius.circular(labelBorderRadius),
-                splashColor: selectedColor.withOpacity(0.2),
-                highlightColor: selectedColor.withOpacity(0.4),
-                onTap: () => _handlePress(index),
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(labelBorderRadius),
-                    color: isSelected ? selectedColor : unselectedColor,
-                  ),
-                  alignment: Alignment.center,
-                  padding: labelPadding,
-                  child: Text(
-                    key: key,
-                    widget.labels[index],
-                    style: isSelected
-                        ? CoconutTypography.body3_12_Bold.setColor(selectedTextColor)
-                        : CoconutTypography.body3_12.setColor(unselectedTextColor),
+          return Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(2.0),
+              child: Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(labelBorderRadius),
+                  splashColor: selectedColor.withOpacity(0.2),
+                  highlightColor: selectedColor.withOpacity(0.4),
+                  onTap: () => _handlePress(index),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(labelBorderRadius),
+                      color: isSelected ? selectedColor : unselectedColor,
+                    ),
+                    alignment: Alignment.center,
+                    padding: labelPadding,
+                    child: Text(
+                      key: key,
+                      widget.labels[index],
+                      style: isSelected
+                          ? CoconutTypography.body3_12_Bold.setColor(selectedTextColor)
+                          : CoconutTypography.body3_12.setColor(unselectedTextColor),
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        );
-      }),
+          );
+        }),
+      ),
     );
   }
 
   @override
   void initState() {
     super.initState();
-    _selections = List.from(widget.isSelected);
+    _selections = _normalizeSelections(List<bool>.from(widget.isSelected), widget.labels.length);
 
     // Find the initially selected index
     _currentSelectedIndex = _selections.indexWhere((selected) => selected);
@@ -312,8 +338,9 @@ class _CoconutSegmentedControlState extends State<CoconutSegmentedControl>
   void didUpdateWidget(covariant CoconutSegmentedControl oldWidget) {
     super.didUpdateWidget(oldWidget);
     // Sync selections and current index when parent updates selection state
-    if (oldWidget.isSelected != widget.isSelected) {
-      _selections = List.from(widget.isSelected);
+    final bool labelsChanged = oldWidget.labels.length != widget.labels.length;
+    if (labelsChanged || oldWidget.isSelected != widget.isSelected) {
+      _selections = _normalizeSelections(List<bool>.from(widget.isSelected), widget.labels.length);
       int newIndex = _selections.indexWhere((selected) => selected);
       if (newIndex == -1) newIndex = 0;
       if (newIndex != _currentSelectedIndex) {
