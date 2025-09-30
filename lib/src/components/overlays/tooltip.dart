@@ -28,8 +28,7 @@ class CoconutToolTip extends StatefulWidget {
 
   /// - Deprecated: This parameter will be removed in version `0.9.0`.
   /// - Now automatically inferred from `CoconutTheme.brightness()`.
-  @Deprecated(
-      'This parameter will be removed in version 0.8. It is now inferred from CoconutTheme.brightness.')
+  @Deprecated('This parameter will be removed in version 0.8. It is now inferred from CoconutTheme.brightness.')
   final Brightness? brightness;
 
   /// The text content inside the tooltip.
@@ -173,9 +172,7 @@ class _CoconutToolTipState extends State<CoconutToolTip> {
                   }
                 },
                 child: ClipPath(
-                  clipper: widget.isBubbleClipperSideLeft
-                      ? LeftTriangleBubbleClipper()
-                      : RightTriangleBubbleClipper(),
+                  clipper: widget.isBubbleClipperSideLeft ? LeftTriangleBubbleClipper() : RightTriangleBubbleClipper(),
                   child: Container(
                     padding: _padding,
                     color: _backgroundColor,
@@ -202,8 +199,7 @@ class _CoconutToolTipState extends State<CoconutToolTip> {
                 child: Container(
                   decoration: BoxDecoration(
                     color: widget.baseBackgroundColor,
-                    borderRadius:
-                        BorderRadius.circular(widget.borderRadius ?? CoconutStyles.radius_250),
+                    borderRadius: BorderRadius.circular(widget.borderRadius ?? CoconutStyles.radius_250),
                   ),
                 ),
               ),
@@ -212,8 +208,7 @@ class _CoconutToolTipState extends State<CoconutToolTip> {
                 padding: _padding,
                 decoration: BoxDecoration(
                   color: _backgroundColor,
-                  borderRadius:
-                      BorderRadius.circular(widget.borderRadius ?? CoconutStyles.radius_250),
+                  borderRadius: BorderRadius.circular(widget.borderRadius ?? CoconutStyles.radius_250),
                   border: Border.all(width: 1, color: _borderColor),
                 ),
                 child: LayoutBuilder(
@@ -241,7 +236,7 @@ class _CoconutToolTipState extends State<CoconutToolTip> {
                             )
                           } else ...{
                             Container(
-                              padding: const EdgeInsets.only(right: 8),
+                              padding: const EdgeInsets.only(right: 80),
                               child: _icon,
                             ),
                           },
@@ -259,12 +254,10 @@ class _CoconutToolTipState extends State<CoconutToolTip> {
           return LayoutBuilder(
             builder: (context, constraints) {
               return Container(
-                constraints: BoxConstraints(
-                    minHeight: Sizes.size60, minWidth: widget.width ?? constraints.maxWidth),
+                constraints: BoxConstraints(minHeight: Sizes.size60, minWidth: widget.width ?? constraints.maxWidth),
                 decoration: BoxDecoration(
                     color: _backgroundColor,
-                    borderRadius:
-                        BorderRadius.circular(widget.borderRadius ?? CoconutStyles.radius_250),
+                    borderRadius: BorderRadius.circular(widget.borderRadius ?? CoconutStyles.radius_250),
                     border: Border.all(width: 1, color: _borderColor)),
                 child: Stack(
                   children: [
@@ -280,8 +273,7 @@ class _CoconutToolTipState extends State<CoconutToolTip> {
                         onPressed: widget.onTapRemove,
                         icon: SvgPicture.asset(
                           'packages/coconut_design_system/assets/svg/close.svg',
-                          colorFilter: ColorFilter.mode(
-                              CoconutColors.onPrimary(brightness), BlendMode.srcIn),
+                          colorFilter: ColorFilter.mode(CoconutColors.onPrimary(brightness), BlendMode.srcIn),
                         ),
                       ),
                     ),
@@ -336,8 +328,7 @@ class _CoconutToolTipState extends State<CoconutToolTip> {
             ? _getBorderColorForBrighness()
             : CoconutColors.onPrimary(brightness));
     _backgroundColor = widget.backgroundColor ??
-        (widget.tooltipType == CoconutTooltipType.fixedClosable ||
-                widget.tooltipType == CoconutTooltipType.placement
+        (widget.tooltipType == CoconutTooltipType.fixedClosable || widget.tooltipType == CoconutTooltipType.placement
             ? _getBackgroundColorForBrighness()
             : CoconutColors.surface(brightness));
 
@@ -346,8 +337,7 @@ class _CoconutToolTipState extends State<CoconutToolTip> {
     if (widget.tooltipType == CoconutTooltipType.fixed) {
       _borderColor = widget.borderColor ?? color.withOpacity(0.7);
       _backgroundColor = widget.backgroundColor ??
-          CoconutColors.backgroundColorPaletteLight[widget.tooltipState.colorIndex]
-              .withOpacity(0.18);
+          CoconutColors.backgroundColorPaletteLight[widget.tooltipState.colorIndex].withOpacity(0.18);
     }
   }
 
