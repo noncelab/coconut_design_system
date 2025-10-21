@@ -4,12 +4,43 @@ All notable changes to the **Coconut Design System** will be documented in this 
 This project follows **[Semantic Versioning](https://semver.org/)**.
 ---
 
-# ## **[0.9.5] - 2025-09-19**
-#
-# ### 🛠 Fixes
-#
-# - **SegmentedControl**
-#   - Adjusted position calculation logic for the animated background to ensure the indicator aligns correctly with the selected segment.
+## **[0.9.6] - 2025-10-21**
+
+### ✨ Features
+
+- **Popup**
+  - Added `centerTitle` option to align title text in `CoconutPopup`.
+  - Added `useFixedFontSize` option to control font scaling in `CoconutPopup`.
+    - Added `useFixedFontSize` parameter to maintain consistent text sizing.
+    - When enabled, applies `TextScaler.linear(1.0)` to override system font scale.
+    - Defaults to `true` for consistent popup appearance across devices.
+    - Improves accessibility and design consistency.
+
+- **Checkbox**
+  - Added `disabledColor` property for enhanced customization.
+
+### 🛠 Fixes
+
+- **AppBar**
+  - Centered title with `subLabel` even when `actionButton` is absent.
+
+- **SegmentedControl**
+  - Corrected `AnimatedSegmentedControl` width calculation for proper layout.
+
+- **Tooltip**
+  - Corrected icon padding in fixed tooltip.
+
+- **Popup**
+  - Updated default font sizes in `CoconutPopup` (title: 18 bold, description: 18, buttonText: 16 bold).
+
+---
+
+## **[0.9.5] - 2025-09-19**
+
+### 🛠 Fixes
+
+- **SegmentedControl**
+ - Adjusted position calculation logic for the animated background to ensure the indicator aligns correctly with the selected segment.
 
 ---
 
