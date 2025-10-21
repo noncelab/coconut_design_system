@@ -49,6 +49,10 @@ class CoconutPopup extends StatefulWidget {
   /// Whether the description text should be centered (default: true).
   final bool centerDescription;
 
+  /// Whether to use fixed font size regardless of system font scale.
+  /// When true, the popup text will maintain consistent sizing.
+  final bool useFixedFontSize;
+
   /// The background color of the popup.
   final Color? backgroundColor;
 
@@ -95,6 +99,7 @@ class CoconutPopup extends StatefulWidget {
     this.rightButtonText = '확인',
     this.centerTitle = true,
     this.centerDescription = true,
+    this.useFixedFontSize = true,
     this.onTapLeft,
     this.backgroundColor,
     this.titleColor,
@@ -121,6 +126,126 @@ class _CoconutPopupState extends State<CoconutPopup> {
   Widget build(BuildContext context) {
     Brightness brightness = CoconutTheme.brightness();
 
+    Widget content = Container(
+      decoration: BoxDecoration(
+        color: widget.backgroundColor ?? CoconutColors.onWhite(brightness),
+        borderRadius: const BorderRadius.all(Radius.circular(16)),
+      ),
+      child: IntrinsicHeight(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            /// Title Section
+            Container(
+              padding: widget.titlePadding ?? const EdgeInsets.only(top: 24, bottom: 12),
+              child: Text(
+                widget.title,
+                style: widget.titleTextStyle?.setColor(widget.titleColor ?? CoconutColors.onGray900(brightness)) ??
+                    CoconutTypography.heading4_18_Bold.setColor(
+                      widget.titleColor ?? CoconutColors.onGray900(brightness),
+                    ),
+                textAlign: widget.centerTitle ? TextAlign.center : null,
+              ),
+            ),
+
+            /// Description Section
+            Container(
+              alignment: Alignment.topCenter,
+              padding: widget.descriptionPadding ?? const EdgeInsets.only(left: 24, right: 24, top: 12, bottom: 12),
+              constraints: const BoxConstraints(minHeight: 66),
+              child: Text(
+                widget.description,
+                textAlign: widget.centerDescription ? TextAlign.center : null,
+                style: widget.descriptionTextStyle
+                        ?.setColor(widget.descriptionColor ?? CoconutColors.onGray800(brightness)) ??
+                    CoconutTypography.heading4_18.setColor(
+                      widget.descriptionColor ?? CoconutColors.onGray800(brightness),
+                    ),
+              ),
+            ),
+
+            /// Action Buttons (Left & Right)
+            Row(
+              children: [
+                if (widget.onTapLeft != null) ...{
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _isLeftButtonPressing = false;
+                        });
+                        widget.onTapLeft?.call();
+                      },
+                      onTapCancel: () {
+                        setState(() {
+                          _isLeftButtonPressing = false;
+                        });
+                      },
+                      onTapDown: (details) {
+                        setState(() {
+                          _isLeftButtonPressing = true;
+                        });
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.only(top: 16, bottom: 16),
+                        color: _isLeftButtonPressing
+                            ? CoconutColors.onPrimary(brightness).withOpacity(0.2)
+                            : Colors.transparent,
+                        alignment: Alignment.center,
+                        child: Text(
+                          widget.leftButtonText,
+                          style: widget.leftButtonTextStyle
+                                  ?.setColor(widget.leftButtonColor ?? CoconutColors.onGray900(brightness)) ??
+                              CoconutTypography.body1_16_Bold.setColor(
+                                widget.leftButtonColor ?? CoconutColors.onGray900(brightness),
+                              ),
+                        ),
+                      ),
+                    ),
+                  ),
+                },
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _isRightButtonPressing = false;
+                      });
+                      widget.onTapRight.call();
+                    },
+                    onTapCancel: () {
+                      setState(() {
+                        _isRightButtonPressing = false;
+                      });
+                    },
+                    onTapDown: (details) {
+                      setState(() {
+                        _isRightButtonPressing = true;
+                      });
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.only(top: 16, bottom: 16),
+                      color: _isRightButtonPressing
+                          ? CoconutColors.onPrimary(brightness).withOpacity(0.2)
+                          : Colors.transparent,
+                      alignment: Alignment.center,
+                      child: Text(
+                        widget.rightButtonText,
+                        style: widget.rightButtonTextStyle
+                                ?.setColor(widget.rightButtonColor ?? CoconutColors.onGray900(brightness)) ??
+                            CoconutTypography.body1_16_Bold.setColor(
+                              widget.rightButtonColor ?? CoconutColors.onGray900(brightness),
+                            ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+
     return Dialog(
       insetPadding: widget.insetPadding,
       shape: const RoundedRectangleBorder(
@@ -129,125 +254,12 @@ class _CoconutPopupState extends State<CoconutPopup> {
       backgroundColor: Theme.of(context).dialogBackgroundColor,
       child: ClipRRect(
         borderRadius: const BorderRadius.all(Radius.circular(16)),
-        child: Container(
-          decoration: BoxDecoration(
-            color: widget.backgroundColor ?? CoconutColors.onWhite(brightness),
-            borderRadius: const BorderRadius.all(Radius.circular(16)),
-          ),
-          child: IntrinsicHeight(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                /// Title Section
-                Container(
-                  padding: widget.titlePadding ?? const EdgeInsets.only(top: 24, bottom: 12),
-                  child: Text(
-                    widget.title,
-                    style: widget.titleTextStyle?.setColor(widget.titleColor ?? CoconutColors.onGray900(brightness)) ??
-                        CoconutTypography.heading4_18_Bold.setColor(
-                          widget.titleColor ?? CoconutColors.onGray900(brightness),
-                        ),
-                    textAlign: widget.centerTitle ? TextAlign.center : null,
-                  ),
-                ),
-
-                /// Description Section
-                Container(
-                  alignment: Alignment.topCenter,
-                  padding: widget.descriptionPadding ?? const EdgeInsets.only(left: 24, right: 24, top: 12, bottom: 12),
-                  constraints: const BoxConstraints(minHeight: 66),
-                  child: Text(
-                    widget.description,
-                    textAlign: widget.centerDescription ? TextAlign.center : null,
-                    style: widget.descriptionTextStyle
-                            ?.setColor(widget.descriptionColor ?? CoconutColors.onGray800(brightness)) ??
-                        CoconutTypography.heading4_18.setColor(
-                          widget.descriptionColor ?? CoconutColors.onGray800(brightness),
-                        ),
-                  ),
-                ),
-
-                /// Action Buttons (Left & Right)
-                Row(
-                  children: [
-                    if (widget.onTapLeft != null) ...{
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _isLeftButtonPressing = false;
-                            });
-                            widget.onTapLeft?.call();
-                          },
-                          onTapCancel: () {
-                            setState(() {
-                              _isLeftButtonPressing = false;
-                            });
-                          },
-                          onTapDown: (details) {
-                            setState(() {
-                              _isLeftButtonPressing = true;
-                            });
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.only(top: 16, bottom: 16),
-                            color: _isLeftButtonPressing
-                                ? CoconutColors.onPrimary(brightness).withOpacity(0.2)
-                                : Colors.transparent,
-                            alignment: Alignment.center,
-                            child: Text(
-                              widget.leftButtonText,
-                              style: widget.leftButtonTextStyle
-                                      ?.setColor(widget.leftButtonColor ?? CoconutColors.onGray900(brightness)) ??
-                                  CoconutTypography.body1_16_Bold.setColor(
-                                    widget.leftButtonColor ?? CoconutColors.onGray900(brightness),
-                                  ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    },
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _isRightButtonPressing = false;
-                          });
-                          widget.onTapRight.call();
-                        },
-                        onTapCancel: () {
-                          setState(() {
-                            _isRightButtonPressing = false;
-                          });
-                        },
-                        onTapDown: (details) {
-                          setState(() {
-                            _isRightButtonPressing = true;
-                          });
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.only(top: 16, bottom: 16),
-                          color: _isRightButtonPressing
-                              ? CoconutColors.onPrimary(brightness).withOpacity(0.2)
-                              : Colors.transparent,
-                          alignment: Alignment.center,
-                          child: Text(
-                            widget.rightButtonText,
-                            style: widget.rightButtonTextStyle
-                                    ?.setColor(widget.rightButtonColor ?? CoconutColors.onGray900(brightness)) ??
-                                CoconutTypography.body1_16_Bold.setColor(
-                                  widget.rightButtonColor ?? CoconutColors.onGray900(brightness),
-                                ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                )
-              ],
-            ),
-          ),
-        ),
+        child: widget.useFixedFontSize
+            ? MediaQuery(
+                data: MediaQuery.of(context).copyWith(textScaler: const TextScaler.linear(1.0)),
+                child: content,
+              )
+            : content,
       ),
     );
   }
