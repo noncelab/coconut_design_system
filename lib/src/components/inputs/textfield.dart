@@ -198,44 +198,43 @@ class CoconutTextField extends StatefulWidget {
   ///   ),
   /// )
   /// ```
-  const CoconutTextField({
-    super.key,
-    required this.controller,
-    required this.focusNode,
-    required this.onChanged,
-    this.onEditingComplete,
-    this.brightness,
-    this.padding,
-    this.activeColor,
-    this.cursorColor,
-    this.placeholderColor,
-    this.errorColor,
-    this.backgroundColor,
-    this.maxLength,
-    this.maxLines,
-    this.prefix,
-    this.suffix,
-    this.placeholderText,
-    this.errorText,
-    this.descriptionText,
-    this.isError = false,
-    this.textInputType,
-    this.textInputAction,
-    this.textInputFormatter,
-    this.obscureText = false,
-    this.isVisibleBorder = true,
-    this.borderRadius = 12,
-    this.height,
-    this.fontSize = 14,
-    this.fontFamily = 'Pretendard',
-    this.fontWeight = FontWeight.normal,
-    this.textAlign,
-    this.isLengthVisible = true,
-    this.enableInteractiveSelection,
-    this.autocorrect = false,
-    this.enableSuggestions = false,
-    this.enabled = true
-  });
+  const CoconutTextField(
+      {super.key,
+      required this.controller,
+      required this.focusNode,
+      required this.onChanged,
+      this.onEditingComplete,
+      this.brightness,
+      this.padding,
+      this.activeColor,
+      this.cursorColor,
+      this.placeholderColor,
+      this.errorColor,
+      this.backgroundColor,
+      this.maxLength,
+      this.maxLines,
+      this.prefix,
+      this.suffix,
+      this.placeholderText,
+      this.errorText,
+      this.descriptionText,
+      this.isError = false,
+      this.textInputType,
+      this.textInputAction,
+      this.textInputFormatter,
+      this.obscureText = false,
+      this.isVisibleBorder = true,
+      this.borderRadius = 12,
+      this.height,
+      this.fontSize = 14,
+      this.fontFamily = 'Pretendard',
+      this.fontWeight = FontWeight.normal,
+      this.textAlign,
+      this.isLengthVisible = true,
+      this.enableInteractiveSelection,
+      this.autocorrect = false,
+      this.enableSuggestions = false,
+      this.enabled = true});
 
   @override
   State<CoconutTextField> createState() => _CoconutTextFieldState();
@@ -282,7 +281,8 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
   void _updateData() {
     _activeColor = widget.activeColor ?? CoconutColors.onBlack(brightness);
     _cursorColor = widget.cursorColor ?? CoconutColors.onBlack(brightness);
-    _placeholderColor = widget.placeholderColor ?? CoconutColors.onGray300(brightness);
+    _placeholderColor =
+        widget.placeholderColor ?? CoconutColors.onGray300(brightness);
     _errorColor = widget.errorColor ?? CoconutColors.red;
     _backgroundColor = widget.backgroundColor ?? Colors.transparent;
     _text = widget.controller.text;
@@ -297,7 +297,8 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
     _updateData();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_prefixGlobalKey.currentContext != null) {
-        final prefixRenderBox = _prefixGlobalKey.currentContext?.findRenderObject() as RenderBox;
+        final prefixRenderBox =
+            _prefixGlobalKey.currentContext?.findRenderObject() as RenderBox;
         _prefixSize = prefixRenderBox.size;
         setState(() {});
       }
@@ -331,7 +332,8 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                     color: widget.isError
                         ? _errorColor
                         : _isFocus
-                            ? widget.maxLength != null && _text.runes.length > widget.maxLength!
+                            ? widget.maxLength != null &&
+                                    _text.runes.length > widget.maxLength!
                                 ? _errorColor
                                 : _activeColor
                             : _placeholderColor,
@@ -349,7 +351,8 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                 obscureText: widget.obscureText,
                 textAlign: widget.textAlign ?? TextAlign.start,
                 padding: widget.padding ??
-                    EdgeInsets.fromLTRB(widget.prefix != null ? 0 : 16, 20, 16, 20),
+                    EdgeInsets.fromLTRB(
+                        widget.prefix != null ? 0 : 16, 20, 16, 20),
                 style: CoconutTypography.body2_14.copyWith(
                   color: _activeColor,
                   fontSize: widget.fontSize,
@@ -380,11 +383,18 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                 child: Container(
                   height: widget.prefix != null ? _prefixSize.height : null,
                   margin: widget.prefix == null
-                      ? widget.padding ?? const EdgeInsets.fromLTRB(16, 20, 16, 20)
-                      : EdgeInsets.only(left: _prefixSize.width, top: widget.padding?.top ?? 20),
-                  padding: widget.suffix != null ? const EdgeInsets.only(right: 40) : null,
+                      ? widget.padding ??
+                          const EdgeInsets.fromLTRB(16, 20, 16, 20)
+                      : EdgeInsets.only(
+                          left: _prefixSize.width,
+                          top: widget.padding?.top ?? 20),
+                  padding: widget.suffix != null
+                      ? const EdgeInsets.only(right: 40)
+                      : null,
                   alignment: Alignment.centerLeft,
-                  child: widget.placeholderText == null || _isFocus || _text.isNotEmpty
+                  child: widget.placeholderText == null ||
+                          _isFocus ||
+                          _text.isNotEmpty
                       ? Text(
                           '',
                           style: CoconutTypography.body2_14.copyWith(
@@ -430,10 +440,9 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                   child: Text(
                     widget.descriptionText ?? '',
                     style: CoconutTypography.body3_12.copyWith(
-                      overflow: TextOverflow.ellipsis,
                       color: _isFocus ? _activeColor : _placeholderColor,
                     ),
-                    textScaler: TextScaler.linear(1.0),
+                    textScaler: const TextScaler.linear(1.0),
                   ),
                 ),
               },
