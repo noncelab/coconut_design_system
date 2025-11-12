@@ -4,6 +4,20 @@ All notable changes to the **Coconut Design System** will be documented in this 
 This project follows **[Semantic Versioning](https://semver.org/)**.
 ---
 
+## **[0.9.7] - 2025-11-12**
+
+### 🛠 Fixes
+
+- **TextField**
+  - Removed the ellipsis option from description text to avoid unintended truncation.
+
+### 🧼 Cleanup
+
+- **Formatting**
+  - Set formatter line length to 120 characters for consistent code wrapping.
+
+---
+
 ## **[0.9.6] - 2025-10-21**
 
 ### ✨ Features
