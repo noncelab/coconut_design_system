@@ -84,8 +84,7 @@ class CoconutAppBar {
     List<Widget>? actionButtonList,
   }) {
     if (customTitle != null) {
-      customTitle = GestureDetector(
-          onTap: onTitlePressed, child: Padding(padding: titlePadding, child: customTitle));
+      customTitle = GestureDetector(onTap: onTitlePressed, child: Padding(padding: titlePadding, child: customTitle));
     }
     Brightness brightness = CoconutTheme.brightness();
     Widget? widget = customTitle ??
@@ -472,8 +471,7 @@ class CoconutAppBar {
                         isBottom
                             ? 'packages/coconut_design_system/assets/svg/close.svg'
                             : 'packages/coconut_design_system/assets/svg/arrow-back.svg',
-                        colorFilter:
-                            ColorFilter.mode(CoconutColors.onPrimary(brightness), BlendMode.srcIn),
+                        colorFilter: ColorFilter.mode(CoconutColors.onPrimary(brightness), BlendMode.srcIn),
                         width: 24,
                         height: 24,
                       ),
@@ -632,8 +630,7 @@ class _CoconutFrostedAppBarState extends State<CoconutFrostedAppBar> {
     bool newScrollOverTitleHeight = scrollPosition >= 30;
     bool newTitleVisible = widget.hasTitleOpacity ? scrollPosition >= 15 : true;
 
-    if (newScrollOverTitleHeight != _isScrollOverTitleHeight ||
-        newTitleVisible != _isTitleVisible) {
+    if (newScrollOverTitleHeight != _isScrollOverTitleHeight || newTitleVisible != _isTitleVisible) {
       setState(() {
         _isScrollOverTitleHeight = newScrollOverTitleHeight;
         _isTitleVisible = widget.hasTitleOpacity ? newTitleVisible : _isTitleVisible;
@@ -657,9 +654,8 @@ class _CoconutFrostedAppBarState extends State<CoconutFrostedAppBar> {
     Color backgroundColor = _getBackgroundColor(brightness);
 
     return AppBar(
-      systemOverlayStyle: Theme.of(context).brightness == Brightness.light
-          ? SystemUiOverlayStyle.dark
-          : SystemUiOverlayStyle.light,
+      systemOverlayStyle:
+          Theme.of(context).brightness == Brightness.light ? SystemUiOverlayStyle.dark : SystemUiOverlayStyle.light,
       title: AnimatedOpacity(
         duration: const Duration(milliseconds: 200),
         opacity: _isTitleVisible ? 1 : 0,
@@ -683,8 +679,7 @@ class _CoconutFrostedAppBarState extends State<CoconutFrostedAppBar> {
                     widget.isBottom
                         ? 'packages/coconut_design_system/assets/svg/close.svg'
                         : 'packages/coconut_design_system/assets/svg/arrow-back.svg',
-                    colorFilter:
-                        ColorFilter.mode(CoconutColors.onPrimary(brightness), BlendMode.srcIn),
+                    colorFilter: ColorFilter.mode(CoconutColors.onPrimary(brightness), BlendMode.srcIn),
                     width: 24,
                     height: 24,
                   ),
@@ -719,12 +714,8 @@ class _CoconutFrostedAppBarState extends State<CoconutFrostedAppBar> {
   /// Determines the background color based on scroll position and theme brightness.
   Color _getBackgroundColor(Brightness brightness) {
     if (widget.backgroundColor == null) {
-      return _isScrollOverTitleHeight
-          ? CoconutColors.surface(brightness).withOpacity(0.06)
-          : Colors.transparent;
+      return _isScrollOverTitleHeight ? CoconutColors.surface(brightness).withOpacity(0.06) : Colors.transparent;
     }
-    return _isScrollOverTitleHeight
-        ? widget.backgroundColor!.withOpacity(0.06)
-        : Colors.transparent;
+    return _isScrollOverTitleHeight ? widget.backgroundColor!.withOpacity(0.06) : Colors.transparent;
   }
 }

@@ -43,8 +43,7 @@ class _InputsScreenState extends State<InputsScreen> {
           child: Consumer<ThemeProvider>(
             builder: (context, themeProvider, child) {
               final isDarkMode = themeProvider.themeMode == ThemeMode.dark;
-              final brightness =
-                  isDarkMode ? Brightness.dark : Brightness.light;
+              final brightness = isDarkMode ? Brightness.dark : Brightness.light;
 
               return Padding(
                 padding: const EdgeInsets.all(CoconutLayout.defaultPadding),
@@ -82,8 +81,7 @@ class _InputsScreenState extends State<InputsScreen> {
                           ),
                           const CoconutChip(
                             color: CoconutColors.cyan,
-                            padding: EdgeInsets.symmetric(
-                                vertical: 2, horizontal: 8),
+                            padding: EdgeInsets.symmetric(vertical: 2, horizontal: 8),
                             isRectangle: true,
                             label: 'TESTNET',
                             labelColor: CoconutColors.white,
@@ -92,8 +90,7 @@ class _InputsScreenState extends State<InputsScreen> {
                           ),
                           CoconutChip(
                             color: CoconutColors.colorPalette.first,
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 2, horizontal: 8),
+                            padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
                             label: 'isSelected null',
                             labelColor: CoconutColors.colorPalette.first,
                             labelSize: 12,
@@ -101,8 +98,7 @@ class _InputsScreenState extends State<InputsScreen> {
                           ),
                           CoconutChip(
                             color: CoconutColors.colorPalette.last,
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 2, horizontal: 8),
+                            padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
                             label: 'Selected',
                             labelColor: CoconutColors.colorPalette.last,
                             labelSize: 10,
@@ -111,8 +107,7 @@ class _InputsScreenState extends State<InputsScreen> {
                           ),
                           CoconutChip(
                             color: CoconutColors.colorPalette.last,
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 2, horizontal: 8),
+                            padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
                             label: 'Unselected',
                             labelColor: CoconutColors.colorPalette.last,
                             labelSize: 10,
@@ -260,8 +255,7 @@ class _InputsScreenState extends State<InputsScreen> {
                             ),
                             onChanged: (text) {
                               controller1Text = text;
-                              isVisibleErrorText =
-                                  text.runes.length == maxLength;
+                              isVisibleErrorText = text.runes.length == maxLength;
                               setState(() {});
                             },
                           ),
@@ -291,9 +285,7 @@ class _InputsScreenState extends State<InputsScreen> {
                               child: Container(
                                 margin: const EdgeInsets.only(right: 13),
                                 child: SvgPicture.asset(
-                                  obscureText
-                                      ? 'assets/svg/textfield_hide.svg'
-                                      : 'assets/svg/textfield_view.svg',
+                                  obscureText ? 'assets/svg/textfield_hide.svg' : 'assets/svg/textfield_view.svg',
                                   width: 16,
                                   height: 16,
                                   colorFilter: ColorFilter.mode(
@@ -354,8 +346,7 @@ class _InputsScreenState extends State<InputsScreen> {
                             ),
                             onChanged: (text) {
                               controller1Text = text;
-                              isVisibleErrorText =
-                                  text.runes.length == maxLength;
+                              isVisibleErrorText = text.runes.length == maxLength;
                               setState(() {});
                             },
                           ),

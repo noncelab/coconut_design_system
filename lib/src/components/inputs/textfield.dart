@@ -20,8 +20,7 @@ class CoconutTextField extends StatefulWidget {
 
   /// - Deprecated: This parameter will be removed in version `0.9.0`.
   /// - Now automatically inferred from `CoconutTheme.brightness()`.
-  @Deprecated(
-      'This parameter will be removed in version 0.8. It is now inferred from CoconutTheme.brightness.')
+  @Deprecated('This parameter will be removed in version 0.8. It is now inferred from CoconutTheme.brightness.')
   final Brightness? brightness;
 
   /// Callback function triggered when the text changes.
@@ -281,8 +280,7 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
   void _updateData() {
     _activeColor = widget.activeColor ?? CoconutColors.onBlack(brightness);
     _cursorColor = widget.cursorColor ?? CoconutColors.onBlack(brightness);
-    _placeholderColor =
-        widget.placeholderColor ?? CoconutColors.onGray300(brightness);
+    _placeholderColor = widget.placeholderColor ?? CoconutColors.onGray300(brightness);
     _errorColor = widget.errorColor ?? CoconutColors.red;
     _backgroundColor = widget.backgroundColor ?? Colors.transparent;
     _text = widget.controller.text;
@@ -297,8 +295,7 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
     _updateData();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_prefixGlobalKey.currentContext != null) {
-        final prefixRenderBox =
-            _prefixGlobalKey.currentContext?.findRenderObject() as RenderBox;
+        final prefixRenderBox = _prefixGlobalKey.currentContext?.findRenderObject() as RenderBox;
         _prefixSize = prefixRenderBox.size;
         setState(() {});
       }
@@ -332,8 +329,7 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                     color: widget.isError
                         ? _errorColor
                         : _isFocus
-                            ? widget.maxLength != null &&
-                                    _text.runes.length > widget.maxLength!
+                            ? widget.maxLength != null && _text.runes.length > widget.maxLength!
                                 ? _errorColor
                                 : _activeColor
                             : _placeholderColor,
@@ -350,9 +346,7 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                 inputFormatters: widget.textInputFormatter,
                 obscureText: widget.obscureText,
                 textAlign: widget.textAlign ?? TextAlign.start,
-                padding: widget.padding ??
-                    EdgeInsets.fromLTRB(
-                        widget.prefix != null ? 0 : 16, 20, 16, 20),
+                padding: widget.padding ?? EdgeInsets.fromLTRB(widget.prefix != null ? 0 : 16, 20, 16, 20),
                 style: CoconutTypography.body2_14.copyWith(
                   color: _activeColor,
                   fontSize: widget.fontSize,
@@ -383,18 +377,11 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                 child: Container(
                   height: widget.prefix != null ? _prefixSize.height : null,
                   margin: widget.prefix == null
-                      ? widget.padding ??
-                          const EdgeInsets.fromLTRB(16, 20, 16, 20)
-                      : EdgeInsets.only(
-                          left: _prefixSize.width,
-                          top: widget.padding?.top ?? 20),
-                  padding: widget.suffix != null
-                      ? const EdgeInsets.only(right: 40)
-                      : null,
+                      ? widget.padding ?? const EdgeInsets.fromLTRB(16, 20, 16, 20)
+                      : EdgeInsets.only(left: _prefixSize.width, top: widget.padding?.top ?? 20),
+                  padding: widget.suffix != null ? const EdgeInsets.only(right: 40) : null,
                   alignment: Alignment.centerLeft,
-                  child: widget.placeholderText == null ||
-                          _isFocus ||
-                          _text.isNotEmpty
+                  child: widget.placeholderText == null || _isFocus || _text.isNotEmpty
                       ? Text(
                           '',
                           style: CoconutTypography.body2_14.copyWith(

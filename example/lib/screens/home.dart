@@ -11,11 +11,8 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final router = GoRouter.of(context);
-    final List<GoRoute> routes = router.configuration.routes
-        .whereType<GoRoute>()
-        .toList()
-        .where((route) => route.path != '/')
-        .toList();
+    final List<GoRoute> routes =
+        router.configuration.routes.whereType<GoRoute>().toList().where((route) => route.path != '/').toList();
 
     return Scaffold(
       appBar: const MyAppBar(),

@@ -65,9 +65,7 @@ class CoconutAppbarButton extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(14.0),
               border: Border.all(
-                color: isActive
-                    ? Colors.transparent
-                    : CoconutColors.onPrimary(brightness).withOpacity(0.2),
+                color: isActive ? Colors.transparent : CoconutColors.onPrimary(brightness).withOpacity(0.2),
               ),
               color: isActive
                   ? usePrimaryActiveColor

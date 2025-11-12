@@ -404,8 +404,8 @@ class AppbarScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildFrostedAppBar(BuildContext context, Brightness brightness,
-      AppbarProvider appbarProvider, ThemeProvider themeProvider) {
+  Widget _buildFrostedAppBar(
+      BuildContext context, Brightness brightness, AppbarProvider appbarProvider, ThemeProvider themeProvider) {
     ScrollController controller = ScrollController();
     return Scaffold(
       extendBodyBehindAppBar: true, // essential
@@ -461,8 +461,8 @@ class AppbarScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTopNaviAppBar(BuildContext context, Brightness brightness,
-      AppbarProvider appbarProvider, ThemeProvider themeProvider) {
+  Widget _buildTopNaviAppBar(
+      BuildContext context, Brightness brightness, AppbarProvider appbarProvider, ThemeProvider themeProvider) {
     if (appbarProvider.isNextButtonVisible) {
       return Scaffold(
         backgroundColor: CoconutColors.surface(brightness),
@@ -529,9 +529,8 @@ class AppbarScreen extends StatelessWidget {
       appBar: CoconutAppBar.build(
         title: 'Top Navi',
         context: context,
-        onTitlePressed: appbarProvider.isTitlePressable
-            ? () => showSnackBar(context, 'Title clicked', brightness)
-            : null,
+        onTitlePressed:
+            appbarProvider.isTitlePressable ? () => showSnackBar(context, 'Title clicked', brightness) : null,
         onBackPressed: () {
           Navigator.pop(context);
         },

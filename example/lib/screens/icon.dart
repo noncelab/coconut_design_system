@@ -16,17 +16,14 @@ class IconScreen extends StatelessWidget {
         child: Consumer<ThemeProvider>(
           builder: (context, themeProvider, child) {
             final isDarkMode = themeProvider.themeMode == ThemeMode.dark;
-            final backgroundColors = isDarkMode
-                ? CoconutColors.backgroundColorPaletteDark
-                : CoconutColors.backgroundColorPaletteLight;
+            final backgroundColors =
+                isDarkMode ? CoconutColors.backgroundColorPaletteDark : CoconutColors.backgroundColorPaletteLight;
             List<double> iconSizeList = [20, 24, 30];
 
             return Center(
               child: Column(
                 children: [
-                  for (int sizeIndex = 0;
-                      sizeIndex < iconSizeList.length;
-                      sizeIndex++) ...[
+                  for (int sizeIndex = 0; sizeIndex < iconSizeList.length; sizeIndex++) ...[
                     Text(
                       'IconSize: ${iconSizeList[sizeIndex]} x ${iconSizeList[sizeIndex]} (${iconSizeList[sizeIndex] / 2} x ${iconSizeList[sizeIndex] / 2})',
                       style: CoconutTypography.heading4_18_Bold,

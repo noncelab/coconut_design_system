@@ -21,8 +21,7 @@ import 'package:flutter/material.dart';
 class CoconutUnderlinedButton extends StatefulWidget {
   /// - Deprecated: This parameter will be removed in version `0.9.0`.
   /// - Now automatically inferred from `CoconutTheme.brightness()`.
-  @Deprecated(
-      'This parameter will be removed in version 0.8. It is now inferred from CoconutTheme.brightness.')
+  @Deprecated('This parameter will be removed in version 0.8. It is now inferred from CoconutTheme.brightness.')
   final Brightness? brightness;
 
   /// **The text label displayed on the button.**

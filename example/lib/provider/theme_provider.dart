@@ -14,8 +14,7 @@ import 'package:flutter/material.dart';
 /// ```
 class ThemeProvider with ChangeNotifier {
   /// The current theme mode of the app (default: `ThemeMode.system`).
-  ThemeMode _themeMode =
-      CoconutTheme.brightness() == Brightness.dark ? ThemeMode.dark : ThemeMode.light;
+  ThemeMode _themeMode = CoconutTheme.brightness() == Brightness.dark ? ThemeMode.dark : ThemeMode.light;
 
   /// Returns the current theme mode.
   ///
@@ -44,9 +43,7 @@ class ThemeProvider with ChangeNotifier {
   /// ```
   void toggleTheme() {
     _themeMode = _themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
-    CoconutTheme.setTheme(_themeMode == ThemeMode.light
-        ? Brightness.light
-        : Brightness.dark); // Set the theme globally
+    CoconutTheme.setTheme(_themeMode == ThemeMode.light ? Brightness.light : Brightness.dark); // Set the theme globally
     notifyListeners(); // Notify UI updates
   }
 }

@@ -23,8 +23,7 @@ class CoconutButton extends StatefulWidget {
   /// **Brightness of the button**
   /// - Deprecated: This parameter will be removed in version `0.9.0`.
   /// - Now automatically inferred from `CoconutTheme.brightness()`.
-  @Deprecated(
-      'This parameter will be removed in version 0.8. It is now inferred from CoconutTheme.brightness.')
+  @Deprecated('This parameter will be removed in version 0.8. It is now inferred from CoconutTheme.brightness.')
   final Brightness? brightness;
 
   /// **Button width**
@@ -140,21 +139,20 @@ class _CoconutButtonState extends State<CoconutButton> {
   Widget build(BuildContext context) {
     brightness = CoconutTheme.brightness();
     padding = widget.padding ?? const EdgeInsets.symmetric(vertical: 12, horizontal: 12);
-    backgroundColor = widget.backgroundColor ??
-        (brightness == Brightness.light ? CoconutColors.black : CoconutColors.white);
-    foregroundColor = widget.foregroundColor ??
-        (brightness == Brightness.light ? CoconutColors.white : CoconutColors.black);
+    backgroundColor =
+        widget.backgroundColor ?? (brightness == Brightness.light ? CoconutColors.black : CoconutColors.white);
+    foregroundColor =
+        widget.foregroundColor ?? (brightness == Brightness.light ? CoconutColors.white : CoconutColors.black);
     pressedBackgroundColor = widget.pressedBackgroundColor ?? backgroundColor.withOpacity(0.5);
-    pressedForegroundColor = widget.pressedForegroundColor ??
-        (brightness == Brightness.light ? CoconutColors.white : CoconutColors.black);
-    pressedTextColor = widget.pressedTextColor ??
-        (brightness == Brightness.light ? CoconutColors.white : CoconutColors.black);
+    pressedForegroundColor =
+        widget.pressedForegroundColor ?? (brightness == Brightness.light ? CoconutColors.white : CoconutColors.black);
+    pressedTextColor =
+        widget.pressedTextColor ?? (brightness == Brightness.light ? CoconutColors.white : CoconutColors.black);
     disabledBackgroundColor = widget.disabledBackgroundColor ??
         (brightness == Brightness.light ? CoconutColors.gray150 : CoconutColors.gray800);
     disabledForegroundColor = widget.disabledForegroundColor ??
         (brightness == Brightness.light ? CoconutColors.gray350 : CoconutColors.gray700);
-    textStyle = widget.textStyle ??
-        CoconutTypography.body2_14_Bold.setColor(CoconutColors.onPrimary(brightness));
+    textStyle = widget.textStyle ?? CoconutTypography.body2_14_Bold.setColor(CoconutColors.onPrimary(brightness));
     return GestureDetector(
       onTapDown: (details) {
         setState(() {
@@ -183,9 +181,8 @@ class _CoconutButtonState extends State<CoconutButton> {
         padding: padding,
         decoration: BoxDecoration(
           color: getBackgroundColor(isDarkMode: brightness == Brightness.dark),
-          border: Border.all(
-              width: widget.borderWidth,
-              color: getOutlineColor(isDarkMode: brightness == Brightness.dark)),
+          border:
+              Border.all(width: widget.borderWidth, color: getOutlineColor(isDarkMode: brightness == Brightness.dark)),
           borderRadius: BorderRadius.circular(
             widget.borderRadius,
           ),
@@ -234,8 +231,7 @@ class _CoconutButtonState extends State<CoconutButton> {
   }
 
   /// **Determines button width based on `isExpand` flag**
-  double? getButtonWidth(BuildContext context) =>
-      widget.isExpand ? MediaQuery.sizeOf(context).width : widget.width;
+  double? getButtonWidth(BuildContext context) => widget.isExpand ? MediaQuery.sizeOf(context).width : widget.width;
 
   /// **Returns the appropriate text color based on state**
   Color? getForegroundColor({bool isDarkMode = false}) {

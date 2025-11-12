@@ -33,8 +33,7 @@ class _IndicatorScreenState extends State<IndicatorScreen> {
           child: Consumer<ThemeProvider>(
             builder: (context, themeProvider, child) {
               final isDarkMode = themeProvider.themeMode == ThemeMode.dark;
-              final brightness =
-                  isDarkMode ? Brightness.dark : Brightness.light;
+              final brightness = isDarkMode ? Brightness.dark : Brightness.light;
 
               return Container(
                 padding: const EdgeInsets.symmetric(
@@ -81,8 +80,7 @@ class _IndicatorScreenState extends State<IndicatorScreen> {
                                       children: [
                                         Text(
                                           'Reverse',
-                                          style:
-                                              CoconutTypography.body2_14_Bold,
+                                          style: CoconutTypography.body2_14_Bold,
                                         ),
                                         CoconutButton(
                                           brightness: brightness,
@@ -101,8 +99,7 @@ class _IndicatorScreenState extends State<IndicatorScreen> {
                                       children: [
                                         Text(
                                           'Loop',
-                                          style:
-                                              CoconutTypography.body2_14_Bold,
+                                          style: CoconutTypography.body2_14_Bold,
                                         ),
                                         CoconutButton(
                                           brightness: brightness,
@@ -126,8 +123,7 @@ class _IndicatorScreenState extends State<IndicatorScreen> {
                                       style: CoconutTypography.body2_14_Bold,
                                     ),
                                     CoconutLayout.spacing_1000h,
-                                    _buildCircularProgressDurationControlBox(
-                                        brightness),
+                                    _buildCircularProgressDurationControlBox(brightness),
                                   ],
                                 ),
                               ],

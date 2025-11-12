@@ -33,8 +33,7 @@ class CoconutToast {
   static void showBottomToast({
     /// - Deprecated: This parameter will be removed in version `0.9.0`.
     /// - Now automatically inferred from `CoconutTheme.brightness()`.
-    @Deprecated(
-        'This parameter will be removed in version 0.8. It is now inferred from CoconutTheme.brightness.')
+    @Deprecated('This parameter will be removed in version 0.8. It is now inferred from CoconutTheme.brightness.')
     Brightness? brightness,
     required BuildContext context,
     required String text,
@@ -274,8 +273,7 @@ class CoconutToast {
 class CoconutToastWidget extends StatefulWidget {
   final String text;
 
-  @Deprecated(
-      'This parameter will be removed in version 0.8. It is now inferred from CoconutTheme.brightness.')
+  @Deprecated('This parameter will be removed in version 0.8. It is now inferred from CoconutTheme.brightness.')
   final Brightness? brightness;
 
   final bool isVisibleIcon;
@@ -314,8 +312,7 @@ class CoconutToastWidget extends StatefulWidget {
   State<CoconutToastWidget> createState() => _CoconutToastWidgetState();
 }
 
-class _CoconutToastWidgetState extends State<CoconutToastWidget>
-    with SingleTickerProviderStateMixin {
+class _CoconutToastWidgetState extends State<CoconutToastWidget> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<Offset> _offsetAnimation;
   late Animation<double> _fadeAnimation;
@@ -343,9 +340,7 @@ class _CoconutToastWidgetState extends State<CoconutToastWidget>
                 color: widget.backgroundColor ?? CoconutColors.onGray900(brightness),
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
-                  color: widget.borderColor ??
-                      widget.backgroundColor ??
-                      CoconutColors.onGray900(brightness),
+                  color: widget.borderColor ?? widget.backgroundColor ?? CoconutColors.onGray900(brightness),
                   width: 1,
                 ),
               ),
@@ -360,8 +355,7 @@ class _CoconutToastWidgetState extends State<CoconutToastWidget>
                   final isMultiline = textPainter.computeLineMetrics().length > 1;
 
                   return Row(
-                    crossAxisAlignment:
-                        isMultiline ? CrossAxisAlignment.start : CrossAxisAlignment.center,
+                    crossAxisAlignment: isMultiline ? CrossAxisAlignment.start : CrossAxisAlignment.center,
                     children: [
                       if (widget.isVisibleIcon) ...{
                         Padding(
@@ -371,8 +365,7 @@ class _CoconutToastWidgetState extends State<CoconutToastWidget>
                             bottom: widget.textPadding,
                           ),
                           child: SvgPicture.asset(
-                            widget.iconPath ??
-                                'packages/coconut_design_system/assets/svg/circle_info.svg',
+                            widget.iconPath ?? 'packages/coconut_design_system/assets/svg/circle_info.svg',
                             height: widget.iconSize,
                             colorFilter: ColorFilter.mode(
                               widget.iconColor,

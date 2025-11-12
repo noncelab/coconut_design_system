@@ -32,8 +32,7 @@ class CoconutUnderlinedButtonScreen extends StatelessWidget {
                     brightness: brightness,
                     isActive: false,
                     text: 'UnderlinedButton',
-                    onTap: () => showSnackBar(
-                        context, 'Underlined Button Clicked!', brightness),
+                    onTap: () => showSnackBar(context, 'Underlined Button Clicked!', brightness),
                   ),
                   CoconutLayout.spacing_300h,
                   const Text(
@@ -43,8 +42,7 @@ class CoconutUnderlinedButtonScreen extends StatelessWidget {
                   CoconutUnderlinedButton(
                     brightness: brightness,
                     text: 'UnderlinedButton',
-                    onTap: () => showSnackBar(
-                        context, 'Underlined Button Clicked!', brightness),
+                    onTap: () => showSnackBar(context, 'Underlined Button Clicked!', brightness),
                   ),
                   CoconutLayout.spacing_300h,
                   const Text(
@@ -56,8 +54,7 @@ class CoconutUnderlinedButtonScreen extends StatelessWidget {
                     defaultColor: CoconutColors.red,
                     text: 'UnderlinedButton',
                     lineWidth: 2,
-                    onTap: () => showSnackBar(
-                        context, 'Underlined Button Clicked!', brightness),
+                    onTap: () => showSnackBar(context, 'Underlined Button Clicked!', brightness),
                   ),
                   CoconutLayout.spacing_300h,
                   const Text(
@@ -68,8 +65,7 @@ class CoconutUnderlinedButtonScreen extends StatelessWidget {
                     brightness: brightness,
                     textStyle: CoconutTypography.heading1_32_Bold,
                     text: 'UnderlinedButton',
-                    onTap: () => showSnackBar(
-                        context, 'Underlined Button Clicked!', brightness),
+                    onTap: () => showSnackBar(context, 'Underlined Button Clicked!', brightness),
                   ),
                 ],
               ),

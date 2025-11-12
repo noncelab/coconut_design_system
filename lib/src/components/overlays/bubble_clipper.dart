@@ -21,8 +21,7 @@ class LeftTriangleBubbleClipper extends CustomClipper<Path> {
     path.lineTo(size.width, size.height - 15);
 
     // Bottom-right rounded corner
-    path.quadraticBezierTo(
-        size.width, size.height, size.width - 15, size.height);
+    path.quadraticBezierTo(size.width, size.height, size.width - 15, size.height);
     path.lineTo(15, size.height);
 
     // Bottom-left rounded corner
@@ -64,8 +63,7 @@ class RightTriangleBubbleClipper extends CustomClipper<Path> {
     path.lineTo(size.width - 15, size.height);
 
     // Bottom-right rounded corner
-    path.quadraticBezierTo(
-        size.width, size.height, size.width, size.height - 15);
+    path.quadraticBezierTo(size.width, size.height, size.width, size.height - 15);
     path.lineTo(size.width, 30);
 
     // Top-right rounded corner

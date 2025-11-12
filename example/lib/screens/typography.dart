@@ -16,10 +16,8 @@ class TypographyScreen extends StatelessWidget {
         child: ListView.builder(
           itemCount: CoconutTypography.typographyStyles.length,
           itemBuilder: (context, index) {
-            final typographyKey =
-                CoconutTypography.typographyStyles.keys.elementAt(index);
-            final typographyStyle =
-                CoconutTypography.typographyStyles[typographyKey]!;
+            final typographyKey = CoconutTypography.typographyStyles.keys.elementAt(index);
+            final typographyStyle = CoconutTypography.typographyStyles[typographyKey]!;
 
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 12),

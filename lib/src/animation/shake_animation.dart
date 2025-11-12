@@ -58,8 +58,7 @@ class CoconutShakeAnimation extends StatefulWidget {
   CoconutShakeAnimationState createState() => CoconutShakeAnimationState();
 }
 
-class CoconutShakeAnimationState extends State<CoconutShakeAnimation>
-    with SingleTickerProviderStateMixin {
+class CoconutShakeAnimationState extends State<CoconutShakeAnimation> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _offsetAnimation;
 
@@ -81,8 +80,7 @@ class CoconutShakeAnimationState extends State<CoconutShakeAnimation>
     }
     items.add(TweenSequenceItem(tween: Tween(begin: -offset, end: 0.0), weight: 1));
 
-    _offsetAnimation = TweenSequence<double>(items)
-        .animate(CurvedAnimation(parent: _controller, curve: widget.curve));
+    _offsetAnimation = TweenSequence<double>(items).animate(CurvedAnimation(parent: _controller, curve: widget.curve));
 
     _controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {

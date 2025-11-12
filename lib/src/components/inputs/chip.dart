@@ -161,8 +161,7 @@ class CoconutChip extends StatelessWidget {
             isRectangle ? CoconutStyles.radius_50 : CoconutStyles.radius_500,
           ),
           border: Border.all(
-              color: (borderColor ?? color)
-                  .withOpacity(isSelected == false ? 0.6 : 1.0),
+              color: (borderColor ?? color).withOpacity(isSelected == false ? 0.6 : 1.0),
               width: isSelected == true ? selectedBorderWidth : borderWidth),
         ),
         child: Text(
@@ -185,6 +184,5 @@ class CoconutChip extends StatelessWidget {
       fontFamily: labelFontFamily,
       fontSize: labelSize,
       fontWeight: isSelected == true ? FontWeight.bold : FontWeight.normal,
-      color: (labelColor ?? borderColor ?? CoconutColors.white)
-          .withOpacity(isSelected == false ? 0.5 : 1.0));
+      color: (labelColor ?? borderColor ?? CoconutColors.white).withOpacity(isSelected == false ? 0.5 : 1.0));
 }

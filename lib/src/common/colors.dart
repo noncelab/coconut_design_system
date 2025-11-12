@@ -104,14 +104,11 @@ class CoconutColors {
 
   static Color normalPrimaryButtonColor() => const Color(0xFFDEFF58);
   static Color pressedPrimaryButtonColor() => const Color(0x80DEFF58);
-  static Color disabledButtonColor(Brightness brightness) =>
-      brightness == Brightness.dark ? gray800 : gray150;
+  static Color disabledButtonColor(Brightness brightness) => brightness == Brightness.dark ? gray800 : gray150;
 
-  static Color buttonLabelColor(Brightness brightness) =>
-      brightness == Brightness.dark ? black : white;
+  static Color buttonLabelColor(Brightness brightness) => brightness == Brightness.dark ? black : white;
   static Color primaryButtonLabelColor() => black;
-  static Color disabledButtonLabelColor(Brightness brightness) =>
-      brightness == Brightness.dark ? gray700 : gray350;
+  static Color disabledButtonLabelColor(Brightness brightness) => brightness == Brightness.dark ? gray700 : gray350;
 
   // TODO: green
   static Color onAccent(Brightness brightness) => brightness == Brightness.light ? green : primary;
@@ -120,33 +117,23 @@ class CoconutColors {
 
   static Color onWhite(Brightness brightness) => brightness == Brightness.light ? white : black;
 
-  static Color onGray100(Brightness brightness) =>
-      brightness == Brightness.light ? gray100 : gray900;
+  static Color onGray100(Brightness brightness) => brightness == Brightness.light ? gray100 : gray900;
 
-  static Color onGray150(Brightness brightness) =>
-      brightness == Brightness.light ? gray150 : gray800;
+  static Color onGray150(Brightness brightness) => brightness == Brightness.light ? gray150 : gray800;
 
-  static Color onGray200(Brightness brightness) =>
-      brightness == Brightness.light ? gray200 : gray700;
+  static Color onGray200(Brightness brightness) => brightness == Brightness.light ? gray200 : gray700;
 
-  static Color onGray300(Brightness brightness) =>
-      brightness == Brightness.light ? gray300 : gray600;
+  static Color onGray300(Brightness brightness) => brightness == Brightness.light ? gray300 : gray600;
 
-  static Color onGray350(Brightness brightness) =>
-      brightness == Brightness.light ? gray350 : gray500;
+  static Color onGray350(Brightness brightness) => brightness == Brightness.light ? gray350 : gray500;
 
-  static Color onGray500(Brightness brightness) =>
-      brightness == Brightness.light ? gray500 : gray350;
+  static Color onGray500(Brightness brightness) => brightness == Brightness.light ? gray500 : gray350;
 
-  static Color onGray600(Brightness brightness) =>
-      brightness == Brightness.light ? gray600 : gray300;
+  static Color onGray600(Brightness brightness) => brightness == Brightness.light ? gray600 : gray300;
 
-  static Color onGray700(Brightness brightness) =>
-      brightness == Brightness.light ? gray700 : gray200;
+  static Color onGray700(Brightness brightness) => brightness == Brightness.light ? gray700 : gray200;
 
-  static Color onGray800(Brightness brightness) =>
-      brightness == Brightness.light ? gray800 : gray150;
+  static Color onGray800(Brightness brightness) => brightness == Brightness.light ? gray800 : gray150;
 
-  static Color onGray900(Brightness brightness) =>
-      brightness == Brightness.light ? gray900 : gray100;
+  static Color onGray900(Brightness brightness) => brightness == Brightness.light ? gray900 : gray100;
 }

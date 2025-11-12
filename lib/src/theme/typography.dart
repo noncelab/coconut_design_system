@@ -62,13 +62,10 @@ TextStyle applyVariation(
   double? fontSize = baseStyle.fontSize;
 
   return baseStyle.copyWith(
-      fontFamily: isNumber
-          ? CoconutTypography.kNumberFontFamily
-          : CoconutTypography.kTextFontFamily,
+      fontFamily: isNumber ? CoconutTypography.kNumberFontFamily : CoconutTypography.kTextFontFamily,
       fontWeight: isBold ? FontWeight.w700 : FontWeight.w400,
       height: fontSize != null ? (fontSize >= 24 ? 1.2 : 1.4) : null,
-      letterSpacing:
-          fontSize != null ? (fontSize >= 18 ? -0.04 : -0.02) : -0.02);
+      letterSpacing: fontSize != null ? (fontSize >= 18 ? -0.04 : -0.02) : -0.02);
 }
 
 /// **Coconut Design System - Typography Styles**
@@ -87,73 +84,44 @@ class CoconutTypography {
   // ====== Heading Styles ======
 
   /// **H1 - 32px, Regular**
-  static const TextStyle heading1_32 = TextStyle(
-      fontSize: 32,
-      fontWeight: FontWeight.w400,
-      fontFamily: kTextFontFamily,
-      height: 1.2);
+  static const TextStyle heading1_32 =
+      TextStyle(fontSize: 32, fontWeight: FontWeight.w400, fontFamily: kTextFontFamily, height: 1.2);
 
-  static final TextStyle heading1_32_Bold =
-      applyVariation(heading1_32, isBold: true);
-  static final TextStyle heading1_32_Number =
-      applyVariation(heading1_32, isNumber: true);
-  static final TextStyle heading1_32_NumberBold =
-      applyVariation(heading1_32, isNumber: true, isBold: true);
+  static final TextStyle heading1_32_Bold = applyVariation(heading1_32, isBold: true);
+  static final TextStyle heading1_32_Number = applyVariation(heading1_32, isNumber: true);
+  static final TextStyle heading1_32_NumberBold = applyVariation(heading1_32, isNumber: true, isBold: true);
 
   /// **H2 - 28px, Regular**
-  static const TextStyle heading2_28 = TextStyle(
-      fontSize: 28,
-      fontWeight: FontWeight.w400,
-      fontFamily: kTextFontFamily,
-      height: 1.2);
+  static const TextStyle heading2_28 =
+      TextStyle(fontSize: 28, fontWeight: FontWeight.w400, fontFamily: kTextFontFamily, height: 1.2);
 
-  static final TextStyle heading2_28_Bold =
-      applyVariation(heading2_28, isBold: true);
-  static final TextStyle heading2_28_Number =
-      applyVariation(heading2_28, isNumber: true);
-  static final TextStyle heading2_28_NumberBold =
-      applyVariation(heading2_28, isNumber: true, isBold: true);
+  static final TextStyle heading2_28_Bold = applyVariation(heading2_28, isBold: true);
+  static final TextStyle heading2_28_Number = applyVariation(heading2_28, isNumber: true);
+  static final TextStyle heading2_28_NumberBold = applyVariation(heading2_28, isNumber: true, isBold: true);
 
   /// **H3 - 21px, Regular**
-  static const TextStyle heading3_21 = TextStyle(
-      fontSize: 21,
-      fontWeight: FontWeight.w400,
-      fontFamily: kTextFontFamily,
-      height: 1.4);
+  static const TextStyle heading3_21 =
+      TextStyle(fontSize: 21, fontWeight: FontWeight.w400, fontFamily: kTextFontFamily, height: 1.4);
 
-  static final TextStyle heading3_21_Bold =
-      applyVariation(heading3_21, isBold: true);
-  static final TextStyle heading3_21_Number =
-      applyVariation(heading3_21, isNumber: true);
-  static final TextStyle heading3_21_NumberBold =
-      applyVariation(heading3_21, isNumber: true, isBold: true);
+  static final TextStyle heading3_21_Bold = applyVariation(heading3_21, isBold: true);
+  static final TextStyle heading3_21_Number = applyVariation(heading3_21, isNumber: true);
+  static final TextStyle heading3_21_NumberBold = applyVariation(heading3_21, isNumber: true, isBold: true);
 
   /// **H4 - 18px, Regular**
-  static const TextStyle heading4_18 = TextStyle(
-      fontSize: 18,
-      fontWeight: FontWeight.w400,
-      fontFamily: kTextFontFamily,
-      height: 1.4);
+  static const TextStyle heading4_18 =
+      TextStyle(fontSize: 18, fontWeight: FontWeight.w400, fontFamily: kTextFontFamily, height: 1.4);
 
-  static final TextStyle heading4_18_Bold =
-      applyVariation(heading4_18, isBold: true);
-  static final TextStyle heading4_18_Number =
-      applyVariation(heading4_18, isNumber: true);
-  static final TextStyle heading4_18_NumberBold =
-      applyVariation(heading4_18, isNumber: true, isBold: true);
+  static final TextStyle heading4_18_Bold = applyVariation(heading4_18, isBold: true);
+  static final TextStyle heading4_18_Number = applyVariation(heading4_18, isNumber: true);
+  static final TextStyle heading4_18_NumberBold = applyVariation(heading4_18, isNumber: true, isBold: true);
 
   /// **Body 1 - 16px, Regular**
-  static const TextStyle body1_16 = TextStyle(
-      fontSize: 16,
-      fontWeight: FontWeight.w400,
-      fontFamily: kTextFontFamily,
-      height: 1.4);
+  static const TextStyle body1_16 =
+      TextStyle(fontSize: 16, fontWeight: FontWeight.w400, fontFamily: kTextFontFamily, height: 1.4);
 
   static final TextStyle body1_16_Bold = applyVariation(body1_16, isBold: true);
-  static final TextStyle body1_16_Number =
-      applyVariation(body1_16, isNumber: true);
-  static final TextStyle body1_16_NumberBold =
-      applyVariation(body1_16, isNumber: true, isBold: true);
+  static final TextStyle body1_16_Number = applyVariation(body1_16, isNumber: true);
+  static final TextStyle body1_16_NumberBold = applyVariation(body1_16, isNumber: true, isBold: true);
 
   /// **Body 2 - 14px, Regular**
   static const TextStyle body2_14 = TextStyle(
@@ -164,10 +132,8 @@ class CoconutTypography {
   );
 
   static final TextStyle body2_14_Bold = applyVariation(body2_14, isBold: true);
-  static final TextStyle body2_14_Number =
-      applyVariation(body2_14, isNumber: true);
-  static final TextStyle body2_14_NumberBold =
-      applyVariation(body2_14, isNumber: true, isBold: true);
+  static final TextStyle body2_14_Number = applyVariation(body2_14, isNumber: true);
+  static final TextStyle body2_14_NumberBold = applyVariation(body2_14, isNumber: true, isBold: true);
 
   /// **Body 3 - 12px, Regular**
   static const TextStyle body3_12 = TextStyle(
@@ -178,10 +144,8 @@ class CoconutTypography {
   );
 
   static final TextStyle body3_12_Bold = applyVariation(body3_12, isBold: true);
-  static final TextStyle body3_12_Number =
-      applyVariation(body3_12, isNumber: true);
-  static final TextStyle body3_12_NumberBold =
-      applyVariation(body3_12, isNumber: true, isBold: true);
+  static final TextStyle body3_12_Number = applyVariation(body3_12, isNumber: true);
+  static final TextStyle body3_12_NumberBold = applyVariation(body3_12, isNumber: true, isBold: true);
 
   /// **Caption Number - 10px, Regular**
   static const TextStyle caption_10 = TextStyle(
@@ -191,12 +155,9 @@ class CoconutTypography {
     height: 1.4,
   );
 
-  static final TextStyle caption_10_Bold =
-      applyVariation(caption_10, isBold: true);
-  static final TextStyle caption_10_Number =
-      applyVariation(caption_10, isNumber: true);
-  static final TextStyle caption_10_NumberBold =
-      applyVariation(caption_10, isNumber: true, isBold: true);
+  static final TextStyle caption_10_Bold = applyVariation(caption_10, isBold: true);
+  static final TextStyle caption_10_Number = applyVariation(caption_10, isNumber: true);
+  static final TextStyle caption_10_NumberBold = applyVariation(caption_10, isNumber: true, isBold: true);
 
   /// **Predefined Typography Styles Map**
   ///

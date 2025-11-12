@@ -119,10 +119,7 @@ class _CoconutStepperState extends State<CoconutStepper> {
   /// - [isDisabled] determines whether the button is active.
   /// - [onTap] is the function triggered when the button is tapped.
   Widget _buildStepperButton(
-      {required String asset,
-      required bool isDisabled,
-      required VoidCallback onTap,
-      required Brightness brightness}) {
+      {required String asset, required bool isDisabled, required VoidCallback onTap, required Brightness brightness}) {
     return GestureDetector(
       onTap: isDisabled ? null : onTap,
       child: Container(

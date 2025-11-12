@@ -194,8 +194,7 @@ class CoconutPulldownMenu extends StatelessWidget {
                 return Column(
                   children: [
                     Container(
-                      padding: groupTitlePadding ??
-                          const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+                      padding: groupTitlePadding ?? const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
                       alignment: Alignment.centerLeft,
                       decoration: BoxDecoration(
                         borderRadius: index == 0
@@ -214,8 +213,7 @@ class CoconutPulldownMenu extends StatelessWidget {
                             ),
                       ),
                     ),
-                    if (thickDividerIndexList != null &&
-                        thickDividerIndexList!.contains(element.index)) ...{
+                    if (thickDividerIndexList != null && thickDividerIndexList!.contains(element.index)) ...{
                       /// Adds a thick divider between items
                       Container(
                         height: thickDividerHeight,
@@ -231,8 +229,8 @@ class CoconutPulldownMenu extends StatelessWidget {
                   ],
                 );
               }
-              return _button(element.title, element.index, flattenedEntries.length, groupCount,
-                  borderRadius, brightness);
+              return _button(
+                  element.title, element.index, flattenedEntries.length, groupCount, borderRadius, brightness);
             }),
           ),
         ),

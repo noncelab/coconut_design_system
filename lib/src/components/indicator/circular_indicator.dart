@@ -75,8 +75,7 @@ class CoconutCircularIndicator extends StatefulWidget {
   State<CoconutCircularIndicator> createState() => _CoconutCircularIndicatorState();
 }
 
-class _CoconutCircularIndicatorState extends State<CoconutCircularIndicator>
-    with SingleTickerProviderStateMixin {
+class _CoconutCircularIndicatorState extends State<CoconutCircularIndicator> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
   @override
@@ -97,8 +96,7 @@ class _CoconutCircularIndicatorState extends State<CoconutCircularIndicator>
           fit: BoxFit.contain,
           delegates: LottieDelegates(
             values: [
-              if (widget.colorFilter != null)
-                ValueDelegate.color(['**'], value: widget.colorFilter!),
+              if (widget.colorFilter != null) ValueDelegate.color(['**'], value: widget.colorFilter!),
             ],
           ),
         ));
