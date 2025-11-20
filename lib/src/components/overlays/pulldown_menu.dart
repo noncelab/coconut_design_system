@@ -6,9 +6,11 @@ abstract class CoconutPulldownMenuEntry {}
 
 class CoconutPulldownMenuItem extends CoconutPulldownMenuEntry {
   final String title;
+  final bool isDisabled;
 
   CoconutPulldownMenuItem({
     required this.title,
+    this.isDisabled = false,
   });
 }
 
@@ -162,10 +164,10 @@ class CoconutPulldownMenu extends StatelessWidget {
         groupCount++;
         flattenedEntries.add(_IndexedEntry(entry.groupTitle, -1)); // indicator for group title
         for (final item in entry.items) {
-          flattenedEntries.add(_IndexedEntry(item.title, runningIndex++));
+          flattenedEntries.add(_IndexedEntry(item.title, runningIndex++, isDisabled: item.isDisabled));
         }
       } else if (entry is CoconutPulldownMenuItem) {
-        flattenedEntries.add(_IndexedEntry(entry.title, runningIndex++));
+        flattenedEntries.add(_IndexedEntry(entry.title, runningIndex++, isDisabled: entry.isDisabled));
       }
     }
 
@@ -229,8 +231,8 @@ class CoconutPulldownMenu extends StatelessWidget {
                   ],
                 );
               }
-              return _button(
-                  element.title, element.index, flattenedEntries.length, groupCount, borderRadius, brightness);
+              return _button(element.title, element.index, element.isDisabled, flattenedEntries.length, groupCount,
+                  borderRadius, brightness);
             }),
           ),
         ),
@@ -242,6 +244,7 @@ class CoconutPulldownMenu extends StatelessWidget {
   Widget _button(
     String title,
     int index,
+    bool isDisabled,
     int flattenedEntryListLenght,
     int groupCount,
     double borderRadius,
@@ -271,9 +274,11 @@ class CoconutPulldownMenu extends StatelessWidget {
             ),
           ),
           child: InkWell(
-            onTap: () {
-              onSelected.call(index, title);
-            },
+            onTap: isDisabled
+                ? null
+                : () {
+                    onSelected.call(index, title);
+                  },
             borderRadius: _getBorderRadius(
               borderRadius,
               brightness,
@@ -300,7 +305,9 @@ class CoconutPulldownMenu extends StatelessWidget {
                   Text(
                     title,
                     style: CoconutTypography.body2_14.copyWith(
-                      color: textColor ?? CoconutColors.onBlack(brightness),
+                      color: isDisabled
+                          ? CoconutColors.onGray350(brightness)
+                          : textColor ?? CoconutColors.onBlack(brightness),
                     ),
                   ),
 
@@ -354,5 +361,6 @@ class CoconutPulldownMenu extends StatelessWidget {
 class _IndexedEntry {
   final String title;
   final int index;
-  _IndexedEntry(this.title, this.index);
+  final bool isDisabled;
+  _IndexedEntry(this.title, this.index, {this.isDisabled = false});
 }
