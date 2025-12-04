@@ -54,6 +54,9 @@ class CoconutButton extends StatefulWidget {
   /// **Text style for the button label**
   final TextStyle? textStyle;
 
+  /// **Border color for the button**
+  final Color? borderColor;
+
   /// **Background color (default varies based on brightness)**
   final Color? backgroundColor;
 
@@ -95,6 +98,7 @@ class CoconutButton extends StatefulWidget {
     this.padding,
     this.borderWidth = 1,
     this.borderRadius = 12,
+    this.borderColor,
     required this.onPressed,
     required this.text,
     this.textStyle,
@@ -127,6 +131,7 @@ class _CoconutButtonState extends State<CoconutButton> {
   late Brightness brightness;
   late EdgeInsets padding;
   late Color backgroundColor;
+  late Color borderColor;
   late Color foregroundColor;
   late Color pressedBackgroundColor;
   late Color pressedForegroundColor;
@@ -152,6 +157,7 @@ class _CoconutButtonState extends State<CoconutButton> {
         (brightness == Brightness.light ? CoconutColors.gray150 : CoconutColors.gray800);
     disabledForegroundColor = widget.disabledForegroundColor ??
         (brightness == Brightness.light ? CoconutColors.gray350 : CoconutColors.gray700);
+    borderColor = widget.borderColor ?? getOutlineColor(isDarkMode: brightness == Brightness.dark);
     textStyle = widget.textStyle ?? CoconutTypography.body2_14_Bold.setColor(CoconutColors.onPrimary(brightness));
     return GestureDetector(
       onTapDown: (details) {
@@ -181,8 +187,7 @@ class _CoconutButtonState extends State<CoconutButton> {
         padding: padding,
         decoration: BoxDecoration(
           color: getBackgroundColor(isDarkMode: brightness == Brightness.dark),
-          border:
-              Border.all(width: widget.borderWidth, color: getOutlineColor(isDarkMode: brightness == Brightness.dark)),
+          border: Border.all(width: widget.borderWidth, color: borderColor),
           borderRadius: BorderRadius.circular(
             widget.borderRadius,
           ),
