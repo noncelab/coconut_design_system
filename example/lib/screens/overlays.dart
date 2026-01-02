@@ -285,6 +285,7 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
               context: context,
               builder: (BuildContext context) {
                 return CoconutPopup(
+                  languageCode: 'en',
                   title: 'Title',
                   description: 'description',
                   onTapRight: () {
@@ -304,6 +305,7 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
               context: context,
               builder: (BuildContext context) {
                 return CoconutPopup(
+                  languageCode: 'en',
                   title: 'Title',
                   description: 'description',
                   rightButtonColor: CoconutColors.onAccent(brightness),
@@ -329,6 +331,7 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
               context: context,
               builder: (BuildContext context) {
                 return CoconutPopup(
+                  languageCode: 'en',
                   title: 'Title',
                   description:
                       'Long description description description description description description description description description description description description description description description description description description',

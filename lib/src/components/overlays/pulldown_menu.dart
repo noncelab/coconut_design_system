@@ -123,6 +123,7 @@ class CoconutPulldownMenu extends StatelessWidget {
   final TextStyle? groupTitleStyle;
   final Color? groupTitleColor;
   final EdgeInsets? groupTitlePadding;
+  final bool? isSelectedItemBold;
 
   /// Creates an instance of `CoconutPulldownMenu`.
   const CoconutPulldownMenu({
@@ -151,6 +152,7 @@ class CoconutPulldownMenu extends StatelessWidget {
     this.groupTitleColor,
     this.groupTitlePadding,
     this.groupTitleStyle,
+    this.isSelectedItemBold = false,
   });
 
   @override
@@ -308,13 +310,23 @@ class CoconutPulldownMenu extends StatelessWidget {
                       color: isDisabled
                           ? CoconutColors.onGray350(brightness)
                           : textColor ?? CoconutColors.onBlack(brightness),
+                      fontWeight: isSelectedItemBold != null && isSelectedItemBold!
+                          ? selectedIndex == index
+                              ? FontWeight.bold
+                              : FontWeight.normal
+                          : null,
                     ),
                   ),
 
                   /// Checkmark Icon for Selected Item
                   const Spacer(),
-                  if (selectedIndex == index) ...{
-                    SvgPicture.asset(
+                  Visibility(
+                    visible: selectedIndex == index,
+                    maintainSize: true,
+                    maintainAnimation: true,
+                    maintainState: true,
+                    maintainInteractivity: true,
+                    child: SvgPicture.asset(
                       'packages/coconut_design_system/assets/svg/pulldown_check.svg',
                       width: iconSize,
                       height: iconSize,
@@ -323,7 +335,7 @@ class CoconutPulldownMenu extends StatelessWidget {
                         BlendMode.srcIn,
                       ),
                     ),
-                  }
+                  ),
                 ],
               ),
             ),

@@ -38,10 +38,10 @@ class CoconutPopup extends StatefulWidget {
   final Function? onTapLeft;
 
   /// The text for the left button (default: "취소" / "Cancel").
-  final String leftButtonText;
+  final String? leftButtonText;
 
   /// The text for the right button (default: "확인" / "Confirm").
-  final String rightButtonText;
+  final String? rightButtonText;
 
   /// Whether the title text should be centered (default: true).
   final bool centerTitle;
@@ -89,14 +89,18 @@ class CoconutPopup extends StatefulWidget {
   /// The padding around the whole dialog.
   final EdgeInsets? insetPadding;
 
+  /// The language code of the popup.(e.g. 'ko', 'kr', 'en', 'ja', 'jp')
+  final String languageCode;
+
   /// Creates an instance of `CoconutPopup`.
   const CoconutPopup({
     super.key,
     required this.title,
     required this.description,
     required this.onTapRight,
-    this.leftButtonText = '취소',
-    this.rightButtonText = '확인',
+    required this.languageCode,
+    this.leftButtonText,
+    this.rightButtonText,
     this.centerTitle = true,
     this.centerDescription = true,
     this.useFixedFontSize = true,
@@ -193,7 +197,7 @@ class _CoconutPopupState extends State<CoconutPopup> {
                             : Colors.transparent,
                         alignment: Alignment.center,
                         child: Text(
-                          widget.leftButtonText,
+                          widget.leftButtonText ?? _getLeftButtonText(),
                           style: widget.leftButtonTextStyle
                                   ?.setColor(widget.leftButtonColor ?? CoconutColors.onGray900(brightness)) ??
                               CoconutTypography.body1_16_Bold.setColor(
@@ -229,7 +233,7 @@ class _CoconutPopupState extends State<CoconutPopup> {
                           : Colors.transparent,
                       alignment: Alignment.center,
                       child: Text(
-                        widget.rightButtonText,
+                        widget.rightButtonText ?? _getRightButtonText(),
                         style: widget.rightButtonTextStyle
                                 ?.setColor(widget.rightButtonColor ?? CoconutColors.onGray900(brightness)) ??
                             CoconutTypography.body1_16_Bold.setColor(
@@ -262,5 +266,23 @@ class _CoconutPopupState extends State<CoconutPopup> {
             : content,
       ),
     );
+  }
+
+  String _getLeftButtonText() {
+    return widget.leftButtonText ??
+        (widget.languageCode == 'ko' || widget.languageCode == 'kr'
+            ? '취소'
+            : widget.languageCode == 'en'
+                ? 'Cancel'
+                : 'キャンセル');
+  }
+
+  String _getRightButtonText() {
+    return widget.rightButtonText ??
+        (widget.languageCode == 'ko' || widget.languageCode == 'kr'
+            ? '확인'
+            : widget.languageCode == 'en'
+                ? 'Confirm'
+                : '確認');
   }
 }
