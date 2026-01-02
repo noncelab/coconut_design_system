@@ -41,6 +41,9 @@ class CoconutPulldown extends StatelessWidget {
   /// If `null`, it uses the default text style.
   final double? fontSize;
 
+  /// The padding around the pulldown.
+  final EdgeInsets? padding;
+
   /// Creates a `CoconutPulldown` widget.
   ///
   /// - [title] sets the text displayed in the pulldown.
@@ -70,6 +73,7 @@ class CoconutPulldown extends StatelessWidget {
     this.iconColor,
     this.textColor,
     this.fontSize,
+    this.padding,
   });
 
   @override
@@ -79,33 +83,37 @@ class CoconutPulldown extends StatelessWidget {
       onTap: () {
         onChanged(!isOpen);
       },
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          /// Title text
-          Container(
-            margin: const EdgeInsets.only(left: 8),
-            alignment: Alignment.center,
-            child: Text(
-              title,
-              style: CoconutTypography.caption_10.copyWith(
-                fontSize: fontSize,
-                color: textColor ?? CoconutColors.onBlack(brightness),
+      behavior: HitTestBehavior.opaque,
+      child: Padding(
+        padding: padding ?? const EdgeInsets.all(0),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            /// Title text
+            Container(
+              margin: const EdgeInsets.only(left: 8),
+              alignment: Alignment.center,
+              child: Text(
+                title,
+                style: CoconutTypography.caption_10.copyWith(
+                  fontSize: fontSize,
+                  color: textColor ?? CoconutColors.onBlack(brightness),
+                ),
               ),
             ),
-          ),
 
-          /// Open/Close icon
-          SvgPicture.asset(
-            'packages/coconut_design_system/assets/svg/pulldown_${isOpen ? 'open' : 'close'}.svg',
-            width: iconSize,
-            height: iconSize,
-            colorFilter: ColorFilter.mode(
-              iconColor ?? CoconutColors.onBlack(brightness),
-              BlendMode.srcIn,
+            /// Open/Close icon
+            SvgPicture.asset(
+              'packages/coconut_design_system/assets/svg/pulldown_${isOpen ? 'open' : 'close'}.svg',
+              width: iconSize,
+              height: iconSize,
+              colorFilter: ColorFilter.mode(
+                iconColor ?? CoconutColors.onBlack(brightness),
+                BlendMode.srcIn,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
