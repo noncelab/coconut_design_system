@@ -4,6 +4,16 @@ All notable changes to the **Coconut Design System** will be documented in this 
 This project follows **[Semantic Versioning](https://semver.org/)**.
 ---
 
+## **[0.9.9] - 2026-01-02**
+
+### ✨ Features
+
+- **Pulldown**
+  - Added `isSelectedItemBold` option to customize font weight when the item is selected.
+  - Added `padding` option to customize padding.
+
+---
+
 ## **[0.9.8] - 2026-01-02**
 
 ### ✨ Features
