@@ -4,6 +4,23 @@ All notable changes to the **Coconut Design System** will be documented in this 
 This project follows **[Semantic Versioning](https://semver.org/)**.
 ---
 
+## **[0.9.8] - 2026-01-02**
+
+### ✨ Features
+
+- **PulldownMenuItem**
+  - Added `isDisabled` option to control clickable state in `CoconutPulldownMenuItem`.
+
+- **Button**
+  - Added `borderColor` option to customize border color.
+
+### 🛠 Fixes
+
+- **UnderlinedButton**
+  - Adjusted layout calculations to respect `textScaleFactor` for proper text scaling.
+
+---
+
 ## **[0.9.7] - 2025-11-12**
 
 ### 🛠 Fixes
