@@ -143,10 +143,12 @@ class _CoconutUnderlinedButtonState extends State<CoconutUnderlinedButton> {
   }
 
   double _getTextWidth(BuildContext context) {
+    final textScaleFactor = MediaQuery.textScalerOf(context);
     final textPainter = TextPainter(
       text: TextSpan(text: widget.text, style: widget.textStyle),
       maxLines: 1,
       textDirection: TextDirection.ltr,
+      textScaler: textScaleFactor,
     )..layout();
     return textPainter.width;
   }
