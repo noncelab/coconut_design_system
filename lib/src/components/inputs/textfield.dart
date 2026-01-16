@@ -155,6 +155,11 @@ class CoconutTextField extends StatefulWidget {
 
   final bool enabled;
 
+  /// The text overflow behavior of the text field.
+  ///
+  /// If `null`, it defaults to `TextOverflow.ellipsis`.
+  final TextOverflow? textOverflow;
+
   /// Creates a `CoconutTextField` widget.
   ///
   /// - [controller] manages the text input.
@@ -178,6 +183,10 @@ class CoconutTextField extends StatefulWidget {
   /// - [textAlign] controls the alignment of the text inside the field.
   /// - [isLengthVisible] determines whether to display the character length counter.
   /// - [enableInteractiveSelection] disables text selection and long-press actions.
+  /// - [autocorrect] enables autocorrect.
+  /// - [enableSuggestions] enables suggestions while typing.
+  /// - [enabled] enables the text field.
+  /// - [textOverflow] controls the text overflow behavior.
   /// Example usage:
   /// ```dart
   /// CoconutTextField(
@@ -233,7 +242,8 @@ class CoconutTextField extends StatefulWidget {
       this.enableInteractiveSelection,
       this.autocorrect = false,
       this.enableSuggestions = false,
-      this.enabled = true});
+      this.enabled = true,
+      this.textOverflow = TextOverflow.ellipsis});
 
   @override
   State<CoconutTextField> createState() => _CoconutTextFieldState();
@@ -416,7 +426,7 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                 Expanded(
                   child: Text(
                     widget.errorText ?? '',
-                    overflow: TextOverflow.ellipsis,
+                    overflow: widget.textOverflow,
                     style: CoconutTypography.body3_12.copyWith(
                       color: _errorColor,
                     ),
