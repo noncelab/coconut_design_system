@@ -92,6 +92,13 @@ class CoconutTextField extends StatefulWidget {
   /// Additional description text displayed below the text field.
   final String? descriptionText;
 
+  /// Whether the error text should be displayed in multiple lines.
+  ///
+  /// If `true`, the error text can wrap to multiple lines.
+  /// If `false`, the error text will be displayed in a single line with ellipsis.
+  /// Defaults to `false`.
+  final bool isErrorTextMultiline;
+
   /// Whether to display the error text and error border when an error occurs.
   ///
   /// Defaults to `false`.
@@ -168,6 +175,7 @@ class CoconutTextField extends StatefulWidget {
   /// - [placeholderText] displays a hint inside the text field.
   /// - [errorText] and [isError] handle error messages and status.
   /// - [descriptionText] provides additional information below the text field.
+  /// - [isErrorTextMultiline] determines whether the description text can wrap to multiple lines.
   /// - [obscureText] enables secure text entry.
   /// - [isVisibleBorder] determines whether the text field has a border.
   /// - [borderRadius] sets the border radius of the text field.
@@ -217,6 +225,7 @@ class CoconutTextField extends StatefulWidget {
       this.placeholderText,
       this.errorText,
       this.descriptionText,
+      this.isErrorTextMultiline = false,
       this.isError = false,
       this.textInputType,
       this.textInputAction,
@@ -430,6 +439,8 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                       color: _isFocus ? _activeColor : _placeholderColor,
                     ),
                     textScaler: const TextScaler.linear(1.0),
+                    maxLines: widget.isErrorTextMultiline ? null : 1,
+                    overflow: widget.isErrorTextMultiline ? null : TextOverflow.ellipsis,
                   ),
                 ),
               },
