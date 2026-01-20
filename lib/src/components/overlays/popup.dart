@@ -269,20 +269,38 @@ class _CoconutPopupState extends State<CoconutPopup> {
   }
 
   String _getLeftButtonText() {
-    return widget.leftButtonText ??
-        (widget.languageCode == 'ko' || widget.languageCode == 'kr'
-            ? '취소'
-            : widget.languageCode == 'en'
-                ? 'Cancel'
-                : 'キャンセル');
+    if (widget.leftButtonText != null) {
+      return widget.leftButtonText!;
+    }
+    switch (widget.languageCode) {
+      case 'ko':
+      case 'kr':
+        return '취소';
+      case 'jp':
+        return 'キャンセル';
+      case 'es':
+        return 'Cancelar';
+      case 'en':
+      default:
+        return 'Cancel';
+    }
   }
 
   String _getRightButtonText() {
-    return widget.rightButtonText ??
-        (widget.languageCode == 'ko' || widget.languageCode == 'kr'
-            ? '확인'
-            : widget.languageCode == 'en'
-                ? 'Confirm'
-                : '確認');
+    if (widget.rightButtonText != null) {
+      return widget.rightButtonText!;
+    }
+    switch (widget.languageCode) {
+      case 'ko':
+      case 'kr':
+        return '확인';
+      case 'jp':
+        return '確認';
+      case 'es':
+        return 'Aceptar';
+      case 'en':
+      default:
+        return 'OK';
+    }
   }
 }
