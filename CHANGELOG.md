@@ -4,6 +4,19 @@ All notable changes to the **Coconut Design System** will be documented in this 
 This project follows **[Semantic Versioning](https://semver.org/)**.
 ---
 
+## **[0.9.10] - 2026-01-03**
+
+### ✨ Features
+
+- **TextField**
+  - Added `textOverflow` option to handle overflowed text.
+  - Added `isErrorTextMultiline` option to handle multiline error text.
+
+- **Popup**
+  - Added support for Spanish language for confirm and cancel buttons.
+
+---
+
 ## **[0.9.9] - 2026-01-02**
 
 ### ✨ Features
