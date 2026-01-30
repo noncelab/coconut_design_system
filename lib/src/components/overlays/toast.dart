@@ -92,7 +92,7 @@ class CoconutToast {
                   padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
                   height: 50,
                   decoration: BoxDecoration(
-                    color: backgroundColor ?? CoconutColors.onGray900(brightness),
+                    color: backgroundColor ?? CoconutColors.onGray100(brightness),
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(
                       color: borderColor ?? CoconutColors.onGray300(brightness),
@@ -104,7 +104,7 @@ class CoconutToast {
                     overflow: TextOverflow.ellipsis,
                     style: CoconutTypography.body2_14.copyWith(
                       decoration: TextDecoration.none, // Prevents underlining in debug mode
-                      color: textColor ?? CoconutColors.onGray100(brightness),
+                      color: textColor ?? CoconutColors.onGray900(brightness),
                     ),
                   ),
                 ),
@@ -176,7 +176,7 @@ class CoconutToast {
                 backgroundColor: backgroundColor,
                 borderColor: borderColor,
                 textColor: textColor,
-                iconColor: borderColor ?? CoconutColors.onGray100(brightness),
+                iconColor: borderColor ?? CoconutColors.onGray900(brightness),
                 iconPath: iconPath,
                 iconSize: iconSize,
                 iconRightPadding: iconRightPadding,
@@ -288,6 +288,7 @@ class CoconutToastWidget extends StatefulWidget {
   final Color? textColor;
   final Color iconColor;
   final String? iconPath;
+  final double offsetY;
 
   /// Creates an instance of `CoconutToastWidget`.
   const CoconutToastWidget({
@@ -306,6 +307,7 @@ class CoconutToastWidget extends StatefulWidget {
     this.borderColor,
     this.textColor,
     this.iconPath,
+    this.offsetY = 0.5,
   });
 
   @override
@@ -337,10 +339,10 @@ class _CoconutToastWidgetState extends State<CoconutToastWidget> with SingleTick
               padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 13),
               width: double.maxFinite,
               decoration: BoxDecoration(
-                color: widget.backgroundColor ?? CoconutColors.onGray900(brightness),
+                color: widget.backgroundColor ?? CoconutColors.onGray100(brightness),
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
-                  color: widget.borderColor ?? widget.backgroundColor ?? CoconutColors.onGray900(brightness),
+                  color: widget.borderColor ?? widget.backgroundColor ?? CoconutColors.onGray100(brightness),
                   width: 1,
                 ),
               ),
@@ -385,7 +387,7 @@ class _CoconutToastWidgetState extends State<CoconutToastWidget> with SingleTick
                             widget.text,
                             style: widget.textStyle.copyWith(
                               decoration: TextDecoration.none, // Prevents underlining in debug mode
-                              color: widget.textColor ?? CoconutColors.onGray100(brightness),
+                              color: widget.textColor ?? CoconutColors.onGray900(brightness),
                             ),
                           ),
                         ),
@@ -413,7 +415,7 @@ class _CoconutToastWidgetState extends State<CoconutToastWidget> with SingleTick
 
     _controller = AnimationController(duration: const Duration(milliseconds: 300), vsync: this);
 
-    _offsetAnimation = Tween<Offset>(begin: Offset.zero, end: const Offset(0.0, -1.0))
+    _offsetAnimation = Tween<Offset>(begin: Offset(0.0, widget.offsetY), end: const Offset(0.0, -1.0))
         .animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
 
     _fadeAnimation = Tween<double>(
