@@ -181,10 +181,10 @@ class CoconutPulldownMenu extends StatelessWidget {
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              color: shadowColor ?? Colors.black.withOpacity(0.5),
+              color: shadowColor ?? CoconutColors.pulldownMenuShadowColor(brightness),
               spreadRadius: spreadRadius,
               blurRadius: blurRadius,
-              offset: const Offset(5, 5),
+              offset: Offset.zero,
             ),
           ],
         ),
@@ -221,7 +221,7 @@ class CoconutPulldownMenu extends StatelessWidget {
                       /// Adds a thick divider between items
                       Container(
                         height: thickDividerHeight,
-                        color: CoconutColors.onGray200(brightness),
+                        color: CoconutColors.pulldownMenuThickDividerColor(brightness),
                       ),
                     } else if (element.index < flattenedEntries.length - 1 - groupCount) ...{
                       /// Adds a divider between items
