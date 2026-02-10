@@ -221,13 +221,13 @@ class CoconutPulldownMenu extends StatelessWidget {
                       /// Adds a thick divider between items
                       Container(
                         height: thickDividerHeight,
-                        color: CoconutColors.pulldownMenuThickDividerColor(brightness),
+                        color: CoconutColors.onGray200(brightness),
                       ),
                     } else if (element.index < flattenedEntries.length - 1 - groupCount) ...{
                       /// Adds a divider between items
                       Container(
                         height: dividerHeight,
-                        color: dividerColor ?? CoconutColors.onGray200(brightness),
+                        color: dividerColor ?? CoconutColors.pulldownMenuDividerColor(brightness),
                       ),
                     }
                   ],
