@@ -252,6 +252,7 @@ class CoconutToast {
                 iconSize: iconSize,
                 iconRightPadding: iconRightPadding,
                 textStyle: textStyle,
+                textColor: CoconutColors.gray900,
                 textPadding: textPadding,
                 onDismiss: () {
                   overlayEntry.remove();
