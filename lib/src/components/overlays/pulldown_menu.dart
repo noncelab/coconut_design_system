@@ -99,7 +99,7 @@ class CoconutPulldownMenu extends StatelessWidget {
   /// The height of divider between buttons. (default: `1`)
   final double? dividerHeight;
 
-  /// The height of thick divider between buttons. (default: `2`)
+  /// The height of thick divider between buttons. (default: `5`)
   final double? thickDividerHeight;
 
   /// The text color of menu items.
@@ -141,7 +141,7 @@ class CoconutPulldownMenu extends StatelessWidget {
     this.borderRadius = 16,
     this.iconSize = 24,
     this.dividerHeight = 1,
-    this.thickDividerHeight = 2,
+    this.thickDividerHeight = 5,
     this.thickDividerIndexList,
     this.textColor,
     this.backgroundColor,
@@ -193,6 +193,16 @@ class CoconutPulldownMenu extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: List.generate(flattenedEntries.length, (index) {
               final element = flattenedEntries[index];
+              final divider = _buildDivider(
+                index: element.index,
+                totalLength: flattenedEntries.length,
+                groupCount: groupCount,
+                brightness: brightness,
+                thickDividerIndices: thickDividerIndexList,
+                dividerHeight: dividerHeight ?? 1,
+                thickDividerHeight: thickDividerHeight ?? 5,
+                overrideColor: dividerColor,
+              );
 
               if (element.index == -1) {
                 return Column(
@@ -217,18 +227,8 @@ class CoconutPulldownMenu extends StatelessWidget {
                             ),
                       ),
                     ),
-                    if (thickDividerIndexList != null && thickDividerIndexList!.contains(element.index)) ...{
-                      /// Adds a thick divider between items
-                      Container(
-                        height: thickDividerHeight,
-                        color: CoconutColors.pulldownMenuThickDividerColor(brightness),
-                      ),
-                    } else if (element.index < flattenedEntries.length - 1 - groupCount) ...{
-                      /// Adds a divider between items
-                      Container(
-                        height: dividerHeight,
-                        color: dividerColor ?? CoconutColors.pulldownMenuDividerColor(brightness),
-                      ),
+                    if (divider != null) ...{
+                      divider,
                     }
                   ],
                 );
@@ -239,6 +239,28 @@ class CoconutPulldownMenu extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Widget? _buildDivider({
+    required int index,
+    required int totalLength,
+    required int groupCount,
+    required Brightness brightness,
+    List<int>? thickDividerIndices,
+    double dividerHeight = 1,
+    double thickDividerHeight = 5,
+    Color? overrideColor,
+  }) {
+    final isThick = thickDividerIndices?.contains(index) ?? false;
+    final isLast = index >= totalLength - 1 - groupCount;
+    final shouldShow = isThick || !isLast;
+
+    if (!shouldShow) return null;
+
+    return Container(
+      height: isThick ? thickDividerHeight : dividerHeight,
+      color: overrideColor ?? CoconutColors.pulldownMenuDividerColor(brightness),
     );
   }
 
@@ -263,6 +285,17 @@ class CoconutPulldownMenu extends StatelessWidget {
             1;
 
     final isTopRounded = index == 0 && entries[index] is! CoconutPulldownMenuGroup;
+
+    final divider = _buildDivider(
+        index: index,
+        totalLength: flattenedEntryListLenght,
+        groupCount: groupCount,
+        brightness: brightness,
+        thickDividerIndices: thickDividerIndexList,
+        dividerHeight: dividerHeight ?? 1,
+        thickDividerHeight: thickDividerHeight ?? 5,
+        overrideColor: dividerColor);
+
     return Column(
       children: [
         Material(
@@ -341,18 +374,8 @@ class CoconutPulldownMenu extends StatelessWidget {
             ),
           ),
         ),
-        if (thickDividerIndexList != null && thickDividerIndexList!.contains(index)) ...{
-          /// Adds a thick divider between items
-          Container(
-            height: thickDividerHeight,
-            color: CoconutColors.pulldownMenuThickDividerColor(brightness),
-          ),
-        } else if (index < flattenedEntryListLenght - 1 - groupCount) ...{
-          /// Adds a divider between items
-          Container(
-            height: dividerHeight,
-            color: dividerColor ?? CoconutColors.pulldownMenuDividerColor(brightness),
-          ),
+        if (divider != null) ...{
+          divider,
         }
       ],
     );
