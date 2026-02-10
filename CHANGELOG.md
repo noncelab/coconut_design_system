@@ -4,6 +4,20 @@ All notable changes to the **Coconut Design System** will be documented in this 
 This project follows **[Semantic Versioning](https://semver.org/)**.
 ---
 
+## **[0.9.11] - 2026-02-11**
+
+### 🛠 Fixes
+
+- **Toast**
+  - Added `offsetY` parameter to `CoconutToastWidget`.
+  - Fixed text color in warning toast.
+
+- **Pulldown**
+  - Set default shadow in pulldown menu.
+  - Unified divider color and set the default thick divider height.
+
+---
+
 ## **[0.9.10] - 2026-01-03**
 
 ### ✨ Features
