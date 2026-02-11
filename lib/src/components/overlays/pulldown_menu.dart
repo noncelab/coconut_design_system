@@ -8,9 +8,21 @@ class CoconutPulldownMenuItem extends CoconutPulldownMenuEntry {
   final String title;
   final bool isDisabled;
 
+  /// Whether to show a switch (toggle) widget on the right side of this item.
+  final bool hasSwitch;
+
+  /// The current value of the switch. Only used when [hasSwitch] is `true`.
+  final bool switchValue;
+
+  /// Callback function when the switch is toggled.
+  final Function(bool value)? onSwitchChanged;
+
   CoconutPulldownMenuItem({
     required this.title,
     this.isDisabled = false,
+    this.hasSwitch = false,
+    this.switchValue = false,
+    this.onSwitchChanged,
   });
 }
 
@@ -36,6 +48,7 @@ class CoconutPulldownMenuGroup extends CoconutPulldownMenuEntry {
 /// CoconutPulldownMenu(
 ///   entries: [
 ///     CoconutPulldownMenuItem(title: 'Item 1'),
+///     CoconutPulldownMenuItem(title: 'Item 2', hasSwitch: true, switchValue: true),
 ///     CoconutPulldownMenuGroup(
 ///       groupTitle: 'Group Title',
 ///       items: [
@@ -47,6 +60,9 @@ class CoconutPulldownMenuGroup extends CoconutPulldownMenuEntry {
 ///   selectedIndex: 2,
 ///   onSelected: (index, title) {
 ///     print('Selected $index: $title');
+///   },
+///   onSwitchChanged: (index, value) {
+///     print('Switch $index: $value');
 ///   },
 /// )
 /// ```
@@ -125,6 +141,19 @@ class CoconutPulldownMenu extends StatelessWidget {
   final EdgeInsets? groupTitlePadding;
   final bool? isSelectedItemBold;
 
+  /// Callback when a switch in a menu item is toggled.
+  /// Provides the item index and the new switch value.
+  final Function(int index, bool value)? onSwitchChanged;
+
+  /// The active track color for the switch.
+  final Color? switchActiveTrackColor;
+
+  /// The inactive track color for the switch.
+  final Color? switchInactiveTrackColor;
+
+  /// The thumb color for the switch.
+  final Color? switchThumbColor;
+
   /// Creates an instance of `CoconutPulldownMenu`.
   const CoconutPulldownMenu({
     super.key,
@@ -153,6 +182,10 @@ class CoconutPulldownMenu extends StatelessWidget {
     this.groupTitlePadding,
     this.groupTitleStyle,
     this.isSelectedItemBold = false,
+    this.onSwitchChanged,
+    this.switchActiveTrackColor,
+    this.switchInactiveTrackColor,
+    this.switchThumbColor,
   });
 
   @override
@@ -166,10 +199,12 @@ class CoconutPulldownMenu extends StatelessWidget {
         groupCount++;
         flattenedEntries.add(_IndexedEntry(entry.groupTitle, -1)); // indicator for group title
         for (final item in entry.items) {
-          flattenedEntries.add(_IndexedEntry(item.title, runningIndex++, isDisabled: item.isDisabled));
+          flattenedEntries.add(_IndexedEntry(item.title, runningIndex++,
+              isDisabled: item.isDisabled, hasSwitch: item.hasSwitch, switchValue: item.switchValue));
         }
       } else if (entry is CoconutPulldownMenuItem) {
-        flattenedEntries.add(_IndexedEntry(entry.title, runningIndex++, isDisabled: entry.isDisabled));
+        flattenedEntries.add(_IndexedEntry(entry.title, runningIndex++,
+            isDisabled: entry.isDisabled, hasSwitch: entry.hasSwitch, switchValue: entry.switchValue));
       }
     }
 
@@ -191,6 +226,7 @@ class CoconutPulldownMenu extends StatelessWidget {
         child: IntrinsicWidth(
           child: Column(
             mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: List.generate(flattenedEntries.length, (index) {
               final element = flattenedEntries[index];
               final divider = _buildDivider(
@@ -233,8 +269,8 @@ class CoconutPulldownMenu extends StatelessWidget {
                   ],
                 );
               }
-              return _button(element.title, element.index, element.isDisabled, flattenedEntries.length, groupCount,
-                  borderRadius, brightness);
+              return _button(element.title, element.index, element.isDisabled, element.hasSwitch, element.switchValue,
+                  flattenedEntries.length, groupCount, borderRadius, brightness);
             }),
           ),
         ),
@@ -269,6 +305,8 @@ class CoconutPulldownMenu extends StatelessWidget {
     String title,
     int index,
     bool isDisabled,
+    bool hasSwitch,
+    bool switchValue,
     int flattenedEntryListLenght,
     int groupCount,
     double borderRadius,
@@ -312,7 +350,13 @@ class CoconutPulldownMenu extends StatelessWidget {
             onTap: isDisabled
                 ? null
                 : () {
-                    onSelected.call(index, title);
+                    if (hasSwitch) {
+                      onSwitchChanged?.call(index, !switchValue);
+                      final item = _findItemByIndex(index);
+                      item?.onSwitchChanged?.call(!switchValue);
+                    } else {
+                      onSelected.call(index, title);
+                    }
                   },
             borderRadius: _getBorderRadius(
               borderRadius,
@@ -351,24 +395,38 @@ class CoconutPulldownMenu extends StatelessWidget {
                     ),
                   ),
 
-                  /// Checkmark Icon for Selected Item
+                  const SizedBox(width: 16),
                   const Spacer(),
-                  Visibility(
-                    visible: selectedIndex == index,
-                    maintainSize: true,
-                    maintainAnimation: true,
-                    maintainState: true,
-                    maintainInteractivity: true,
-                    child: SvgPicture.asset(
-                      'packages/coconut_design_system/assets/svg/pulldown_check.svg',
-                      width: iconSize,
-                      height: iconSize,
-                      colorFilter: ColorFilter.mode(
-                        iconColor ?? CoconutColors.onBlack(brightness),
-                        BlendMode.srcIn,
+
+                  /// Switch or Checkmark Icon
+                  if (hasSwitch)
+                    IgnorePointer(
+                      child: CoconutSwitch(
+                        isOn: switchValue,
+                        onChanged: (_) {},
+                        activeColor: switchActiveTrackColor,
+                        thumbColor: switchThumbColor,
+                        trackColor: switchInactiveTrackColor,
+                        scale: 0.6,
+                      ),
+                    )
+                  else
+                    Visibility(
+                      visible: selectedIndex == index,
+                      maintainSize: true,
+                      maintainAnimation: true,
+                      maintainState: true,
+                      maintainInteractivity: true,
+                      child: SvgPicture.asset(
+                        'packages/coconut_design_system/assets/svg/pulldown_check.svg',
+                        width: iconSize,
+                        height: iconSize,
+                        colorFilter: ColorFilter.mode(
+                          iconColor ?? CoconutColors.onBlack(brightness),
+                          BlendMode.srcIn,
+                        ),
                       ),
                     ),
-                  ),
                 ],
               ),
             ),
@@ -379,6 +437,23 @@ class CoconutPulldownMenu extends StatelessWidget {
         }
       ],
     );
+  }
+
+  /// Finds the [CoconutPulldownMenuItem] corresponding to the given flattened [index].
+  CoconutPulldownMenuItem? _findItemByIndex(int index) {
+    int runningIndex = 0;
+    for (final entry in entries) {
+      if (entry is CoconutPulldownMenuGroup) {
+        for (final item in entry.items) {
+          if (runningIndex == index) return item;
+          runningIndex++;
+        }
+      } else if (entry is CoconutPulldownMenuItem) {
+        if (runningIndex == index) return entry;
+        runningIndex++;
+      }
+    }
+    return null;
   }
 
   /// Determines the border radius for the first and last items.
@@ -397,5 +472,7 @@ class _IndexedEntry {
   final String title;
   final int index;
   final bool isDisabled;
-  _IndexedEntry(this.title, this.index, {this.isDisabled = false});
+  final bool hasSwitch;
+  final bool switchValue;
+  _IndexedEntry(this.title, this.index, {this.isDisabled = false, this.hasSwitch = false, this.switchValue = false});
 }
