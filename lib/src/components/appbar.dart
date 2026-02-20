@@ -95,7 +95,7 @@ class CoconutAppBar {
                 padding: titlePadding,
                 child: Text(
                   title,
-                  style: CoconutTypography.heading4_18.setColor(
+                  style: CoconutTypography.body1_16.setColor(
                     CoconutColors.onPrimary(brightness),
                   ),
                 ),
@@ -105,7 +105,7 @@ class CoconutAppBar {
                 text: title,
                 onTap: onTitlePressed,
                 padding: titlePadding,
-                textStyle: CoconutTypography.heading4_18,
+                textStyle: CoconutTypography.body1_16,
                 brightness: brightness,
               ),
             },
