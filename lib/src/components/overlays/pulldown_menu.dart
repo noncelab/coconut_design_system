@@ -336,101 +336,39 @@ class CoconutPulldownMenu extends StatelessWidget {
 
     return Column(
       children: [
-        Material(
-          color: backgroundColor ?? CoconutColors.onGray100(brightness),
-          shape: RoundedRectangleBorder(
-            borderRadius: _getBorderRadius(
-              borderRadius,
-              brightness,
-              isBottomRounded: isBottomRounded,
-              isTopRounded: isTopRounded,
-            ),
-          ),
-          child: InkWell(
-            onTap: isDisabled
-                ? null
-                : () {
-                    if (hasSwitch) {
-                      onSwitchChanged?.call(index, !switchValue);
-                      final item = _findItemByIndex(index);
-                      item?.onSwitchChanged?.call(!switchValue);
-                    } else {
-                      onSelected.call(index, title);
-                    }
-                  },
-            borderRadius: _getBorderRadius(
-              borderRadius,
-              brightness,
-              isBottomRounded: isBottomRounded,
-              isTopRounded: isTopRounded,
-            ),
-            splashColor: splashColor ?? CoconutColors.onGray200(brightness),
-            highlightColor: Colors.transparent,
-            child: Container(
-              height: buttonHeight,
-              padding: buttonPadding ?? const EdgeInsets.symmetric(horizontal: 20),
-              alignment: Alignment.centerLeft,
-              decoration: BoxDecoration(
-                borderRadius: _getBorderRadius(
-                  borderRadius,
-                  brightness,
-                  isBottomRounded: isBottomRounded,
-                  isTopRounded: isTopRounded,
-                ),
-              ),
-              child: Row(
-                children: [
-                  /// Button Label
-                  Text(
-                    title,
-                    style: CoconutTypography.body2_14.copyWith(
-                      color: isDisabled
-                          ? CoconutColors.onGray350(brightness)
-                          : textColor ?? CoconutColors.onBlack(brightness),
-                      fontWeight: isSelectedItemBold != null && isSelectedItemBold!
-                          ? selectedIndex == index
-                              ? FontWeight.bold
-                              : FontWeight.normal
-                          : null,
-                    ),
-                  ),
-
-                  const SizedBox(width: 16),
-                  const Spacer(),
-
-                  /// Switch or Checkmark Icon
-                  if (hasSwitch)
-                    IgnorePointer(
-                      child: CoconutSwitch(
-                        isOn: switchValue,
-                        onChanged: (_) {},
-                        activeColor: switchActiveTrackColor,
-                        thumbColor: switchThumbColor,
-                        trackColor: switchInactiveTrackColor,
-                        scale: 0.6,
-                      ),
-                    )
-                  else
-                    Visibility(
-                      visible: selectedIndex == index,
-                      maintainSize: true,
-                      maintainAnimation: true,
-                      maintainState: true,
-                      maintainInteractivity: true,
-                      child: SvgPicture.asset(
-                        'packages/coconut_design_system/assets/svg/pulldown_check.svg',
-                        width: iconSize,
-                        height: iconSize,
-                        colorFilter: ColorFilter.mode(
-                          iconColor ?? CoconutColors.onBlack(brightness),
-                          BlendMode.srcIn,
-                        ),
-                      ),
-                    ),
-                ],
-              ),
-            ),
-          ),
+        _PulldownMenuItemButton(
+          title: title,
+          index: index,
+          isDisabled: isDisabled,
+          hasSwitch: hasSwitch,
+          switchValue: switchValue,
+          isBottomRounded: isBottomRounded,
+          isTopRounded: isTopRounded,
+          borderRadius: borderRadius,
+          brightness: brightness,
+          backgroundColor: backgroundColor,
+          buttonHeight: buttonHeight,
+          buttonPadding: buttonPadding,
+          textColor: textColor,
+          isSelectedItemBold: isSelectedItemBold,
+          selectedIndex: selectedIndex,
+          iconSize: iconSize,
+          iconColor: iconColor,
+          splashColor: splashColor,
+          switchActiveTrackColor: switchActiveTrackColor,
+          switchThumbColor: switchThumbColor,
+          switchInactiveTrackColor: switchInactiveTrackColor,
+          onTap: isDisabled
+              ? null
+              : () {
+                  if (hasSwitch) {
+                    onSwitchChanged?.call(index, !switchValue);
+                    final item = _findItemByIndex(index);
+                    item?.onSwitchChanged?.call(!switchValue);
+                  } else {
+                    onSelected.call(index, title);
+                  }
+                },
         ),
         if (divider != null) ...{
           divider,
@@ -455,17 +393,6 @@ class CoconutPulldownMenu extends StatelessWidget {
     }
     return null;
   }
-
-  /// Determines the border radius for the first and last items.
-  BorderRadius _getBorderRadius(double borderRadius, Brightness brightness,
-      {bool isTopRounded = false, bool isBottomRounded = false}) {
-    return BorderRadius.only(
-      topLeft: isTopRounded ? Radius.circular(borderRadius) : const Radius.circular(0),
-      topRight: isTopRounded ? Radius.circular(borderRadius) : const Radius.circular(0),
-      bottomLeft: isBottomRounded ? Radius.circular(borderRadius) : const Radius.circular(0),
-      bottomRight: isBottomRounded ? Radius.circular(borderRadius) : const Radius.circular(0),
-    );
-  }
 }
 
 class _IndexedEntry {
@@ -475,4 +402,150 @@ class _IndexedEntry {
   final bool hasSwitch;
   final bool switchValue;
   _IndexedEntry(this.title, this.index, {this.isDisabled = false, this.hasSwitch = false, this.switchValue = false});
+}
+
+class _PulldownMenuItemButton extends StatefulWidget {
+  final String title;
+  final int index;
+  final bool isDisabled;
+  final bool hasSwitch;
+  final bool switchValue;
+  final bool isBottomRounded;
+  final bool isTopRounded;
+  final double borderRadius;
+  final Brightness brightness;
+  final Color? backgroundColor;
+  final double buttonHeight;
+  final EdgeInsets? buttonPadding;
+  final Color? textColor;
+  final bool? isSelectedItemBold;
+  final int? selectedIndex;
+  final double iconSize;
+  final Color? iconColor;
+  final Color? splashColor;
+  final Color? switchActiveTrackColor;
+  final Color? switchThumbColor;
+  final Color? switchInactiveTrackColor;
+  final VoidCallback? onTap;
+
+  const _PulldownMenuItemButton({
+    required this.title,
+    required this.index,
+    required this.isDisabled,
+    required this.hasSwitch,
+    required this.switchValue,
+    required this.isBottomRounded,
+    required this.isTopRounded,
+    required this.borderRadius,
+    required this.brightness,
+    this.backgroundColor,
+    required this.buttonHeight,
+    this.buttonPadding,
+    this.textColor,
+    this.isSelectedItemBold,
+    this.selectedIndex,
+    required this.iconSize,
+    this.iconColor,
+    this.splashColor,
+    this.switchActiveTrackColor,
+    this.switchThumbColor,
+    this.switchInactiveTrackColor,
+    this.onTap,
+  });
+
+  @override
+  State<_PulldownMenuItemButton> createState() => _PulldownMenuItemButtonState();
+}
+
+class _PulldownMenuItemButtonState extends State<_PulldownMenuItemButton> {
+  bool _isPressed = false;
+
+  BorderRadius _getBorderRadius() {
+    return BorderRadius.only(
+      topLeft: widget.isTopRounded ? Radius.circular(widget.borderRadius) : const Radius.circular(0),
+      topRight: widget.isTopRounded ? Radius.circular(widget.borderRadius) : const Radius.circular(0),
+      bottomLeft: widget.isBottomRounded ? Radius.circular(widget.borderRadius) : const Radius.circular(0),
+      bottomRight: widget.isBottomRounded ? Radius.circular(widget.borderRadius) : const Radius.circular(0),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: widget.backgroundColor ?? CoconutColors.onGray100(widget.brightness),
+      shape: RoundedRectangleBorder(
+        borderRadius: _getBorderRadius(),
+      ),
+      child: GestureDetector(
+        onTapDown: widget.isDisabled ? null : (_) => setState(() => _isPressed = true),
+        onTapUp: widget.isDisabled
+            ? null
+            : (_) {
+                setState(() => _isPressed = false);
+                widget.onTap?.call();
+              },
+        onTapCancel: widget.isDisabled ? null : () => setState(() => _isPressed = false),
+        child: Container(
+          height: widget.buttonHeight,
+          padding: widget.buttonPadding ?? const EdgeInsets.symmetric(horizontal: 20),
+          alignment: Alignment.centerLeft,
+          decoration: BoxDecoration(
+            color: _isPressed ? (widget.splashColor ?? CoconutColors.onGray200(widget.brightness)) : Colors.transparent,
+            borderRadius: _getBorderRadius(),
+          ),
+          child: Row(
+            children: [
+              /// Button Label
+              Text(
+                widget.title,
+                style: CoconutTypography.body2_14.copyWith(
+                  color: widget.isDisabled
+                      ? CoconutColors.onGray350(widget.brightness)
+                      : widget.textColor ?? CoconutColors.onBlack(widget.brightness),
+                  fontWeight: widget.isSelectedItemBold != null && widget.isSelectedItemBold!
+                      ? widget.selectedIndex == widget.index
+                          ? FontWeight.bold
+                          : FontWeight.normal
+                      : null,
+                ),
+              ),
+
+              const SizedBox(width: 16),
+              const Spacer(),
+
+              /// Switch or Checkmark Icon
+              if (widget.hasSwitch)
+                IgnorePointer(
+                  child: CoconutSwitch(
+                    isOn: widget.switchValue,
+                    onChanged: (_) {},
+                    activeColor: widget.switchActiveTrackColor,
+                    thumbColor: widget.switchThumbColor,
+                    trackColor: widget.switchInactiveTrackColor,
+                    scale: 0.6,
+                  ),
+                )
+              else
+                Visibility(
+                  visible: widget.selectedIndex == widget.index,
+                  maintainSize: true,
+                  maintainAnimation: true,
+                  maintainState: true,
+                  maintainInteractivity: true,
+                  child: SvgPicture.asset(
+                    'packages/coconut_design_system/assets/svg/pulldown_check.svg',
+                    width: widget.iconSize,
+                    height: widget.iconSize,
+                    colorFilter: ColorFilter.mode(
+                      widget.iconColor ?? CoconutColors.onBlack(widget.brightness),
+                      BlendMode.srcIn,
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }
