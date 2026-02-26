@@ -125,24 +125,27 @@ class CoconutToast {
                     dismiss();
                   }
                 },
-                child: Container(
-                  margin: const EdgeInsets.all(12),
-                  padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: backgroundColor ?? CoconutColors.onGray100(brightness),
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: borderColor ?? CoconutColors.onGray300(brightness),
-                      width: 1,
+                child: MediaQuery(
+                  data: MediaQuery.of(context).copyWith(textScaler: TextScaler.noScaling),
+                  child: Container(
+                    margin: const EdgeInsets.all(12),
+                    padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+                    decoration: BoxDecoration(
+                      color: backgroundColor ?? CoconutColors.onGray100(brightness),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: borderColor ?? CoconutColors.onGray300(brightness),
+                        width: 0.5,
+                      ),
                     ),
-                  ),
-                  child: Text(
-                    text,
-                    overflow: TextOverflow.ellipsis,
-                    style: CoconutTypography.body2_14.copyWith(
-                      decoration: TextDecoration.none, // Prevents underlining in debug mode
-                      color: textColor ?? CoconutColors.onGray900(brightness),
+                    child: Text(
+                      text,
+                      overflow: TextOverflow.ellipsis,
+                      style: CoconutTypography.body2_14.copyWith(
+                        decoration: TextDecoration.none,
+                        color: textColor ?? CoconutColors.onGray900(brightness),
+                        height: 1.0,
+                      ),
                     ),
                   ),
                 ),
