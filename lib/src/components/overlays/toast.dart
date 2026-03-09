@@ -1,6 +1,44 @@
+import 'dart:math' show pi;
+
 import 'package:coconut_design_system/coconut_design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+/// Defines the severity level of a toast notification.
+///
+/// Each level determines the default border color of the toast.
+/// Explicit [borderColor] overrides the level-based default.
+enum CoconutToastLevel {
+  info,
+  warning,
+  error,
+  success;
+
+  Color borderColor(Brightness brightness) {
+    switch (this) {
+      case CoconutToastLevel.info:
+        return CoconutColors.onGray300(brightness);
+      case CoconutToastLevel.warning:
+        return CoconutColors.warningYellow;
+      case CoconutToastLevel.error:
+        return CoconutColors.hotPink;
+      case CoconutToastLevel.success:
+        return CoconutColors.green;
+    }
+  }
+
+  /// Returns a gradient that blends from the accent color to the background color,
+  /// angled 30° downward from top-left.
+  Gradient borderGradient(Brightness brightness) {
+    final bgColor = CoconutColors.onGray200(brightness);
+    final accentColor = borderColor(brightness);
+
+    return LinearGradient(
+      colors: [accentColor, bgColor],
+      transform: const GradientRotation(pi / 6),
+    );
+  }
+}
 
 /// A customizable toast notification utility for displaying temporary messages.
 ///
@@ -87,24 +125,27 @@ class CoconutToast {
                     dismiss();
                   }
                 },
-                child: Container(
-                  margin: const EdgeInsets.all(12),
-                  padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: backgroundColor ?? CoconutColors.onGray100(brightness),
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: borderColor ?? CoconutColors.onGray300(brightness),
-                      width: 1,
+                child: MediaQuery(
+                  data: MediaQuery.of(context).copyWith(textScaler: TextScaler.noScaling),
+                  child: Container(
+                    margin: const EdgeInsets.all(12),
+                    padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+                    decoration: BoxDecoration(
+                      color: backgroundColor ?? CoconutColors.onGray100(brightness),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: borderColor ?? CoconutColors.onGray300(brightness),
+                        width: 0.5,
+                      ),
                     ),
-                  ),
-                  child: Text(
-                    text,
-                    overflow: TextOverflow.ellipsis,
-                    style: CoconutTypography.body2_14.copyWith(
-                      decoration: TextDecoration.none, // Prevents underlining in debug mode
-                      color: textColor ?? CoconutColors.onGray900(brightness),
+                    child: Text(
+                      text,
+                      overflow: TextOverflow.ellipsis,
+                      style: CoconutTypography.body2_14.copyWith(
+                        decoration: TextDecoration.none,
+                        color: textColor ?? CoconutColors.onGray900(brightness),
+                        height: 1.0,
+                      ),
                     ),
                   ),
                 ),
@@ -148,6 +189,7 @@ class CoconutToast {
     Color? borderColor,
     Color? textColor,
     String? iconPath,
+    CoconutToastLevel level = CoconutToastLevel.info,
   }) {
     if (removePrevToast && _currentToastOverlay != null) {
       try {
@@ -176,12 +218,16 @@ class CoconutToast {
                 backgroundColor: backgroundColor,
                 borderColor: borderColor,
                 textColor: textColor,
-                iconColor: borderColor ?? CoconutColors.onGray900(brightness),
+                iconColor: borderColor ??
+                    (level == CoconutToastLevel.info
+                        ? textColor ?? CoconutColors.onGray900(brightness)
+                        : level.borderColor(brightness)),
                 iconPath: iconPath,
                 iconSize: iconSize,
                 iconRightPadding: iconRightPadding,
                 textStyle: textStyle,
                 textPadding: textPadding,
+                level: level,
                 onDismiss: () {
                   overlayEntry.remove();
                 },
@@ -246,7 +292,7 @@ class CoconutToast {
                 text: text,
                 isVisibleIcon: true,
                 backgroundColor: backgroundColor ?? warningYellowBackground,
-                borderColor: borderColor ?? backgroundColor ?? warningYellowBackground,
+                borderColor: borderColor,
                 iconColor: warningYellow,
                 iconPath: 'packages/coconut_design_system/assets/svg/triangle_warning.svg',
                 iconSize: iconSize,
@@ -254,6 +300,7 @@ class CoconutToast {
                 textStyle: textStyle,
                 textColor: CoconutColors.gray900,
                 textPadding: textPadding,
+                level: CoconutToastLevel.warning,
                 onDismiss: () {
                   overlayEntry.remove();
                 },
@@ -291,6 +338,17 @@ class CoconutToastWidget extends StatefulWidget {
   final String? iconPath;
   final double offsetY;
 
+  /// The severity level of the toast. Determines the default border gradient
+  /// when [borderColor] and [borderGradient] are not explicitly provided.
+  final CoconutToastLevel level;
+
+  /// Custom gradient for the border. Overrides level-based gradient.
+  /// If [borderColor] is set, it takes precedence over this.
+  final Gradient? borderGradient;
+
+  /// The width of the gradient border (default: `0.5`).
+  final double borderWidth;
+
   /// Creates an instance of `CoconutToastWidget`.
   const CoconutToastWidget({
     super.key,
@@ -309,6 +367,9 @@ class CoconutToastWidget extends StatefulWidget {
     this.textColor,
     this.iconPath,
     this.offsetY = 0.5,
+    this.level = CoconutToastLevel.info,
+    this.borderGradient,
+    this.borderWidth = 0.5,
   });
 
   @override
@@ -317,85 +378,133 @@ class CoconutToastWidget extends StatefulWidget {
 
 class _CoconutToastWidgetState extends State<CoconutToastWidget> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
-  late Animation<Offset> _offsetAnimation;
+  late Animation<double> _slideAnimation;
   late Animation<double> _fadeAnimation;
+
+  static const double _initialOffsetY = 12.0;
+  static const double _dismissOffsetY = -80.0;
 
   @override
   Widget build(BuildContext context) {
     Brightness brightness = CoconutTheme.brightness();
-    return SlideTransition(
-      position: _offsetAnimation,
-      child: FadeTransition(
-        opacity: _fadeAnimation,
-        child: GestureDetector(
-          onVerticalDragUpdate: (details) {
-            if (details.primaryDelta! < -5) {
-              _startFadeOut();
-            }
-          },
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, child) {
+        return Transform.translate(
+          offset: Offset(0.0, _slideAnimation.value),
+          child: Opacity(
+            opacity: _fadeAnimation.value,
+            child: child,
+          ),
+        );
+      },
+      child: GestureDetector(
+        onVerticalDragUpdate: (details) {
+          if (details.primaryDelta! < -5) {
+            _startFadeOut();
+          }
+        },
+        child: MediaQuery(
+          data: MediaQuery.of(context).copyWith(textScaler: TextScaler.noScaling),
           child: Material(
             type: MaterialType.transparency,
             child: Container(
-              margin: const EdgeInsets.all(12),
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 13),
+              margin: const EdgeInsets.fromLTRB(12, 24, 12, 12),
               width: double.maxFinite,
               decoration: BoxDecoration(
-                color: widget.backgroundColor ?? CoconutColors.onGray100(brightness),
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(
-                  color: widget.borderColor ?? widget.backgroundColor ?? CoconutColors.onGray100(brightness),
-                  width: 1,
-                ),
+                gradient: widget.borderColor != null
+                    ? null
+                    : widget.borderGradient ?? widget.level.borderGradient(brightness),
+                color: widget.borderColor,
+                boxShadow: [
+                  BoxShadow(
+                    color: CoconutColors.black.withValues(alpha: brightness == Brightness.dark ? 0.4 : 0.12),
+                    blurRadius: 16,
+                    spreadRadius: 0,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
               ),
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  final textPainter = TextPainter(
-                    text: TextSpan(text: widget.text),
-                    maxLines: null,
-                    textDirection: TextDirection.ltr,
-                  )..layout(maxWidth: constraints.maxWidth);
+              padding: EdgeInsets.all(widget.borderWidth),
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 13),
+                decoration: BoxDecoration(
+                  color: widget.backgroundColor ?? CoconutColors.onGray100(brightness),
+                  borderRadius: BorderRadius.circular(12 - widget.borderWidth),
+                ),
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    final resolvedStyle = widget.textStyle.copyWith(
+                      decoration: TextDecoration.none,
+                      color: widget.textColor ?? CoconutColors.onGray900(brightness),
+                      leadingDistribution: TextLeadingDistribution.even,
+                    );
+                    final fontSize = resolvedStyle.fontSize ?? 14;
+                    final lineHeight = fontSize * (resolvedStyle.height ?? 1.4);
 
-                  final isMultiline = textPainter.computeLineMetrics().length > 1;
+                    final textPainter = TextPainter(
+                      text: TextSpan(text: widget.text, style: resolvedStyle),
+                      maxLines: null,
+                      textDirection: TextDirection.ltr,
+                    )..layout(maxWidth: constraints.maxWidth);
 
-                  return Row(
-                    crossAxisAlignment: isMultiline ? CrossAxisAlignment.start : CrossAxisAlignment.center,
-                    children: [
-                      if (widget.isVisibleIcon) ...{
-                        Padding(
-                          padding: EdgeInsets.only(
-                            right: widget.iconRightPadding,
-                            top: widget.textPadding,
-                            bottom: widget.textPadding,
-                          ),
-                          child: SvgPicture.asset(
-                            widget.iconPath ?? 'packages/coconut_design_system/assets/svg/circle_info.svg',
+                    final isMultiline = textPainter.computeLineMetrics().length > 1;
+
+                    return Row(
+                      crossAxisAlignment: isMultiline ? CrossAxisAlignment.start : CrossAxisAlignment.center,
+                      children: [
+                        if (widget.isVisibleIcon) ...{
+                          if (isMultiline)
+                            Padding(
+                              padding: EdgeInsets.only(
+                                right: widget.iconRightPadding,
+                                top: widget.textPadding,
+                              ),
+                              child: SizedBox(
+                                height: lineHeight,
+                                child: Center(
+                                  child: SvgPicture.asset(
+                                    widget.iconPath ?? 'packages/coconut_design_system/assets/svg/circle_info.svg',
+                                    height: widget.iconSize,
+                                    colorFilter: ColorFilter.mode(
+                                      widget.iconColor,
+                                      BlendMode.srcIn,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                          else
+                            Padding(
+                              padding: EdgeInsets.only(right: widget.iconRightPadding),
+                              child: SvgPicture.asset(
+                                widget.iconPath ?? 'packages/coconut_design_system/assets/svg/circle_info.svg',
+                                height: widget.iconSize,
+                                colorFilter: ColorFilter.mode(
+                                  widget.iconColor,
+                                  BlendMode.srcIn,
+                                ),
+                              ),
+                            ),
+                        } else ...{
+                          SizedBox(
                             height: widget.iconSize,
-                            colorFilter: ColorFilter.mode(
-                              widget.iconColor,
-                              BlendMode.srcIn,
+                          ),
+                        },
+                        Flexible(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(vertical: widget.textPadding),
+                            child: Text(
+                              widget.text,
+                              style: resolvedStyle,
                             ),
                           ),
                         ),
-                      } else ...{
-                        SizedBox(
-                          height: widget.iconSize,
-                        ),
-                      },
-                      Flexible(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: widget.textPadding),
-                          child: Text(
-                            widget.text,
-                            style: widget.textStyle.copyWith(
-                              decoration: TextDecoration.none, // Prevents underlining in debug mode
-                              color: widget.textColor ?? CoconutColors.onGray900(brightness),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
-                },
+                      ],
+                    );
+                  },
+                ),
               ),
             ),
           ),
@@ -416,7 +525,7 @@ class _CoconutToastWidgetState extends State<CoconutToastWidget> with SingleTick
 
     _controller = AnimationController(duration: const Duration(milliseconds: 300), vsync: this);
 
-    _offsetAnimation = Tween<Offset>(begin: Offset(0.0, widget.offsetY), end: const Offset(0.0, -1.0))
+    _slideAnimation = Tween<double>(begin: _initialOffsetY, end: _dismissOffsetY)
         .animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
 
     _fadeAnimation = Tween<double>(

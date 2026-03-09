@@ -491,6 +491,57 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
             );
           },
         ),
+        CoconutUnderlinedButton(
+          brightness: brightness,
+          text: 'Info Level',
+          textStyle: CoconutTypography.caption_10,
+          onTap: () {
+            CoconutToast.showToast(
+              context: context,
+              text: 'Info level toast',
+              level: CoconutToastLevel.info,
+            );
+          },
+        ),
+        CoconutUnderlinedButton(
+          brightness: brightness,
+          text: 'Warning Level',
+          textStyle: CoconutTypography.caption_10,
+          onTap: () {
+            CoconutToast.showToast(
+              context: context,
+              text: 'Warning level toast',
+              isVisibleIcon: true,
+              level: CoconutToastLevel.warning,
+            );
+          },
+        ),
+        CoconutUnderlinedButton(
+          brightness: brightness,
+          text: 'Error Level',
+          textStyle: CoconutTypography.caption_10,
+          onTap: () {
+            CoconutToast.showToast(
+              context: context,
+              text: 'Error level toast',
+              isVisibleIcon: true,
+              level: CoconutToastLevel.error,
+            );
+          },
+        ),
+        CoconutUnderlinedButton(
+          brightness: brightness,
+          text: 'Success Level',
+          textStyle: CoconutTypography.caption_10,
+          onTap: () {
+            CoconutToast.showToast(
+              context: context,
+              text: 'Success level toast',
+              isVisibleIcon: true,
+              level: CoconutToastLevel.success,
+            );
+          },
+        ),
       ],
     );
   }
