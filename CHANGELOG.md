@@ -4,6 +4,15 @@ All notable changes to the **Coconut Design System** will be documented in this 
 This project follows **[Semantic Versioning](https://semver.org/)**.
 ---
 
+## **[0.9.13] - 2026-03-17**
+
+### 🛠 Fixes
+
+- **Toast**
+  - Removed the `maxWidth` constraint from toast layout.
+
+---
+
 ## **[0.9.12] - 2026-03-17**
 
 ### ✨ Features
