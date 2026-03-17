@@ -74,10 +74,10 @@ class CoconutUnderlinedButton extends StatefulWidget {
 class _CoconutUnderlinedButtonState extends State<CoconutUnderlinedButton> {
   /// **Tracks whether the button is currently being pressed.**
   late bool _isPressing;
-  Brightness brightnesss = CoconutTheme.brightness();
 
   @override
   Widget build(BuildContext context) {
+    final brightness = CoconutTheme.brightness();
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
@@ -110,13 +110,13 @@ class _CoconutUnderlinedButtonState extends State<CoconutUnderlinedButton> {
                 textAlign: TextAlign.center,
                 softWrap: true,
                 style: widget.textStyle.setColor(
-                  _getColorForBrightness(brightnesss),
+                  _getColorForBrightness(brightness),
                 ),
               ),
               Container(
                 width: _getTextWidth(context),
                 height: widget.lineWidth,
-                color: _getColorForBrightness(brightnesss),
+                color: _getColorForBrightness(brightness),
               ),
             ],
           ),
