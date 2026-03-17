@@ -443,11 +443,14 @@ class _CoconutToastWidgetState extends State<CoconutToastWidget> with SingleTick
                     final fontSize = resolvedStyle.fontSize ?? 14;
                     final lineHeight = fontSize * (resolvedStyle.height ?? 1.4);
 
+                    final iconSpace = widget.isVisibleIcon ? widget.iconSize + widget.iconRightPadding : 0.0;
+                    final textMaxWidth = constraints.maxWidth - iconSpace;
+
                     final textPainter = TextPainter(
                       text: TextSpan(text: widget.text, style: resolvedStyle),
                       maxLines: null,
                       textDirection: TextDirection.ltr,
-                    )..layout(maxWidth: constraints.maxWidth);
+                    )..layout(maxWidth: textMaxWidth);
 
                     final isMultiline = textPainter.computeLineMetrics().length > 1;
 
