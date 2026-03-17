@@ -4,6 +4,31 @@ All notable changes to the **Coconut Design System** will be documented in this 
 This project follows **[Semantic Versioning](https://semver.org/)**.
 ---
 
+## **[0.9.12] - 2026-03-17**
+
+### ✨ Features
+
+- **PulldownMenu**
+  - Added switch item support.
+  - Replaced `InkWell` with `GestureDetector` and improved support for switch interactions.
+
+### 🛠 Fixes
+
+- **Toast**
+  - Added border and shadow to toast widget.
+  - Improved alignment between icon and text.
+  - Fixed bottom toast style.
+
+### 💄 UI Improvements
+
+- **AppBar**
+  - Updated title typography to use `body1_16`.
+
+- **PulldownMenu**
+  - Adjusted default `blurRadius` and `spreadRadius` values.
+
+---
+
 ## **[0.9.11] - 2026-02-11**
 
 ### 🛠 Fixes
