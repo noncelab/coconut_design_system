@@ -71,7 +71,8 @@ class CoconutToast {
   static void showBottomToast({
     /// - Deprecated: This parameter will be removed in version `0.9.0`.
     /// - Now automatically inferred from `CoconutTheme.brightness()`.
-    @Deprecated('This parameter will be removed in version 0.8. It is now inferred from CoconutTheme.brightness.')
+    @Deprecated(
+        'This parameter will be removed in version 0.8. It is now inferred from CoconutTheme.brightness.')
     Brightness? brightness,
     required BuildContext context,
     required String text,
@@ -255,6 +256,7 @@ class CoconutToast {
   /// - [backgroundColor]: Optional background override.
   /// - [borderColor]: Optional border override.
   /// - [textStyle]: Optional override for text style.
+  @Deprecated('Use showToast() with level: CoconutToastLevel.warning instead.')
   static void showWarningToast({
     required BuildContext context,
     required String text,
@@ -321,7 +323,8 @@ class CoconutToast {
 class CoconutToastWidget extends StatefulWidget {
   final String text;
 
-  @Deprecated('This parameter will be removed in version 0.8. It is now inferred from CoconutTheme.brightness.')
+  @Deprecated(
+      'This parameter will be removed in version 0.8. It is now inferred from CoconutTheme.brightness.')
   final Brightness? brightness;
 
   final bool isVisibleIcon;
@@ -376,7 +379,8 @@ class CoconutToastWidget extends StatefulWidget {
   State<CoconutToastWidget> createState() => _CoconutToastWidgetState();
 }
 
-class _CoconutToastWidgetState extends State<CoconutToastWidget> with SingleTickerProviderStateMixin {
+class _CoconutToastWidgetState extends State<CoconutToastWidget>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _slideAnimation;
   late Animation<double> _fadeAnimation;
@@ -419,7 +423,8 @@ class _CoconutToastWidgetState extends State<CoconutToastWidget> with SingleTick
                 color: widget.borderColor,
                 boxShadow: [
                   BoxShadow(
-                    color: CoconutColors.black.withValues(alpha: brightness == Brightness.dark ? 0.4 : 0.12),
+                    color: CoconutColors.black
+                        .withValues(alpha: brightness == Brightness.dark ? 0.4 : 0.12),
                     blurRadius: 16,
                     spreadRadius: 0,
                     offset: const Offset(0, 4),
@@ -440,35 +445,28 @@ class _CoconutToastWidgetState extends State<CoconutToastWidget> with SingleTick
                       color: widget.textColor ?? CoconutColors.onGray900(brightness),
                       leadingDistribution: TextLeadingDistribution.even,
                     );
-                    final fontSize = resolvedStyle.fontSize ?? 14;
-                    final lineHeight = fontSize * (resolvedStyle.height ?? 1.4);
-
-                    final iconSpace = widget.isVisibleIcon ? widget.iconSize + widget.iconRightPadding : 0.0;
-                    final textMaxWidth = constraints.maxWidth - iconSpace;
-
-                    final textPainter = TextPainter(
-                      text: TextSpan(text: widget.text, style: resolvedStyle),
-                      maxLines: null,
-                      textDirection: TextDirection.ltr,
-                    )..layout(maxWidth: textMaxWidth);
-
-                    final isMultiline = textPainter.computeLineMetrics().length > 1;
 
                     return Row(
-                      crossAxisAlignment: isMultiline ? CrossAxisAlignment.start : CrossAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         if (widget.isVisibleIcon) ...{
-                          if (isMultiline)
-                            Padding(
-                              padding: EdgeInsets.only(
-                                right: widget.iconRightPadding,
-                                top: widget.textPadding,
-                              ),
-                              child: SizedBox(
-                                height: lineHeight,
+                          LayoutBuilder(
+                            builder: (context, iconConstraints) {
+                              double containerHeight;
+                              if (widget.textStyle.fontSize != null &&
+                                  widget.textStyle.height != null) {
+                                containerHeight =
+                                    widget.textStyle.fontSize! * widget.textStyle.height!;
+                              } else {
+                                containerHeight = 14 * 1.4;
+                              }
+                              return Container(
+                                height: containerHeight,
+                                padding: EdgeInsets.only(right: widget.iconRightPadding),
                                 child: Center(
                                   child: SvgPicture.asset(
-                                    widget.iconPath ?? 'packages/coconut_design_system/assets/svg/circle_info.svg',
+                                    widget.iconPath ??
+                                        'packages/coconut_design_system/assets/svg/circle_info.svg',
                                     height: widget.iconSize,
                                     colorFilter: ColorFilter.mode(
                                       widget.iconColor,
@@ -476,32 +474,18 @@ class _CoconutToastWidgetState extends State<CoconutToastWidget> with SingleTick
                                     ),
                                   ),
                                 ),
-                              ),
-                            )
-                          else
-                            Padding(
-                              padding: EdgeInsets.only(right: widget.iconRightPadding),
-                              child: SvgPicture.asset(
-                                widget.iconPath ?? 'packages/coconut_design_system/assets/svg/circle_info.svg',
-                                height: widget.iconSize,
-                                colorFilter: ColorFilter.mode(
-                                  widget.iconColor,
-                                  BlendMode.srcIn,
-                                ),
-                              ),
-                            ),
+                              );
+                            },
+                          ),
                         } else ...{
                           SizedBox(
                             height: widget.iconSize,
                           ),
                         },
                         Flexible(
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(vertical: widget.textPadding),
-                            child: Text(
-                              widget.text,
-                              style: resolvedStyle,
-                            ),
+                          child: Text(
+                            widget.text,
+                            style: resolvedStyle,
                           ),
                         ),
                       ],
