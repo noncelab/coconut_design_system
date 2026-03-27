@@ -20,7 +20,8 @@ class CoconutTextField extends StatefulWidget {
 
   /// - Deprecated: This parameter will be removed in version `0.9.0`.
   /// - Now automatically inferred from `CoconutTheme.brightness()`.
-  @Deprecated('This parameter will be removed in version 0.8. It is now inferred from CoconutTheme.brightness.')
+  @Deprecated(
+      'This parameter will be removed in version 0.8. It is now inferred from CoconutTheme.brightness.')
   final Brightness? brightness;
 
   /// Callback function triggered when the text changes.
@@ -160,12 +161,18 @@ class CoconutTextField extends StatefulWidget {
   /// Whether to enable suggestions while typing.
   final bool enableSuggestions;
 
+  /// Whether the text field is interactive.
+  ///
+  /// If `false`, the text field is disabled and does not respond to user input.
   final bool enabled;
 
   /// The text overflow behavior of the text field.
   ///
   /// If `null`, it defaults to `TextOverflow.ellipsis`.
   final TextOverflow? textOverflow;
+
+  /// The line height applied to the input text.
+  final double textHeight;
 
   /// Creates a `CoconutTextField` widget.
   ///
@@ -195,6 +202,7 @@ class CoconutTextField extends StatefulWidget {
   /// - [enableSuggestions] enables suggestions while typing.
   /// - [enabled] enables the text field.
   /// - [textOverflow] controls the text overflow behavior.
+  /// - [textHeight] sets the line height of the input text.
   /// Example usage:
   /// ```dart
   /// CoconutTextField(
@@ -252,7 +260,8 @@ class CoconutTextField extends StatefulWidget {
       this.autocorrect = false,
       this.enableSuggestions = false,
       this.enabled = true,
-      this.textOverflow = TextOverflow.ellipsis});
+      this.textOverflow = TextOverflow.ellipsis,
+      this.textHeight = 1.4});
 
   @override
   State<CoconutTextField> createState() => _CoconutTextFieldState();
@@ -365,12 +374,14 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                 inputFormatters: widget.textInputFormatter,
                 obscureText: widget.obscureText,
                 textAlign: widget.textAlign ?? TextAlign.start,
-                padding: widget.padding ?? EdgeInsets.fromLTRB(widget.prefix != null ? 0 : 16, 20, 16, 20),
+                padding: widget.padding ??
+                    EdgeInsets.fromLTRB(widget.prefix != null ? 0 : 16, 20, 16, 20),
                 style: CoconutTypography.body2_14.copyWith(
                   color: _activeColor,
                   fontSize: widget.fontSize,
                   fontFamily: widget.fontFamily,
                   fontWeight: widget.fontWeight,
+                  height: widget.textHeight,
                 ),
                 cursorColor: _cursorColor,
                 decoration: const BoxDecoration(
@@ -436,7 +447,9 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                   child: Text(
                     widget.errorText ?? '',
                     maxLines: widget.isErrorTextMultiline ? null : 1,
-                    overflow: widget.isErrorTextMultiline ? null : (widget.textOverflow ?? TextOverflow.ellipsis),
+                    overflow: widget.isErrorTextMultiline
+                        ? null
+                        : (widget.textOverflow ?? TextOverflow.ellipsis),
                     style: CoconutTypography.body3_12.copyWith(
                       color: _errorColor,
                     ),
