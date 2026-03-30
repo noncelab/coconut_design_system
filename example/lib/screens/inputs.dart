@@ -14,6 +14,7 @@ class InputsScreen extends StatefulWidget {
 
 class _InputsScreenState extends State<InputsScreen> {
   CoconutChipStatus chipStatus = CoconutChipStatus.unselected;
+  CoconutOptionStateEnum optionPickerState = CoconutOptionStateEnum.warning;
 
   bool isCheckbox1Selected = false;
   bool isCheckbox2Selected = false;
@@ -285,7 +286,9 @@ class _InputsScreenState extends State<InputsScreen> {
                               child: Container(
                                 margin: const EdgeInsets.only(right: 13),
                                 child: SvgPicture.asset(
-                                  obscureText ? 'assets/svg/textfield_hide.svg' : 'assets/svg/textfield_view.svg',
+                                  obscureText
+                                      ? 'assets/svg/textfield_hide.svg'
+                                      : 'assets/svg/textfield_view.svg',
                                   width: 16,
                                   height: 16,
                                   colorFilter: ColorFilter.mode(
@@ -350,6 +353,100 @@ class _InputsScreenState extends State<InputsScreen> {
                               setState(() {});
                             },
                           ),
+                          CoconutLayout.spacing_600h,
+                          _titleBox('Option Picker', brightness),
+                          CoconutOptionPicker(
+                            text: 'CoconutOptionPicker Test',
+                            label: 'Test Label',
+                            onTap: () {
+                              // BottomSheet 호출과 같이 Tap에 대한 작동 로직은 사용하는 화면에서 제어해야 함
+                              CoconutOptionStateEnum draftOptionPickerState = optionPickerState;
+                              showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                builder: (context) => CoconutBottomSheet(
+                                  useIntrinsicHeight: true,
+                                  appBar: CoconutAppBar.build(
+                                    title: 'CoconutOptionPicker Options',
+                                    context: context,
+                                    isBottom: true,
+                                  ),
+                                  body: StatefulBuilder(
+                                    builder: (context, setBottomSheetState) {
+                                      Widget buildOptionButton({
+                                        required String title,
+                                        required CoconutOptionStateEnum state,
+                                      }) {
+                                        final isSelected = draftOptionPickerState == state;
+
+                                        return Padding(
+                                          padding: const EdgeInsets.only(bottom: 12),
+                                          child: CoconutButton(
+                                            text: title,
+                                            isExpand: true,
+                                            buttonType: isSelected
+                                                ? CoconutButtonType.filled
+                                                : CoconutButtonType.outlined,
+                                            backgroundColor: isSelected
+                                                ? CoconutColors.normalPrimaryButtonColor()
+                                                : Colors.transparent,
+                                            foregroundColor: isSelected
+                                                ? CoconutColors.primaryButtonLabelColor()
+                                                : CoconutColors.onBlack(brightness),
+                                            borderColor: isSelected
+                                                ? CoconutColors.normalPrimaryButtonColor()
+                                                : CoconutColors.onGray700(brightness),
+                                            onPressed: () {
+                                              setBottomSheetState(() {
+                                                draftOptionPickerState = state;
+                                              });
+                                            },
+                                          ),
+                                        );
+                                      }
+
+                                      return Padding(
+                                        padding: const EdgeInsets.all(CoconutLayout.defaultPadding),
+                                        child: Column(
+                                          children: [
+                                            buildOptionButton(
+                                              title: 'normal',
+                                              state: CoconutOptionStateEnum.normal,
+                                            ),
+                                            buildOptionButton(
+                                              title: 'warning',
+                                              state: CoconutOptionStateEnum.warning,
+                                            ),
+                                            buildOptionButton(
+                                              title: 'error',
+                                              state: CoconutOptionStateEnum.error,
+                                            ),
+                                            CoconutLayout.spacing_300h,
+                                            CoconutButton(
+                                                onPressed: () {
+                                                  optionPickerState = draftOptionPickerState;
+                                                  setState(() {});
+                                                  Navigator.pop(context);
+                                                },
+                                                text: 'Complete')
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                              );
+                            },
+                            coconutOptionStateEnum: optionPickerState,
+                            guideText: 'guide test',
+                            inlineWidgets: const [
+                              CoconutChip(
+                                label: '#non-kyc',
+                                color: CoconutColors.yellow,
+                              ),
+                            ],
+                          ),
+                          CoconutLayout.spacing_2500h,
                         ],
                       ),
                     ],
