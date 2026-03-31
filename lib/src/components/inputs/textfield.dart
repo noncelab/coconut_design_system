@@ -20,8 +20,7 @@ class CoconutTextField extends StatefulWidget {
 
   /// - Deprecated: This parameter will be removed in version `0.9.0`.
   /// - Now automatically inferred from `CoconutTheme.brightness()`.
-  @Deprecated(
-      'This parameter will be removed in version 0.8. It is now inferred from CoconutTheme.brightness.')
+  @Deprecated('This parameter will be removed in version 0.8. It is now inferred from CoconutTheme.brightness.')
   final Brightness? brightness;
 
   /// Callback function triggered when the text changes.
@@ -172,7 +171,7 @@ class CoconutTextField extends StatefulWidget {
   final TextOverflow? textOverflow;
 
   /// The line height applied to the input text.
-  final double textHeight;
+  final double fontHeight;
 
   /// Creates a `CoconutTextField` widget.
   ///
@@ -195,6 +194,7 @@ class CoconutTextField extends StatefulWidget {
   /// - [fontSize] sets the font size of the input text.
   /// - [fontFamily] specifies the font family for the input text.
   /// - [fontWeight] specifies the font weight for the input text.
+  /// - [fontHeight] sets the line height of the input text.
   /// - [textAlign] controls the alignment of the text inside the field.
   /// - [isLengthVisible] determines whether to display the character length counter.
   /// - [enableInteractiveSelection] disables text selection and long-press actions.
@@ -261,7 +261,7 @@ class CoconutTextField extends StatefulWidget {
       this.enableSuggestions = false,
       this.enabled = true,
       this.textOverflow = TextOverflow.ellipsis,
-      this.textHeight = 1.4});
+      this.fontHeight = 1.4});
 
   @override
   State<CoconutTextField> createState() => _CoconutTextFieldState();
@@ -374,14 +374,13 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                 inputFormatters: widget.textInputFormatter,
                 obscureText: widget.obscureText,
                 textAlign: widget.textAlign ?? TextAlign.start,
-                padding: widget.padding ??
-                    EdgeInsets.fromLTRB(widget.prefix != null ? 0 : 16, 20, 16, 20),
+                padding: widget.padding ?? EdgeInsets.fromLTRB(widget.prefix != null ? 0 : 16, 20, 16, 20),
                 style: CoconutTypography.body2_14.copyWith(
                   color: _activeColor,
                   fontSize: widget.fontSize,
                   fontFamily: widget.fontFamily,
                   fontWeight: widget.fontWeight,
-                  height: widget.textHeight,
+                  height: widget.fontHeight,
                 ),
                 cursorColor: _cursorColor,
                 decoration: const BoxDecoration(
@@ -447,9 +446,7 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                   child: Text(
                     widget.errorText ?? '',
                     maxLines: widget.isErrorTextMultiline ? null : 1,
-                    overflow: widget.isErrorTextMultiline
-                        ? null
-                        : (widget.textOverflow ?? TextOverflow.ellipsis),
+                    overflow: widget.isErrorTextMultiline ? null : (widget.textOverflow ?? TextOverflow.ellipsis),
                     style: CoconutTypography.body3_12.copyWith(
                       color: _errorColor,
                     ),
