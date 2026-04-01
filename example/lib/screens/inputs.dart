@@ -358,6 +358,14 @@ class _InputsScreenState extends State<InputsScreen> {
                           CoconutOptionPicker(
                             text: 'CoconutOptionPicker Test',
                             label: 'Test Label',
+                            inlineWidget: Container(
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: CoconutColors.cyanBlue, width: 1)),
+                              child: const Text(
+                                'This is OptionBox',
+                                style: CoconutTypography.caption_10,
+                              ),
+                            ),
                             onTap: () {
                               // BottomSheet 호출과 같이 Tap에 대한 작동 로직은 사용하는 화면에서 제어해야 함
                               CoconutOptionStateEnum draftOptionPickerState = optionPickerState;

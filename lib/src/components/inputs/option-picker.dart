@@ -73,6 +73,7 @@ class CoconutOptionPicker extends StatelessWidget {
     this.enabled = true,
     this.label,
     this.guideText,
+    this.inlineWidget,
     this.padding,
     this.textStyle,
     this.labelStyle,
@@ -105,6 +106,13 @@ class CoconutOptionPicker extends StatelessWidget {
   /// This text is shown only when [coconutOptionStateEnum] is not
   /// [CoconutOptionStateEnum.normal].
   final String? guideText;
+
+  /// The inline widget displayed to the right of the main text.
+  ///
+  /// This widget is rendered inline with the text inside the same horizontal
+  /// scroll area, making it suitable for elements such as chips, tags,
+  /// or badges.
+  final Widget? inlineWidget;
 
   /// Callback function triggered when the picker row is tapped.
   final VoidCallback? onTap;
@@ -268,18 +276,31 @@ class CoconutOptionPicker extends StatelessWidget {
             thickness: 1,
             color: resolvedDividerColor,
           ),
-        if (coconutOptionStateEnum != CoconutOptionStateEnum.normal && guideText != null) ...[
-          Padding(
-            padding: const EdgeInsets.only(top: 4, left: 2),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                guideText!,
-                style: resolveGuideStyle,
-              ),
-            ),
-          )
-        ]
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            if (coconutOptionStateEnum != CoconutOptionStateEnum.normal && guideText != null) ...[
+              Padding(
+                padding: const EdgeInsets.only(top: 4, left: 2),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    guideText!,
+                    style: resolveGuideStyle,
+                  ),
+                ),
+              )
+            ],
+            if (coconutOptionStateEnum == CoconutOptionStateEnum.normal) ...[
+              // for using left side area
+              Container(),
+            ],
+            if (inlineWidget != null) ...[
+              Padding(padding: const EdgeInsets.only(top: 4, left: 2), child: inlineWidget!),
+            ],
+          ],
+        )
       ],
     );
   }
