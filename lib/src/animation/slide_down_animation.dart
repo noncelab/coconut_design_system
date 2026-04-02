@@ -6,6 +6,7 @@ class CoconutSlideDownAnimation extends StatelessWidget {
     super.key,
     required this.child,
     this.duration = const Duration(milliseconds: 280),
+    this.delay = Duration.zero,
     this.offset = const Offset(0, -24),
     this.curve = Curves.easeOutCubic,
     this.autoStart = true,
@@ -14,6 +15,7 @@ class CoconutSlideDownAnimation extends StatelessWidget {
 
   final Widget child;
   final Duration duration;
+  final Duration delay;
   final Offset offset;
   final Curve curve;
   final bool autoStart;
@@ -23,6 +25,7 @@ class CoconutSlideDownAnimation extends StatelessWidget {
   Widget build(BuildContext context) {
     return CoconutTransitionAnimation(
       duration: duration,
+      delay: delay,
       beginOffset: offset,
       endOffset: Offset.zero,
       beginOpacity: 0,

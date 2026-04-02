@@ -42,6 +42,9 @@ class CoconutShakeAnimation extends StatefulWidget {
   /// Whether to start the shake animation automatically when the widget is built.
   final bool autoStart;
 
+  /// Delay before the shake animation starts automatically.
+  final Duration delay;
+
   const CoconutShakeAnimation({
     super.key,
     required this.child,
@@ -52,6 +55,7 @@ class CoconutShakeAnimation extends StatefulWidget {
     this.curve = Curves.linear,
     this.onCompleted,
     this.autoStart = false,
+    this.delay = Duration.zero,
   });
 
   @override
@@ -61,6 +65,7 @@ class CoconutShakeAnimation extends StatefulWidget {
 class CoconutShakeAnimationState extends State<CoconutShakeAnimation> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _offsetAnimation;
+  int _startToken = 0;
 
   @override
   void initState() {
@@ -89,12 +94,34 @@ class CoconutShakeAnimationState extends State<CoconutShakeAnimation> with Singl
     });
 
     if (widget.autoStart) {
-      WidgetsBinding.instance.addPostFrameCallback((_) => shake());
+      WidgetsBinding.instance.addPostFrameCallback((_) => _startWithDelay());
+    }
+  }
+
+  @override
+  void didUpdateWidget(covariant CoconutShakeAnimation oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if ((oldWidget.autoStart != widget.autoStart || oldWidget.delay != widget.delay) && widget.autoStart) {
+      _startWithDelay();
     }
   }
 
   void shake() {
     _controller.forward(from: 0.0);
+  }
+
+  void _startWithDelay() {
+    final token = ++_startToken;
+    if (widget.delay <= Duration.zero) {
+      shake();
+      return;
+    }
+
+    Future<void>.delayed(widget.delay, () {
+      if (!mounted || token != _startToken) return;
+      shake();
+    });
   }
 
   @override

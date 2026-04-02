@@ -22,6 +22,7 @@ class CoconutTypewriterAnimation extends StatefulWidget {
     this.maxLines,
     this.overflow,
     this.duration = const Duration(milliseconds: 800),
+    this.delay = Duration.zero,
     this.curve = Curves.linear,
     this.autoStart = true,
     this.onCompleted,
@@ -45,6 +46,9 @@ class CoconutTypewriterAnimation extends StatefulWidget {
   /// The total duration required to reveal the full text.
   final Duration duration;
 
+  /// Delay before the animation starts automatically.
+  final Duration delay;
+
   /// The animation curve used for the text reveal progression.
   final Curve curve;
 
@@ -62,6 +66,7 @@ class _CoconutTypewriterAnimationState extends State<CoconutTypewriterAnimation>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   late final Animation<double> _progressAnimation;
+  int _startToken = 0;
 
   @override
   void initState() {
@@ -84,7 +89,7 @@ class _CoconutTypewriterAnimationState extends State<CoconutTypewriterAnimation>
     if (widget.autoStart) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (mounted) {
-          start();
+          _startWithDelay();
         }
       });
     }
@@ -99,13 +104,26 @@ class _CoconutTypewriterAnimationState extends State<CoconutTypewriterAnimation>
     }
 
     if (oldWidget.text != widget.text && widget.autoStart) {
-      start();
+      _startWithDelay();
     }
   }
 
   /// Restarts the typewriter animation from the beginning.
   void start() {
     _controller.forward(from: 0);
+  }
+
+  void _startWithDelay() {
+    final token = ++_startToken;
+    if (widget.delay <= Duration.zero) {
+      start();
+      return;
+    }
+
+    Future<void>.delayed(widget.delay, () {
+      if (!mounted || token != _startToken) return;
+      start();
+    });
   }
 
   @override

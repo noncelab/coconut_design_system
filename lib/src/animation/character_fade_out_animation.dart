@@ -15,6 +15,7 @@ class CoconutCharacterFadeOutAnimation extends StatefulWidget {
     this.maxLines,
     this.overflow,
     this.duration = const Duration(milliseconds: 1200),
+    this.delay = Duration.zero,
     this.curve = Curves.easeIn,
     this.autoStart = true,
     this.fadePortion = 0.45,
@@ -29,6 +30,7 @@ class CoconutCharacterFadeOutAnimation extends StatefulWidget {
   final int? maxLines;
   final TextOverflow? overflow;
   final Duration duration;
+  final Duration delay;
   final Curve curve;
   final bool autoStart;
   final double fadePortion;
@@ -44,6 +46,7 @@ class _CoconutCharacterFadeOutAnimationState extends State<CoconutCharacterFadeO
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   late Animation<double> _progressAnimation;
+  int _startToken = 0;
 
   @override
   void initState() {
@@ -66,7 +69,7 @@ class _CoconutCharacterFadeOutAnimationState extends State<CoconutCharacterFadeO
     if (widget.autoStart) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (mounted) {
-          start();
+          _startWithDelay();
         }
       });
     }
@@ -88,12 +91,25 @@ class _CoconutCharacterFadeOutAnimationState extends State<CoconutCharacterFadeO
     }
 
     if (oldWidget.text != widget.text && widget.autoStart) {
-      start();
+      _startWithDelay();
     }
   }
 
   void start() {
     _controller.forward(from: 0);
+  }
+
+  void _startWithDelay() {
+    final token = ++_startToken;
+    if (widget.delay <= Duration.zero) {
+      start();
+      return;
+    }
+
+    Future<void>.delayed(widget.delay, () {
+      if (!mounted || token != _startToken) return;
+      start();
+    });
   }
 
   @override

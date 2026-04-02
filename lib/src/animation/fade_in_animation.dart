@@ -6,6 +6,7 @@ class CoconutFadeInAnimation extends StatelessWidget {
     super.key,
     required this.child,
     this.duration = const Duration(milliseconds: 220),
+    this.delay = Duration.zero,
     this.curve = Curves.easeOut,
     this.autoStart = true,
     this.onCompleted,
@@ -13,6 +14,7 @@ class CoconutFadeInAnimation extends StatelessWidget {
 
   final Widget child;
   final Duration duration;
+  final Duration delay;
   final Curve curve;
   final bool autoStart;
   final VoidCallback? onCompleted;
@@ -21,6 +23,7 @@ class CoconutFadeInAnimation extends StatelessWidget {
   Widget build(BuildContext context) {
     return CoconutTransitionAnimation(
       duration: duration,
+      delay: delay,
       beginOffset: Offset.zero,
       endOffset: Offset.zero,
       beginOpacity: 0,

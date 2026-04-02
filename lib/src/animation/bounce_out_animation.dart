@@ -6,6 +6,7 @@ class CoconutBounceOutAnimation extends StatelessWidget {
     super.key,
     required this.child,
     this.duration = const Duration(milliseconds: 280),
+    this.delay = Duration.zero,
     this.endScale = 0.7,
     this.curve = Curves.easeInBack,
     this.autoStart = true,
@@ -14,6 +15,7 @@ class CoconutBounceOutAnimation extends StatelessWidget {
 
   final Widget child;
   final Duration duration;
+  final Duration delay;
   final double endScale;
   final Curve curve;
   final bool autoStart;
@@ -23,6 +25,7 @@ class CoconutBounceOutAnimation extends StatelessWidget {
   Widget build(BuildContext context) {
     return CoconutTransitionAnimation(
       duration: duration,
+      delay: delay,
       beginOffset: Offset.zero,
       endOffset: Offset.zero,
       beginOpacity: 1,
