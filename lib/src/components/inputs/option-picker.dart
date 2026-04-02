@@ -26,6 +26,7 @@ enum CoconutOptionStateEnum {
 /// - A divider below the tappable row
 /// - Semantic visual states via [coconutOptionStateEnum]
 /// - An optional [guideText] shown for warning and error states
+/// - An optional [subWidget] shown below the divider on the right side
 ///
 /// The main content row scrolls horizontally so that long text and inline widgets
 /// remain accessible without wrapping.
@@ -49,6 +50,7 @@ class CoconutOptionPicker extends StatelessWidget {
   /// - [inlineWidgets] are rendered to the right of [text] inside the same
   ///   horizontal scroll area.
   /// - [inlineSpacing] sets the horizontal gap between [text] and [inlineWidgets].
+  /// - [subWidget] displays an additional widget below the divider on the trailing side.
   ///
   /// Example usage:
   /// ```dart
@@ -73,7 +75,7 @@ class CoconutOptionPicker extends StatelessWidget {
     this.enabled = true,
     this.label,
     this.guideText,
-    this.inlineWidget,
+    this.subWidget,
     this.padding,
     this.textStyle,
     this.labelStyle,
@@ -107,12 +109,11 @@ class CoconutOptionPicker extends StatelessWidget {
   /// [CoconutOptionStateEnum.normal].
   final String? guideText;
 
-  /// The inline widget displayed to the right of the main text.
+  /// The supplementary widget displayed below the divider on the trailing side.
   ///
-  /// This widget is rendered inline with the text inside the same horizontal
-  /// scroll area, making it suitable for elements such as chips, tags,
-  /// or badges.
-  final Widget? inlineWidget;
+  /// This widget is commonly used for secondary actions or contextual content
+  /// that should be visually separated from the main picker row.
+  final Widget? subWidget;
 
   /// Callback function triggered when the picker row is tapped.
   final VoidCallback? onTap;
@@ -296,8 +297,8 @@ class CoconutOptionPicker extends StatelessWidget {
               // for using left side area
               Container(),
             ],
-            if (inlineWidget != null) ...[
-              Padding(padding: const EdgeInsets.only(top: 4, left: 2), child: inlineWidget!),
+            if (subWidget != null) ...[
+              Padding(padding: const EdgeInsets.only(top: 4, left: 2), child: subWidget!),
             ],
           ],
         )

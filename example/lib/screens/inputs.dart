@@ -358,7 +358,7 @@ class _InputsScreenState extends State<InputsScreen> {
                           CoconutOptionPicker(
                             text: 'CoconutOptionPicker Test',
                             label: 'Test Label',
-                            inlineWidget: Container(
+                            subWidget: Container(
                               decoration: BoxDecoration(
                                   border: Border.all(color: CoconutColors.cyanBlue, width: 1)),
                               child: const Text(
