@@ -24,7 +24,22 @@ export 'src/components/overlays/tooltip.dart';
 export 'src/components/overlays/toast.dart';
 export 'src/components/indicator/progress_indicator.dart';
 export 'src/components/indicator/circular_indicator.dart';
+export 'src/animation/bounce_in_animation.dart';
+export 'src/animation/bounce_out_animation.dart';
+export 'src/animation/character_fade_in_animation.dart';
+export 'src/animation/character_fade_out_animation.dart';
+export 'src/animation/fade_in_animation.dart';
+export 'src/animation/fade_out_animation.dart';
 export 'src/animation/shake_animation.dart';
+export 'src/animation/scale_in_animation.dart';
+export 'src/animation/scale_out_animation.dart';
+export 'src/animation/slide_down_animation.dart';
+export 'src/animation/slide_left_animation.dart';
+export 'src/animation/slide_right_animation.dart';
+export 'src/animation/slide_up_animation.dart';
+export 'src/animation/typewriter_animation.dart';
+export 'src/animation/zoom_in_animation.dart';
+export 'src/animation/zoom_out_animation.dart';
 
 // 📌 Theme & Styling
 export 'src/theme/typography.dart';
