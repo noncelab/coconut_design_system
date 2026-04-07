@@ -3,6 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+/// The visual style of [CoconutTextField].
+enum CoconutTextFieldStyle {
+  bordered,
+  underline,
+}
+
 /// A customizable text field widget with a Cupertino-style appearance.
 ///
 /// `CoconutTextField` supports various customization options, including:
@@ -174,6 +180,11 @@ class CoconutTextField extends StatefulWidget {
   /// The line height applied to the input text.
   final double fontHeight;
 
+  /// The visual style of the text field.
+  ///
+  /// Defaults to [CoconutTextFieldStyle.bordered].
+  final CoconutTextFieldStyle style;
+
   /// Creates a `CoconutTextField` widget.
   ///
   /// - [controller] manages the text input.
@@ -261,7 +272,8 @@ class CoconutTextField extends StatefulWidget {
       this.enableSuggestions = false,
       this.enabled = true,
       this.textOverflow = TextOverflow.ellipsis,
-      this.fontHeight = 1.4});
+      this.fontHeight = 1.4,
+      this.style = CoconutTextFieldStyle.bordered});
 
   @override
   State<CoconutTextField> createState() => _CoconutTextFieldState();
@@ -345,6 +357,15 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
 
   @override
   Widget build(BuildContext context) {
+    final bool isUnderline = widget.style == CoconutTextFieldStyle.underline;
+    final Color resolvedBorderColor = widget.isError
+        ? _errorColor
+        : _isFocus
+            ? widget.maxLength != null && _text.runes.length > widget.maxLength!
+                ? _errorColor
+                : _activeColor
+            : _placeholderColor;
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -353,17 +374,18 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
           height: widget.height,
           decoration: BoxDecoration(
             border: widget.isVisibleBorder
-                ? Border.all(
-                    color: widget.isError
-                        ? _errorColor
-                        : _isFocus
-                            ? widget.maxLength != null && _text.runes.length > widget.maxLength!
-                                ? _errorColor
-                                : _activeColor
-                            : _placeholderColor,
-                  )
+                ? isUnderline
+                    ? Border(
+                        bottom: BorderSide(
+                          color: resolvedBorderColor,
+                          width: 1,
+                        ),
+                      )
+                    : Border.all(
+                        color: resolvedBorderColor,
+                      )
                 : null,
-            borderRadius: BorderRadius.circular(widget.borderRadius),
+            borderRadius: isUnderline ? null : BorderRadius.circular(widget.borderRadius),
             color: _backgroundColor,
           ),
           child: Stack(
@@ -375,7 +397,12 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                 obscureText: widget.obscureText,
                 textAlign: widget.textAlign ?? TextAlign.start,
                 padding: widget.padding ??
-                    EdgeInsets.fromLTRB(widget.prefix != null ? 0 : 16, 20, 16, 20),
+                    EdgeInsets.fromLTRB(
+                      widget.prefix != null ? 0 : (isUnderline ? 0 : 16),
+                      isUnderline ? 12 : 20,
+                      isUnderline ? 0 : 16,
+                      isUnderline ? 12 : 20,
+                    ),
                 style: CoconutTypography.body2_14.copyWith(
                   color: _activeColor,
                   fontSize: widget.fontSize,
@@ -407,8 +434,17 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                 child: Container(
                   height: widget.prefix != null ? _prefixSize.height : null,
                   margin: widget.prefix == null
-                      ? widget.padding ?? const EdgeInsets.fromLTRB(16, 20, 16, 20)
-                      : EdgeInsets.only(left: _prefixSize.width, top: widget.padding?.top ?? 20),
+                      ? widget.padding ??
+                          EdgeInsets.fromLTRB(
+                            isUnderline ? 0 : 16,
+                            isUnderline ? 12 : 20,
+                            isUnderline ? 0 : 16,
+                            isUnderline ? 12 : 20,
+                          )
+                      : EdgeInsets.only(
+                          left: _prefixSize.width,
+                          top: widget.padding?.top ?? (isUnderline ? 12 : 20),
+                        ),
                   padding: widget.suffix != null ? const EdgeInsets.only(right: 40) : null,
                   alignment: Alignment.centerLeft,
                   child: widget.placeholderText == null || _isFocus || _text.isNotEmpty

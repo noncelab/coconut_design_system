@@ -272,6 +272,15 @@ class _InputsScreenState extends State<InputsScreen> {
                           ),
                           const SizedBox(height: 10),
                           CoconutTextField(
+                            controller: controller2,
+                            focusNode: focusNode2,
+                            brightness: brightness,
+                            style: CoconutTextFieldStyle.underline,
+                            placeholderText: 'Placeholder text',
+                            onChanged: (text) {},
+                          ),
+                          const SizedBox(height: 10),
+                          CoconutTextField(
                             controller: controller3,
                             focusNode: focusNode3,
                             brightness: brightness,
