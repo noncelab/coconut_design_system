@@ -50,6 +50,8 @@ class CoconutOptionPicker extends StatelessWidget {
   /// - [inlineWidgets] are rendered to the right of [text] inside the same
   ///   horizontal scroll area.
   /// - [inlineSpacing] sets the horizontal gap between [text] and [inlineWidgets].
+  /// - [enableTextWrap] allows the main content to wrap onto multiple lines
+  ///   instead of scrolling horizontally.
   /// - [subWidget] displays an additional widget below the divider on the trailing side.
   ///
   /// Example usage:
@@ -91,6 +93,7 @@ class CoconutOptionPicker extends StatelessWidget {
     this.coconutOptionStateEnum = CoconutOptionStateEnum.normal,
     this.inlineWidgets = const [],
     this.inlineSpacing = 8,
+    this.enableTextWrap = false,
   });
 
   /// The primary text displayed in the picker row.
@@ -174,6 +177,12 @@ class CoconutOptionPicker extends StatelessWidget {
   /// Defaults to `8.0` pixels.
   final double inlineSpacing;
 
+  /// Whether the main content should wrap onto multiple lines.
+  ///
+  /// If `false`, the content scrolls horizontally.
+  /// If `true`, the content wraps instead of scrolling.
+  final bool enableTextWrap;
+
   @override
   Widget build(BuildContext context) {
     final brightness = Theme.of(context).brightness;
@@ -208,6 +217,22 @@ class CoconutOptionPicker extends StatelessWidget {
     final resolvedLabelColor = labelColor ?? CoconutColors.gray500;
     final resolvedLabelStyle =
         labelStyle ?? CoconutTypography.body3_12.setColor(resolvedLabelColor);
+    final List<InlineSpan> wrappedContentSpans = [
+      TextSpan(
+        text: text,
+        style: resolvedTextStyle,
+      ),
+      for (final widget in inlineWidgets) ...[
+        WidgetSpan(
+          alignment: PlaceholderAlignment.middle,
+          child: SizedBox(width: inlineSpacing),
+        ),
+        WidgetSpan(
+          alignment: PlaceholderAlignment.middle,
+          child: widget,
+        ),
+      ],
+    ];
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -235,25 +260,30 @@ class CoconutOptionPicker extends StatelessWidget {
                 child: Row(
                   children: [
                     Expanded(
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        // Scroll the full inline content, including the leading text.
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              text,
-                              maxLines: 1,
-                              softWrap: false,
-                              style: resolvedTextStyle,
+                      child: enableTextWrap
+                          ? Text.rich(
+                              TextSpan(children: wrappedContentSpans),
+                              softWrap: true,
+                            )
+                          : SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              // Scroll the full inline content, including the leading text.
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    text,
+                                    maxLines: 1,
+                                    softWrap: false,
+                                    style: resolvedTextStyle,
+                                  ),
+                                  for (final widget in inlineWidgets) ...[
+                                    SizedBox(width: inlineSpacing),
+                                    widget,
+                                  ],
+                                ],
+                              ),
                             ),
-                            for (final widget in inlineWidgets) ...[
-                              SizedBox(width: inlineSpacing),
-                              widget,
-                            ],
-                          ],
-                        ),
-                      ),
                     ),
                     const SizedBox(width: 8),
                     SvgPicture.asset(
