@@ -72,8 +72,8 @@ class CoconutOptionPicker extends StatelessWidget {
   /// ```
   const CoconutOptionPicker({
     super.key,
-    required this.text,
     required this.onTap,
+    this.text,
     this.enabled = true,
     this.label,
     this.guideText,
@@ -99,7 +99,7 @@ class CoconutOptionPicker extends StatelessWidget {
   /// The primary text displayed in the picker row.
   ///
   /// This usually represents the currently selected value.
-  final String text;
+  final String? text;
 
   /// An optional label displayed above the picker row.
   ///
@@ -218,18 +218,20 @@ class CoconutOptionPicker extends StatelessWidget {
     final resolvedLabelStyle =
         labelStyle ?? CoconutTypography.body3_12.setColor(resolvedLabelColor);
     final List<InlineSpan> wrappedContentSpans = [
-      TextSpan(
-        text: text,
-        style: resolvedTextStyle,
-      ),
-      for (final widget in inlineWidgets) ...[
-        WidgetSpan(
-          alignment: PlaceholderAlignment.middle,
-          child: SizedBox(width: inlineSpacing),
+      if (text != null)
+        TextSpan(
+          text: text,
+          style: resolvedTextStyle,
         ),
+      for (int index = 0; index < inlineWidgets.length; index++) ...[
+        if (text != null || index > 0)
+          WidgetSpan(
+            alignment: PlaceholderAlignment.middle,
+            child: SizedBox(width: inlineSpacing),
+          ),
         WidgetSpan(
           alignment: PlaceholderAlignment.middle,
-          child: widget,
+          child: inlineWidgets[index],
         ),
       ],
     ];
@@ -271,12 +273,14 @@ class CoconutOptionPicker extends StatelessWidget {
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Text(
-                                    text,
-                                    maxLines: 1,
-                                    softWrap: false,
-                                    style: resolvedTextStyle,
-                                  ),
+                                  if (text != null) ...[
+                                    Text(
+                                      text!,
+                                      maxLines: 1,
+                                      softWrap: false,
+                                      style: resolvedTextStyle,
+                                    ),
+                                  ],
                                   for (final widget in inlineWidgets) ...[
                                     SizedBox(width: inlineSpacing),
                                     widget,
