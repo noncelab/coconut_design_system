@@ -172,6 +172,11 @@ class CoconutTextField extends StatefulWidget {
   /// If `false`, the text field is disabled and does not respond to user input.
   final bool enabled;
 
+  /// Whether tapping outside the text field should remove focus.
+  ///
+  /// Defaults to `false`.
+  final bool unfocusOnTapOutside;
+
   /// The text overflow behavior of the text field.
   ///
   /// If `null`, it defaults to `TextOverflow.ellipsis`.
@@ -213,6 +218,7 @@ class CoconutTextField extends StatefulWidget {
   /// - [autocorrect] enables autocorrect.
   /// - [enableSuggestions] enables suggestions while typing.
   /// - [enabled] enables the text field.
+  /// - [unfocusOnTapOutside] removes focus when the user taps outside the field.
   /// - [textOverflow] controls the text overflow behavior.
   /// Example usage:
   /// ```dart
@@ -271,6 +277,7 @@ class CoconutTextField extends StatefulWidget {
       this.autocorrect = false,
       this.enableSuggestions = false,
       this.enabled = true,
+      this.unfocusOnTapOutside = false,
       this.textOverflow = TextOverflow.ellipsis,
       this.fontHeight = 1.4,
       this.style = CoconutTextFieldStyle.bordered});
@@ -428,6 +435,9 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                 autocorrect: widget.autocorrect,
                 enableSuggestions: widget.enableSuggestions,
                 onEditingComplete: widget.onEditingComplete,
+                onTapOutside: widget.unfocusOnTapOutside
+                    ? (_) => widget.focusNode.unfocus()
+                    : null,
                 enabled: widget.enabled,
               ),
               IgnorePointer(
