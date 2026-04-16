@@ -316,13 +316,15 @@ class CoconutOptionPicker extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             if (coconutOptionStateEnum != CoconutOptionStateEnum.normal && guideText != null) ...[
-              Padding(
-                padding: const EdgeInsets.only(top: 4, left: 2),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    guideText!,
-                    style: resolveGuideStyle,
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 4, left: 2),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      guideText!,
+                      style: resolveGuideStyle,
+                    ),
                   ),
                 ),
               )
