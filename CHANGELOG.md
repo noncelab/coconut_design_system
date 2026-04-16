@@ -5,6 +5,29 @@ This project follows **[Semantic Versioning](https://semver.org/)**.
 
 ---
 
+
+## **[0.9.15] - 2026-04-16**
+
+### ✨ Features
+
+- **TextField**
+  - Added `textHeight` option to customize text height.
+  - Added `fontHeight` option to customize text height.
+  - Added `style` support to `CoconutTextField`.
+  - Added `unfocusOnOutsideTap` option to `CoconutTextField`.
+
+- **OptionPicker**
+  - Added `CoconutOptionPicker` component.
+  - Added `enableTextWrap` option to support multiline text.
+
+- **Inputs**
+  - Added example code for `OptionPicker`.
+
+- **Animations**
+  - Added `CoconutAnimations`.
+
+---
+
 ## **[0.9.14] - 2026-03-24**
 
 ### 🛠 Fixes
