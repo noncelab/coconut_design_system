@@ -1,6 +1,7 @@
 import 'package:coconut_design_system/coconut_design_system.dart';
 import 'package:example/provider/appbar_provider.dart';
 import 'package:example/screens/appbar.dart';
+import 'package:example/screens/animation.dart';
 import 'package:example/screens/button.dart';
 import 'package:example/screens/color.dart';
 import 'package:example/screens/home.dart';
@@ -114,6 +115,11 @@ final GoRouter _router = GoRouter(
       name: 'overlays',
       path: '/overlays',
       builder: (context, state) => const OverlaysScreen(),
+    ),
+    GoRoute(
+      name: 'animation',
+      path: '/animation',
+      builder: (context, state) => const AnimationScreen(),
     ),
   ],
 );
