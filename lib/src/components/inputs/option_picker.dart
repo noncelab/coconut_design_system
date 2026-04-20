@@ -128,6 +128,7 @@ class CoconutOptionPicker extends StatelessWidget {
 
   /// Padding applied inside the tappable picker row.
   final EdgeInsetsGeometry? padding;
+  
 
   /// Custom text style for the main [text].
   final TextStyle? textStyle;
