@@ -44,7 +44,7 @@ class CoconutOptionPicker extends StatelessWidget {
   /// - [textColor], [labelColor], [iconColor], [dividerColor], and [guideTextColor]
   ///   customize colors when not overridden by the semantic state styling.
   /// - [iconSize] sets the size of the trailing chevron icon.
-  /// - [showDivider] toggles the divider below the row.
+  /// - [showUnderline] toggles the divider below the row.
   /// - [borderRadius] applies the top-left and top-right ripple radius.
   /// - [coconutOptionStateEnum] controls semantic styling for warning and error states.
   /// - [inlineWidgets] are rendered to the right of [text] inside the same
@@ -86,7 +86,7 @@ class CoconutOptionPicker extends StatelessWidget {
     this.labelColor,
     this.iconColor,
     this.iconSize = 24,
-    this.showDivider = true,
+    this.showUnderline = true,
     this.dividerColor,
     this.guideTextColor,
     this.borderRadius,
@@ -153,7 +153,7 @@ class CoconutOptionPicker extends StatelessWidget {
   final double iconSize;
 
   /// Whether to show the divider below the picker row.
-  final bool showDivider;
+  final bool showUnderline;
 
   /// Custom color for the divider.
   final Color? dividerColor;
@@ -210,10 +210,6 @@ class CoconutOptionPicker extends StatelessWidget {
         getColorByState(guideTextColor ?? CoconutColors.onGray800(brightness));
     final resolveGuideStyle =
         guideStyle ?? CoconutTypography.caption_10.setColor(resolvedGuideTextColor);
-    final resolvedRadius = BorderRadius.only(
-      topRight: Radius.circular(borderRadius ?? 0),
-      topLeft: Radius.circular(borderRadius ?? 0),
-    );
     final resolvedLabelColor = labelColor ?? CoconutColors.gray500;
     final resolvedLabelStyle =
         labelStyle ?? CoconutTypography.body3_12.setColor(resolvedLabelColor);
@@ -248,64 +244,55 @@ class CoconutOptionPicker extends StatelessWidget {
             ),
           )
         ],
-        Material(
-          color: Colors.transparent,
-          child: InkWell(
-            onTap: enabled ? onTap : null,
-            // Ripple is limited to the tappable row above the divider.
-            borderRadius: resolvedRadius,
-            splashColor: CoconutColors.onBlack(brightness).withValues(alpha: 0.08),
-            highlightColor: CoconutColors.onBlack(brightness).withValues(alpha: 0.04),
-            child: Ink(
-              child: Padding(
-                padding: padding ?? EdgeInsets.fromLTRB(2, label != null ? 6 : 12, 4, 8),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: enableTextWrap
-                          ? Text.rich(
-                              TextSpan(children: wrappedContentSpans),
-                              softWrap: true,
-                            )
-                          : SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              // Scroll the full inline content, including the leading text.
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  if (text != null) ...[
-                                    Text(
-                                      text!,
-                                      maxLines: 1,
-                                      softWrap: false,
-                                      style: resolvedTextStyle,
-                                    ),
-                                  ],
-                                  for (final widget in inlineWidgets) ...[
-                                    SizedBox(width: inlineSpacing),
-                                    widget,
-                                  ],
-                                ],
-                              ),
-                            ),
-                    ),
-                    const SizedBox(width: 8),
-                    SvgPicture.asset(
-                      'packages/coconut_design_system/assets/svg/pulldown_close.svg',
-                      width: iconSize,
-                      height: iconSize,
-                      colorFilter: ColorFilter.mode(
-                        resolvedIconColor,
-                        BlendMode.srcIn,
-                      ),
-                    ),
-                  ],
+        _ShrinkOnTap(
+          onTap: enabled ? onTap : null,
+          child: Padding(
+            padding: padding ?? EdgeInsets.fromLTRB(2, label != null ? 6 : 0, 4, 8),
+            child: Row(
+              children: [
+                Expanded(
+                  child: enableTextWrap
+                      ? Text.rich(
+                          TextSpan(children: wrappedContentSpans),
+                          softWrap: true,
+                        )
+                      : SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          // Scroll the full inline content, including the leading text.
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              if (text != null) ...[
+                                Text(
+                                  text!,
+                                  maxLines: 1,
+                                  softWrap: false,
+                                  style: resolvedTextStyle,
+                                ),
+                              ],
+                              for (final widget in inlineWidgets) ...[
+                                SizedBox(width: inlineSpacing),
+                                widget,
+                              ],
+                            ],
+                          ),
+                        ),
                 ),
-              ),
+                const SizedBox(width: 8),
+                SvgPicture.asset(
+                  'packages/coconut_design_system/assets/svg/pulldown_close.svg',
+                  width: iconSize,
+                  height: iconSize,
+                  colorFilter: ColorFilter.mode(
+                    resolvedIconColor,
+                    BlendMode.srcIn,
+                  ),
+                ),
+              ],
             ),
           ),
         ),
-        if (showDivider)
+        if (showUnderline)
           Divider(
             height: 1,
             thickness: 1,
@@ -339,6 +326,53 @@ class CoconutOptionPicker extends StatelessWidget {
           ],
         )
       ],
+    );
+  }
+}
+
+/// Internal helper that shrinks its [child] slightly while it is being pressed.
+///
+/// Used instead of [InkWell] to provide a scale-based press feedback without
+/// any ripple or background color change.
+class _ShrinkOnTap extends StatefulWidget {
+  const _ShrinkOnTap({
+    required this.child,
+    this.onTap,
+  });
+
+  static const double _pressedScale = 0.97;
+  static const Duration _duration = Duration(milliseconds: 100);
+
+  final Widget child;
+  final VoidCallback? onTap;
+
+  @override
+  State<_ShrinkOnTap> createState() => _ShrinkOnTapState();
+}
+
+class _ShrinkOnTapState extends State<_ShrinkOnTap> {
+  bool _pressed = false;
+
+  void _setPressed(bool value) {
+    if (widget.onTap == null) return;
+    if (_pressed == value) return;
+    setState(() => _pressed = value);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: widget.onTap,
+      onTapDown: (_) => _setPressed(true),
+      onTapUp: (_) => _setPressed(false),
+      onTapCancel: () => _setPressed(false),
+      child: AnimatedScale(
+        scale: _pressed ? _ShrinkOnTap._pressedScale : 1.0,
+        duration: _ShrinkOnTap._duration,
+        curve: Curves.easeOut,
+        child: widget.child,
+      ),
     );
   }
 }
