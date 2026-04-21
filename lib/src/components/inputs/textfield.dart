@@ -513,13 +513,13 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
             ],
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(top: 4),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              if (widget.errorText != null && widget.isError == true) ...{
-                Expanded(
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            if (widget.errorText != null && widget.isError == true) ...{
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 4),
                   child: Text(
                     widget.errorText ?? '',
                     maxLines: widget.isErrorTextMultiline ? null : 1,
@@ -530,9 +530,12 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                       color: _errorColor,
                     ),
                   ),
-                )
-              } else if (widget.descriptionText != null) ...{
-                Expanded(
+                ),
+              )
+            } else if (widget.descriptionText != null) ...{
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 4),
                   child: Text(
                     widget.descriptionText ?? '',
                     style: CoconutTypography.body3_12.copyWith(
@@ -541,18 +544,21 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                     textScaler: const TextScaler.linear(1.0),
                   ),
                 ),
-              },
-              if (widget.maxLength != null && widget.isLengthVisible) ...{
-                Container(),
-                Text(
+              ),
+            },
+            if (widget.maxLength != null && widget.isLengthVisible) ...{
+              Container(),
+              Padding(
+                padding: const EdgeInsets.only(top: 4),
+                child: Text(
                   '${_text.runes.length}/${widget.maxLength}',
                   style: CoconutTypography.body3_12_Number.copyWith(
                     color: _isFocus ? _activeColor : _placeholderColor,
                   ),
                 ),
-              }
-            ],
-          ),
+              ),
+            }
+          ],
         ),
       ],
     );
