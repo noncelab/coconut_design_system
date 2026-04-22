@@ -516,6 +516,7 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             if (widget.errorText != null && widget.isError == true) ...{
               Expanded(
