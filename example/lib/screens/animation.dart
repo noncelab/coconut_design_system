@@ -326,7 +326,7 @@ class _AnimationScreenState extends State<AnimationScreen> {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
-        color: CoconutColors.primary.withValues(alpha: 0.2),
+        color: CoconutColors.primary.withOpacity(0.2),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Text(

@@ -111,7 +111,7 @@ class CoconutColors {
   static Color disabledButtonLabelColor(Brightness brightness) => brightness == Brightness.dark ? gray700 : gray350;
 
   static Color pulldownMenuShadowColor(Brightness brightness) =>
-      brightness == Brightness.dark ? white.withValues(alpha: 0.1) : black.withValues(alpha: 0.5);
+      brightness == Brightness.dark ? white.withOpacity(0.1) : black.withOpacity(0.5);
   static Color pulldownMenuDividerColor(Brightness brightness) => brightness == Brightness.dark ? black : gray200;
 
   // TODO: green
