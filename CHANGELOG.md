@@ -5,6 +5,22 @@ This project follows **[Semantic Versioning](https://semver.org/)**.
 
 ---
 
+## **[0.9.16] - 2026-04-22**
+
+### 🛠 Fixes
+
+- **OptionPicker**
+  - Updated the default padding.
+  - Removed `InkWell`.
+  - Added `shrinkAnimation`.
+
+- **TextField**
+  - Aligned suffix text within the padded content area while keeping the right edge anchored.
+  - Moved top spacing from the footer row to visible children only.
+  - Aligned footer content to the top using `crossAxisAlignment.start`.
+
+---
+
 
 ## **[0.9.15] - 2026-04-16**
 
