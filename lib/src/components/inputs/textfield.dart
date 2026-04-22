@@ -296,7 +296,9 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
   Brightness brightness = CoconutTheme.brightness();
 
   final GlobalKey _prefixGlobalKey = GlobalKey();
+  final GlobalKey _suffixGlobalKey = GlobalKey();
   Size _prefixSize = const Size(0, 0);
+  Size _suffixSize = const Size(0, 0);
 
   String _text = '';
   String _placeholderText = '';
@@ -341,19 +343,14 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
     widget.controller.addListener(_controllerListener);
     widget.focusNode.addListener(_focusNodeListener);
     _updateData();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (_prefixGlobalKey.currentContext != null) {
-        final prefixRenderBox = _prefixGlobalKey.currentContext?.findRenderObject() as RenderBox;
-        _prefixSize = prefixRenderBox.size;
-        setState(() {});
-      }
-    });
+    WidgetsBinding.instance.addPostFrameCallback((_) => _measureAffixes());
   }
 
   @override
   void didUpdateWidget(covariant CoconutTextField oldWidget) {
     super.didUpdateWidget(oldWidget);
     _updateData();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _measureAffixes());
   }
 
   @override
@@ -363,9 +360,38 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
     super.dispose();
   }
 
+  void _measureAffixes() {
+    Size nextPrefixSize = const Size(0, 0);
+    Size nextSuffixSize = const Size(0, 0);
+
+    if (_prefixGlobalKey.currentContext != null) {
+      final prefixRenderBox = _prefixGlobalKey.currentContext?.findRenderObject() as RenderBox;
+      nextPrefixSize = prefixRenderBox.size;
+    }
+
+    if (_suffixGlobalKey.currentContext != null) {
+      final suffixRenderBox = _suffixGlobalKey.currentContext?.findRenderObject() as RenderBox;
+      nextSuffixSize = suffixRenderBox.size;
+    }
+
+    if (nextPrefixSize != _prefixSize || nextSuffixSize != _suffixSize) {
+      setState(() {
+        _prefixSize = nextPrefixSize;
+        _suffixSize = nextSuffixSize;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final bool isUnderline = widget.style == CoconutTextFieldStyle.underline;
+    final EdgeInsets resolvedPadding = widget.padding ??
+        EdgeInsets.fromLTRB(
+          widget.prefix != null ? 0 : (isUnderline ? 0 : 16),
+          isUnderline ? 12 : 20,
+          isUnderline ? 0 : 16,
+          isUnderline ? 12 : 20,
+        );
     final Color resolvedBorderColor = widget.isError
         ? _errorColor
         : _isFocus
@@ -404,13 +430,9 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                 inputFormatters: widget.textInputFormatter,
                 obscureText: widget.obscureText,
                 textAlign: widget.textAlign ?? TextAlign.start,
-                padding: widget.padding ??
-                    EdgeInsets.fromLTRB(
-                      widget.prefix != null ? 0 : (isUnderline ? 0 : 16),
-                      isUnderline ? 12 : 20,
-                      isUnderline ? 0 : 16,
-                      isUnderline ? 12 : 20,
-                    ),
+                padding: resolvedPadding.copyWith(
+                  right: resolvedPadding.right + _suffixSize.width,
+                ),
                 style: CoconutTypography.body2_14.copyWith(
                   color: _activeColor,
                   fontSize: widget.fontSize,
@@ -428,10 +450,10 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                   key: _prefixGlobalKey,
                   child: widget.prefix,
                 ),
-                suffix: widget.suffix,
+                suffix: null,
                 keyboardType: widget.textInputType,
                 textInputAction: widget.textInputAction,
-                textAlignVertical: TextAlignVertical.bottom,
+                textAlignVertical: TextAlignVertical.center,
                 enableInteractiveSelection: widget.enableInteractiveSelection,
                 autocorrect: widget.autocorrect,
                 enableSuggestions: widget.enableSuggestions,
@@ -443,18 +465,12 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                 child: Container(
                   height: widget.prefix != null ? _prefixSize.height : null,
                   margin: widget.prefix == null
-                      ? widget.padding ??
-                          EdgeInsets.fromLTRB(
-                            isUnderline ? 0 : 16,
-                            isUnderline ? 12 : 20,
-                            isUnderline ? 0 : 16,
-                            isUnderline ? 12 : 20,
-                          )
+                      ? resolvedPadding
                       : EdgeInsets.only(
                           left: _prefixSize.width,
-                          top: widget.padding?.top ?? (isUnderline ? 12 : 20),
+                          top: resolvedPadding.top,
                         ),
-                  padding: widget.suffix != null ? const EdgeInsets.only(right: 40) : null,
+                  padding: widget.suffix != null ? EdgeInsets.only(right: _suffixSize.width) : null,
                   alignment: Alignment.centerLeft,
                   child: widget.placeholderText == null || _isFocus || _text.isNotEmpty
                       ? Text(
@@ -479,16 +495,32 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                         ),
                 ),
               ),
+              if (widget.suffix != null)
+                Positioned.fill(
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      top: resolvedPadding.top,
+                      bottom: resolvedPadding.bottom,
+                    ),
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: KeyedSubtree(
+                        key: _suffixGlobalKey,
+                        child: widget.suffix!,
+                      ),
+                    ),
+                  ),
+                ),
             ],
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(top: 4),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              if (widget.errorText != null && widget.isError == true) ...{
-                Expanded(
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            if (widget.errorText != null && widget.isError == true) ...{
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 4),
                   child: Text(
                     widget.errorText ?? '',
                     maxLines: widget.isErrorTextMultiline ? null : 1,
@@ -499,9 +531,12 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                       color: _errorColor,
                     ),
                   ),
-                )
-              } else if (widget.descriptionText != null) ...{
-                Expanded(
+                ),
+              )
+            } else if (widget.descriptionText != null) ...{
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 4),
                   child: Text(
                     widget.descriptionText ?? '',
                     style: CoconutTypography.body3_12.copyWith(
@@ -510,18 +545,21 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                     textScaler: const TextScaler.linear(1.0),
                   ),
                 ),
-              },
-              if (widget.maxLength != null && widget.isLengthVisible) ...{
-                Container(),
-                Text(
+              ),
+            },
+            if (widget.maxLength != null && widget.isLengthVisible) ...{
+              Container(),
+              Padding(
+                padding: const EdgeInsets.only(top: 4),
+                child: Text(
                   '${_text.runes.length}/${widget.maxLength}',
                   style: CoconutTypography.body3_12_Number.copyWith(
                     color: _isFocus ? _activeColor : _placeholderColor,
                   ),
                 ),
-              }
-            ],
-          ),
+              ),
+            }
+          ],
         ),
       ],
     );

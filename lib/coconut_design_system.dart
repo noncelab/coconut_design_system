@@ -11,7 +11,7 @@ export 'src/components/appbar_button.dart';
 export 'src/components/inputs/tag_chip.dart';
 export 'src/components/inputs/checkbox.dart';
 export 'src/components/inputs/chip.dart';
-export 'src/components/inputs/option-picker.dart';
+export 'src/components/inputs/option_picker.dart';
 export 'src/components/inputs/pulldown.dart';
 export 'src/components/inputs/stepper.dart';
 export 'src/components/inputs/switch.dart';
