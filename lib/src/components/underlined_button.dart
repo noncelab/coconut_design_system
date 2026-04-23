@@ -114,7 +114,7 @@ class _CoconutUnderlinedButtonState extends State<CoconutUnderlinedButton> {
                 ),
               ),
               Container(
-                width: _getTextWidth(context),
+                width: _getTextWidth(context) + 4,
                 height: widget.lineWidth,
                 color: _getColorForBrightness(brightness),
               ),
