@@ -505,17 +505,16 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                 ),
               ),
               if (widget.suffix != null)
-                Positioned.fill(
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      right: resolvedPadding.right,
-                    ),
-                    child: Align(
-                      alignment: Alignment.centerRight,
-                      child: KeyedSubtree(
-                        key: _suffixGlobalKey,
-                        child: widget.suffix!,
-                      ),
+                Positioned(
+                  right: resolvedPadding.right,
+                  top: 0,
+                  bottom: 0,
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    widthFactor: 1.0,
+                    child: KeyedSubtree(
+                      key: _suffixGlobalKey,
+                      child: widget.suffix!,
                     ),
                   ),
                 ),
