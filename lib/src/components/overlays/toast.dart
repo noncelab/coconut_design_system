@@ -129,13 +129,14 @@ class CoconutToast {
                 child: MediaQuery(
                   data: MediaQuery.of(context).copyWith(textScaler: TextScaler.noScaling),
                   child: Container(
-                    margin: const EdgeInsets.all(12),
+                    margin: EdgeInsets.only(
+                        left: 16, right: 16, bottom: MediaQuery.sizeOf(context).height / 13),
                     padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
                     decoration: BoxDecoration(
-                      color: backgroundColor ?? CoconutColors.onGray100(brightness),
+                      color: backgroundColor ?? _getBottomToastBackgroundColor(brightness),
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(
-                        color: borderColor ?? CoconutColors.onGray300(brightness),
+                        color: borderColor ?? _getBottomToastBorderColor(brightness),
                         width: 0.5,
                       ),
                     ),
@@ -144,8 +145,7 @@ class CoconutToast {
                       overflow: TextOverflow.ellipsis,
                       style: CoconutTypography.body2_14.copyWith(
                         decoration: TextDecoration.none,
-                        color: textColor ?? CoconutColors.onGray900(brightness),
-                        height: 1.0,
+                        color: textColor ?? _getBottomToastTextColor(brightness),
                       ),
                     ),
                   ),
@@ -159,6 +159,18 @@ class CoconutToast {
 
     Overlay.of(context).insert(overlayEntry);
     dismiss(isDelay: true);
+  }
+
+  static Color _getBottomToastTextColor(Brightness brightness) {
+    return brightness == Brightness.dark ? CoconutColors.white : CoconutColors.black;
+  }
+
+  static Color _getBottomToastBackgroundColor(Brightness brightness) {
+    return brightness == Brightness.dark ? CoconutColors.gray800 : CoconutColors.gray200;
+  }
+
+  static Color _getBottomToastBorderColor(Brightness brightness) {
+    return brightness == Brightness.dark ? CoconutColors.gray900 : CoconutColors.gray150;
   }
 
   /// Displays a toast message at the top of the screen.
