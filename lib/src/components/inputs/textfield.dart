@@ -506,7 +506,7 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
               ),
               if (widget.suffix != null)
                 Positioned(
-                  right: resolvedPadding.right,
+                  right: 0,
                   top: 0,
                   bottom: 0,
                   child: Align(
