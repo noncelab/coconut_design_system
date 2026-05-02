@@ -15,6 +15,9 @@ class InputsScreen extends StatefulWidget {
 class _InputsScreenState extends State<InputsScreen> {
   CoconutChipStatus chipStatus = CoconutChipStatus.unselected;
   CoconutOptionStateEnum optionPickerState = CoconutOptionStateEnum.warning;
+  DateTime calendarFocusedMonth = DateUtils.dateOnly(DateTime.now());
+  DateTime calendarSelectedDate = DateUtils.dateOnly(DateTime.now());
+  TimeOfDay calendarSelectedTime = const TimeOfDay(hour: 9, minute: 21);
 
   bool isCheckbox1Selected = false;
   bool isCheckbox2Selected = false;
@@ -462,6 +465,41 @@ class _InputsScreenState extends State<InputsScreen> {
                                 color: CoconutColors.yellow,
                               ),
                             ],
+                          ),
+                          CoconutLayout.spacing_600h,
+                          _titleBox('Coconut Date Picker', brightness),
+                          CoconutDatePicker(
+                            width: 320,
+                            locale: const Locale('en'),
+                            initialDate: calendarSelectedDate,
+                            firstDate: DateTime(1900),
+                            lastDate: DateTime(2100),
+                            currentDate: DateUtils.dateOnly(DateTime.now()),
+                            headerHeadlineStyle: CoconutTypography.body1_16,
+                            headerHelpStyle: CoconutTypography.body3_12,
+                            modeToggleStyle: CoconutTypography.body1_16,
+                            controlColor: CoconutColors.onBlack(brightness),
+                            weekdayStyle:
+                                CoconutTypography.body2_14.setColor(CoconutColors.blueGray),
+                            dayStyle: CoconutTypography.body1_16,
+                            yearStyle: CoconutTypography.body2_14_Number,
+                            selectedDayBackgroundColor: CoconutColors.onGray800(brightness),
+                            showTimeSelector: true,
+                            selectedTime: calendarSelectedTime,
+                            onTimeChanged: (time) {
+                              calendarSelectedTime = time;
+                              setState(() {});
+                            },
+                            onDateChanged: (date) {
+                              calendarSelectedDate = date;
+                              calendarFocusedMonth = DateTime(date.year, date.month);
+                              setState(() {});
+                            },
+                            onDisplayedMonthChanged: (month) {
+                              calendarFocusedMonth = month;
+                            },
+                            amLabel: '오전',
+                            pmLabel: '오후',
                           ),
                           CoconutLayout.spacing_2500h,
                         ],

@@ -15,6 +15,7 @@ import 'package:example/screens/segmented_control.dart';
 import 'package:example/screens/typography.dart';
 import 'package:example/screens/underlined_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:example/provider/theme_provider.dart';
@@ -43,6 +44,13 @@ class MyApp extends StatelessWidget {
       theme: CoconutThemeData.lightTheme,
       darkTheme: CoconutThemeData.darkTheme,
       themeMode: themeProvider.themeMode,
+      localizationsDelegates: GlobalMaterialLocalizations.delegates,
+      supportedLocales: const [
+        Locale('en'),
+        Locale('ko'),
+        Locale('ja'),
+        Locale('es'),
+      ],
       routerConfig: _router,
     );
   }
