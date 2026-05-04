@@ -536,88 +536,91 @@ class _CoconutDatePickerTimeSelectorState extends State<_CoconutDatePickerTimeSe
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Divider(
-          height: 1,
-          thickness: 1,
-          color: widget.dividerColor,
-        ),
-        const SizedBox(height: 16),
-        Row(
-          children: [
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: Text(
-                  widget.label,
-                  style: widget.labelStyle,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Divider(
+            height: 1,
+            thickness: 1,
+            color: widget.dividerColor,
+          ),
+          const SizedBox(height: 16),
+          Row(
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: Text(
+                    widget.label,
+                    style: widget.labelStyle,
+                  ),
                 ),
               ),
-            ),
-            Container(
-              width: 90,
-              height: 44,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: widget.timeFieldBackgroundColor,
-                borderRadius: BorderRadius.circular(8),
+              Container(
+                width: 90,
+                height: 44,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: widget.timeFieldBackgroundColor,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _TimeInputField(
+                      controller: _hourController,
+                      focusNode: _hourFocusNode,
+                      enabled: widget.onTimeChanged != null,
+                      textStyle: widget.timeTextStyle,
+                      minValue: 1,
+                      maxValue: 12,
+                      onChanged: _handleHourChanged,
+                      onKeyEvent: _handleHourKeyEvent,
+                    ),
+                    Text(
+                      ' : ',
+                      style: widget.timeTextStyle,
+                    ),
+                    _TimeInputField(
+                      controller: _minuteController,
+                      focusNode: _minuteFocusNode,
+                      enabled: widget.onTimeChanged != null,
+                      textStyle: widget.timeTextStyle,
+                      minValue: 0,
+                      maxValue: 59,
+                      onBackspaceWhenEmpty: _handleMinuteBackspaceWhenEmpty,
+                    ),
+                  ],
+                ),
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  _TimeInputField(
-                    controller: _hourController,
-                    focusNode: _hourFocusNode,
-                    enabled: widget.onTimeChanged != null,
-                    textStyle: widget.timeTextStyle,
-                    minValue: 1,
-                    maxValue: 12,
-                    onChanged: _handleHourChanged,
-                    onKeyEvent: _handleHourKeyEvent,
-                  ),
-                  Text(
-                    ' : ',
-                    style: widget.timeTextStyle,
-                  ),
-                  _TimeInputField(
-                    controller: _minuteController,
-                    focusNode: _minuteFocusNode,
-                    enabled: widget.onTimeChanged != null,
-                    textStyle: widget.timeTextStyle,
-                    minValue: 0,
-                    maxValue: 59,
-                    onBackspaceWhenEmpty: _handleMinuteBackspaceWhenEmpty,
-                  ),
-                ],
+              const SizedBox(width: 16),
+              Container(
+                width: 120,
+                height: 44,
+                padding: const EdgeInsets.all(2),
+                decoration: BoxDecoration(
+                  color: widget.periodFieldBackgroundColor,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: _PeriodSegmentedControl(
+                  isAm: _isAm,
+                  textStyle: widget.periodTextStyle,
+                  selectedBackgroundColor: widget.selectedPeriodBackgroundColor,
+                  selectedBorderColor: widget.selectedPeriodBorderColor,
+                  selectedTextColor: widget.selectedPeriodTextColor,
+                  unselectedTextColor: widget.unselectedPeriodTextColor,
+                  amLabel: widget.amLabel,
+                  pmLabel: widget.pmLabel,
+                  onChanged:
+                      widget.onTimeChanged == null ? null : (isAm) => _updatePeriod(isAm: isAm),
+                ),
               ),
-            ),
-            const SizedBox(width: 16),
-            Container(
-              width: 120,
-              height: 44,
-              padding: const EdgeInsets.all(2),
-              decoration: BoxDecoration(
-                color: widget.periodFieldBackgroundColor,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: _PeriodSegmentedControl(
-                isAm: _isAm,
-                textStyle: widget.periodTextStyle,
-                selectedBackgroundColor: widget.selectedPeriodBackgroundColor,
-                selectedBorderColor: widget.selectedPeriodBorderColor,
-                selectedTextColor: widget.selectedPeriodTextColor,
-                unselectedTextColor: widget.unselectedPeriodTextColor,
-                amLabel: widget.amLabel,
-                pmLabel: widget.pmLabel,
-                onChanged:
-                    widget.onTimeChanged == null ? null : (isAm) => _updatePeriod(isAm: isAm),
-              ),
-            ),
-          ],
-        ),
-      ],
+            ],
+          ),
+        ],
+      ),
     );
   }
 
