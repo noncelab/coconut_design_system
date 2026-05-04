@@ -856,6 +856,9 @@ class _TimeInputField extends StatelessWidget {
             counterText: '',
           ),
           onChanged: onChanged,
+          onTapOutside: (_) {
+            focusNode.unfocus();
+          },
         ),
       ),
     );
