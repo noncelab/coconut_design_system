@@ -330,19 +330,16 @@ class CoconutDatePicker extends StatelessWidget {
               children: [
                 SizedBox(
                   height: _calendarDatePickerHeight,
-                  child: ScrollConfiguration(
-                    behavior: const _CalendarDatePickerScrollBehavior(),
-                    child: CalendarDatePicker(
-                      key: ValueKey<DateTime>(DateUtils.dateOnly(resolvedInitialDate)),
-                      initialDate: resolvedInitialDate,
-                      firstDate: firstDate,
-                      lastDate: lastDate,
-                      currentDate: currentDate,
-                      onDateChanged: onDateChanged,
-                      onDisplayedMonthChanged: onDisplayedMonthChanged,
-                      initialCalendarMode: initialCalendarMode,
-                      selectableDayPredicate: selectableDayPredicate,
-                    ),
+                  child: CalendarDatePicker(
+                    key: ValueKey<DateTime>(DateUtils.dateOnly(resolvedInitialDate)),
+                    initialDate: resolvedInitialDate,
+                    firstDate: firstDate,
+                    lastDate: lastDate,
+                    currentDate: currentDate,
+                    onDateChanged: onDateChanged,
+                    onDisplayedMonthChanged: onDisplayedMonthChanged,
+                    initialCalendarMode: initialCalendarMode,
+                    selectableDayPredicate: selectableDayPredicate,
                   ),
                 ),
                 if (showTimeSelector)
