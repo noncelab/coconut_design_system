@@ -162,15 +162,15 @@ class CoconutToast {
   }
 
   static Color _getBottomToastTextColor(Brightness brightness) {
-    return brightness == Brightness.dark ? CoconutColors.white : CoconutColors.black;
+    return brightness == Brightness.dark ? CoconutColors.gray900 : CoconutColors.white;
   }
 
   static Color _getBottomToastBackgroundColor(Brightness brightness) {
-    return brightness == Brightness.dark ? CoconutColors.gray800 : CoconutColors.gray200;
+    return brightness == Brightness.dark ? CoconutColors.white : CoconutColors.gray900;
   }
 
   static Color _getBottomToastBorderColor(Brightness brightness) {
-    return brightness == Brightness.dark ? CoconutColors.gray900 : CoconutColors.gray150;
+    return brightness == Brightness.dark ? CoconutColors.gray300 : CoconutColors.gray700;
   }
 
   /// Displays a toast message at the top of the screen.
