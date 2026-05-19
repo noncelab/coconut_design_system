@@ -463,14 +463,13 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
               ),
               IgnorePointer(
                 child: Container(
-                  height: widget.prefix != null ? _prefixSize.height : null,
-                  margin: widget.prefix == null
-                      ? resolvedPadding
-                      : EdgeInsets.only(
-                          left: _prefixSize.width,
-                          top: resolvedPadding.top,
-                        ),
-                  padding: widget.suffix != null ? EdgeInsets.only(right: _suffixSize.width) : null,
+                  margin: EdgeInsets.only(
+                    left: widget.prefix == null ? resolvedPadding.left : _prefixSize.width,
+                    top: resolvedPadding.top,
+                    right: widget.suffix != null
+                        ? _suffixSize.width + resolvedPadding.right
+                        : resolvedPadding.right,
+                  ),
                   alignment: Alignment.centerLeft,
                   child: widget.placeholderText == null || _isFocus || _text.isNotEmpty
                       ? Text(
@@ -496,18 +495,16 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                 ),
               ),
               if (widget.suffix != null)
-                Positioned.fill(
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      top: resolvedPadding.top,
-                      bottom: resolvedPadding.bottom,
-                    ),
-                    child: Align(
-                      alignment: Alignment.centerRight,
-                      child: KeyedSubtree(
-                        key: _suffixGlobalKey,
-                        child: widget.suffix!,
-                      ),
+                Positioned(
+                  right: 0,
+                  top: 0,
+                  bottom: 0,
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    widthFactor: 1.0,
+                    child: KeyedSubtree(
+                      key: _suffixGlobalKey,
+                      child: widget.suffix!,
                     ),
                   ),
                 ),
