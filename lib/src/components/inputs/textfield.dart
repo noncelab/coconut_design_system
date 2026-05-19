@@ -330,8 +330,7 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
   void _updateData() {
     _activeColor = widget.activeColor ?? CoconutColors.onBlack(brightness);
     _cursorColor = widget.cursorColor ?? CoconutColors.onBlack(brightness);
-    _placeholderColor =
-        widget.placeholderColor ?? CoconutColors.onGray300(brightness);
+    _placeholderColor = widget.placeholderColor ?? CoconutColors.onGray300(brightness);
     _errorColor = widget.errorColor ?? CoconutColors.red;
     _backgroundColor = widget.backgroundColor ?? Colors.transparent;
     _text = widget.controller.text;
@@ -366,14 +365,12 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
     Size nextSuffixSize = const Size(0, 0);
 
     if (_prefixGlobalKey.currentContext != null) {
-      final prefixRenderBox =
-          _prefixGlobalKey.currentContext?.findRenderObject() as RenderBox;
+      final prefixRenderBox = _prefixGlobalKey.currentContext?.findRenderObject() as RenderBox;
       nextPrefixSize = prefixRenderBox.size;
     }
 
     if (_suffixGlobalKey.currentContext != null) {
-      final suffixRenderBox =
-          _suffixGlobalKey.currentContext?.findRenderObject() as RenderBox;
+      final suffixRenderBox = _suffixGlobalKey.currentContext?.findRenderObject() as RenderBox;
       nextSuffixSize = suffixRenderBox.size;
     }
 
@@ -422,8 +419,7 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                         color: resolvedBorderColor,
                       )
                 : null,
-            borderRadius:
-                isUnderline ? null : BorderRadius.circular(widget.borderRadius),
+            borderRadius: isUnderline ? null : BorderRadius.circular(widget.borderRadius),
             color: _backgroundColor,
           ),
           child: Stack(
@@ -462,26 +458,20 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                 autocorrect: widget.autocorrect,
                 enableSuggestions: widget.enableSuggestions,
                 onEditingComplete: widget.onEditingComplete,
-                onTapOutside: widget.unfocusOnTapOutside
-                    ? (_) => widget.focusNode.unfocus()
-                    : null,
+                onTapOutside: widget.unfocusOnTapOutside ? (_) => widget.focusNode.unfocus() : null,
                 enabled: widget.enabled,
               ),
               IgnorePointer(
                 child: Container(
                   margin: EdgeInsets.only(
-                    left: widget.prefix == null
-                        ? resolvedPadding.left
-                        : _prefixSize.width,
+                    left: widget.prefix == null ? resolvedPadding.left : _prefixSize.width,
                     top: resolvedPadding.top,
                     right: widget.suffix != null
                         ? _suffixSize.width + resolvedPadding.right
                         : resolvedPadding.right,
                   ),
                   alignment: Alignment.centerLeft,
-                  child: widget.placeholderText == null ||
-                          _isFocus ||
-                          _text.isNotEmpty
+                  child: widget.placeholderText == null || _isFocus || _text.isNotEmpty
                       ? Text(
                           '',
                           style: CoconutTypography.body2_14.copyWith(
