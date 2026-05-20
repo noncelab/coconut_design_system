@@ -37,6 +37,8 @@ class CoconutColors {
   static const Color tangerine = Color(0xFFFA9C5A);
   static const Color yellow = Color(0xFFFECC2F);
   static const Color blueGray = Color(0xFFBCCAD9);
+  static const Color lightSky = Color(0xFF8CD5FF);
+  static const Color periwinkle = Color(0xFF7775FF);
 
   /// custom colors
   static const Color warningYellow = Color(0xFFFFAF03);
