@@ -62,8 +62,7 @@ class CoconutTypewriterAnimation extends StatefulWidget {
   State<CoconutTypewriterAnimation> createState() => _CoconutTypewriterAnimationState();
 }
 
-class _CoconutTypewriterAnimationState extends State<CoconutTypewriterAnimation>
-    with SingleTickerProviderStateMixin {
+class _CoconutTypewriterAnimationState extends State<CoconutTypewriterAnimation> with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   late final Animation<double> _progressAnimation;
   int _startToken = 0;

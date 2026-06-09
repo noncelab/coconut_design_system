@@ -71,8 +71,7 @@ class CoconutToast {
   static void showBottomToast({
     /// - Deprecated: This parameter will be removed in version `0.9.0`.
     /// - Now automatically inferred from `CoconutTheme.brightness()`.
-    @Deprecated(
-        'This parameter will be removed in version 0.8. It is now inferred from CoconutTheme.brightness.')
+    @Deprecated('This parameter will be removed in version 0.8. It is now inferred from CoconutTheme.brightness.')
     Brightness? brightness,
     required BuildContext context,
     required String text,
@@ -129,8 +128,7 @@ class CoconutToast {
                 child: MediaQuery(
                   data: MediaQuery.of(context).copyWith(textScaler: TextScaler.noScaling),
                   child: Container(
-                    margin: EdgeInsets.only(
-                        left: 16, right: 16, bottom: MediaQuery.sizeOf(context).height / 13),
+                    margin: EdgeInsets.only(left: 16, right: 16, bottom: MediaQuery.sizeOf(context).height / 13),
                     padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
                     decoration: BoxDecoration(
                       color: backgroundColor ?? _getBottomToastBackgroundColor(brightness),
@@ -335,8 +333,7 @@ class CoconutToast {
 class CoconutToastWidget extends StatefulWidget {
   final String text;
 
-  @Deprecated(
-      'This parameter will be removed in version 0.8. It is now inferred from CoconutTheme.brightness.')
+  @Deprecated('This parameter will be removed in version 0.8. It is now inferred from CoconutTheme.brightness.')
   final Brightness? brightness;
 
   final bool isVisibleIcon;
@@ -391,8 +388,7 @@ class CoconutToastWidget extends StatefulWidget {
   State<CoconutToastWidget> createState() => _CoconutToastWidgetState();
 }
 
-class _CoconutToastWidgetState extends State<CoconutToastWidget>
-    with SingleTickerProviderStateMixin {
+class _CoconutToastWidgetState extends State<CoconutToastWidget> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _slideAnimation;
   late Animation<double> _fadeAnimation;
@@ -435,8 +431,7 @@ class _CoconutToastWidgetState extends State<CoconutToastWidget>
                 color: widget.borderColor,
                 boxShadow: [
                   BoxShadow(
-                    color:
-                        CoconutColors.black.withOpacity(brightness == Brightness.dark ? 0.4 : 0.12),
+                    color: CoconutColors.black.withOpacity(brightness == Brightness.dark ? 0.4 : 0.12),
                     blurRadius: 16,
                     spreadRadius: 0,
                     offset: const Offset(0, 4),
@@ -465,10 +460,8 @@ class _CoconutToastWidgetState extends State<CoconutToastWidget>
                           LayoutBuilder(
                             builder: (context, iconConstraints) {
                               double containerHeight;
-                              if (widget.textStyle.fontSize != null &&
-                                  widget.textStyle.height != null) {
-                                containerHeight =
-                                    widget.textStyle.fontSize! * widget.textStyle.height!;
+                              if (widget.textStyle.fontSize != null && widget.textStyle.height != null) {
+                                containerHeight = widget.textStyle.fontSize! * widget.textStyle.height!;
                               } else {
                                 containerHeight = 14 * 1.4;
                               }
@@ -477,8 +470,7 @@ class _CoconutToastWidgetState extends State<CoconutToastWidget>
                                 padding: EdgeInsets.only(right: widget.iconRightPadding),
                                 child: Center(
                                   child: SvgPicture.asset(
-                                    widget.iconPath ??
-                                        'packages/coconut_design_system/assets/svg/circle_info.svg',
+                                    widget.iconPath ?? 'packages/coconut_design_system/assets/svg/circle_info.svg',
                                     height: widget.iconSize,
                                     colorFilter: ColorFilter.mode(
                                       widget.iconColor,

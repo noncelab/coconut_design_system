@@ -452,19 +452,15 @@ class _CharacterFadeSequenceDemoState extends State<_CharacterFadeSequenceDemo> 
             child: Center(
               child: switch (_phase) {
                 _CharacterSequencePhase.hidden => const SizedBox.shrink(),
-                _CharacterSequencePhase.entering ||
-                _CharacterSequencePhase.visible =>
-                  _buildEnteringAnimation(),
+                _CharacterSequencePhase.entering || _CharacterSequencePhase.visible => _buildEnteringAnimation(),
                 _CharacterSequencePhase.exiting => _buildExitingAnimation(),
               },
             ),
           ),
           CoconutLayout.spacing_300h,
           CoconutButton(
-            text: _phase == _CharacterSequencePhase.hidden ||
-                    _phase == _CharacterSequencePhase.exiting
-                ? 'Show'
-                : 'Hide',
+            text:
+                _phase == _CharacterSequencePhase.hidden || _phase == _CharacterSequencePhase.exiting ? 'Show' : 'Hide',
             onPressed: _playSequence,
             isExpand: true,
           ),

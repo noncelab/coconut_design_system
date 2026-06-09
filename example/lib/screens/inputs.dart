@@ -298,9 +298,7 @@ class _InputsScreenState extends State<InputsScreen> {
                               child: Container(
                                 margin: const EdgeInsets.only(right: 13),
                                 child: SvgPicture.asset(
-                                  obscureText
-                                      ? 'assets/svg/textfield_hide.svg'
-                                      : 'assets/svg/textfield_view.svg',
+                                  obscureText ? 'assets/svg/textfield_hide.svg' : 'assets/svg/textfield_view.svg',
                                   width: 16,
                                   height: 16,
                                   colorFilter: ColorFilter.mode(
@@ -371,8 +369,7 @@ class _InputsScreenState extends State<InputsScreen> {
                             text: 'CoconutOptionPicker Test',
                             label: 'Test Label',
                             subWidget: Container(
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: CoconutColors.cyanBlue, width: 1)),
+                              decoration: BoxDecoration(border: Border.all(color: CoconutColors.cyanBlue, width: 1)),
                               child: const Text(
                                 'This is OptionBox',
                                 style: CoconutTypography.caption_10,
@@ -404,9 +401,8 @@ class _InputsScreenState extends State<InputsScreen> {
                                           child: CoconutButton(
                                             text: title,
                                             isExpand: true,
-                                            buttonType: isSelected
-                                                ? CoconutButtonType.filled
-                                                : CoconutButtonType.outlined,
+                                            buttonType:
+                                                isSelected ? CoconutButtonType.filled : CoconutButtonType.outlined,
                                             backgroundColor: isSelected
                                                 ? CoconutColors.normalPrimaryButtonColor()
                                                 : Colors.transparent,
@@ -479,8 +475,7 @@ class _InputsScreenState extends State<InputsScreen> {
                             headerHelpStyle: CoconutTypography.body3_12,
                             modeToggleStyle: CoconutTypography.body1_16,
                             controlColor: CoconutColors.onBlack(brightness),
-                            weekdayStyle:
-                                CoconutTypography.body2_14.setColor(CoconutColors.blueGray),
+                            weekdayStyle: CoconutTypography.body2_14.setColor(CoconutColors.blueGray),
                             dayStyle: CoconutTypography.body1_16,
                             yearStyle: CoconutTypography.body2_14_Number,
                             selectedDayBackgroundColor: CoconutColors.onGray800(brightness),

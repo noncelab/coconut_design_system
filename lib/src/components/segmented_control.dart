@@ -80,12 +80,10 @@ class CoconutSegmentedControl extends StatefulWidget {
   });
 
   @override
-  State<CoconutSegmentedControl> createState() =>
-      _CoconutSegmentedControlState();
+  State<CoconutSegmentedControl> createState() => _CoconutSegmentedControlState();
 }
 
-class _CoconutSegmentedControlState extends State<CoconutSegmentedControl>
-    with TickerProviderStateMixin {
+class _CoconutSegmentedControlState extends State<CoconutSegmentedControl> with TickerProviderStateMixin {
   /// Stores the selection state of each segment.
   late List<bool> _selections;
 
@@ -120,24 +118,20 @@ class _CoconutSegmentedControlState extends State<CoconutSegmentedControl>
     final isDarkMode = brightness == Brightness.dark;
 
     // Set default values if not provided by the user.
-    final containerBorderRadius =
-        widget.containerBorderRadius ?? CoconutStyles.radius_200;
-    final labelBorderRadius =
-        widget.labelBorderRadius ?? CoconutStyles.radius_150;
+    final containerBorderRadius = widget.containerBorderRadius ?? CoconutStyles.radius_200;
+    final labelBorderRadius = widget.labelBorderRadius ?? CoconutStyles.radius_150;
     final labelPadding = widget.labelPadding ??
         const EdgeInsets.symmetric(
           horizontal: 16,
           vertical: 12,
         );
-    final selectedColor = widget.selectedColor ??
-        (isDarkMode ? CoconutColors.gray900 : CoconutColors.gray900);
+    final selectedColor = widget.selectedColor ?? (isDarkMode ? CoconutColors.gray900 : CoconutColors.gray900);
     final unselectedColor = widget.unselectedColor ?? Colors.transparent;
     final segmentedControlContainerColor =
-        widget.segmentedControlContainerColor ??
-            (isDarkMode ? CoconutColors.gray800 : CoconutColors.gray150);
+        widget.segmentedControlContainerColor ?? (isDarkMode ? CoconutColors.gray800 : CoconutColors.gray150);
     final selectedTextColor = widget.selectedTextColor ?? CoconutColors.white;
-    final unselectedTextColor = widget.unselectedTextColor ??
-        (isDarkMode ? CoconutColors.gray500 : CoconutColors.gray400);
+    final unselectedTextColor =
+        widget.unselectedTextColor ?? (isDarkMode ? CoconutColors.gray500 : CoconutColors.gray400);
     return Container(
       width: MediaQuery.sizeOf(context).width,
       decoration: BoxDecoration(
@@ -149,8 +143,7 @@ class _CoconutSegmentedControlState extends State<CoconutSegmentedControl>
               builder: (context, constraints) {
                 final int numberOfSegments = widget.labels.length;
                 final double segmentWidth = numberOfSegments > 0
-                    ? (constraints.maxWidth - 4 * numberOfSegments) /
-                        numberOfSegments
+                    ? (constraints.maxWidth - 4 * numberOfSegments) / numberOfSegments
                     : constraints.maxWidth;
                 return _buildAnimatedSegmentedControl(
                   segmentWidth,
@@ -189,8 +182,7 @@ class _CoconutSegmentedControlState extends State<CoconutSegmentedControl>
     // Update animation position if needed
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (widget.showAnimation && _animationController.isDismissed) {
-        final currentPosition =
-            _calculatePosition(_currentSelectedIndex, containerWidth);
+        final currentPosition = _calculatePosition(_currentSelectedIndex, containerWidth);
         _positionAnimation = Tween<double>(
           begin: currentPosition,
           end: currentPosition,
@@ -248,16 +240,12 @@ class _CoconutSegmentedControlState extends State<CoconutSegmentedControl>
                         padding: labelPadding,
                         child: IconTheme(
                           data: IconThemeData(
-                            color: isSelected
-                                ? selectedTextColor
-                                : unselectedTextColor,
+                            color: isSelected ? selectedTextColor : unselectedTextColor,
                           ),
                           child: DefaultTextStyle(
                             style: isSelected
-                                ? CoconutTypography.body3_12_Bold
-                                    .setColor(selectedTextColor)
-                                : CoconutTypography.body3_12
-                                    .setColor(unselectedTextColor),
+                                ? CoconutTypography.body3_12_Bold.setColor(selectedTextColor)
+                                : CoconutTypography.body3_12.setColor(unselectedTextColor),
                             child: widget.labels[index],
                           ),
                         ),
@@ -310,16 +298,12 @@ class _CoconutSegmentedControlState extends State<CoconutSegmentedControl>
                     padding: labelPadding,
                     child: IconTheme(
                       data: IconThemeData(
-                        color: isSelected
-                            ? selectedTextColor
-                            : unselectedTextColor,
+                        color: isSelected ? selectedTextColor : unselectedTextColor,
                       ),
                       child: DefaultTextStyle(
                         style: isSelected
-                            ? CoconutTypography.body3_12_Bold
-                                .setColor(selectedTextColor)
-                            : CoconutTypography.body3_12
-                                .setColor(unselectedTextColor),
+                            ? CoconutTypography.body3_12_Bold.setColor(selectedTextColor)
+                            : CoconutTypography.body3_12.setColor(unselectedTextColor),
                         child: widget.labels[index],
                       ),
                     ),
@@ -336,8 +320,7 @@ class _CoconutSegmentedControlState extends State<CoconutSegmentedControl>
   @override
   void initState() {
     super.initState();
-    _selections = _normalizeSelections(
-        List<bool>.from(widget.isSelected), widget.labels.length);
+    _selections = _normalizeSelections(List<bool>.from(widget.isSelected), widget.labels.length);
 
     // Find the initially selected index
     _currentSelectedIndex = _selections.indexWhere((selected) => selected);
@@ -367,8 +350,7 @@ class _CoconutSegmentedControlState extends State<CoconutSegmentedControl>
     // Sync selections and current index when parent updates selection state
     final bool labelsChanged = oldWidget.labels.length != widget.labels.length;
     if (labelsChanged || oldWidget.isSelected != widget.isSelected) {
-      _selections = _normalizeSelections(
-          List<bool>.from(widget.isSelected), widget.labels.length);
+      _selections = _normalizeSelections(List<bool>.from(widget.isSelected), widget.labels.length);
       int newIndex = _selections.indexWhere((selected) => selected);
       if (newIndex == -1) newIndex = 0;
       if (newIndex != _currentSelectedIndex) {

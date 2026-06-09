@@ -241,24 +241,17 @@ class CoconutDatePicker extends StatelessWidget {
   Widget build(BuildContext context) {
     final brightness = Theme.of(context).brightness;
     final resolvedBackgroundColor = backgroundColor ?? CoconutColors.surface(brightness);
-    final resolvedHeaderForegroundColor =
-        headerForegroundColor ?? CoconutColors.onBlack(brightness);
+    final resolvedHeaderForegroundColor = headerForegroundColor ?? CoconutColors.onBlack(brightness);
     final resolvedControlColor = controlColor ?? CoconutColors.onBlack(brightness);
     final resolvedDayForegroundColor = dayForegroundColor ?? CoconutColors.onGray800(brightness);
-    final resolvedSelectedDayForegroundColor =
-        selectedDayForegroundColor ?? CoconutColors.onWhite(brightness);
-    final resolvedDisabledDayForegroundColor =
-        disabledDayForegroundColor ?? CoconutColors.onGray350(brightness);
-    final resolvedSelectedDayBackgroundColor =
-        selectedDayBackgroundColor ?? CoconutColors.onGray800(brightness);
+    final resolvedSelectedDayForegroundColor = selectedDayForegroundColor ?? CoconutColors.onWhite(brightness);
+    final resolvedDisabledDayForegroundColor = disabledDayForegroundColor ?? CoconutColors.onGray350(brightness);
+    final resolvedSelectedDayBackgroundColor = selectedDayBackgroundColor ?? CoconutColors.onGray800(brightness);
     final resolvedTodayForegroundColor = todayForegroundColor ?? CoconutColors.onBlack(brightness);
     final resolvedYearForegroundColor = yearForegroundColor ?? CoconutColors.onGray800(brightness);
-    final resolvedSelectedYearForegroundColor =
-        selectedYearForegroundColor ?? CoconutColors.onWhite(brightness);
-    final resolvedDisabledYearForegroundColor =
-        disabledYearForegroundColor ?? CoconutColors.onGray350(brightness);
-    final resolvedSelectedYearBackgroundColor =
-        selectedYearBackgroundColor ?? CoconutColors.onBlack(brightness);
+    final resolvedSelectedYearForegroundColor = selectedYearForegroundColor ?? CoconutColors.onWhite(brightness);
+    final resolvedDisabledYearForegroundColor = disabledYearForegroundColor ?? CoconutColors.onGray350(brightness);
+    final resolvedSelectedYearBackgroundColor = selectedYearBackgroundColor ?? CoconutColors.onBlack(brightness);
     final resolvedInitialDate = initialDate ?? currentDate ?? DateTime.now();
 
     return Container(
@@ -283,8 +276,7 @@ class CoconutDatePicker extends StatelessWidget {
               headerForegroundColor: resolvedHeaderForegroundColor,
               headerHeadlineStyle: headerHeadlineStyle ?? CoconutTypography.body1_16,
               headerHelpStyle: headerHelpStyle ?? CoconutTypography.body3_12,
-              weekdayStyle:
-                  weekdayStyle ?? CoconutTypography.body2_14.setColor(CoconutColors.blueGray),
+              weekdayStyle: weekdayStyle ?? CoconutTypography.body2_14.setColor(CoconutColors.blueGray),
               dayStyle: dayStyle ?? CoconutTypography.body1_16,
               dayForegroundColor: _resolveColor(
                 normal: resolvedDayForegroundColor,
@@ -357,18 +349,12 @@ class CoconutDatePicker extends StatelessWidget {
                         ),
                     periodTextStyle: periodTextStyle ?? CoconutTypography.body1_16,
                     dividerColor: timeDividerColor ?? CoconutColors.onGray200(brightness),
-                    timeFieldBackgroundColor:
-                        timeFieldBackgroundColor ?? CoconutColors.onGray150(brightness),
-                    periodFieldBackgroundColor:
-                        periodFieldBackgroundColor ?? CoconutColors.onGray150(brightness),
-                    selectedPeriodBackgroundColor:
-                        selectedPeriodBackgroundColor ?? CoconutColors.surface(brightness),
-                    selectedPeriodBorderColor:
-                        selectedPeriodBorderColor ?? CoconutColors.onGray300(brightness),
-                    selectedPeriodTextColor:
-                        selectedPeriodTextColor ?? CoconutColors.onGray800(brightness),
-                    unselectedPeriodTextColor:
-                        unselectedPeriodTextColor ?? CoconutColors.onGray800(brightness),
+                    timeFieldBackgroundColor: timeFieldBackgroundColor ?? CoconutColors.onGray150(brightness),
+                    periodFieldBackgroundColor: periodFieldBackgroundColor ?? CoconutColors.onGray150(brightness),
+                    selectedPeriodBackgroundColor: selectedPeriodBackgroundColor ?? CoconutColors.surface(brightness),
+                    selectedPeriodBorderColor: selectedPeriodBorderColor ?? CoconutColors.onGray300(brightness),
+                    selectedPeriodTextColor: selectedPeriodTextColor ?? CoconutColors.onGray800(brightness),
+                    unselectedPeriodTextColor: unselectedPeriodTextColor ?? CoconutColors.onGray800(brightness),
                     amLabel: amLabel,
                     pmLabel: pmLabel,
                   ),
@@ -610,8 +596,7 @@ class _CoconutDatePickerTimeSelectorState extends State<_CoconutDatePickerTimeSe
                   unselectedTextColor: widget.unselectedPeriodTextColor,
                   amLabel: widget.amLabel,
                   pmLabel: widget.pmLabel,
-                  onChanged:
-                      widget.onTimeChanged == null ? null : (isAm) => _updatePeriod(isAm: isAm),
+                  onChanged: widget.onTimeChanged == null ? null : (isAm) => _updatePeriod(isAm: isAm),
                 ),
               ),
             ],
@@ -821,9 +806,7 @@ class _TimeInputField extends StatelessWidget {
             return KeyEventResult.handled;
           }
 
-          if (event is KeyDownEvent &&
-              event.logicalKey == LogicalKeyboardKey.backspace &&
-              controller.text.isEmpty) {
+          if (event is KeyDownEvent && event.logicalKey == LogicalKeyboardKey.backspace && controller.text.isEmpty) {
             return onBackspaceWhenEmpty?.call() ?? KeyEventResult.ignored;
           }
           return KeyEventResult.ignored;
