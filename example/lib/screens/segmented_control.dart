@@ -113,13 +113,13 @@ class _SegmentedConrolScreenState extends State<SegmentedConrolScreen> {
               return Column(
                 children: [
                   CoconutSegmentedControl(
-                    labels: labels.map((label) => Text(label)).toList(),
                     isSelected: isSelected,
                     onPressed: (index) {
                       setState(() {
                         isSelected = List<bool>.generate(labels.length, (i) => i == index);
                       });
                     },
+                    children: labels.map((label) => Text(label)).toList(),
                   ),
                   CoconutLayout.spacing_1000h,
                   if (isSelected[0]) ...{
@@ -133,14 +133,14 @@ class _SegmentedConrolScreenState extends State<SegmentedConrolScreen> {
                         child: Stack(
                           children: [
                             CoconutSegmentedControl(
-                              labels: const [
+                              isSelected: const [true, false, false, false],
+                              onPressed: (index) {},
+                              children: const [
                                 Text("Label"),
                                 Text("Label"),
                                 Text("Label"),
                                 Text("Label"),
                               ],
-                              isSelected: const [true, false, false, false],
-                              onPressed: (index) {},
                             ),
                             Container(
                               decoration: BoxDecoration(
