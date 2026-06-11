@@ -36,8 +36,7 @@ class CoconutTransitionAnimation extends StatefulWidget {
   State<CoconutTransitionAnimation> createState() => _CoconutTransitionAnimationState();
 }
 
-class _CoconutTransitionAnimationState extends State<CoconutTransitionAnimation>
-    with SingleTickerProviderStateMixin {
+class _CoconutTransitionAnimationState extends State<CoconutTransitionAnimation> with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   late final Animation<double> _animation;
   late final Animation<Offset> _offsetAnimation;

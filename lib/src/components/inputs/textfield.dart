@@ -26,8 +26,7 @@ class CoconutTextField extends StatefulWidget {
 
   /// - Deprecated: This parameter will be removed in version `0.9.0`.
   /// - Now automatically inferred from `CoconutTheme.brightness()`.
-  @Deprecated(
-      'This parameter will be removed in version 0.8. It is now inferred from CoconutTheme.brightness.')
+  @Deprecated('This parameter will be removed in version 0.8. It is now inferred from CoconutTheme.brightness.')
   final Brightness? brightness;
 
   /// Callback function triggered when the text changes.
@@ -466,9 +465,7 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                   margin: EdgeInsets.only(
                     left: widget.prefix == null ? resolvedPadding.left : _prefixSize.width,
                     top: resolvedPadding.top,
-                    right: widget.suffix != null
-                        ? _suffixSize.width + resolvedPadding.right
-                        : resolvedPadding.right,
+                    right: widget.suffix != null ? _suffixSize.width + resolvedPadding.right : resolvedPadding.right,
                   ),
                   alignment: Alignment.centerLeft,
                   child: widget.placeholderText == null || _isFocus || _text.isNotEmpty
@@ -522,9 +519,7 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
                   child: Text(
                     widget.errorText ?? '',
                     maxLines: widget.isErrorTextMultiline ? null : 1,
-                    overflow: widget.isErrorTextMultiline
-                        ? null
-                        : (widget.textOverflow ?? TextOverflow.ellipsis),
+                    overflow: widget.isErrorTextMultiline ? null : (widget.textOverflow ?? TextOverflow.ellipsis),
                     style: CoconutTypography.body3_12.copyWith(
                       color: _errorColor,
                     ),

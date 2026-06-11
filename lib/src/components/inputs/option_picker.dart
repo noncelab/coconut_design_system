@@ -128,7 +128,6 @@ class CoconutOptionPicker extends StatelessWidget {
 
   /// Padding applied inside the tappable picker row.
   final EdgeInsetsGeometry? padding;
-  
 
   /// Custom text style for the main [text].
   final TextStyle? textStyle;
@@ -197,23 +196,16 @@ class CoconutOptionPicker extends StatelessWidget {
               : CoconutColors.hotPink;
     }
 
-    final resolvedTextColor = enabled
-        ? (textColor ?? CoconutColors.onBlack(brightness))
-        : CoconutColors.onGray500(brightness);
-    final resolvedIconColor = getColorByState(enabled
-        ? (iconColor ?? CoconutColors.onGray500(brightness))
-        : CoconutColors.onGray500(brightness));
-    final resolvedDividerColor =
-        getColorByState(dividerColor ?? CoconutColors.onGray800(brightness));
-    final resolvedTextStyle =
-        textStyle ?? CoconutTypography.heading4_18.setColor(resolvedTextColor);
-    final resolvedGuideTextColor =
-        getColorByState(guideTextColor ?? CoconutColors.onGray800(brightness));
-    final resolveGuideStyle =
-        guideStyle ?? CoconutTypography.caption_10.setColor(resolvedGuideTextColor);
+    final resolvedTextColor =
+        enabled ? (textColor ?? CoconutColors.onBlack(brightness)) : CoconutColors.onGray500(brightness);
+    final resolvedIconColor = getColorByState(
+        enabled ? (iconColor ?? CoconutColors.onGray500(brightness)) : CoconutColors.onGray500(brightness));
+    final resolvedDividerColor = getColorByState(dividerColor ?? CoconutColors.onGray800(brightness));
+    final resolvedTextStyle = textStyle ?? CoconutTypography.heading4_18.setColor(resolvedTextColor);
+    final resolvedGuideTextColor = getColorByState(guideTextColor ?? CoconutColors.onGray800(brightness));
+    final resolveGuideStyle = guideStyle ?? CoconutTypography.caption_10.setColor(resolvedGuideTextColor);
     final resolvedLabelColor = labelColor ?? CoconutColors.gray500;
-    final resolvedLabelStyle =
-        labelStyle ?? CoconutTypography.body3_12.setColor(resolvedLabelColor);
+    final resolvedLabelStyle = labelStyle ?? CoconutTypography.body3_12.setColor(resolvedLabelColor);
     final List<InlineSpan> wrappedContentSpans = [
       if (text != null)
         TextSpan(
