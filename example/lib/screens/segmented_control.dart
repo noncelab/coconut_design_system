@@ -124,7 +124,7 @@ class _SegmentedConrolScreenState extends State<SegmentedConrolScreen> {
                   CoconutLayout.spacing_1000h,
                   if (isSelected[0]) ...{
                     Container(
-                      color: CoconutColors.onPrimary(brightness).withOpacity(0.9),
+                      color: CoconutColors.onPrimary(brightness).withValues(alpha: 0.9),
                       padding: const EdgeInsets.symmetric(
                         horizontal: CoconutLayout.defaultPadding,
                         vertical: 150,
@@ -145,7 +145,7 @@ class _SegmentedConrolScreenState extends State<SegmentedConrolScreen> {
                             Container(
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(CoconutStyles.radius_200),
-                                  color: CoconutColors.white.withOpacity(0.6)),
+                                  color: CoconutColors.white.withValues(alpha: 0.6)),
                               height: 46,
                             ),
                             Positioned(

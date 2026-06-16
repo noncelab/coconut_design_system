@@ -93,8 +93,11 @@ class _CoconutSegmentedControlState extends State<CoconutSegmentedControl> with 
   late List<bool> _selections;
 
   /// The list of widgets to display as segments, derived from [children] or [labels].
-  List<Widget> get _effectiveChildren =>
-      widget.children ?? widget.labels?.map((label) => Text(label)).toList() ?? const [];
+  List<Widget> get _effectiveChildren {
+    // ignore: deprecated_member_use_from_same_package
+    final labels = widget.labels;
+    return widget.children ?? labels?.map((label) => Text(label)).toList() ?? const [];
+  }
 
   /// Animation controller for the sliding animation.
   late AnimationController _animationController;
@@ -244,8 +247,8 @@ class _CoconutSegmentedControlState extends State<CoconutSegmentedControl> with 
                     color: Colors.transparent,
                     child: InkWell(
                       borderRadius: BorderRadius.circular(labelBorderRadius),
-                      splashColor: selectedColor.withOpacity(0.2),
-                      highlightColor: selectedColor.withOpacity(0.4),
+                      splashColor: selectedColor.withValues(alpha: 0.2),
+                      highlightColor: selectedColor.withValues(alpha: 0.4),
                       onTap: () => _handlePress(index, items.length, containerWidth),
                       child: Container(
                         key: key,
@@ -299,8 +302,8 @@ class _CoconutSegmentedControlState extends State<CoconutSegmentedControl> with 
                 color: Colors.transparent,
                 child: InkWell(
                   borderRadius: BorderRadius.circular(labelBorderRadius),
-                  splashColor: selectedColor.withOpacity(0.2),
-                  highlightColor: selectedColor.withOpacity(0.4),
+                  splashColor: selectedColor.withValues(alpha: 0.2),
+                  highlightColor: selectedColor.withValues(alpha: 0.4),
                   onTap: () => _handlePress(index, items.length),
                   child: Container(
                     key: key,
@@ -364,7 +367,9 @@ class _CoconutSegmentedControlState extends State<CoconutSegmentedControl> with 
     super.didUpdateWidget(oldWidget);
     // Sync selections and current index when parent updates selection state
     final items = _effectiveChildren;
-    final bool labelsChanged = (oldWidget.children?.length ?? oldWidget.labels?.length ?? 0) != items.length;
+    // ignore: deprecated_member_use_from_same_package
+    final oldLabels = oldWidget.labels;
+    final bool labelsChanged = (oldWidget.children?.length ?? oldLabels?.length ?? 0) != items.length;
     if (labelsChanged || oldWidget.isSelected != widget.isSelected) {
       _selections = _normalizeSelections(List<bool>.from(widget.isSelected), items.length);
       int newIndex = _selections.indexWhere((selected) => selected);

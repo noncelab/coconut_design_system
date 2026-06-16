@@ -399,40 +399,6 @@ class CoconutDatePicker extends StatelessWidget {
   }
 }
 
-class _CalendarDatePickerScrollBehavior extends MaterialScrollBehavior {
-  const _CalendarDatePickerScrollBehavior();
-
-  @override
-  ScrollPhysics getScrollPhysics(BuildContext context) {
-    return const _CalendarDatePickerScrollPhysics();
-  }
-}
-
-class _CalendarDatePickerScrollPhysics extends ClampingScrollPhysics {
-  const _CalendarDatePickerScrollPhysics({super.parent});
-
-  @override
-  _CalendarDatePickerScrollPhysics applyTo(ScrollPhysics? ancestor) {
-    return _CalendarDatePickerScrollPhysics(parent: buildParent(ancestor));
-  }
-
-  @override
-  bool shouldAcceptUserOffset(ScrollMetrics position) {
-    if (position.axis == Axis.vertical) {
-      return false;
-    }
-    return super.shouldAcceptUserOffset(position);
-  }
-
-  @override
-  double applyPhysicsToUserOffset(ScrollMetrics position, double offset) {
-    if (position.axis == Axis.vertical) {
-      return 0;
-    }
-    return super.applyPhysicsToUserOffset(position, offset);
-  }
-}
-
 class _CoconutDatePickerTimeSelector extends StatefulWidget {
   const _CoconutDatePickerTimeSelector({
     required this.selectedTime,

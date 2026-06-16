@@ -431,7 +431,7 @@ class _CoconutToastWidgetState extends State<CoconutToastWidget> with SingleTick
                 color: widget.borderColor,
                 boxShadow: [
                   BoxShadow(
-                    color: CoconutColors.black.withOpacity(brightness == Brightness.dark ? 0.4 : 0.12),
+                    color: CoconutColors.black.withValues(alpha: brightness == Brightness.dark ? 0.4 : 0.12),
                     blurRadius: 16,
                     spreadRadius: 0,
                     offset: const Offset(0, 4),

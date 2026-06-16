@@ -58,7 +58,7 @@ class CoconutBoxDecoration {
     color: CoconutColors.white,
     boxShadow: [
       BoxShadow(
-        color: CoconutColors.black.withOpacity(0.06),
+        color: CoconutColors.black.withValues(alpha: 0.06),
         spreadRadius: 4,
         blurRadius: 20,
       ),

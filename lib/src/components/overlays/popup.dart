@@ -193,7 +193,7 @@ class _CoconutPopupState extends State<CoconutPopup> {
                       child: Container(
                         padding: const EdgeInsets.only(top: 16, bottom: 16),
                         color: _isLeftButtonPressing
-                            ? CoconutColors.onPrimary(brightness).withOpacity(0.2)
+                            ? CoconutColors.onPrimary(brightness).withValues(alpha: 0.2)
                             : Colors.transparent,
                         alignment: Alignment.center,
                         child: Text(
@@ -229,7 +229,7 @@ class _CoconutPopupState extends State<CoconutPopup> {
                     child: Container(
                       padding: const EdgeInsets.only(top: 16, bottom: 16),
                       color: _isRightButtonPressing
-                          ? CoconutColors.onPrimary(brightness).withOpacity(0.2)
+                          ? CoconutColors.onPrimary(brightness).withValues(alpha: 0.2)
                           : Colors.transparent,
                       alignment: Alignment.center,
                       child: Text(
@@ -255,7 +255,7 @@ class _CoconutPopupState extends State<CoconutPopup> {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(16)),
       ),
-      backgroundColor: Theme.of(context).dialogBackgroundColor,
+      backgroundColor: Theme.of(context).dialogTheme.backgroundColor,
       child: ClipRRect(
         borderRadius: const BorderRadius.all(Radius.circular(16)),
         child: widget.useFixedFontSize

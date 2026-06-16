@@ -148,7 +148,7 @@ class _CoconutButtonState extends State<CoconutButton> {
         widget.backgroundColor ?? (brightness == Brightness.light ? CoconutColors.black : CoconutColors.white);
     foregroundColor =
         widget.foregroundColor ?? (brightness == Brightness.light ? CoconutColors.white : CoconutColors.black);
-    pressedBackgroundColor = widget.pressedBackgroundColor ?? backgroundColor.withOpacity(0.5);
+    pressedBackgroundColor = widget.pressedBackgroundColor ?? backgroundColor.withValues(alpha: 0.5);
     pressedForegroundColor =
         widget.pressedForegroundColor ?? (brightness == Brightness.light ? CoconutColors.white : CoconutColors.black);
     pressedTextColor =
@@ -246,7 +246,7 @@ class _CoconutButtonState extends State<CoconutButton> {
     return switch (widget.buttonType) {
       CoconutButtonType.filled => isPressing ? pressedTextColor : foregroundColor,
       CoconutButtonType.outlined => isPressing ? outlinePressingColor : textColor,
-      CoconutButtonType.none => isPressing ? textColor.withOpacity(0.5) : textColor,
+      CoconutButtonType.none => isPressing ? textColor.withValues(alpha: 0.5) : textColor,
     };
   }
 

@@ -46,7 +46,7 @@ class CoconutUnderlinedButton extends StatefulWidget {
   final Color? defaultColor;
 
   /// **Underline color when the button is pressed (optional).**
-  /// - If `null`, it falls back to `defaultColor.withOpacity(0.5)`.
+  /// - If `null`, it falls back to `defaultColor.withValues(alpha: 0.5)`.
   final Color? pressingColor;
 
   final bool isActive;
@@ -132,12 +132,12 @@ class _CoconutUnderlinedButtonState extends State<CoconutUnderlinedButton> {
   /// - Otherwise, returns `defaultColor` or the primary theme color.
   Color _getColorForBrightness(Brightness brightness) {
     if (!widget.isActive) {
-      return CoconutColors.onPrimary(brightness).withOpacity(0.2);
+      return CoconutColors.onPrimary(brightness).withValues(alpha: 0.2);
     }
     if (_isPressing) {
       return widget.pressingColor ??
-          widget.defaultColor?.withOpacity(0.5) ??
-          CoconutColors.onPrimary(brightness).withOpacity(0.5);
+          widget.defaultColor?.withValues(alpha: 0.5) ??
+          CoconutColors.onPrimary(brightness).withValues(alpha: 0.5);
     }
     return widget.defaultColor ?? CoconutColors.onPrimary(brightness);
   }

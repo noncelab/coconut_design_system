@@ -96,17 +96,17 @@ class CoconutTagChip extends StatelessWidget {
       child: Container(
         padding: padding,
         decoration: BoxDecoration(
-          color: color.withOpacity(status == CoconutChipStatus.selected ? 0.3 : 0.18),
+          color: color.withValues(alpha: status == CoconutChipStatus.selected ? 0.3 : 0.18),
           borderRadius: BorderRadius.circular(
             isRectangle ? CoconutStyles.radius_50 : CoconutStyles.radius_500,
           ),
           border: Border.all(
-              color: color.withOpacity(status == CoconutChipStatus.unselected ? 0.15 : 1), width: borderWidth),
+              color: color.withValues(alpha: status == CoconutChipStatus.unselected ? 0.15 : 1), width: borderWidth),
         ),
         child: Text(
           '#$tag',
           style: textStyle.copyWith(
-            color: color.withOpacity(status == CoconutChipStatus.unselected ? 0.18 : 1),
+            color: color.withValues(alpha: status == CoconutChipStatus.unselected ? 0.18 : 1),
             //fontWeight: status == CoconutChipStatus.selected ? FontWeight.w700 : null,
           ),
         ),

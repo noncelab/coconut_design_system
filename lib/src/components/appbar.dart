@@ -714,8 +714,8 @@ class _CoconutFrostedAppBarState extends State<CoconutFrostedAppBar> {
   /// Determines the background color based on scroll position and theme brightness.
   Color _getBackgroundColor(Brightness brightness) {
     if (widget.backgroundColor == null) {
-      return _isScrollOverTitleHeight ? CoconutColors.surface(brightness).withOpacity(0.06) : Colors.transparent;
+      return _isScrollOverTitleHeight ? CoconutColors.surface(brightness).withValues(alpha: 0.06) : Colors.transparent;
     }
-    return _isScrollOverTitleHeight ? widget.backgroundColor!.withOpacity(0.06) : Colors.transparent;
+    return _isScrollOverTitleHeight ? widget.backgroundColor!.withValues(alpha: 0.06) : Colors.transparent;
   }
 }

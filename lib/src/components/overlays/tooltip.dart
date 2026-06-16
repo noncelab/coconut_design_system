@@ -290,6 +290,7 @@ class _CoconutToolTipState extends State<CoconutToolTip> {
   void didUpdateWidget(covariant CoconutToolTip oldWidget) {
     super.didUpdateWidget(oldWidget);
 
+    // ignore: deprecated_member_use_from_same_package
     if (widget.brightness != oldWidget.brightness) {
       setState(() {
         initColors();
@@ -335,9 +336,9 @@ class _CoconutToolTipState extends State<CoconutToolTip> {
     color = CoconutColors.colorPalette[widget.tooltipState.colorIndex];
 
     if (widget.tooltipType == CoconutTooltipType.fixed) {
-      _borderColor = widget.borderColor ?? color.withOpacity(0.7);
+      _borderColor = widget.borderColor ?? color.withValues(alpha: 0.7);
       _backgroundColor = widget.backgroundColor ??
-          CoconutColors.backgroundColorPaletteLight[widget.tooltipState.colorIndex].withOpacity(0.18);
+          CoconutColors.backgroundColorPaletteLight[widget.tooltipState.colorIndex].withValues(alpha: 0.18);
     }
   }
 
@@ -363,6 +364,7 @@ class _CoconutToolTipState extends State<CoconutToolTip> {
   }
 
   Color _getBackgroundColorForBrighness() {
+    // ignore: deprecated_member_use_from_same_package
     switch (widget.brightness) {
       case Brightness.dark:
         return CoconutColors.gray800;
@@ -373,6 +375,7 @@ class _CoconutToolTipState extends State<CoconutToolTip> {
   }
 
   Color _getBorderColorForBrighness() {
+    // ignore: deprecated_member_use_from_same_package
     switch (widget.brightness) {
       case Brightness.dark:
         return CoconutColors.gray800;

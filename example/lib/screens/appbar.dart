@@ -117,7 +117,7 @@ class AppbarScreen extends StatelessWidget {
         borderRadius: BorderRadius.circular(
           CoconutStyles.radius_200,
         ),
-        color: CoconutColors.onPrimary(brightness).withOpacity(0.2),
+        color: CoconutColors.onPrimary(brightness).withValues(alpha: 0.2),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -136,15 +136,15 @@ class AppbarScreen extends StatelessWidget {
                   style: CoconutTypography.body2_14.setColor(
                     isHomeSt
                         ? CoconutColors.onPrimary(brightness)
-                        : CoconutColors.onPrimary(brightness).withOpacity(0.5),
+                        : CoconutColors.onPrimary(brightness).withValues(alpha: 0.5),
                   ),
                 ),
                 subtitle: Text(
                   'This displays a App Icon on the left side of the app bar.',
                   style: CoconutTypography.body3_12.setColor(
                     isHomeSt
-                        ? CoconutColors.onPrimary(brightness).withOpacity(0.5)
-                        : CoconutColors.onPrimary(brightness).withOpacity(0.2),
+                        ? CoconutColors.onPrimary(brightness).withValues(alpha: 0.5)
+                        : CoconutColors.onPrimary(brightness).withValues(alpha: 0.2),
                   ),
                 ),
                 value: isAppIconVisible,
@@ -161,13 +161,13 @@ class AppbarScreen extends StatelessWidget {
                   style: CoconutTypography.body2_14.setColor(
                     isHomeSt
                         ? CoconutColors.onPrimary(brightness)
-                        : CoconutColors.onPrimary(brightness).withOpacity(0.5),
+                        : CoconutColors.onPrimary(brightness).withValues(alpha: 0.5),
                   ),
                 ),
                 subtitle: Text(
                   'This displays button widgets on the right side of the app bar.',
                   style: CoconutTypography.body3_12.setColor(
-                    CoconutColors.onPrimary(brightness).withOpacity(0.5),
+                    CoconutColors.onPrimary(brightness).withValues(alpha: 0.5),
                   ),
                 ),
                 value: isActionButtonVisible,
@@ -183,15 +183,15 @@ class AppbarScreen extends StatelessWidget {
                   style: CoconutTypography.body2_14.setColor(
                     !isHomeSt
                         ? CoconutColors.onPrimary(brightness)
-                        : CoconutColors.onPrimary(brightness).withOpacity(0.5),
+                        : CoconutColors.onPrimary(brightness).withValues(alpha: 0.5),
                   ),
                 ),
                 subtitle: Text(
                   'This displays a next button on the right side of the app bar.',
                   style: CoconutTypography.body3_12.setColor(
                     !isHomeSt
-                        ? CoconutColors.onPrimary(brightness).withOpacity(0.5)
-                        : CoconutColors.onPrimary(brightness).withOpacity(0.2),
+                        ? CoconutColors.onPrimary(brightness).withValues(alpha: 0.5)
+                        : CoconutColors.onPrimary(brightness).withValues(alpha: 0.2),
                   ),
                 ),
                 value: isNextButtonVisible,
@@ -207,7 +207,7 @@ class AppbarScreen extends StatelessWidget {
                   style: CoconutTypography.body2_14.setColor(
                     !isHomeSt && isLeadingVisible
                         ? CoconutColors.onPrimary(brightness)
-                        : CoconutColors.onPrimary(brightness).withOpacity(0.5),
+                        : CoconutColors.onPrimary(brightness).withValues(alpha: 0.5),
                   ),
                 ),
                 value: isClosable,
@@ -226,15 +226,15 @@ class AppbarScreen extends StatelessWidget {
                   style: CoconutTypography.body2_14.setColor(
                     !isHomeSt && !isNextButtonVisible
                         ? CoconutColors.onPrimary(brightness)
-                        : CoconutColors.onPrimary(brightness).withOpacity(0.5),
+                        : CoconutColors.onPrimary(brightness).withValues(alpha: 0.5),
                   ),
                 ),
                 subtitle: Text(
                   'This makes the title clickable to enable interaction.',
                   style: CoconutTypography.body3_12.setColor(
                     !isHomeSt && !isNextButtonVisible
-                        ? CoconutColors.onPrimary(brightness).withOpacity(0.5)
-                        : CoconutColors.onPrimary(brightness).withOpacity(0.2),
+                        ? CoconutColors.onPrimary(brightness).withValues(alpha: 0.5)
+                        : CoconutColors.onPrimary(brightness).withValues(alpha: 0.2),
                   ),
                 ),
                 value: isTitlePressable,
@@ -250,15 +250,15 @@ class AppbarScreen extends StatelessWidget {
                   style: CoconutTypography.body2_14.setColor(
                     !isNextButtonVisible
                         ? CoconutColors.onPrimary(brightness)
-                        : CoconutColors.onPrimary(brightness).withOpacity(0.5),
+                        : CoconutColors.onPrimary(brightness).withValues(alpha: 0.5),
                   ),
                 ),
                 subtitle: Text(
                   'This displays a back button or a close button on the left side of the app bar.',
                   style: CoconutTypography.body3_12.setColor(
                     !isNextButtonVisible
-                        ? CoconutColors.onPrimary(brightness).withOpacity(0.5)
-                        : CoconutColors.onPrimary(brightness).withOpacity(0.2),
+                        ? CoconutColors.onPrimary(brightness).withValues(alpha: 0.5)
+                        : CoconutColors.onPrimary(brightness).withValues(alpha: 0.2),
                   ),
                 ),
                 enabled: !isNextButtonVisible,
@@ -276,15 +276,15 @@ class AppbarScreen extends StatelessWidget {
                   style: CoconutTypography.body2_14.setColor(
                     !isNextButtonVisible
                         ? CoconutColors.onPrimary(brightness)
-                        : CoconutColors.onPrimary(brightness).withOpacity(0.5),
+                        : CoconutColors.onPrimary(brightness).withValues(alpha: 0.5),
                   ),
                 ),
                 subtitle: Text(
                   'This displays a sublabel widget to the right of the app bar title.',
                   style: CoconutTypography.body3_12.setColor(
                     !isNextButtonVisible
-                        ? CoconutColors.onPrimary(brightness).withOpacity(0.5)
-                        : CoconutColors.onPrimary(brightness).withOpacity(0.2),
+                        ? CoconutColors.onPrimary(brightness).withValues(alpha: 0.5)
+                        : CoconutColors.onPrimary(brightness).withValues(alpha: 0.2),
                   ),
                 ),
                 value: isSubLabelVisible,
@@ -313,7 +313,7 @@ class AppbarScreen extends StatelessWidget {
         borderRadius: BorderRadius.circular(
           CoconutStyles.radius_200,
         ),
-        color: CoconutColors.onPrimary(brightness).withOpacity(0.2),
+        color: CoconutColors.onPrimary(brightness).withValues(alpha: 0.2),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,

@@ -97,9 +97,9 @@ class CoconutSwitch extends StatelessWidget {
         scale: scale,
         child: CupertinoSwitch(
           value: isOn,
-          activeColor: active,
+          activeTrackColor: active,
           thumbColor: thumb,
-          trackColor: track,
+          inactiveTrackColor: track,
           onChanged: (value) {
             onChanged(value);
           },

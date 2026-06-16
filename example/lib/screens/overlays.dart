@@ -472,7 +472,6 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
           textStyle: CoconutTypography.caption_10,
           onTap: () {
             CoconutToast.showBottomToast(
-              brightness: brightness,
               context: context,
               text: 'Bottom toast',
             );
@@ -484,7 +483,6 @@ class _OverlaysScreenState extends State<OverlaysScreen> {
           textStyle: CoconutTypography.caption_10,
           onTap: () {
             CoconutToast.showBottomToast(
-              brightness: brightness,
               context: context,
               seconds: 3,
               text: 'Long text text text text text text text text text text text text text',
