@@ -16,6 +16,7 @@ This project follows **[Semantic Versioning](https://semver.org/)**.
 
 - **Colors**
   - Added gradient color tokens.
+  - Replaced opacity usage with `withValues`.
 
 ### 🛠 Fixes
 
