@@ -5,6 +5,32 @@ This project follows **[Semantic Versioning](https://semver.org/)**.
 
 ---
 
+## **[0.10.0] - 2026-06-16**
+
+### ✨ Features
+
+- **DatePicker**
+  - Added `CoconutDatePicker` widget.
+  - Improved time input behavior and spacing.
+  - Removed unnecessary scroll configuration wrapper.
+
+- **Colors**
+  - Added gradient color tokens.
+
+### 🛠 Fixes
+
+- **Toast**
+  - Updated the bottom toast theme and colors.
+
+- **TextField**
+  - Improved layout constraints and suffix positioning.
+
+- **SegmentedControl**
+  - Changed labels to support widget values.
+  - Preserved compatibility with the previous label format.
+
+---
+
 ## **[0.9.16] - 2026-04-22**
 
 ### 🛠 Fixes
