@@ -5,6 +5,15 @@ This project follows **[Semantic Versioning](https://semver.org/)**.
 
 ---
 
+## **[0.10.1] - 2026-07-02**
+
+### 🛠 Fixes
+
+- **Toast**
+  - Ensured toast visibility and overlay state are reset after dismissal.
+
+---
+
 ## **[0.10.0] - 2026-06-16**
 
 ### ✨ Features
