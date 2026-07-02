@@ -107,8 +107,9 @@ class CoconutToast {
         await fadeController.forward();
         overlayEntry.remove();
         fadeController.dispose();
+      } catch (_) {} finally {
         _isToastVisible = false;
-      } catch (_) {}
+      }
     }
 
     overlayEntry = OverlayEntry(
@@ -241,6 +242,7 @@ class CoconutToast {
                 level: level,
                 onDismiss: () {
                   overlayEntry.remove();
+                  _currentToastOverlay = null;
                 },
                 duration: seconds <= 5 ? seconds : 5,
               ),
@@ -315,6 +317,7 @@ class CoconutToast {
                 level: CoconutToastLevel.warning,
                 onDismiss: () {
                   overlayEntry.remove();
+                  _currentToastOverlay = null;
                 },
                 duration: seconds <= 5 ? seconds : 5,
               ),
@@ -533,9 +536,9 @@ class _CoconutToastWidgetState extends State<CoconutToastWidget> with SingleTick
 
   void _startFadeOut() {
     _controller.forward().then((_) {
+      CoconutToast._isToastVisible = false;
       if (mounted) {
         widget.onDismiss();
-        CoconutToast._isToastVisible = false;
       }
     });
   }
