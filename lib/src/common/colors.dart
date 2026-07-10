@@ -131,7 +131,7 @@ class CoconutColors {
 
   static Color onGray300(Brightness brightness) => brightness == Brightness.light ? gray300 : gray600;
 
-  static Color onGray350(Brightness brightness) => brightness == Brightness.light ? gray350 : gray500;
+  static Color onGray350(Brightness brightness) => brightness == Brightness.light ? gray350 : gray600;
 
   static Color onGray500(Brightness brightness) => brightness == Brightness.light ? gray500 : gray350;
 

@@ -66,6 +66,11 @@ class CoconutTextField extends StatefulWidget {
   /// If `null`, it defaults to `CoconutColors.red`.
   final Color? errorColor;
 
+  /// The color of the text field border.
+  ///
+  /// If `null`, it defaults to `CoconutColors.onGray350(brightness)`.
+  final Color? borderColor;
+
   /// The color of the text field background
   ///
   /// If `null`, it defaults to `Colors.transparent`.
@@ -194,7 +199,7 @@ class CoconutTextField extends StatefulWidget {
   /// - [controller] manages the text input.
   /// - [focusNode] handles focus-related behaviors.
   /// - [onChanged] is triggered when the text input changes.
-  /// - [activeColor], [cursorColor], [placeholderColor], and [errorColor] customize text and border colors.
+  /// - [activeColor], [cursorColor], [placeholderColor], [borderColor], and [errorColor] customize text and border colors.
   /// - [backgroundColor] sets the background color of the text field.
   /// - [maxLength] sets a character limit.
   /// - [maxLines] allows multi-line input.
@@ -251,6 +256,7 @@ class CoconutTextField extends StatefulWidget {
       this.cursorColor,
       this.placeholderColor,
       this.errorColor,
+      this.borderColor,
       this.backgroundColor,
       this.maxLength,
       this.maxLines,
@@ -290,6 +296,7 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
   late Color _activeColor;
   late Color _placeholderColor;
   late Color _errorColor;
+  late Color _borderColor;
   late Color _cursorColor;
   late Color _backgroundColor;
   Brightness brightness = CoconutTheme.brightness();
@@ -331,6 +338,7 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
     _cursorColor = widget.cursorColor ?? CoconutColors.onBlack(brightness);
     _placeholderColor = widget.placeholderColor ?? CoconutColors.onGray300(brightness);
     _errorColor = widget.errorColor ?? CoconutColors.red;
+    _borderColor = widget.borderColor ?? CoconutColors.onGray350(brightness);
     _backgroundColor = widget.backgroundColor ?? Colors.transparent;
     _text = widget.controller.text;
   }
@@ -397,7 +405,7 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
             ? widget.maxLength != null && _text.runes.length > widget.maxLength!
                 ? _errorColor
                 : _activeColor
-            : _placeholderColor;
+            : _borderColor;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
