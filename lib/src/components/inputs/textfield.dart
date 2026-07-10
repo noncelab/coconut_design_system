@@ -338,7 +338,7 @@ class _CoconutTextFieldState extends State<CoconutTextField> {
     _cursorColor = widget.cursorColor ?? CoconutColors.onBlack(brightness);
     _placeholderColor = widget.placeholderColor ?? CoconutColors.onGray300(brightness);
     _errorColor = widget.errorColor ?? CoconutColors.red;
-    _borderColor = widget.borderColor ?? CoconutColors.onGray350(brightness);
+    _borderColor = widget.borderColor ?? _placeholderColor;
     _backgroundColor = widget.backgroundColor ?? Colors.transparent;
     _text = widget.controller.text;
   }
