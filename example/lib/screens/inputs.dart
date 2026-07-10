@@ -186,8 +186,8 @@ class _InputsScreenState extends State<InputsScreen> {
                           const SizedBox(width: 10),
                           CoconutSwitch(
                             isOn: isSwitch2On,
-                            activeColor: CoconutColors.primary,
-                            thumbColor: CoconutColors.white,
+                            activeTrackColor: CoconutColors.primary,
+                            activeThumbColor: CoconutColors.white,
                             onChanged: (value) {
                               isSwitch2On = value;
                               setState(() {});

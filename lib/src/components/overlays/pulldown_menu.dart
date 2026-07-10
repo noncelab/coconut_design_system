@@ -519,9 +519,9 @@ class _PulldownMenuItemButtonState extends State<_PulldownMenuItemButton> {
                   child: CoconutSwitch(
                     isOn: widget.switchValue,
                     onChanged: (_) {},
-                    activeColor: widget.switchActiveTrackColor,
-                    thumbColor: widget.switchThumbColor,
-                    trackColor: widget.switchInactiveTrackColor,
+                    activeTrackColor: widget.switchActiveTrackColor,
+                    activeThumbColor: widget.switchThumbColor,
+                    inactiveTrackColor: widget.switchInactiveTrackColor,
                     scale: 0.6,
                   ),
                 )
