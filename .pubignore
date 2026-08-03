@@ -1,1 +1,8 @@
-coconut_design_system.iml
+.dart_tool/
+.fvm/
+.idea/
+.vscode/
+*.iml
+build/
+coverage/
+pubspec.lock
