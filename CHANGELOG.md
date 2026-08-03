@@ -5,6 +5,26 @@ This project follows **[Semantic Versioning](https://semver.org/)**.
 
 ---
 
+## **[0.10.2] - 2026-08-03**
+
+### ✨ Features
+
+- **TextField**
+  - Added `borderColor` to customize the border color of `CoconutTextField`.
+
+### 🛠 Fixes
+
+- **TextField**
+  - Changed the default border color to use `placeholderColor`.
+
+### ♻️ Refactor
+
+- **Switch**
+  - Added explicit active and inactive track and thumb color properties to `CoconutSwitch`.
+  - Deprecated `activeColor`, `trackColor`, and `thumbColor` in favor of the clearer color property names.
+
+---
+
 ## **[0.10.1] - 2026-07-02**
 
 ### 🛠 Fixes
