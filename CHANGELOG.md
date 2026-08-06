@@ -5,6 +5,15 @@ This project follows **[Semantic Versioning](https://semver.org/)**.
 
 ---
 
+## **[0.10.3] - 2026-08-06**
+
+### 🧹 Chores
+
+- Updated the license.
+- Excluded IDE-related files from package publishing.
+
+---
+
 ## **[0.10.2] - 2026-08-03**
 
 ### ✨ Features
