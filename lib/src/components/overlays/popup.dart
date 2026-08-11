@@ -204,6 +204,8 @@ class _CoconutPopupState extends State<CoconutPopup> {
               Padding(
                 padding: const EdgeInsets.only(left: 24, right: 24, bottom: 12),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     CoconutCheckbox(
@@ -211,7 +213,7 @@ class _CoconutPopupState extends State<CoconutPopup> {
                       onChanged: (value) => widget.onCheckboxChanged?.call(value),
                     ),
                     const SizedBox(width: 8),
-                    Expanded(
+                    Flexible(
                       child: GestureDetector(
                         behavior: HitTestBehavior.opaque,
                         onTap: () => widget.onCheckboxChanged?.call(!widget.isCheckboxSelected),
