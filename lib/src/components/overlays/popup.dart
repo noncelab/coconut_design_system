@@ -74,6 +74,32 @@ class CoconutPopup extends StatefulWidget {
   /// The TextStyle of the description text.
   final TextStyle? descriptionTextStyle;
 
+  /// The text displayed next to the checkbox below the description.
+  ///
+  /// If `null`, the checkbox row is not displayed.
+  final String? checkboxText;
+
+  /// The style of the text displayed next to the checkbox.
+  ///
+  /// Defaults to [CoconutTypography.body3_12].
+  final TextStyle? checkboxTextStyle;
+
+  /// The checkbox text color when selected.
+  ///
+  /// Defaults to `CoconutColors.onGray600(brightness)`.
+  final Color? selectedCheckboxTextColor;
+
+  /// The checkbox text color when not selected.
+  ///
+  /// Defaults to `CoconutColors.onGray300(brightness)`.
+  final Color? unselectedCheckboxTextColor;
+
+  /// Whether the checkbox below the description is selected.
+  final bool isCheckboxSelected;
+
+  /// Called when the checkbox or its text is tapped.
+  final ValueChanged<bool>? onCheckboxChanged;
+
   /// The TextStyle of the left button text.
   final TextStyle? leftButtonTextStyle;
 
@@ -112,6 +138,12 @@ class CoconutPopup extends StatefulWidget {
     this.rightButtonColor,
     this.titleTextStyle,
     this.descriptionTextStyle,
+    this.checkboxText,
+    this.checkboxTextStyle,
+    this.selectedCheckboxTextColor,
+    this.unselectedCheckboxTextColor,
+    this.isCheckboxSelected = false,
+    this.onCheckboxChanged,
     this.leftButtonTextStyle,
     this.rightButtonTextStyle,
     this.titlePadding,
@@ -167,6 +199,39 @@ class _CoconutPopupState extends State<CoconutPopup> {
                     ),
               ),
             ),
+
+            if (widget.checkboxText != null)
+              Padding(
+                padding: const EdgeInsets.only(left: 24, right: 24, bottom: 12),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    CoconutCheckbox(
+                      isSelected: widget.isCheckboxSelected,
+                      onChanged: (value) => widget.onCheckboxChanged?.call(value),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () => widget.onCheckboxChanged?.call(!widget.isCheckboxSelected),
+                        child: Text(
+                          widget.checkboxText!,
+                          style: (widget.checkboxTextStyle ?? CoconutTypography.body3_12).copyWith(
+                            color: widget.isCheckboxSelected
+                                ? widget.selectedCheckboxTextColor ??
+                                    widget.checkboxTextStyle?.color ??
+                                    CoconutColors.onGray600(brightness)
+                                : widget.unselectedCheckboxTextColor ??
+                                    widget.checkboxTextStyle?.color ??
+                                    CoconutColors.onGray300(brightness),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
 
             /// Action Buttons (Left & Right)
             Row(
