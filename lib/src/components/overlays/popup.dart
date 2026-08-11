@@ -84,15 +84,15 @@ class CoconutPopup extends StatefulWidget {
   /// Defaults to [CoconutTypography.body3_12].
   final TextStyle? checkboxTextStyle;
 
-  /// The checkbox text color when selected.
+  /// The checkbox text color while it is being pressed.
   ///
   /// Defaults to `CoconutColors.onGray600(brightness)`.
-  final Color? selectedCheckboxTextColor;
+  final Color? pressedCheckboxTextColor;
 
-  /// The checkbox text color when not selected.
+  /// The default checkbox text color.
   ///
   /// Defaults to `CoconutColors.onGray300(brightness)`.
-  final Color? unselectedCheckboxTextColor;
+  final Color? checkboxTextColor;
 
   /// Whether the checkbox below the description is selected.
   final bool isCheckboxSelected;
@@ -140,8 +140,8 @@ class CoconutPopup extends StatefulWidget {
     this.descriptionTextStyle,
     this.checkboxText,
     this.checkboxTextStyle,
-    this.selectedCheckboxTextColor,
-    this.unselectedCheckboxTextColor,
+    this.pressedCheckboxTextColor,
+    this.checkboxTextColor,
     this.isCheckboxSelected = false,
     this.onCheckboxChanged,
     this.leftButtonTextStyle,
@@ -156,6 +156,7 @@ class CoconutPopup extends StatefulWidget {
 }
 
 class _CoconutPopupState extends State<CoconutPopup> {
+  bool _isCheckboxTextPressing = false;
   bool _isLeftButtonPressing = false;
   bool _isRightButtonPressing = false;
   @override
@@ -216,17 +217,32 @@ class _CoconutPopupState extends State<CoconutPopup> {
                     Flexible(
                       child: GestureDetector(
                         behavior: HitTestBehavior.opaque,
-                        onTap: () => widget.onCheckboxChanged?.call(!widget.isCheckboxSelected),
+                        onTap: () {
+                          setState(() {
+                            _isCheckboxTextPressing = false;
+                          });
+                          widget.onCheckboxChanged?.call(!widget.isCheckboxSelected);
+                        },
+                        onTapCancel: () {
+                          setState(() {
+                            _isCheckboxTextPressing = false;
+                          });
+                        },
+                        onTapDown: (_) {
+                          setState(() {
+                            _isCheckboxTextPressing = true;
+                          });
+                        },
                         child: Text(
                           widget.checkboxText!,
                           style: (widget.checkboxTextStyle ?? CoconutTypography.body3_12).copyWith(
-                            color: widget.isCheckboxSelected
-                                ? widget.selectedCheckboxTextColor ??
+                            color: _isCheckboxTextPressing
+                                ? widget.pressedCheckboxTextColor ??
                                     widget.checkboxTextStyle?.color ??
-                                    CoconutColors.onGray600(brightness)
-                                : widget.unselectedCheckboxTextColor ??
+                                    CoconutColors.onGray300(brightness)
+                                : widget.checkboxTextColor ??
                                     widget.checkboxTextStyle?.color ??
-                                    CoconutColors.onGray300(brightness),
+                                    CoconutColors.onGray600(brightness),
                           ),
                         ),
                       ),
