@@ -34,6 +34,11 @@ class CoconutPopup extends StatefulWidget {
   /// The description text displayed below the title.
   final String description;
 
+  /// The rich description displayed below the title.
+  ///
+  /// When provided, this takes precedence over [description].
+  final InlineSpan? descriptionSpan;
+
   /// The callback function when the left button is tapped (optional, usually "Cancel").
   final Function? onTapLeft;
 
@@ -138,6 +143,7 @@ class CoconutPopup extends StatefulWidget {
     this.rightButtonColor,
     this.titleTextStyle,
     this.descriptionTextStyle,
+    this.descriptionSpan,
     this.checkboxText,
     this.checkboxTextStyle,
     this.pressedCheckboxTextColor,
@@ -162,6 +168,11 @@ class _CoconutPopupState extends State<CoconutPopup> {
   @override
   Widget build(BuildContext context) {
     Brightness brightness = CoconutTheme.brightness();
+    final descriptionStyle =
+        widget.descriptionTextStyle?.setColor(widget.descriptionColor ?? CoconutColors.onGray800(brightness)) ??
+            CoconutTypography.heading4_18.setColor(
+              widget.descriptionColor ?? CoconutColors.onGray800(brightness),
+            );
 
     Widget content = Container(
       decoration: BoxDecoration(
@@ -190,15 +201,21 @@ class _CoconutPopupState extends State<CoconutPopup> {
               alignment: Alignment.topCenter,
               padding: widget.descriptionPadding ?? const EdgeInsets.only(left: 24, right: 24, top: 12, bottom: 12),
               constraints: const BoxConstraints(minHeight: 66),
-              child: Text(
-                widget.description,
-                textAlign: widget.centerDescription ? TextAlign.center : null,
-                style: widget.descriptionTextStyle
-                        ?.setColor(widget.descriptionColor ?? CoconutColors.onGray800(brightness)) ??
-                    CoconutTypography.heading4_18.setColor(
-                      widget.descriptionColor ?? CoconutColors.onGray800(brightness),
+              child: widget.descriptionSpan != null
+                  ? RichText(
+                      text: TextSpan(
+                        style: descriptionStyle,
+                        children: [widget.descriptionSpan!],
+                      ),
+                      textAlign: widget.centerDescription ? TextAlign.center : TextAlign.start,
+                      textScaler:
+                          widget.useFixedFontSize ? const TextScaler.linear(1.0) : MediaQuery.textScalerOf(context),
+                    )
+                  : Text(
+                      widget.description,
+                      textAlign: widget.centerDescription ? TextAlign.center : null,
+                      style: descriptionStyle,
                     ),
-              ),
             ),
 
             if (widget.checkboxText != null)
