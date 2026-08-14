@@ -42,6 +42,7 @@ class CoconutColors {
 
   /// custom colors
   static const Color warningYellow = Color(0xFFFFAF03);
+  static const Color warningAmber = Color(0xFFFFCC00);
   static const Color warningYellowBackground = Color(0xFFFFF3BE);
   static const Color warningText = Color.fromRGBO(206, 91, 111, 1);
   static const Color borderGray = Color.fromRGBO(81, 81, 96, 1);
