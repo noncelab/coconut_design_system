@@ -93,11 +93,7 @@ CoconutButton(
 | 🎨 **Theme**            | Color Scheme, Typography, Data                   |
 | 📑 **App Bar**          | Customizable App Bar & Buttons                   |
 | 🖼 **Icons**            | Custom Icon Components                           |
----
-## License
-This project is licensed under the **MIT License with Commons Clause**.
 
-**© 2025 Nonce Lab** – All rights reserved.
 ---
 ## 🤝 Contributing  
 
@@ -121,3 +117,7 @@ For **issues, feature requests, or feedback**, feel free to:
 ## ⭐ Star & Follow  
 
 If you like this project, please **star** the repo and **follow** us for updates! 🚀✨  
+
+---
+## License
+Reference [LICENSE](LICENSE)
