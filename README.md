@@ -1,14 +1,14 @@
 # 🥥 Coconut Design System
 
-The **Coconut Design System** is a modern, reusable UI component library for Flutter, developed by **Nonce Lab**. It provides a **consistent**, **customizable**, and **theme-aware** UI for building high-quality mobile applications.
-
+The **Coconut Design System** is a reusable UI component library for Flutter, developed by **Nonce Lab**. It provides consistent, customizable, and theme-aware components for building mobile applications.
 
 ## 🚀 Features
-- **Reusable UI Components** – Buttons, Tooltips, Toasts, Bottom Sheets, etc.
-- **Theme-Aware** – Supports **light & dark mode**.
-- **Highly Customizable** – Easily change colors, fonts, sizes, etc.
-- **Performance Optimized** – Built with **Flutter best practices**.
-- **MIT Licensed** – Open-source, with Commons Clause.
+
+- **Reusable UI Components** – Buttons, inputs, overlays, indicators, and more.
+- **Theme-Aware** – Supports light and dark modes.
+- **Customizable** – Configure colors, typography, sizing, and component behavior.
+- **Animations** – Includes reusable entrance, exit, shake, slide, typewriter, and zoom animations.
+- **MIT Licensed** – Open source under the MIT License.
 
 ---
 
@@ -16,18 +16,22 @@ The **Coconut Design System** is a modern, reusable UI component library for Flu
 
 To use Coconut Design System in your Flutter project, add it as a dependency:
 
-### 1️⃣ **Add the Package**
+### 1️⃣ Add the package
+
 ```sh
 flutter pub add coconut_design_system
 ```
+
 Or manually add it in your pubspec.yaml:
-```
+
+```yaml
 dependencies:
   coconut_design_system: latest_version
 ```
 
-### 2️⃣ Import the Library
-```
+### 2️⃣ Import the library
+
+```dart
 import 'package:coconut_design_system/coconut_design_system.dart';
 ```
 
@@ -36,88 +40,104 @@ import 'package:coconut_design_system/coconut_design_system.dart';
 ## 📚 Usage Guide
 
 ### 🟢 Buttons
-```
+
+```dart
 CoconutButton(
-  text: "Click Me",
+  text: 'Click Me',
   onPressed: () {
-    print("Button Clicked!");
+    print('Button Clicked!');
   },
 );
 ```
+
 ### 🟡 Toast Messages
-```
+
+```dart
 CoconutToast.showToast(
   context: context,
-  text: "This is a toast message!",
+  text: 'This is a toast message!',
 );
 ```
+
 ### 🔵 Bottom Sheet
-```
+
+```dart
 showModalBottomSheet(
   context: context,
+  isScrollControlled: true,
   builder: (context) => CoconutBottomSheet(
-    appBar: AppBar(title: Text("Title")),
-    body: Text("This is a bottom sheet."),
+    appBar: AppBar(title: const Text('Title')),
+    body: const Text('This is a bottom sheet.'),
   ),
 );
 ```
+
 ---
+
 ## 🎨 Theming & Customization
 
 The Coconut Design System supports light and dark mode, and allows you to customize:
-	•	Colors
-	•	Typography
-	•	Shapes & Borders
-	•	Icons & Sizes
+
+- Colors
+- Typography
+- Shapes and borders
+- Icons and sizes
 
 Example:
-```
+
+```dart
 CoconutButton(
-  text: "Custom Button",
+  text: 'Custom Button',
+  onPressed: () {},
   backgroundColor: Colors.purple,
-  textColor: Colors.white,
+  foregroundColor: Colors.white,
 );
 ```
+
 ---
+
 ## 🛠 Available Components
-| Component                | Description                                      |
-|-------------------------|--------------------------------------------------|
-| ✅ **Buttons**          | Standard, Segmented, Underlined Buttons         |
-| 🔔 **Toasts**           | Top & Bottom Toast Notifications                 |
-| 📥 **Bottom Sheets**    | Modal & Fixed Bottom Sheets                      |
-| 📌 **Tooltips**         | Fixed & Floating Tooltips                        |
-| 📂 **Pulldowns**        | Custom Dropdown Menus                            |
-| 🔄 **Indicators**       | Circular & Progress Indicators                   |
-| 🔳 **Inputs**           | Checkbox, Chip, Pulldown, Stepper, Switch, TagChip, TextField |
-| 📏 **Overlays**         | Popup, Pulldown Menu, Toast, Bubble Clipper      |
-| 🎨 **Theme**            | Color Scheme, Typography, Data                   |
-| 📑 **App Bar**          | Customizable App Bar & Buttons                   |
-| 🖼 **Icons**            | Custom Icon Components                           |
 
----
-## 🤝 Contributing  
-
-We welcome contributions! If you’d like to improve the **Coconut Design System**, follow these steps:  
-
-1. **Fork the repository**  
-2. **Create a feature branch** (`git checkout -b new-feature`)  
-3. **Commit your changes** (`git commit -m "Add new feature"`)  
-4. **Push to the branch** (`git push origin new-feature`)  
-5. **Submit a Pull Request!** 🚀  
-
----
-## 🛠 Support & Feedback  
-
-For **issues, feature requests, or feedback**, feel free to:  
-- Open an issue on **[GitHub](https://github.com/noncelab/coconut_design_system/issues)**  
-- Contact us at **hello@noncelab.com**  
+| Category | Components |
+|----------|------------|
+| **Buttons & controls** | Button, Underlined Button, Segmented Control |
+| **Inputs** | Checkbox, Chip, Date Picker, Option Picker, Pulldown, Stepper, Switch, Tag Chip, Text Field |
+| **Overlays** | Bottom Sheet, Popup, Pulldown Menu, Toast, Tooltip |
+| **Indicators** | Circular Indicator, Progress Indicator |
+| **Navigation** | App Bar, Frosted App Bar, App Bar Button |
+| **Icons** | Custom icon component |
+| **Animations** | Bounce, Character Fade, Fade, Scale, Shake, Slide, Typewriter, Zoom |
+| **Theme & styling** | Colors, layout, sizes, styles, theme, typography |
 
 ---
 
-## ⭐ Star & Follow  
+## 🤝 Contributing
 
-If you like this project, please **star** the repo and **follow** us for updates! 🚀✨  
+We welcome contributions! If you’d like to improve the **Coconut Design System**, follow these steps:
+
+1. **Fork the repository**
+2. **Create a feature branch** (`git checkout -b new-feature`)
+3. **Commit your changes** (`git commit -m "Add new feature"`)
+4. **Push to the branch** (`git push origin new-feature`)
+5. **Submit a Pull Request!** 🚀
 
 ---
+
+## 🛠 Support & Feedback
+
+For **issues, feature requests, or feedback**, feel free to:
+
+- Open an issue on **[GitHub](https://github.com/noncelab/coconut_design_system/issues)**
+- Contact us at **hello@noncelab.com**
+
+---
+
+## ⭐ Star & Follow
+
+If you like this project, please **star** the repo and **follow** us for updates! 🚀✨
+
+---
+
 ## License
+
 Reference [LICENSE](LICENSE)
