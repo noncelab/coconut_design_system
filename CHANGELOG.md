@@ -5,6 +5,29 @@ This project follows **[Semantic Versioning](https://semver.org/)**.
 
 ---
 
+## **[0.11.0] - 2026-08-18**
+
+### ✨ Features
+
+- **Popup**
+  - Added an optional checkbox below the description.
+  - Added rich text descriptions through `descriptionSpan`, while preserving the existing `description` API.
+- **Colors**
+  - Added the `warningAmber` color token.
+
+### 🛠 Fixes
+
+- **Popup**
+  - Center-aligned the checkbox section.
+  - Updated the checkbox text color only while the text is being pressed.
+
+### 📝 Documentation
+
+- Updated the license notice in `LICENSE` and `README.md`.
+- Updated the README to reflect the current components and usage examples.
+
+---
+
 ## **[0.10.3] - 2026-08-06**
 
 ### 🧹 Chores
