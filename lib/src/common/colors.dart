@@ -41,6 +41,12 @@ class CoconutColors {
   static const Color periwinkle = Color(0xFF7775FF);
 
   /// custom colors
+  /// Success text and icon color for light backgrounds.
+  static const Color successOnLight = Color(0xFF267343);
+
+  /// Success text and icon color for dark backgrounds.
+  static const Color successOnDark = Color(0xFF6FBF8C);
+
   static const Color warningYellow = Color(0xFFFFAF03);
   static const Color warningAmber = Color(0xFFFFCC00);
   static const Color warningYellowBackground = Color(0xFFFFF3BE);
