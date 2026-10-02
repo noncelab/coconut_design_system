@@ -5,6 +5,16 @@ This project follows **[Semantic Versioning](https://semver.org/)**.
 
 ---
 
+## **[0.11.1] - 2026-10-02**
+
+### ✨ Features
+
+- **Colors**
+  - Added `successOnLight` for success text and icons on light backgrounds.
+  - Added `successOnDark` for success text and icons on dark backgrounds.
+
+---
+
 ## **[0.11.0] - 2026-08-18**
 
 ### ✨ Features
