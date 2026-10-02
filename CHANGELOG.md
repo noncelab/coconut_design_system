@@ -5,6 +5,18 @@ This project follows **[Semantic Versioning](https://semver.org/)**.
 
 ---
 
+## **[0.11.2] - 2026-10-02**
+
+### 🛠 Fixes
+
+- **Checkbox**
+  - Separated unselected and disabled states with `isDisabled` (defaults to `false`), preventing tap interactions when disabled.
+  - Added `unSelectedColor` to customize the unselected color and `inactiveColor` to customize the disabled color regardless of selection state.
+  - Deprecated `disabledColor` in favor of `unSelectedColor`, preserving it as a fallback for backward compatibility.
+  - Added an assertion to prevent providing both `unSelectedColor` and `disabledColor`.
+
+---
+
 ## **[0.11.1] - 2026-10-02**
 
 ### ✨ Features
