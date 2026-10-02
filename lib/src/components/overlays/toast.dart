@@ -107,7 +107,8 @@ class CoconutToast {
         await fadeController.forward();
         overlayEntry.remove();
         fadeController.dispose();
-      } catch (_) {} finally {
+      } catch (_) {
+      } finally {
         _isToastVisible = false;
       }
     }

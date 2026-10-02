@@ -18,46 +18,46 @@ class CoconutCheckbox extends StatelessWidget {
   /// Defaults to `20.0` pixels.
   final double width;
 
-  /// The color of the checkbox.
+  /// The color of the checkbox when selected.
   /// If not provided, it defaults to the appropriate color based on the brightness mode.
   final Color? color;
 
-  /// The color of the checkbox when it is disabled.
+  /// The color of the checkbox when it is unselected.
+  final Color? unSelectedColor;
+
+  @Deprecated('Use unSelectedColor instead. This property will be removed in a future version.')
   final Color? disabledColor;
 
+  /// The color of the checkbox when it is disabled.
+  final Color? inactiveColor;
+
+  /// Whether the checkbox is interactive.
+  /// Defaults to `false`.
+  final bool isDisabled;
+
   /// Creates a `CoconutCheckbox` widget.
-  ///
-  /// - [isSelected] determines whether the checkbox is checked or not.
-  /// - [onChanged] is triggered when the checkbox is tapped.
-  /// - [width] sets the checkbox size (default: `20.0`).
-  /// - [color] allows customization of the checkbox color.
-  /// - [disabledColor] allows customization of the checkbox color when it is disabled.
-  ///
-  /// Example usage:
-  /// ```dart
-  /// CoconutCheckbox(
-  ///   isSelected: true,
-  ///   onChanged: (bool value) {
-  ///     print("Checkbox state: $value");
-  ///   },
-  /// )
-  /// ```
   const CoconutCheckbox({
     super.key,
     required this.isSelected,
     required this.onChanged,
     this.width = 20.0,
     this.color,
+    this.unSelectedColor,
+    this.inactiveColor,
     this.disabledColor,
-  });
+    this.isDisabled = false,
+  }) : assert(unSelectedColor == null || disabledColor == null,
+            'Cannot provide both unSelectedColor and disabledColor. Use unSelectedColor.');
 
   @override
   Widget build(BuildContext context) {
     final brightness = CoconutTheme.brightness();
     return GestureDetector(
-      onTap: () {
-        onChanged(!isSelected);
-      },
+      onTap: isDisabled
+          ? null
+          : () {
+              onChanged(!isSelected);
+            },
       child: SvgPicture.asset(
         'packages/coconut_design_system/assets/svg/checkbox${isSelected ? '_selected' : ''}.svg',
         width: width,
@@ -71,8 +71,11 @@ class CoconutCheckbox extends StatelessWidget {
   }
 
   Color _getColor(Brightness brightness) {
+    if (isDisabled) {
+      return inactiveColor ?? CoconutColors.onGray200(brightness);
+    }
     if (!isSelected) {
-      return disabledColor ?? CoconutColors.onGray200(brightness);
+      return unSelectedColor ?? disabledColor ?? CoconutColors.onGray200(brightness);
     }
     return color ?? CoconutColors.onBlack(brightness);
   }
