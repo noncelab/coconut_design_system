@@ -67,9 +67,6 @@ class CoconutButton extends StatefulWidget {
   final Color? pressedBackgroundColor;
 
   /// **Text color when button is pressed**
-  final Color? pressedForegroundColor;
-
-  /// **Text color when button is pressed**
   final Color? pressedTextColor;
 
   /// **Background color when button is disabled**
@@ -107,7 +104,6 @@ class CoconutButton extends StatefulWidget {
     this.backgroundColor,
     this.foregroundColor,
     this.pressedBackgroundColor,
-    this.pressedForegroundColor,
     this.disabledBackgroundColor,
     this.disabledForegroundColor,
     this.pressedTextColor,
@@ -134,7 +130,6 @@ class _CoconutButtonState extends State<CoconutButton> {
   late Color borderColor;
   late Color foregroundColor;
   late Color pressedBackgroundColor;
-  late Color pressedForegroundColor;
   late Color pressedTextColor;
   late Color disabledBackgroundColor;
   late Color disabledForegroundColor;
@@ -149,8 +144,6 @@ class _CoconutButtonState extends State<CoconutButton> {
     foregroundColor =
         widget.foregroundColor ?? (brightness == Brightness.light ? CoconutColors.white : CoconutColors.black);
     pressedBackgroundColor = widget.pressedBackgroundColor ?? backgroundColor.withValues(alpha: 0.5);
-    pressedForegroundColor =
-        widget.pressedForegroundColor ?? (brightness == Brightness.light ? CoconutColors.white : CoconutColors.black);
     pressedTextColor =
         widget.pressedTextColor ?? (brightness == Brightness.light ? CoconutColors.white : CoconutColors.black);
     disabledBackgroundColor = widget.disabledBackgroundColor ??
