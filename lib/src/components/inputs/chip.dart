@@ -144,7 +144,7 @@ class CoconutChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    final chip = GestureDetector(
       onTap: onTap != null
           ? () {
               onTap?.call();
@@ -171,6 +171,8 @@ class CoconutChip extends StatelessWidget {
         ),
       ),
     );
+    // `isSelected == null` marks a non-selectable chip, so no selected state is announced.
+    return Semantics(container: onTap != null, button: onTap != null, selected: isSelected, child: chip);
   }
 
   Color getBackgroundColor() {

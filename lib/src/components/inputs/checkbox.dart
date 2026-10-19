@@ -52,7 +52,7 @@ class CoconutCheckbox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final brightness = CoconutTheme.brightness();
-    return GestureDetector(
+    final checkbox = GestureDetector(
       onTap: isDisabled
           ? null
           : () {
@@ -62,12 +62,14 @@ class CoconutCheckbox extends StatelessWidget {
         'packages/coconut_design_system/assets/svg/checkbox${isSelected ? '_selected' : ''}.svg',
         width: width,
         height: width,
+        excludeFromSemantics: true,
         colorFilter: ColorFilter.mode(
           _getColor(brightness),
           BlendMode.srcIn,
         ),
       ),
     );
+    return Semantics(checked: isSelected, enabled: !isDisabled, child: checkbox);
   }
 
   Color _getColor(Brightness brightness) {

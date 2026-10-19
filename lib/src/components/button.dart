@@ -67,9 +67,6 @@ class CoconutButton extends StatefulWidget {
   final Color? pressedBackgroundColor;
 
   /// **Text color when button is pressed**
-  final Color? pressedForegroundColor;
-
-  /// **Text color when button is pressed**
   final Color? pressedTextColor;
 
   /// **Background color when button is disabled**
@@ -107,7 +104,6 @@ class CoconutButton extends StatefulWidget {
     this.backgroundColor,
     this.foregroundColor,
     this.pressedBackgroundColor,
-    this.pressedForegroundColor,
     this.disabledBackgroundColor,
     this.disabledForegroundColor,
     this.pressedTextColor,
@@ -134,7 +130,6 @@ class _CoconutButtonState extends State<CoconutButton> {
   late Color borderColor;
   late Color foregroundColor;
   late Color pressedBackgroundColor;
-  late Color pressedForegroundColor;
   late Color pressedTextColor;
   late Color disabledBackgroundColor;
   late Color disabledForegroundColor;
@@ -149,8 +144,6 @@ class _CoconutButtonState extends State<CoconutButton> {
     foregroundColor =
         widget.foregroundColor ?? (brightness == Brightness.light ? CoconutColors.white : CoconutColors.black);
     pressedBackgroundColor = widget.pressedBackgroundColor ?? backgroundColor.withValues(alpha: 0.5);
-    pressedForegroundColor =
-        widget.pressedForegroundColor ?? (brightness == Brightness.light ? CoconutColors.white : CoconutColors.black);
     pressedTextColor =
         widget.pressedTextColor ?? (brightness == Brightness.light ? CoconutColors.white : CoconutColors.black);
     disabledBackgroundColor = widget.disabledBackgroundColor ??
@@ -159,7 +152,9 @@ class _CoconutButtonState extends State<CoconutButton> {
         (brightness == Brightness.light ? CoconutColors.gray350 : CoconutColors.gray700);
     borderColor = widget.borderColor ?? getOutlineColor(isDarkMode: brightness == Brightness.dark);
     textStyle = widget.textStyle ?? CoconutTypography.body2_14_Bold.setColor(CoconutColors.onPrimary(brightness));
-    return GestureDetector(
+    final gestureDetector = GestureDetector(
+      // A disabled button keeps absorbing taps but must not announce a tap action.
+      excludeFromSemantics: !widget.isActive,
       onTapDown: (details) {
         setState(() {
           isPressing = true;
@@ -208,6 +203,7 @@ class _CoconutButtonState extends State<CoconutButton> {
         ),
       ),
     );
+    return Semantics(container: true, button: true, enabled: widget.isActive, child: gestureDetector);
   }
 
   /// **Returns the appropriate background color based on state**
@@ -221,7 +217,8 @@ class _CoconutButtonState extends State<CoconutButton> {
     }
     if (widget.buttonType == CoconutButtonType.none) return Colors.transparent;
     if (isPressing) {
-      final outlinePressingColor = isDarkMode ? CoconutColors.gray800 : CoconutColors.gray150;
+      final outlinePressingColor = (_ownsOutlinedFill ? widget.pressedBackgroundColor : null) ??
+          (isDarkMode ? CoconutColors.gray800 : CoconutColors.gray150);
       return switch (widget.buttonType) {
         CoconutButtonType.filled => pressedBackgroundColor,
         CoconutButtonType.outlined => outlinePressingColor,
@@ -230,10 +227,13 @@ class _CoconutButtonState extends State<CoconutButton> {
     }
     return widget.buttonType == CoconutButtonType.filled
         ? backgroundColor
-        : brightness == Brightness.light
-            ? CoconutColors.white
-            : CoconutColors.black;
+        : (_ownsOutlinedFill ? widget.backgroundColor : null) ??
+            (brightness == Brightness.light ? CoconutColors.white : CoconutColors.black);
   }
+
+  /// An outlined button draws `backgroundColor` as its border unless `borderColor` is given;
+  /// only then are `backgroundColor` and `pressedBackgroundColor` its fill.
+  bool get _ownsOutlinedFill => widget.borderColor != null;
 
   /// **Determines button width based on `isExpand` flag**
   double? getButtonWidth(BuildContext context) => widget.isExpand ? MediaQuery.sizeOf(context).width : widget.width;
@@ -241,8 +241,9 @@ class _CoconutButtonState extends State<CoconutButton> {
   /// **Returns the appropriate text color based on state**
   Color? getForegroundColor({bool isDarkMode = false}) {
     if (!widget.isActive) return disabledForegroundColor;
-    final Color textColor = textStyle.color ?? CoconutColors.onPrimary(brightness);
-    final outlinePressingColor = isDarkMode ? CoconutColors.gray200 : CoconutColors.gray500;
+    final Color textColor = widget.foregroundColor ?? textStyle.color ?? CoconutColors.onPrimary(brightness);
+    final outlinePressingColor =
+        widget.pressedTextColor ?? (isDarkMode ? CoconutColors.gray200 : CoconutColors.gray500);
     return switch (widget.buttonType) {
       CoconutButtonType.filled => isPressing ? pressedTextColor : foregroundColor,
       CoconutButtonType.outlined => isPressing ? outlinePressingColor : textColor,
