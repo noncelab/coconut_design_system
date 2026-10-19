@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:ui';
 
 import 'package:coconut_design_system/coconut_design_system.dart';
@@ -22,6 +21,14 @@ import 'package:flutter_svg/svg.dart';
 /// )
 /// ```
 class CoconutAppBar {
+  /// Status bar style for a bar drawn in [brightness]: transparent, with the iOS `statusBarBrightness`
+  /// and the inverse Android icon brightness. Navigation bar fields stay null, so the app's own style applies.
+  static SystemUiOverlayStyle _statusBarStyle(Brightness brightness) => SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarBrightness: brightness,
+        statusBarIconBrightness: brightness == Brightness.light ? Brightness.dark : Brightness.light,
+      );
+
   /// Builds a standard `CoconutAppBar` for navigation and actions.
   ///
   /// This AppBar displays a title, optional sub-label, leading (back/close) button,
@@ -155,21 +162,7 @@ class CoconutAppBar {
     );
 
     return AppBar(
-      systemOverlayStyle: Platform.isIOS
-          ? (brightness == Brightness.light
-              ? const SystemUiOverlayStyle(
-                  statusBarIconBrightness: Brightness.dark, // iOS → 검정 텍스트
-                )
-              : const SystemUiOverlayStyle(
-                  statusBarIconBrightness: Brightness.light, // iOS → 흰색 텍스트
-                ))
-          : (brightness == Brightness.light
-              ? const SystemUiOverlayStyle(
-                  statusBarIconBrightness: Brightness.dark, // Android → 검정 텍스트
-                )
-              : const SystemUiOverlayStyle(
-                  statusBarIconBrightness: Brightness.light, // Android → 흰색 텍스트
-                )),
+      systemOverlayStyle: _statusBarStyle(brightness),
       key: entireWidgetKey,
       toolbarHeight: height ?? (isBottom ? 60 : 56),
       title: widget,
@@ -279,23 +272,7 @@ class CoconutAppBar {
   }) {
     Brightness brightness = CoconutTheme.brightness();
     return SliverAppBar(
-      systemOverlayStyle: Platform.isIOS
-          ? (brightness == Brightness.light
-              ? const SystemUiOverlayStyle(
-                  statusBarIconBrightness: Brightness.dark, // iOS → 검정 텍스트
-                )
-              : const SystemUiOverlayStyle(
-                  statusBarIconBrightness: Brightness.light, // iOS → 흰색 텍스트
-                ))
-          : (brightness == Brightness.light
-              ? const SystemUiOverlayStyle(
-                  statusBarIconBrightness: Brightness.dark, // Android → 검정 텍스트
-                  statusBarColor: Colors.transparent,
-                )
-              : const SystemUiOverlayStyle(
-                  statusBarIconBrightness: Brightness.light, // Android → 흰색 텍스트
-                  statusBarColor: Colors.transparent,
-                )),
+      systemOverlayStyle: _statusBarStyle(brightness),
       scrolledUnderElevation: 0,
       automaticallyImplyLeading: automaticallyImplyLeading,
       floating: false,
@@ -431,21 +408,7 @@ class CoconutAppBar {
   }) {
     Brightness brightness = CoconutTheme.brightness();
     return AppBar(
-      systemOverlayStyle: Platform.isIOS
-          ? (brightness == Brightness.light
-              ? const SystemUiOverlayStyle(
-                  statusBarIconBrightness: Brightness.dark, // iOS → 검정 텍스트
-                )
-              : const SystemUiOverlayStyle(
-                  statusBarIconBrightness: Brightness.light, // iOS → 흰색 텍스트
-                ))
-          : (brightness == Brightness.light
-              ? const SystemUiOverlayStyle(
-                  statusBarIconBrightness: Brightness.dark, // Android → 검정 텍스트
-                )
-              : const SystemUiOverlayStyle(
-                  statusBarIconBrightness: Brightness.light, // Android → 흰색 텍스트
-                )),
+      systemOverlayStyle: _statusBarStyle(brightness),
       title: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Text(

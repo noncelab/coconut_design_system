@@ -102,11 +102,18 @@ class _CoconutSegmentedControlState extends State<CoconutSegmentedControl> with 
   /// Animation controller for the sliding animation.
   late AnimationController _animationController;
 
-  /// Animation for the position of the selected background.
+  /// Easing shared by every slide; created once so taps do not leave status listeners behind.
+  late CurvedAnimation _curve;
+
+  /// Position of the selected background in segment-index units, so the pixel
+  /// offset follows the current width instead of a value cached in a past frame.
   late Animation<double> _positionAnimation;
 
   /// Current selected index for animation.
   int _currentSelectedIndex = 0;
+
+  /// Whether the platform asks for reduced motion (`disableAnimations` or `accessibleNavigation`).
+  bool _reduceMotion = false;
 
   /// Ensures `_selections` length matches `widget.labels.length`.
   /// If lengths differ, it will resize safely keeping a single selected index.
@@ -195,21 +202,6 @@ class _CoconutSegmentedControlState extends State<CoconutSegmentedControl> with 
     Color selectedTextColor,
     Color unselectedTextColor,
   ) {
-    // Update animation position if needed
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (widget.showAnimation && _animationController.isDismissed) {
-        final currentPosition = _calculatePosition(_currentSelectedIndex, containerWidth);
-        _positionAnimation = Tween<double>(
-          begin: currentPosition,
-          end: currentPosition,
-        ).animate(CurvedAnimation(
-          parent: _animationController,
-          curve: Curves.easeInOut,
-        ));
-        if (mounted) setState(() {});
-      }
-    });
-
     return IntrinsicHeight(
       child: Stack(
         children: [
@@ -218,7 +210,7 @@ class _CoconutSegmentedControlState extends State<CoconutSegmentedControl> with 
             animation: _positionAnimation,
             builder: (context, child) {
               return Positioned(
-                left: _positionAnimation.value,
+                left: _calculatePosition(_positionAnimation.value, containerWidth),
                 top: 2.0,
                 bottom: 2.0,
                 child: Container(
@@ -249,7 +241,7 @@ class _CoconutSegmentedControlState extends State<CoconutSegmentedControl> with 
                       borderRadius: BorderRadius.circular(labelBorderRadius),
                       splashColor: selectedColor.withValues(alpha: 0.2),
                       highlightColor: selectedColor.withValues(alpha: 0.4),
-                      onTap: () => _handlePress(index, items.length, containerWidth),
+                      onTap: () => _handlePress(index, items.length),
                       child: Container(
                         key: key,
                         alignment: Alignment.center,
@@ -262,7 +254,7 @@ class _CoconutSegmentedControlState extends State<CoconutSegmentedControl> with 
                             style: isSelected
                                 ? CoconutTypography.body3_12_Bold.setColor(selectedTextColor)
                                 : CoconutTypography.body3_12.setColor(unselectedTextColor),
-                            child: items[index],
+                            child: _segmentSemantics(isSelected, items[index]),
                           ),
                         ),
                       ),
@@ -321,7 +313,7 @@ class _CoconutSegmentedControlState extends State<CoconutSegmentedControl> with 
                         style: isSelected
                             ? CoconutTypography.body3_12_Bold.setColor(selectedTextColor)
                             : CoconutTypography.body3_12.setColor(unselectedTextColor),
-                        child: items[index],
+                        child: _segmentSemantics(isSelected, items[index]),
                       ),
                     ),
                   ),
@@ -344,21 +336,25 @@ class _CoconutSegmentedControlState extends State<CoconutSegmentedControl> with 
     _currentSelectedIndex = _selections.indexWhere((selected) => selected);
     if (_currentSelectedIndex == -1) _currentSelectedIndex = 0;
 
-    // Initialize animation controller if animation is enabled
-    if (widget.showAnimation) {
-      _animationController = AnimationController(
-        duration: const Duration(milliseconds: 250),
-        vsync: this,
-      );
+    // Always created so `showAnimation` can change at runtime; an idle controller schedules no frames.
+    _animationController = AnimationController(
+      duration: const Duration(milliseconds: 250),
+      vsync: this,
+    );
+    _curve = CurvedAnimation(parent: _animationController, curve: Curves.easeInOut);
+    _positionAnimation = AlwaysStoppedAnimation<double>(_currentSelectedIndex.toDouble());
+  }
 
-      // Initialize with default values, will be updated in build
-      _positionAnimation = Tween<double>(
-        begin: 2.0,
-        end: 2.0,
-      ).animate(CurvedAnimation(
-        parent: _animationController,
-        curve: Curves.easeInOut,
-      ));
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _reduceMotion = (MediaQuery.maybeDisableAnimationsOf(context) ?? false) ||
+        (MediaQuery.maybeAccessibleNavigationOf(context) ?? false);
+    if (_reduceMotion && _animationController.isAnimating) {
+      // Reduced motion turned on mid-slide: land on the selected segment now. The build that
+      // follows picks up the stopped animation, so no listener fires during this build.
+      _animationController.stop();
+      _positionAnimation = AlwaysStoppedAnimation<double>(_currentSelectedIndex.toDouble());
     }
   }
 
@@ -376,10 +372,9 @@ class _CoconutSegmentedControlState extends State<CoconutSegmentedControl> with 
       if (newIndex == -1) newIndex = 0;
       if (newIndex != _currentSelectedIndex) {
         _currentSelectedIndex = newIndex;
-        if (widget.showAnimation) {
-          // Ensure next frame re-evaluates the position at the new index
-          _animationController.reset();
-        }
+        // Parent-driven selection changes jump without sliding.
+        _animationController.stop();
+        _positionAnimation = AlwaysStoppedAnimation<double>(newIndex.toDouble());
         if (mounted) setState(() {});
       }
     }
@@ -387,42 +382,46 @@ class _CoconutSegmentedControlState extends State<CoconutSegmentedControl> with 
 
   @override
   void dispose() {
-    if (widget.showAnimation) {
-      _animationController.dispose();
-    }
+    _curve.dispose();
+    _animationController.dispose();
     super.dispose();
   }
 
-  /// Calculates the left position for the animated background based on the index.
-  double _calculatePosition(int index, double containerWidth) {
+  /// Calculates the left position for the animated background based on the (possibly fractional) index.
+  double _calculatePosition(double index, double containerWidth) {
     return 2 + (containerWidth * index) + 4 * (index);
+  }
+
+  /// Exposes each segment as a button in a single-choice group, like Cupertino segmented controls.
+  Widget _segmentSemantics(bool isSelected, Widget child) {
+    return Semantics(
+      button: true,
+      inMutuallyExclusiveGroup: true,
+      selected: isSelected,
+      child: child,
+    );
   }
 
   /// Handles segment selection when a user taps a segment.
   ///
   /// - Updates `_selections` to reflect the new selected state.
-  /// - Animates the background position if animation is enabled.
+  /// - Animates the background position if animation is enabled and the platform allows motion.
   /// - Calls the `onPressed` callback to notify the parent widget.
-  void _handlePress(int index, int itemCount, [double? containerWidth]) {
+  void _handlePress(int index, int itemCount) {
     if (index == _currentSelectedIndex) return; // No change needed
 
     setState(() {
       _selections = List.generate(itemCount, (i) => i == index);
-    });
-
-    if (widget.showAnimation && containerWidth != null) {
-      final double newPosition = _calculatePosition(index, containerWidth);
-
       _positionAnimation = Tween<double>(
         begin: _positionAnimation.value,
-        end: newPosition,
-      ).animate(CurvedAnimation(
-        parent: _animationController,
-        curve: Curves.easeInOut,
-      ));
+        end: index.toDouble(),
+      ).animate(_curve);
+    });
 
-      _animationController.reset();
-      _animationController.forward();
+    if (widget.showAnimation && !_reduceMotion) {
+      _animationController.forward(from: 0);
+    } else {
+      _animationController.value = 1;
     }
 
     _currentSelectedIndex = index;

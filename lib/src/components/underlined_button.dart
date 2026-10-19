@@ -78,7 +78,9 @@ class _CoconutUnderlinedButtonState extends State<CoconutUnderlinedButton> {
   @override
   Widget build(BuildContext context) {
     final brightness = CoconutTheme.brightness();
-    return GestureDetector(
+    final gestureDetector = GestureDetector(
+      // An inactive button keeps absorbing taps but must not announce a tap action.
+      excludeFromSemantics: !widget.isActive,
       behavior: HitTestBehavior.translucent,
       onTap: () {
         if (!widget.isActive) return;
@@ -123,6 +125,7 @@ class _CoconutUnderlinedButtonState extends State<CoconutUnderlinedButton> {
         ),
       ),
     );
+    return Semantics(container: true, button: true, enabled: widget.isActive, child: gestureDetector);
   }
 
   /// **Returns the appropriate color based on the button state.**
