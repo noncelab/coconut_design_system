@@ -5,6 +5,30 @@ This project follows **[Semantic Versioning](https://semver.org/)**.
 
 ---
 
+## **[0.11.3] - 2026-10-19**
+
+### 🛠 Fixes
+
+- **Button**
+  - Honored explicit `foregroundColor` for outlined and text-only buttons and `pressedTextColor` for outlined buttons.
+  - Applied `backgroundColor` and `pressedBackgroundColor` as outlined button fills only when `borderColor` is provided, preserving the legacy border-color behavior when it is omitted.
+  - Exposed button and enabled states to accessibility services for standard and underlined buttons, without exposing tap actions when disabled.
+- **Checkbox & Chip**
+  - Exposed checkbox checked and enabled states and selectable chip selection states to accessibility services.
+- **SegmentedControl**
+  - Fixed initial selection positioning, resizing, and interrupted selection animations.
+  - Fixed animation lifecycle handling when toggling `showAnimation` and disposing the control.
+  - Respected reduced-motion settings and exposed segment selection states to accessibility services.
+- **AppBar**
+  - Corrected status bar brightness for iOS and Android and consistently used a transparent status bar across all three builders.
+
+### ♻️ Refactor
+
+- **Button**
+  - Removed the unused `pressedForegroundColor` parameter. Use `pressedTextColor` to customize the pressed text color.
+
+---
+
 ## **[0.11.2] - 2026-10-02**
 
 ### 🛠 Fixes
