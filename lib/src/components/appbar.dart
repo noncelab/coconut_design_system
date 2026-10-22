@@ -138,7 +138,6 @@ class CoconutAppBar {
         CoconutLayout.spacing_100h,
         Row(
           children: [
-            CoconutLayout.spacing_100w,
             IconButton(
               icon: SvgPicture.asset(
                 isBottom && !isBackButton
@@ -189,7 +188,7 @@ class CoconutAppBar {
             child: defaultLeading,
           )
         ],
-        CoconutLayout.spacing_300w
+        CoconutLayout.spacing_100w
       ],
       flexibleSpace: !isBottom && backgroundColor == null
           ? ClipRect(
@@ -290,7 +289,7 @@ class CoconutAppBar {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    padding: const EdgeInsets.only(left: 16.0, right: 4.0),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
@@ -428,7 +427,6 @@ class CoconutAppBar {
                 CoconutLayout.spacing_100h,
                 Row(
                   children: [
-                    CoconutLayout.spacing_100w,
                     IconButton(
                       icon: SvgPicture.asset(
                         isBottom
@@ -636,7 +634,6 @@ class _CoconutFrostedAppBarState extends State<CoconutFrostedAppBar> {
       leading: Navigator.canPop(context)
           ? Row(
               children: [
-                CoconutLayout.spacing_200w,
                 IconButton(
                   icon: SvgPicture.asset(
                     widget.isBottom
@@ -659,7 +656,7 @@ class _CoconutFrostedAppBarState extends State<CoconutFrostedAppBar> {
           : null,
       actions: [
         if (widget.actionButtonList != null) ...widget.actionButtonList!,
-        const SizedBox(width: 16),
+        CoconutLayout.spacing_100w,
       ],
       flexibleSpace: _isScrollOverTitleHeight
           ? ClipRect(
