@@ -5,6 +5,16 @@ This project follows **[Semantic Versioning](https://semver.org/)**.
 
 ---
 
+## **[0.11.4] - 2026-10-26**
+
+### 🛠 Fixes
+
+- **AppBar**
+  - Aligned app bar icons 16pt from both screen edges by removing extra spacing before back and close buttons and adjusting trailing action spacing.
+  - Applied consistent icon spacing to `CoconutFrostedAppBar`.
+
+---
+
 ## **[0.11.3] - 2026-10-19**
 
 ### 🛠 Fixes
