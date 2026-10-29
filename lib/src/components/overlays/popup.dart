@@ -1,4 +1,5 @@
 import 'package:coconut_design_system/coconut_design_system.dart';
+import 'package:coconut_design_system/src/common/korean_line_break.dart';
 import 'package:flutter/material.dart';
 
 /// A customizable popup dialog with title, description, and action buttons.
@@ -187,7 +188,8 @@ class _CoconutPopupState extends State<CoconutPopup> {
             Container(
               padding: widget.titlePadding ?? const EdgeInsets.only(top: 24, bottom: 12),
               child: Text(
-                widget.title,
+                keepKoreanWords(widget.title),
+                semanticsLabel: widget.title,
                 style: widget.titleTextStyle?.setColor(widget.titleColor ?? CoconutColors.onGray900(brightness)) ??
                     CoconutTypography.heading4_18_Bold.setColor(
                       widget.titleColor ?? CoconutColors.onGray900(brightness),
@@ -205,14 +207,15 @@ class _CoconutPopupState extends State<CoconutPopup> {
                   ? RichText(
                       text: TextSpan(
                         style: descriptionStyle,
-                        children: [widget.descriptionSpan!],
+                        children: [keepKoreanWordsInSpan(widget.descriptionSpan!)],
                       ),
                       textAlign: widget.centerDescription ? TextAlign.center : TextAlign.start,
                       textScaler:
                           widget.useFixedFontSize ? const TextScaler.linear(1.0) : MediaQuery.textScalerOf(context),
                     )
                   : Text(
-                      widget.description,
+                      keepKoreanWords(widget.description),
+                      semanticsLabel: widget.description,
                       textAlign: widget.centerDescription ? TextAlign.center : null,
                       style: descriptionStyle,
                     ),
@@ -251,7 +254,8 @@ class _CoconutPopupState extends State<CoconutPopup> {
                           });
                         },
                         child: Text(
-                          widget.checkboxText!,
+                          keepKoreanWords(widget.checkboxText!),
+                          semanticsLabel: widget.checkboxText,
                           style: (widget.checkboxTextStyle ?? CoconutTypography.body3_12).copyWith(
                             color: _isCheckboxTextPressing
                                 ? widget.pressedCheckboxTextColor ??
