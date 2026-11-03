@@ -5,6 +5,15 @@ This project follows **[Semantic Versioning](https://semver.org/)**.
 
 ---
 
+## **[0.11.5] - 2026-11-03**
+
+### 🛠 Fixes
+
+- **Popup**
+  - Updated Korean text to wrap at spaces.
+
+---
+
 ## **[0.11.4] - 2026-10-26**
 
 ### 🛠 Fixes
